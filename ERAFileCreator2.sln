@@ -1,11 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERAFileCreator", "ERAFileCreator2\ERAFileCreator.csproj", "{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{59B713A4-B29D-46F7-9FB1-E1FDA2AE0ED4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFC.BL", "ERAFileCreator2\EFC.BL\EFC.BL.csproj", "{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Common", "ERAFileCreator2\Common.Common\Common.Common.csproj", "{B4E23EFB-5228-40C5-9455-904CA873A7E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EraView", "ERAFileCreator2\WPFERA\EraView.csproj", "{00BB8A7E-46D3-4326-B966-A41231929748}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EraFileCreatorTests", "EraFileCreatorTests", "{A0FEC32E-9EAB-4782-961B-86CF90222DA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTests", "ERAFileCreator2\CommonTests\CommonTests.csproj", "{A63CBFBE-0FED-4002-BEEC-39624A96E999}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFERATest", "ERAFileCreator2\WPFERATest\WPFERATest.csproj", "{70870F7C-7E2C-4D53-9457-239A5E0883FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFC.BLTests", "ERAFileCreator2\EFC.BLTests\EFC.BLTests.csproj", "{4C6362C6-CAC8-47EB-847A-8B5C83587086}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +29,37 @@ Global
 		{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4E23EFB-5228-40C5-9455-904CA873A7E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4E23EFB-5228-40C5-9455-904CA873A7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4E23EFB-5228-40C5-9455-904CA873A7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4E23EFB-5228-40C5-9455-904CA873A7E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00BB8A7E-46D3-4326-B966-A41231929748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00BB8A7E-46D3-4326-B966-A41231929748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00BB8A7E-46D3-4326-B966-A41231929748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00BB8A7E-46D3-4326-B966-A41231929748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A63CBFBE-0FED-4002-BEEC-39624A96E999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63CBFBE-0FED-4002-BEEC-39624A96E999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63CBFBE-0FED-4002-BEEC-39624A96E999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63CBFBE-0FED-4002-BEEC-39624A96E999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70870F7C-7E2C-4D53-9457-239A5E0883FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70870F7C-7E2C-4D53-9457-239A5E0883FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70870F7C-7E2C-4D53-9457-239A5E0883FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70870F7C-7E2C-4D53-9457-239A5E0883FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C6362C6-CAC8-47EB-847A-8B5C83587086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C6362C6-CAC8-47EB-847A-8B5C83587086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C6362C6-CAC8-47EB-847A-8B5C83587086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C6362C6-CAC8-47EB-847A-8B5C83587086}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A63CBFBE-0FED-4002-BEEC-39624A96E999} = {A0FEC32E-9EAB-4782-961B-86CF90222DA2}
+		{70870F7C-7E2C-4D53-9457-239A5E0883FF} = {A0FEC32E-9EAB-4782-961B-86CF90222DA2}
+		{4C6362C6-CAC8-47EB-847A-8B5C83587086} = {A0FEC32E-9EAB-4782-961B-86CF90222DA2}
 	EndGlobalSection
 EndGlobal
