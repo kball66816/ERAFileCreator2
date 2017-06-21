@@ -14,6 +14,8 @@ namespace EFC.BL
 
         public Modifier Modifier { get; set; }
 
+        public Guid Id { get;  set; }
+
         private decimal copay;
 
         public decimal Copay

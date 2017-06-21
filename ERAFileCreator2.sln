@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERAFileCreator", "ERAFileCreator2\ERAFileCreator.csproj", "{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}"
 EndProject
@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EraFileCreatorTests", "EraF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTests", "ERAFileCreator2\CommonTests\CommonTests.csproj", "{A63CBFBE-0FED-4002-BEEC-39624A96E999}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFERATest", "ERAFileCreator2\WPFERATest\WPFERATest.csproj", "{70870F7C-7E2C-4D53-9457-239A5E0883FF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFC.BLTests", "ERAFileCreator2\EFC.BLTests\EFC.BLTests.csproj", "{4C6362C6-CAC8-47EB-847A-8B5C83587086}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFERATest", "WPFERATest\WPFERATest.csproj", "{5743D31B-E61F-4C55-9F25-041D3431D212}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,21 +45,21 @@ Global
 		{A63CBFBE-0FED-4002-BEEC-39624A96E999}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A63CBFBE-0FED-4002-BEEC-39624A96E999}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A63CBFBE-0FED-4002-BEEC-39624A96E999}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70870F7C-7E2C-4D53-9457-239A5E0883FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70870F7C-7E2C-4D53-9457-239A5E0883FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70870F7C-7E2C-4D53-9457-239A5E0883FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70870F7C-7E2C-4D53-9457-239A5E0883FF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C6362C6-CAC8-47EB-847A-8B5C83587086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C6362C6-CAC8-47EB-847A-8B5C83587086}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C6362C6-CAC8-47EB-847A-8B5C83587086}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C6362C6-CAC8-47EB-847A-8B5C83587086}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5743D31B-E61F-4C55-9F25-041D3431D212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5743D31B-E61F-4C55-9F25-041D3431D212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5743D31B-E61F-4C55-9F25-041D3431D212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5743D31B-E61F-4C55-9F25-041D3431D212}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A63CBFBE-0FED-4002-BEEC-39624A96E999} = {A0FEC32E-9EAB-4782-961B-86CF90222DA2}
-		{70870F7C-7E2C-4D53-9457-239A5E0883FF} = {A0FEC32E-9EAB-4782-961B-86CF90222DA2}
 		{4C6362C6-CAC8-47EB-847A-8B5C83587086} = {A0FEC32E-9EAB-4782-961B-86CF90222DA2}
+		{5743D31B-E61F-4C55-9F25-041D3431D212} = {A0FEC32E-9EAB-4782-961B-86CF90222DA2}
 	EndGlobalSection
 EndGlobal

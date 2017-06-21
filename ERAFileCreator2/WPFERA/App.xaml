@@ -2,9 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WPFERA"
-             xmlns:converter="clr-namespace:Common.Common;assembly=Common.Common"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <converter:NotConverter x:Key="NotConverter"/>
+        <local:NotConverter x:Key="NotConverter"/>
     </Application.Resources>
 </Application>

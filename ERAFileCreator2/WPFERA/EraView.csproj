@@ -57,7 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="NotConverter.cs" />
+    <Compile Include="Utility\NotConverter.cs" />
     <Compile Include="Services\Command.cs" />
     <Compile Include="Services\PatientRepository.cs" />
     <Compile Include="Services\SettingsService.cs" />

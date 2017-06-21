@@ -53,6 +53,8 @@ namespace WPFERA.ViewModel
 
         public PatientRepository patientRepository = new PatientRepository();
 
+        private bool supressActionDialog { get; set; }
+
         SettingsService Settings { get; set; }
 
         public Dictionary<string, string> InsuranceStates { get; set; }
@@ -127,19 +129,20 @@ namespace WPFERA.ViewModel
 
         private void MatchChargeToPatient()
         {
-            if (IsPatientsCharge())
+            if (IsChargeMatched(Charge))
             {
                 return;
             }
             else
             {
                 patient.Charge = Charge;
+                MatchAddonToCharge();
             }
         }
 
-        private bool IsPatientsCharge()
+        private bool IsChargeMatched(Charge charge)
         {
-            if (patient.Charge.Id == Charge.Id)
+            if (patient.Charge.Id == charge.Id)
             {
                 return true;
             }
@@ -154,7 +157,6 @@ namespace WPFERA.ViewModel
 
         private void AddPatient(object obj)
         {
-            Charge test = Charge;
             MatchAdjustmentToCharge();
             MatchAddonToCharge();
             MatchChargeToPatient();
@@ -283,7 +285,15 @@ namespace WPFERA.ViewModel
         {
             if (Settings.AddonPromptEnabled)
             {
-                PromptTypeOfNewAddon();
+               if(supressActionDialog==false)
+                {
+                    PromptTypeOfNewAddon();
+                }
+
+               else
+                {
+                    return;
+                }
             }
 
             else if (Settings.AddonPromptEnabled == false)
@@ -300,8 +310,8 @@ namespace WPFERA.ViewModel
 
         private AddonCharge PromptTypeOfNewAddon()
         {
-            var newAddonDialogResult =
-                MessageBox.Show("Do you want to reuse this Addon?", "Return new Addon", MessageBoxButton.YesNo);
+           
+            var newAddonDialogResult = MessageBox.Show("Do you want to reuse this Addon?", "Return new Addon", MessageBoxButton.YesNo);
             {
 
                 if (newAddonDialogResult == MessageBoxResult.Yes)
@@ -359,7 +369,13 @@ namespace WPFERA.ViewModel
         {
             get { return addonAdjustment; }
             set
-            { if (value != addonAdjustment) { addonAdjustment = value; RaisePropertyChanged("AddonAdjustment"); } }
+            {
+                if (value != addonAdjustment)
+                {
+                    addonAdjustment = value;
+                    RaisePropertyChanged("AddonAdjustment");
+                }
+            }
         }
 
         public ICommand AddChargeAdjustmentCommand { get; private set; }
@@ -368,7 +384,7 @@ namespace WPFERA.ViewModel
 
         private void AddAddonAdjustment(object obj)
         {
-            Charge.AddonChargeList.Last().AdjustmentList.Add(AddonAdjustment);
+            Addon.AdjustmentList.Add(AddonAdjustment);
             AddonAdjustment = new Adjustment();
             RaisePropertyChanged("Adjustment");
             RefreshAllCounters();
@@ -402,11 +418,12 @@ namespace WPFERA.ViewModel
             return checkIfAddonIsNull;
         }
 
+
         private bool CanAddAddonAdjustment(object obj)
         {
             if (!string.IsNullOrEmpty(addonAdjustment.AdjustmentReasonCode) && !string.IsNullOrEmpty(addonAdjustment.AdjustmentType))
             {
-                return CheckIfAddonIsNull();
+                return true;
             }
             else
             {
@@ -527,7 +544,11 @@ namespace WPFERA.ViewModel
 
         private void Save(object obj)
         {
+            supressActionDialog = true;
+            MatchAdjustmentToCharge();
+            MatchAddonToCharge();
             MatchChargeToPatient();
+            UpdateCheckAmount();
             SaveSettings();
             var edi = new ElectronicDataInterchange();
 

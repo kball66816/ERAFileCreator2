@@ -10,6 +10,7 @@ namespace EFC.BL
     {
         public AddonCharge()
         {
+            Id = Guid.NewGuid();
             AdjustmentList = new List<Adjustment>();
             Modifier = new Modifier();
             new Adjustment();

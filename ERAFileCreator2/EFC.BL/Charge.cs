@@ -73,6 +73,6 @@ namespace EFC.BL
             }
         }
 
-        public Guid Id { get; private set; }
+
     }
 }
