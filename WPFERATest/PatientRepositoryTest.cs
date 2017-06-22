@@ -15,8 +15,10 @@ namespace WPFERATest
             PatientRepository Pr = new PatientRepository();
 
             //Act
-            var patient = new Patient();
-            patient.FirstName = "John";
+            var patient = new Patient()
+            {
+                FirstName = "John"
+            };
             Pr.Add(patient);
 
             var expected = "John";
@@ -33,8 +35,10 @@ namespace WPFERATest
             PatientRepository Pr = new PatientRepository();
 
             //Act
-            var patient = new Patient();
-            patient.FirstName = "John";
+            var patient = new Patient()
+            {
+                FirstName = "John"
+            };
             Pr.Add(patient);
             Pr.Delete(patient);
 

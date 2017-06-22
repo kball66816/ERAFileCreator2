@@ -10,10 +10,10 @@ namespace EFC.BLTests
         [TestMethod]
         public void TestClone()
         {
-            AddonCharge addon = new AddonCharge();
-
-            addon.ChargeCost = 50;
-
+            AddonCharge addon = new AddonCharge()
+            {
+                ChargeCost = 50
+            };
             AddonCharge addon2 = (AddonCharge)addon.Clone();
 
             Console.WriteLine(addon2.ChargeCost.ToString());

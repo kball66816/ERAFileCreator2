@@ -53,7 +53,7 @@ namespace WPFERA.ViewModel
 
         public PatientRepository patientRepository = new PatientRepository();
 
-        private bool supressActionDialog { get; set; }
+        public bool SupressActionDialog { get; private set; }
 
         SettingsService Settings { get; set; }
 
@@ -155,6 +155,12 @@ namespace WPFERA.ViewModel
 
         public ICommand AddPatientCommand { get; private set; }
 
+        /// <summary>
+        /// Adds a new patient to the list by ensuring all unmatched details
+        /// in the form match to the previous patient then returning a new instance
+        /// of a patient
+        /// </summary>
+        /// <param name="obj"></param>
         private void AddPatient(object obj)
         {
             MatchAdjustmentToCharge();
@@ -170,12 +176,11 @@ namespace WPFERA.ViewModel
 
         private void ReturnNewCharge()
         {
-            if (TempBinding)
+            if (Settings.ReuseChargeForNextPatient)
             {
-                Charge clone = charge;
                 charge = new Charge(charge);
             }
-            
+
             else
             {
                 Charge = new Charge();
@@ -196,12 +201,34 @@ namespace WPFERA.ViewModel
             }
         }
 
+        private bool IsAddonMatched(AddonCharge Addon)
+        {
+            bool isMatchedAddon = false;
+
+            foreach (AddonCharge addon in Patient.Charge.AddonChargeList)
+            {
+                if (addon.Id == this.Addon.Id)
+                {
+                    isMatchedAddon = true;
+                }
+
+            }
+            return isMatchedAddon;
+        }
         private void MatchAddonToCharge()
         {
             if (CanAddAddon(Addon))
             {
-                MatchAddonAdjustmentToAddon();
-                AddAddon(Charge);
+                if (IsAddonMatched(Addon))
+                {
+                    return;
+                }
+
+                else
+                {
+                    MatchAddonAdjustmentToAddon();
+                    AddAddon(Charge);
+                }
             }
 
             else
@@ -285,12 +312,12 @@ namespace WPFERA.ViewModel
         {
             if (Settings.AddonPromptEnabled)
             {
-               if(supressActionDialog==false)
+                if (SupressActionDialog == false)
                 {
                     PromptTypeOfNewAddon();
                 }
 
-               else
+                else
                 {
                     return;
                 }
@@ -310,7 +337,7 @@ namespace WPFERA.ViewModel
 
         private AddonCharge PromptTypeOfNewAddon()
         {
-           
+
             var newAddonDialogResult = MessageBox.Show("Do you want to reuse this Addon?", "Return new Addon", MessageBoxButton.YesNo);
             {
 
@@ -544,7 +571,7 @@ namespace WPFERA.ViewModel
 
         private void Save(object obj)
         {
-            supressActionDialog = true;
+            SupressActionDialog = true;
             MatchAdjustmentToCharge();
             MatchAddonToCharge();
             MatchChargeToPatient();

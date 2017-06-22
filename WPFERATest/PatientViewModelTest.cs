@@ -26,8 +26,10 @@ namespace WPFERATest
         {
             //Arrange
             var Pvm = new PatientViewModel();
-            var Preference = new Preference();
-            Preference.EnableAddonReusePrompt = false;
+            var Preference = new Preference()
+            {
+                EnableAddonReusePrompt = false
+            };
             Pvm.Addon.ChargeCost = 100;
                 
             //Act
@@ -78,8 +80,10 @@ namespace WPFERATest
         {
             //Arrange
             var pvm = new PatientViewModel();
-            var preference = new Preference();
-            preference.EnableAddonReusePrompt = false;
+            var preference = new Preference()
+            {
+                EnableAddonReusePrompt = false
+            };
             pvm.AddonAdjustment.AdjustmentAmount = 100;
 
             //Act
