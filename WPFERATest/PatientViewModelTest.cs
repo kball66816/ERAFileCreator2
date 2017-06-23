@@ -142,7 +142,7 @@ namespace WPFERATest
             Pvm.Patient.LastName = "Smith";
 
             Pvm.Charge.ProcedureCode = "99215";
-            Pvm.Charge.PlaceOfService.ServiceLocation = "11";
+            Pvm.Charge.PlaceOfService.ServiceLocationNumber = "11";
             //Act
 
             Charge chargeTest = Pvm.Charge;

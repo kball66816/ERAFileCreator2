@@ -22,16 +22,26 @@ namespace EFC.BL.EDI_Segments
             }
             return buildCas.ToString();
         }
+
+        /// <summary>
+        /// Cas should be supressed if the dollar amount is 0
+        /// </summary>
+        /// <param name="adjustmentList"></param>
+        /// <returns></returns>
         public string BuildCas(List<Adjustment> adjustmentList)
         {
             var buildCas = new StringBuilder();
             foreach (Adjustment adjustment in adjustmentList)
             {
-                buildCas.Append("CAS" + "*");
-                buildCas.Append(adjustment.AdjustmentType + "*"); //CAS01 Claim Adjustment Group Code
-                buildCas.Append(adjustment.AdjustmentReasonCode + "*"); //Cas02 Adjustment Reason Code
-                buildCas.Append(adjustment.AdjustmentAmount); //Cas03 Adjustment Quantity
-                buildCas.Append("~");
+                if(adjustment.AdjustmentAmount!=0)
+                {
+                    buildCas.Append("CAS" + "*");
+                    buildCas.Append(adjustment.AdjustmentType + "*"); //CAS01 Claim Adjustment Group Code
+                    buildCas.Append(adjustment.AdjustmentReasonCode + "*"); //Cas02 Adjustment Reason Code
+                    buildCas.Append(adjustment.AdjustmentAmount); //Cas03 Adjustment Quantity
+                    buildCas.Append("~");
+                }
+
             }
             return buildCas.ToString();
 

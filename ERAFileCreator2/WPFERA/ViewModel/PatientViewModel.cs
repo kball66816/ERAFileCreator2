@@ -53,7 +53,7 @@ namespace WPFERA.ViewModel
 
         public PatientRepository patientRepository = new PatientRepository();
 
-        public bool SupressActionDialog { get; private set; }
+        public bool SupressAddonDialog { get; private set; }
 
         SettingsService Settings { get; set; }
 
@@ -163,6 +163,7 @@ namespace WPFERA.ViewModel
         /// <param name="obj"></param>
         private void AddPatient(object obj)
         {
+            SupressAddonDialog = true;
             MatchAdjustmentToCharge();
             MatchAddonToCharge();
             MatchChargeToPatient();
@@ -312,7 +313,7 @@ namespace WPFERA.ViewModel
         {
             if (Settings.AddonPromptEnabled)
             {
-                if (SupressActionDialog == false)
+                if (SupressAddonDialog == false)
                 {
                     PromptTypeOfNewAddon();
                 }
@@ -571,7 +572,7 @@ namespace WPFERA.ViewModel
 
         private void Save(object obj)
         {
-            SupressActionDialog = true;
+            SupressAddonDialog = true;
             MatchAdjustmentToCharge();
             MatchAddonToCharge();
             MatchChargeToPatient();

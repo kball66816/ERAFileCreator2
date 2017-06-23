@@ -23,30 +23,31 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -69,12 +70,6 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
-        <StackPanel  Grid.Row="1" Grid.Column="1" Grid.RowSpan="25"
-                     HorizontalAlignment="Left"
-                     Orientation="Horizontal"
-                     Width="4"
-                     Background="Gray">
-        </StackPanel>
         <Menu Grid.ColumnSpan="7"
               Height="auto"
               Width="auto"
@@ -88,8 +83,7 @@
                 <MenuItem Header="Close"/>
             </MenuItem>
         </Menu>
-        <StatusBar Grid.Row="26" Grid.Column="0" Grid.ColumnSpan="7"
-                   
+        <StatusBar Grid.Row="26" Grid.Column="0" Grid.ColumnSpan="7"    
                 x:Name="StatusBar"
                 Background="#FFF0F0F0">
             <StackPanel Orientation="Horizontal"
@@ -651,7 +645,7 @@
 
         <CheckBox x:Name="IsAlsoRendering" Grid.Row="16" Grid.Column="2"
               Margin="10,10,0,0"
-              IsEnabled="{Binding ElementName=IsAlsoRendering,Path=IsChecked}"
+              IsEnabled="{Binding ElementName=IsIndividualBillingTag,Path=IsChecked}"
               Content="Copy Billing Provider?"
               IsChecked="{Binding BillingProvider.IsAlsoRendering, UpdateSourceTrigger=PropertyChanged}"
               Command="{Binding UpdateRenderingProviderCommand}"/>
@@ -700,16 +694,21 @@
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Place Of Service*"/>
-        <ComboBox ItemsSource="{Binding PlacesOfService}" Grid.Row="19" Grid.Column="3"
-                  Margin="10,20,0,0"
+       
+        <ComboBox  Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}" Grid.Row="19" Grid.Column="3"
+                  Margin="10,20,0,0"                 
+                   DisplayMemberPath="Key"
                       SelectedValuePath="Key"
                       SelectedValue="{Binding Charge.PlaceOfService.ServiceLocation}"
                       MinWidth="115"
                       MaxWidth="115"
-                       HorizontalAlignment="Left" Width="115"/>        <TextBlock x:Name="BillIdTag" Grid.Row="19" Grid.Column="4"
+                       HorizontalAlignment="Left" Width="115" SelectedIndex="9"/>
+      
+        <TextBlock x:Name="BillIdTag" Grid.Row="19" Grid.Column="4"
                        Text="Bill ID*"
                    Margin="10,0,0,0"
-                   VerticalAlignment="Top"/>        <TextBox x:Name="BillIdInput" Grid.Row="19" Grid.Column="4"
+                   VerticalAlignment="Top"/>
+        <TextBox x:Name="BillIdInput" Grid.Row="19" Grid.Column="4"
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left">
@@ -730,6 +729,8 @@
         </TextBox>
         <CheckBox Content="Use Current Code as Default" Grid.Row="19" Grid.Column="5"
                   />
+        <TextBlock  Grid.Row="19" Grid.Column="5"
+                    Margin="10,20,0,0" Text="{Binding SelectedItem.Value, ElementName=PlaceOfServiceComboBox, Mode=OneWay}"/>
         <TextBlock Name="PrimaryProcedureCodeTag" Grid.Row="20" Grid.Column="2"
                    Margin="10,0,0,0"
                        Text="PrimaryProcedureCode*"
