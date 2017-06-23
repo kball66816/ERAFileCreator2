@@ -19,7 +19,7 @@ namespace EFC.BL.EDI_Segments
             }
             buildClp.Append("12" + "*");//CLP06 Claim Filing Indicator Code
             buildClp.Append("EMC5841338" + "*");//CLP07 Payer Claim Control Number
-            buildClp.Append(patient.Charge.PlaceOfService.ServiceLocationNumber);//CLP08 Facility Type Code
+            buildClp.Append(patient.Charge.PlaceOfService.ServiceLocation);//CLP08 Facility Type Code
                                   //CLP09 CLaim Frequency Code
                                   //CLP10 Patient Status Code
                                   //CLP11 Diagnosis Related Group (DRG) Code

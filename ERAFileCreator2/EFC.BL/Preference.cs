@@ -50,6 +50,21 @@ namespace EFC.BL
             }
         }
 
+        private void UpdateAddonPromptStatus()
+        {
+            if (ReuseAddon)
+            {
+                EnableAddonReusePrompt = true;
+            }
+
+            else if (ReuseAddon == false)
+            {
+                EnableAddonReusePrompt = false;
+            }
+
+            RaisePropertyChanged("EnableAddonReusePrompt");
+        }
+
         private bool reuseAddon;
 
         public bool ReuseAddon
@@ -61,6 +76,7 @@ namespace EFC.BL
                 {
                     reuseAddon = value;
                     RaisePropertyChanged("ReuseAddon");
+                    UpdateAddonPromptStatus();
                 }
             }
         }

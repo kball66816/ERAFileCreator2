@@ -267,8 +267,6 @@ namespace WPFERA.ViewModel
             RaisePropertyChanged("Patient");
         }
 
-        public bool TempBinding = true;
-
         private void GetNewPatientDependentOnUserPromptPreference()
         {
             if (Settings.PatientPromptEnabled)

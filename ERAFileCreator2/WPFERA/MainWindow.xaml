@@ -15,6 +15,6 @@
         SizeToContent="WidthAndHeight">
     
     <Grid x:Name="TopGrid">
-        <views:UserControl1 x:Name="TestView"/>
+        <views:SinglePageView x:Name="TestView"/>
     </Grid>
 </Window>

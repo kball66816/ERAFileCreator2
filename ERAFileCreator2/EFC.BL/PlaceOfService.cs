@@ -22,19 +22,19 @@ namespace EFC.BL
 
         public PlaceOfService(PlaceOfService placeOfService)
         {
-            serviceLocationNumber = placeOfService.serviceLocationNumber;
+            serviceLocation = placeOfService.serviceLocation;
         }
 
-        private string serviceLocationNumber;
+        private string serviceLocation;
 
-        public string ServiceLocationNumber
+        public string ServiceLocation
         {
-            get { return serviceLocationNumber; }
+            get { return serviceLocation; }
             set
             {
-                if (value != serviceLocationNumber)
+                if (value != serviceLocation)
                 {
-                    serviceLocationNumber = value;
+                    serviceLocation = value;
                     RaisePropertyChanged("ServiceLocation");
                 }
             }

@@ -18,9 +18,9 @@ namespace WPFERA.Views
     /// <summary>
     /// Interaction logic for TestView.xaml
     /// </summary>
-    public partial class TestView : UserControl
+    public partial class SinglePageView : UserControl
     {
-        public TestView()
+        public SinglePageView()
         {
             InitializeComponent();
         }

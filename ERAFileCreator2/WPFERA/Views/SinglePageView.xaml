@@ -6,14 +6,14 @@
              xmlns:validation="clr-namespace:Common.Common;assembly=Common.Common"
              xmlns:viewModel="clr-namespace:WPFERA.ViewModel"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-    x:Class="WPFERA.Views.UserControl1"
+    x:Class="WPFERA.Views.SinglePageView"
              mc:Ignorable="d" Background="#FFD0E8FF">
     <UserControl.DataContext>
         <viewModel:PatientViewModel/>
     </UserControl.DataContext>
 
-    
-        <DockPanel>
+
+    <DockPanel>
         <Menu DockPanel.Dock="Top" 
               Background="#FF7789D8">
             <MenuItem Header="File"
@@ -61,26 +61,28 @@
                     HorizontalAlignment="Right"/>
             </StackPanel>
         </StatusBar>
-        <TextBlock DockPanel.Dock="top"
+        <StackPanel DockPanel.Dock="Left"
+                         Background="#FF7789D8">
+            <TextBlock DockPanel.Dock="top"
             Text="Patients"></TextBlock>
-        <ListBox DockPanel.Dock="Left"
+            <ListBox 
                  ItemsSource="{Binding PatientList}"
                      MinWidth="100"
                      Background="#FF7789D8" BorderBrush="#FF7789D8">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding BillId}"/>
-                        <TextBlock Text=" "/>
-                        <TextBlock Text="{Binding FullName}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding BillId}"/>
+                            <TextBlock Text=" "/>
+                            <TextBlock Text="{Binding FullName}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -93,6 +95,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -112,18 +115,9 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="25"
-                     HorizontalAlignment="Left"
-                     Orientation="Horizontal"
-                     Width="4"
-                     Background="Gray">
-            </StackPanel>
- 
-            <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6"
+            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6"
                    Text="Insurance Company" FontSize="24" TextDecorations="Underline"
                    Margin="10,0,0,0"/>
             <TextBlock x:Name="InsuranceCompanyNameTag"  
@@ -131,12 +125,12 @@
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                    Text="Insurance Company Name*"
-                   Grid.Row="2" Grid.Column="2" Width="145"/>
+                   Grid.Row="2" Grid.Column="0" Width="145"/>
             <TextBox x:Name="InsuranceCompanyNameInput"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Bottom"
                  Width="115"
-                 Grid.Row="2" Grid.Column="2"
+                 Grid.Row="2" Grid.Column="0"
                  Margin="10,0,0,0">
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
@@ -155,10 +149,10 @@
             </TextBox>
             <TextBlock x:Name="PaymentTypeTag"
                        Text="Payment Type" 
-                   Grid.Row="2" Grid.Column="3"
+                   Grid.Row="2" Grid.Column="1"
                    Margin="10,0,0,0"/>
             <ComboBox x:Name="PaymentTypeDropdown"
-                  Grid.Row="2" Grid.Column="3"
+                  Grid.Row="2" Grid.Column="1"
                   HorizontalAlignment="Left"
                   Margin="10,20,0,0"
                       Width="115"
@@ -166,22 +160,22 @@
                       DisplayMemberPath="Key"
                       SelectedValue="{Binding Insurance.PaymentType}"
                       ItemsSource="{Binding PaymentTypes}"/>
-            <TextBlock x:Name="CheckAmountTag" Grid.Row="2" Grid.Column="4"
+            <TextBlock x:Name="CheckAmountTag" Grid.Row="2" Grid.Column="2"
                        Text="Insurance Check Amount*"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"/>
             <TextBox x:Name="CheckAmountInput"
-                 Grid.Row="2" Grid.Column="4"
+                 Grid.Row="2" Grid.Column="2"
                  Margin="10,20,0,0"
                      Width="115"
                      IsEnabled="False"
                  HorizontalAlignment="Left"
                      Text="{Binding Insurance.CheckAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock x:Name="InsuranceCompanyTaxIdTag" Grid.Row="2" Grid.Column="5"
+            <TextBlock x:Name="InsuranceCompanyTaxIdTag" Grid.Row="2" Grid.Column="3"
                    Margin="10,0,0,0"    
                        Text="Insurance Company Tax ID*"
                    VerticalAlignment="Top"/>
-            <TextBox x:Name="InsuranceCompanyTaxIdInput" Grid.Row="2" Grid.Column="5"
+            <TextBox x:Name="InsuranceCompanyTaxIdInput" Grid.Row="2" Grid.Column="3"
                  HorizontalAlignment="Left"
                  Margin="10,20,0,0"
                      Width="115">
@@ -200,21 +194,21 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock x:Name="CheckDateTag"   Grid.Row="2" Grid.Column="6"
+            <TextBlock x:Name="CheckDateTag"   Grid.Row="2" Grid.Column="4"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Insurance Check Date*"/>
-            <DatePicker x:Name="CheckDateInput" Grid.Row="2" Grid.Column="6"
+            <DatePicker x:Name="CheckDateInput" Grid.Row="2" Grid.Column="4"
                     Margin="10,20,0,0"
                     HorizontalAlignment="Left"
                         SelectedDate="{Binding Insurance.CheckDate}"
                         Width="115"/>
-            <TextBlock x:Name="InsuranceAddressLineOneTag" Grid.Row="3" Grid.Column="2"
+            <TextBlock x:Name="InsuranceAddressLineOneTag" Grid.Row="3" Grid.Column="0"
                        Text="Street Line One*"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                    Margin="10,0,0,0" Width="86"/>
-            <TextBox x:Name="InsuranceStreetLineOneInput" Grid.Row="3" Grid.Column="2"
+            <TextBox x:Name="InsuranceStreetLineOneInput" Grid.Row="3" Grid.Column="0"
                      Width="115"
                      HorizontalAlignment="Left"
                  Margin="10,20,0,0">
@@ -233,12 +227,12 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock x:Name="InsuranceStreetLineTwoTag" Grid.Row="3" Grid.Column="3"
+            <TextBlock x:Name="InsuranceStreetLineTwoTag" Grid.Row="3" Grid.Column="1"
                        Text="Street Line Two"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left" Width="80"/>
-            <TextBox x:Name="InsuranceStreetLineTwoInput" Grid.Row="3" Grid.Column="3"
+            <TextBox x:Name="InsuranceStreetLineTwoInput" Grid.Row="3" Grid.Column="1"
                      Width="115"
                       HorizontalAlignment="Left"
                  Margin="10,20,0,0">
@@ -257,11 +251,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock x:Name="InsuranceCityTag" Grid.Row="3" Grid.Column="4"
+            <TextBlock x:Name="InsuranceCityTag" Grid.Row="3" Grid.Column="2"
                        Text="City"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"/>
-            <TextBox x:Name="InsuranceCityInput" Grid.Row="3" Grid.Column="4"
+            <TextBox x:Name="InsuranceCityInput" Grid.Row="3" Grid.Column="2"
                      Width="115"
                       HorizontalAlignment="Left"
                  Margin="10,20,0,0">
@@ -280,11 +274,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock x:Name="InsuranceStateTag" Grid.Row="3" Grid.Column="5"
+            <TextBlock x:Name="InsuranceStateTag" Grid.Row="3" Grid.Column="3"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                        Text="State"/>
-            <ComboBox x:Name="InsuranceAddressStateInput" Grid.Row="3" Grid.Column="5"
+            <ComboBox x:Name="InsuranceAddressStateInput" Grid.Row="3" Grid.Column="3"
                       Width="115"
                   Margin="10,20,0,0"
                       ItemsSource="{Binding InsuranceStates}"
@@ -292,12 +286,12 @@
                       DisplayMemberPath="Key"
                       SelectedValue="{Binding Insurance.Address.State}"
                        HorizontalAlignment="Left"/>
-            <TextBlock x:Name="InsuranceZipCodeTag" Grid.Row="3" Grid.Column="6"
+            <TextBlock x:Name="InsuranceZipCodeTag" Grid.Row="3" Grid.Column="4"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                    Margin="10,0,0,0"
                        Text="Zip Code" Width="48"/>
-            <TextBox x:Name="InsuranceZipCodeInput" Grid.Row="3" Grid.Column="6"
+            <TextBox x:Name="InsuranceZipCodeInput" Grid.Row="3" Grid.Column="4"
                  Margin="10,20,0,0"
                      Width="115"
                      MaxLength="9"
@@ -317,20 +311,23 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <Rectangle Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="5"
+            <Rectangle Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5"
                    Margin="0,5,0,0"
                    Width="auto"
                    Height="2"
                    Fill="Gray" VerticalAlignment="Center"/>
-            <CheckBox Content="Use Individual Provider" Grid.Row="5" Grid.Column="2"
+            <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6"
+                   Text="Billing Provider" FontSize="24" TextDecorations="Underline"
+                   Margin="10,0,0,0"/>
+            <CheckBox Content="Use Individual Provider" Grid.Row="6" Grid.Column="0"
                   Name="IsIndividualBillingTag"
                   Margin="10,10,0,0"/>
-            <TextBlock Name="BillingProviderNameTag" Grid.Row="6" Grid.Column="2"
+            <TextBlock Name="BillingProviderNameTag" Grid.Row="7" Grid.Column="0"
                        Text="Billing Provider's Name*"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Bottom"
                    Margin="10,0,0,26"/>
-            <TextBox Name="BillingProviderNameInput" Grid.Row="6" Grid.Column="2"
+            <TextBox Name="BillingProviderNameInput" Grid.Row="7" Grid.Column="0"
                      Width="110"
                  Margin="10,20,0,0"
                       HorizontalAlignment="Left"
@@ -350,10 +347,10 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock Name="BillingProviderFirstNameTag" Grid.Row="6" Grid.Column="3"                                                      
+            <TextBlock Name="BillingProviderFirstNameTag" Grid.Row="7" Grid.Column="1"                                                      
                        Text="Provider's First Name"
                    Margin="10,0,0,0"/>
-            <TextBox Name="BillingProviderFirstNameInput" Grid.Row="6" Grid.Column="3"
+            <TextBox Name="BillingProviderFirstNameInput" Grid.Row="7" Grid.Column="1"
                      Width="115"
                  Margin="10,20,0,0"
                       HorizontalAlignment="Left"
@@ -373,10 +370,10 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock Name="BillingProviderLastNameTag"    Grid.Row="6" Grid.Column="4"                                                                                                     
+            <TextBlock Name="BillingProviderLastNameTag"    Grid.Row="7" Grid.Column="2"                                                                                                     
                        Text="Provider's Last Name"
                    Margin="10,0,0,0"/>
-            <TextBox Name="BillingProviderLastNameInput" Grid.Row="6" Grid.Column="4"
+            <TextBox Name="BillingProviderLastNameInput" Grid.Row="7" Grid.Column="2"
                      IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag, Mode=TwoWay}"
                      Width="115"
                  Margin="10,20,0,0"
@@ -396,12 +393,12 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock Name="BillingProviderNpiTag" Grid.Row="6" Grid.Column="5"
+            <TextBlock Name="BillingProviderNpiTag" Grid.Row="7" Grid.Column="3"
                    Text="Provider's NPI*"
                    Margin="10,0,0,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"/>
-            <TextBox Name="BillingProviderNpiInput" Grid.Row="6" Grid.Column="5"
+            <TextBox Name="BillingProviderNpiInput" Grid.Row="7" Grid.Column="3"
                      Width="115"
                      MaxLength="10"
                  Margin="10,20,0,0"
@@ -421,11 +418,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock Name="BillingProviderLineOneTag" Grid.Row="7" Grid.Column="2"
+            <TextBlock Name="BillingProviderLineOneTag" Grid.Row="8" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Street Line One*"/>
-            <TextBox x:Name="ProviderAddressLineOneInput" Grid.Row="7" Grid.Column="2"
+            <TextBox x:Name="ProviderAddressLineOneInput" Grid.Row="8" Grid.Column="0"
                      Width="115"
                  Margin="10,20,0,0"
                  HorizontalAlignment="Left">
@@ -444,12 +441,12 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock Name="BillingProviderAddressTwoTag" Grid.Row="7" Grid.Column="3"
+            <TextBlock Name="BillingProviderAddressTwoTag" Grid.Row="8" Grid.Column="1"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                    Margin="10,0,0,0"
                        Text="Street Line Two" Width="80"/>
-            <TextBox Name="BillingProviderAddressTwoInput" Grid.Row="7" Grid.Column="3"
+            <TextBox Name="BillingProviderAddressTwoInput" Grid.Row="8" Grid.Column="1"
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left">
@@ -468,12 +465,12 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock Name="BillingProviderCityTag" Grid.Row="7" Grid.Column="4"
+            <TextBlock Name="BillingProviderCityTag" Grid.Row="8" Grid.Column="2"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Left"
                        Text="City" Width="20"/>
-            <TextBox Name="BillingProviderCityInput" Grid.Row="7" Grid.Column="4"
+            <TextBox Name="BillingProviderCityInput" Grid.Row="8" Grid.Column="2"
                      Width="115"
                       HorizontalAlignment="Left"
                 Margin="10,20,0,0">
@@ -492,11 +489,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock Name="BillingProviderStateTag" Grid.Row="7" Grid.Column="5"
+            <TextBlock Name="BillingProviderStateTag" Grid.Row="8" Grid.Column="3"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                        Text="State"/>
-            <ComboBox Name="BillingProviderStateInput"  Grid.Row="7" Grid.Column="5"
+            <ComboBox Name="BillingProviderStateInput"  Grid.Row="8" Grid.Column="3"
                   Margin="10,20,0,0"
                       Width="115"
                       ItemsSource="{Binding ProviderStates}"
@@ -504,11 +501,11 @@
                       DisplayMemberPath="Key"
                       SelectedValue="{Binding BillingProvider.Address.State}"
                        HorizontalAlignment="Left"/>
-            <TextBlock Name="BillingProviderZipCodeTag" Grid.Row="7" Grid.Column="6"
+            <TextBlock Name="BillingProviderZipCodeTag" Grid.Row="8" Grid.Column="4"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                        Text="Zip Code"/>
-            <TextBox Name="BillingProviderZipCodeInput" Grid.Row="7" Grid.Column="6"
+            <TextBox Name="BillingProviderZipCodeInput" Grid.Row="8" Grid.Column="4"
                      Width="115"
                  Margin="10,0,0,0"
                      MaxLength="9"
@@ -529,23 +526,24 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <Rectangle Grid.Row="8" Margin="0,5,0,0" Grid.Column="2" Grid.ColumnSpan="5"
+            <Rectangle Grid.Row="9" Margin="0,5,0,0" Grid.Column="0" Grid.ColumnSpan="5"
                    Width="auto"
                    Height="2"
                    Fill="Gray" 
                    VerticalAlignment="Center"/>
-            <TextBlock Text="Patient" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="6" FontSize="24"/>
-            <CheckBox Grid.Row="10" Grid.Column="2"
+            <TextBlock Text="Patient" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="6" FontSize="24" TextDecorations="Underline"
+                       Margin="10,0,0,0"/>
+            <CheckBox Grid.Row="11" Grid.Column="0"
                   VerticalAlignment="Top"
                   Margin="10,10,0,0"
             IsChecked="{Binding Patient.UsePlatformId}"
                           Content="Use Platform ID?" />
-            <TextBlock Name="PatientFirstNameTag" Grid.Row="11" Grid.Column="2"
+            <TextBlock Name="PatientFirstNameTag" Grid.Row="12" Grid.Column="0"
                        Text="Patient's First Name*"
                        Height="20"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"/>
-            <TextBox Name="PatientFirstNameInput" Grid.Row="11" Grid.Column="2"
+            <TextBox Name="PatientFirstNameInput" Grid.Row="12" Grid.Column="0"
                      Width="115"
                  Margin="10,20,0,0"
                       HorizontalAlignment="Left">
@@ -564,11 +562,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock Name="PatientLastNameTag" Grid.Row="11" Grid.Column="3"
+            <TextBlock Name="PatientLastNameTag" Grid.Row="12" Grid.Column="1"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                        Text="Patients's Last Name*"/>
-            <TextBox Name="PatientLastNameInput" Grid.Row="11" Grid.Column="3"
+            <TextBox Name="PatientLastNameInput" Grid.Row="12" Grid.Column="1"
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left">
@@ -587,11 +585,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock x:Name="PatientCopayTag" Grid.Row="11" Grid.Column="4"
+            <TextBlock x:Name="PatientCopayTag" Grid.Row="12" Grid.Column="2"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                        Text="Patient's Copay*"/>
-            <TextBox Name="PatientCopayInput" Grid.Row="11" Grid.Column="4"
+            <TextBox Name="PatientCopayInput" Grid.Row="12" Grid.Column="2"
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left"
@@ -606,100 +604,106 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
-            <CheckBox Name="IncludeSubscriberInput" Grid.Row="12" Grid.Column="2"
+            <CheckBox Name="IncludeSubscriberInput" Grid.Row="13" Grid.Column="0"
                   Margin="10,0,0,0"
                           IsChecked="{Binding Patient.IncludeSubscriber}"
                           Content="Include Subscriber?"/>
-            <TextBlock Name="SubscriberFirstNameTag" Grid.Row="13" Grid.Column="2"
+            <TextBlock Name="SubscriberFirstNameTag" Grid.Row="14" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Subscriber's First Name*"/>
-            <TextBox Name="SubscriberFirstNameInput" Grid.Row="13" Grid.Column="2"
+            <TextBox Name="SubscriberFirstNameInput" Grid.Row="14" Grid.Column="0"
                      Text="{Binding Patient.Subscriber.FirstName}"
                      Width="115"
                  Margin="10,20,0,0"
                      HorizontalAlignment="Left"
                      IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"/>
-            <TextBlock Name="SubscriberLastNameTag" Grid.Row="13" Grid.Column="3"
+            <TextBlock Name="SubscriberLastNameTag" Grid.Row="14" Grid.Column="1"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                        Text="Subscriber's Last Name*"/>
             <TextBox x:Name="SubscriberLastNameInput"
-                     Text="{Binding Patient.Subscriber.LastName}" Grid.Row="13" Grid.Column="3"
+                     Text="{Binding Patient.Subscriber.LastName}" Grid.Row="14" Grid.Column="1"
                  Margin="10,20,0,0"
                      IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
                      Width="115"
                      HorizontalAlignment="Left"/>
-            <TextBlock Name="SubscriberMemberIdTag" Grid.Row="13" Grid.Column="4"
+            <TextBlock Name="SubscriberMemberIdTag" Grid.Row="14" Grid.Column="2"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Subscriber's Member ID*"/>
-            <TextBox Name="SubscriberMemberIdnput" Grid.Row="13" Grid.Column="4"
+            <TextBox Name="SubscriberMemberIdnput" Grid.Row="14" Grid.Column="2"
                  Margin="10,20,0,0"
                       Text="{Binding Patient.Subscriber.MemberId}"
                       IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
                       Width="115"
                       HorizontalAlignment="Left"/>
-            <Rectangle Grid.Row="14" Margin="0,5,0,0" Grid.Column="2" Grid.ColumnSpan="5"
+            <Rectangle Grid.Row="15" Margin="0,5,0,0" Grid.Column="0" Grid.ColumnSpan="5"
                    Width="auto"
                    Height="2"
                    Fill="Gray" VerticalAlignment="Center"/>
-            <TextBlock Text="Patient's Rendering Provider" Grid.Row="15" Grid.Column="2" Grid.ColumnSpan="6" FontSize="24" TextDecorations="Underline"/>
+            <TextBlock Text="Patient's Rendering Provider" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="6" FontSize="24" TextDecorations="Underline"
+                       Margin="10,0,0,0"/>
 
-            <CheckBox x:Name="IsAlsoRendering" Grid.Row="16" Grid.Column="2"
+            <CheckBox x:Name="IsAlsoRendering" Grid.Row="17" Grid.Column="0"
               Margin="10,10,0,0"
               IsEnabled="{Binding ElementName=IsIndividualBillingTag,Path=IsChecked}"
               Content="Copy Billing Provider?"
               IsChecked="{Binding BillingProvider.IsAlsoRendering, UpdateSourceTrigger=PropertyChanged}"
               Command="{Binding UpdateRenderingProviderCommand}"/>
-            <TextBlock Name="RenderingProviderFirstNameTag" Grid.Row="17" Grid.Column="2"
+            <TextBlock Name="RenderingProviderFirstNameTag" Grid.Row="18" Grid.Column="0"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                        Text="Provider's First Name*"/>
-            <TextBox Name="RenderingProviderFirstNameInput" Grid.Row="17" Grid.Column="2"
+            <TextBox Name="RenderingProviderFirstNameInput" Grid.Row="18" Grid.Column="0"
                  Margin="10,20,0,0"
                      Text="{Binding Patient.Provider.FirstName}"
                      Width="115"
                      HorizontalAlignment="Left"
                      IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked, Converter={StaticResource NotConverter}}"/>
-            <TextBlock Name="renderingProviderLastNameTag" Grid.Row="17" Grid.Column="3"
+            <TextBlock Name="renderingProviderLastNameTag" Grid.Row="18" Grid.Column="1"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Provider's Last Name*"/>
-            <TextBox Name="RenderingProviderLastNameInput" Grid.Row="17" Grid.Column="3"
+            <TextBox Name="RenderingProviderLastNameInput" Grid.Row="18" Grid.Column="1"
                  Margin="10,20,0,0"
                      Text="{Binding Patient.Provider.LastName}"
                      Width="115"
                      HorizontalAlignment="Left"
                      IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked, Converter={StaticResource NotConverter}}"/>
-            <TextBlock Name="RenderingProviderNpiTag" Grid.Row="17" Grid.Column="4"
+            <TextBlock Name="RenderingProviderNpiTag" Grid.Row="18" Grid.Column="2"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                        Text="Provider's NPI*"/>
-            <TextBox Name="RenderingProviderNpiInput" Grid.Row="17" Grid.Column="4"
+            <TextBox Name="RenderingProviderNpiInput" Grid.Row="18" Grid.Column="2"
                  Margin="10,20,0,0"
                      Text="{Binding Patient.Provider.Npi}"
                      Width="115"
                      MaxLength="10" 
                      HorizontalAlignment="Left"
                      IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked,Converter={StaticResource NotConverter}}"/>
-            <TextBlock Text="Patient's Date of Service" Grid.Row="18" Grid.Column="2" Grid.ColumnSpan="6" FontSize="24" TextDecorations="Underline"/>
-            <TextBlock Name="DateOfServiceTag" Grid.Row="19" Grid.Column="2"
+            <TextBlock Text="Patient's Date of Service" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="6" FontSize="24" TextDecorations="Underline"
+                       Margin="10,0,0,0"/>
+            <StackPanel Grid.Row="20" Grid.Column="0">
+                <TextBlock Name="DateOfServiceTag" Grid.Row="20" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Date Of Service*"/>
-            <DatePicker Name="DateofServiceInput" Grid.Row="19" Grid.Column="2"
-                    Margin="10,20,0,0"
+                <DatePicker Name="DateofServiceInput" Grid.Row="20" Grid.Column="0"
+                    Margin="10,15,0,0"
                         SelectedDate="{Binding Charge.DateOfService}"
                         Width="115"
                         HorizontalAlignment="Left"/>
-            <TextBlock Name="PlaceofServiceTag" Grid.Row="19" Grid.Column="3"
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Grid.Row="20" Grid.Column="1" Height="55" VerticalAlignment="Top">
+                <TextBlock Name="PlaceofServiceTag" Grid.Row="20" Grid.Column="1"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Place Of Service*"/>
-
-            <ComboBox  Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}" Grid.Row="19" Grid.Column="3"
-                  Margin="10,20,0,0"                 
+                <TextBlock  Grid.Row="20" Grid.Column="1"
+                    Margin="10,0,0,0" Text="{Binding SelectedItem.Value, ElementName=PlaceOfServiceComboBox, Mode=OneWay}"/>
+                <ComboBox  Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}" Grid.Row="20" Grid.Column="1"
+                  Margin="10,0,0,0"                 
                    DisplayMemberPath="Key"
                       SelectedValuePath="Key"
                       SelectedValue="{Binding Charge.PlaceOfService.ServiceLocation}"
@@ -707,39 +711,42 @@
                       MaxWidth="115"
                        HorizontalAlignment="Left" Width="115" SelectedIndex="9"/>
 
-            <TextBlock x:Name="BillIdTag" Grid.Row="19" Grid.Column="4"
+            </StackPanel>
+            <StackPanel Grid.Row="20" Grid.Column="2">
+                <TextBlock x:Name="BillIdTag" Grid.Row="20" Grid.Column="2"
                        Text="Bill ID*"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"/>
-            <TextBox x:Name="BillIdInput" Grid.Row="19" Grid.Column="4"
-                 Margin="10,20,0,0"
+                <TextBox x:Name="BillIdInput" Grid.Row="20" Grid.Column="2"
+                 Margin="10,15,0,0"
                      Width="115"
                       HorizontalAlignment="Left">
-                <Validation.ErrorTemplate>
-                    <ControlTemplate>
-                        <DockPanel >
-                            <Border BorderBrush="Red" BorderThickness="2">
-                                <AdornedElementPlaceholder/>
-                            </Border>
-                        </DockPanel>
-                    </ControlTemplate>
-                </Validation.ErrorTemplate>
-                <Binding Path="Patient.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                    <Binding.ValidationRules>
-                        <validation:StringValidationRule ValidationStep="RawProposedValue"/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox>
-            <CheckBox Content="Use Current Code as Default" Grid.Row="19" Grid.Column="5"
-                  />
-            <TextBlock  Grid.Row="19" Grid.Column="5"
-                    Margin="10,20,0,0" Text="{Binding SelectedItem.Value, ElementName=PlaceOfServiceComboBox, Mode=OneWay}"/>
-            <TextBlock Name="PrimaryProcedureCodeTag" Grid.Row="20" Grid.Column="2"
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <DockPanel >
+                                <Border BorderBrush="Red" BorderThickness="2">
+                                    <AdornedElementPlaceholder/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                    <Binding Path="Patient.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+            </StackPanel>
+            <CheckBox Content="Use Current Code as Default" Grid.Row="20" Grid.Column="3"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center"/>
+
+            <TextBlock Name="PrimaryProcedureCodeTag" Grid.Row="21" Grid.Column="0"
                    Margin="10,0,0,0"
                        Text="PrimaryProcedureCode*"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" Width="127"/>
-            <TextBox Name="PrimaryProcedureCodeInput" Grid.Row="20" Grid.Column="2"
+            <TextBox Name="PrimaryProcedureCodeInput" Grid.Row="21" Grid.Column="0"
                      Width="115"
                  Margin="10,20,0,0"
                      HorizontalAlignment="Left" >
@@ -758,11 +765,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock Name="PrimaryModifiersTag" Grid.Row="20" Grid.Column="3"
+            <TextBlock Name="PrimaryModifiersTag" Grid.Row="21" Grid.Column="1"
                            Text="Modifiers"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"/>
-            <StackPanel Orientation="Horizontal" Grid.Row="20" Grid.Column="3"
+            <StackPanel Orientation="Horizontal" Grid.Row="21" Grid.Column="1"
                     Margin="10,20,0,0"
                         HorizontalAlignment="Left" Width="115">
                 <TextBox x:Name="PrimaryModifierOneInput"
@@ -785,11 +792,11 @@
                              MaxLength="2"
                          Margin="5,0,0,0"/>
             </StackPanel>
-            <TextBlock Name="PrimaryPaidAmountTag" Grid.Row="20" Grid.Column="4"
+            <TextBlock Name="PrimaryPaidAmountTag" Grid.Row="21" Grid.Column="2"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                    Text="Primary Paid Amount*"/>
-            <TextBox Name="PrimaryPaidAmountInput" Grid.Row="20" Grid.Column="4"
+            <TextBox Name="PrimaryPaidAmountInput" Grid.Row="21" Grid.Column="2"
                  Margin="10,20,0,0"
                      Width="115"
                      HorizontalAlignment="Left"
@@ -804,11 +811,11 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
-            <TextBlock Name ="PrimaryChargeAmountTag" Grid.Row="20" Grid.Column="5"
+            <TextBlock Name ="PrimaryChargeAmountTag" Grid.Row="21" Grid.Column="3"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Primary Charge Amount*"/>
-            <TextBox Name="PrimaryChargeAmountInput" Grid.Row="20" Grid.Column="5"
+            <TextBox Name="PrimaryChargeAmountInput" Grid.Row="21" Grid.Column="3"
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left"
@@ -823,11 +830,11 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
-            <TextBlock x:Name="AdjustmentType" Grid.Row="21" Grid.Column="2"
+            <TextBlock x:Name="AdjustmentType" Grid.Row="22" Grid.Column="0"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                            Text="Adjustment Type"/>
-            <StackPanel Orientation="Horizontal" Grid.Row="21" Grid.Column="2"
+            <StackPanel Orientation="Horizontal" Grid.Row="22" Grid.Column="0"
                     Margin="10,20,0,0">
                 <ComboBox x:Name="AdjustmentTypeDropdown"
                           Text="{Binding Adjustment.AdjustmentType}"
@@ -1110,26 +1117,26 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
             </StackPanel>
-            <Button Name="AddAdjustmentButton" Grid.Row="21" Grid.Column="3"
+            <Button Name="AddAdjustmentButton" Grid.Row="22" Grid.Column="1"
                 Margin="10,0,0,0"
                             Command="{Binding AddChargeAdjustmentCommand}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                             Content="Add Additional Adjustment"/>
-            <TextBlock Name="AddonProcedureCodeTag" Grid.Row="22" Grid.Column="2"
+            <TextBlock Name="AddonProcedureCodeTag" Grid.Row="23" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Addon Procedure Code"/>
-            <TextBox Name="AddonProcedureCodeInput" Grid.Row="22" Grid.Column="2"
+            <TextBox Name="AddonProcedureCodeInput" Grid.Row="23" Grid.Column="0"
                  Margin="10,20,0,0"
                                  Text="{Binding Addon.ProcedureCode}" 
                                  Width="115"
                      HorizontalAlignment="Left"/>
-            <TextBlock Name="AddonModifiersTag" Grid.Row="22" Grid.Column="3"
+            <TextBlock Name="AddonModifiersTag" Grid.Row="23" Grid.Column="1"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                            Text="Modifiers"/>
-            <StackPanel Orientation="Horizontal" Grid.Row="22" Grid.Column="3"
+            <StackPanel Orientation="Horizontal" Grid.Row="23" Grid.Column="1"
                     Margin="10,20,0,0">
                 <TextBox x:Name="AddonModifierOneInput"
                                      Text="{Binding Addon.Modifier.ModifierOne}"                                
@@ -1151,36 +1158,36 @@
                                      MaxLength="2"
                          Margin="5,0,0,0"/>
             </StackPanel>
-            <TextBlock Name="AddonPaidAmountTag" Grid.Row="22" Grid.Column="4"
+            <TextBlock Name="AddonPaidAmountTag" Grid.Row="23" Grid.Column="2"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                    Text="Addon Paid Amount"/>
-            <TextBox Name="AddonPaidAmountInput" Grid.Row="22" Grid.Column="4"
+            <TextBox Name="AddonPaidAmountInput" Grid.Row="23" Grid.Column="2"
                  Margin="10,20,0,0"
                              Text="{Binding Addon.PaymentAmount}"
                              Width="115"
                      HorizontalAlignment="Left"/>
-            <TextBlock Name="AddonChargeAmountTag" Grid.Row="22" Grid.Column="5"
+            <TextBlock Name="AddonChargeAmountTag" Grid.Row="23" Grid.Column="3"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                            Text="Addon Charge Amount"/>
-            <TextBox Name="AddonChargeAmountInput" Grid.Row="22" Grid.Column="5"
+            <TextBox Name="AddonChargeAmountInput" Grid.Row="23" Grid.Column="3"
                 Margin="10,20,0,0"
                                  Text="{Binding Addon.ChargeCost}" 
                                  Width="115"
                      HorizontalAlignment="Left"/>
-            <Button Name="AddAddonChargeButton" Grid.Row="22" Grid.Column="6"
+            <Button Name="AddAddonChargeButton" Grid.Row="23" Grid.Column="4"
                 Margin="10,0,10,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     Content="Add Additional Addon"
                     Command="{Binding AddAddonCommand}"/>
-            <TextBlock Name="AddonAdjustmentType" Grid.Row="23" Grid.Column="2"
+            <TextBlock Name="AddonAdjustmentType" Grid.Row="24" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                                Text="Adjustment Type"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="23" Grid.Column="2"
+            <StackPanel Orientation="Horizontal" Grid.Row="24" Grid.Column="0"
                     Margin="10,20,0,0">
                 <ComboBox x:Name="AddonAdjustmentTypeDropdown"
                           Width="45"
@@ -1463,78 +1470,69 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
             </StackPanel>
-            <Button Name="AddonAdjustmentButton" Grid.Row="23" Grid.Column="3"
+            <Button Name="AddonAdjustmentButton" Grid.Row="24" Grid.Column="1"
                 Margin="10,0,0,0"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
                 Content="Add Additional Adjustment"
                 Command="{Binding AddAddonChargeAdjustmentCommand}"/>
-            <Button x:Name="AddPatient" Grid.Row="23" Grid.Column="6"
+            <Button x:Name="AddPatient" Grid.Row="24" Grid.Column="4"
                 Margin="10,0,0,0"
                      Content="Add Additional Patient" 
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                      Command="{Binding AddPatientCommand}"/>
-            <Rectangle Grid.Row="24" Margin="0,5,0,0" Grid.Column="2"
-                   Grid.ColumnSpan="5"
-                   Width="auto"
-                   Height="2"
-                   Fill="Gray"/>
-            <StackPanel Grid.Row="25"  Grid.Column="2" Grid.ColumnSpan="6" Background="#FF7789D8"
+            <Button Grid.Row="25" Grid.Column="4"
+                Command="{Binding SaveFileCommand}"
+                Content="Create 835 File"
+                Width="115"
+                    Margin="10,10,0,0"
+                    VerticalAlignment="Bottom"
+                HorizontalAlignment="left"/>
+        </Grid>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="#FF7789D8"
                     Margin="0,0,0,0">
-            </StackPanel>
-            <CheckBox Content="Reuse Same Patient" Grid.Row="25" Grid.Column="2"
+            <StackPanel.DataContext>
+                <viewModel:PreferenceViewModel/>
+            </StackPanel.DataContext>
+            <StackPanel Orientation="Vertical">
+                <CheckBox Content="Reuse Same Patient" Grid.Row="24" Grid.Column="0"
                   Margin="10,0,0,0"
                   Name="ReusePatientPreference"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.ReusePatient,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                <CheckBox.DataContext>
-                    <viewModel:PreferenceViewModel/>
-                </CheckBox.DataContext>
-            </CheckBox>
-            <CheckBox Content="Reuse Patient Prompt" Grid.Row="25" Grid.Column="2"
-                                Margin="10,20,0,0"
+                </CheckBox>
+                <CheckBox Content="Reuse Patient Prompt" Grid.Row="24" Grid.Column="0"
+                                Margin="10,0,0,0"
                                 Command="{Binding SavePreferenceCommand}"
                                 IsChecked="{Binding Preference.EnablePatientReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="{Binding ElementName=ReusePatientPreference,Path=IsChecked}">
-                <CheckBox.DataContext>
-                    <viewModel:PreferenceViewModel/>
-                </CheckBox.DataContext>
-            </CheckBox>
-            <CheckBox Content="Reuse Same Addon Code" Grid.Row="25" Grid.Column="3"
+
+                </CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <CheckBox Content="Reuse Same Addon Code" Grid.Row="24" Grid.Column="1"
                   Margin="10,0,0,0"
                   Name="ReuseAddonPreference"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.ReuseAddon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                <CheckBox.DataContext>
-                    <viewModel:PreferenceViewModel/>
-                </CheckBox.DataContext>
-            </CheckBox>
-            <CheckBox Content="Reuse Addon Code Prompt" Grid.Row="25" Grid.Column="3"
-                  Margin="10,20,0,0"
+
+                </CheckBox>
+                <CheckBox Content="Reuse Addon Code Prompt" Grid.Row="24" Grid.Column="1"
+                  Margin="10,0,0,0"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.EnableAddonReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                   IsEnabled="{Binding ElementName=ReuseAddonPreference,Path=IsChecked}">
-                <CheckBox.DataContext>
-                    <viewModel:PreferenceViewModel/>
-                </CheckBox.DataContext>
-            </CheckBox>
-            <CheckBox Content="Patient From Last Run" Grid.Row="25" Grid.Column="4"
+
+                </CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <CheckBox Content="Patient From Last Run" Grid.Row="24" Grid.Column="2"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.ReloadLastPatientFromLastSession,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <CheckBox.DataContext>
-                    <viewModel:PreferenceViewModel/>
-                </CheckBox.DataContext>
-            </CheckBox>
-            <Button Grid.Row="25" Grid.Column="6"
-                Margin="10,0,0,0"
-                Command="{Binding SaveFileCommand}"
-                Content="Create 835 File"
-                Width="115"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom">
-            </Button>
-        </Grid>
+                </CheckBox>
+            </StackPanel>
+        </StackPanel>
     </DockPanel>
-   
+
 </UserControl>
