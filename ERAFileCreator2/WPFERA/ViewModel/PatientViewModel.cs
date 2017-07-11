@@ -23,7 +23,7 @@ namespace WPFERA.ViewModel
             Charge = new Charge();
             LoadInsuranceCompany();
 
-            patientRepository.Add(Patient);
+            patientRepository.Add(SelectedPatient);
             PatientList = patientRepository.GetAllPatients();
             PlacesOfService = Charge.PlaceOfService.PlacesOfService;
             LoadCommands();
@@ -47,8 +47,8 @@ namespace WPFERA.ViewModel
 
         private void LoadInitialPatient()
         {
-            Patient = new Patient();
-            Patient = Settings.PullDefaultPatient();
+            SelectedPatient = new Patient();
+            SelectedPatient = Settings.PullDefaultPatient();
         }
 
         public PatientRepository patientRepository = new PatientRepository();
@@ -95,17 +95,17 @@ namespace WPFERA.ViewModel
             }
         }
 
-        private Patient patient;
+        private Patient selectedPatient;
 
-        public Patient Patient
+        public Patient SelectedPatient
         {
-            get { return patient; }
+            get { return selectedPatient; }
             set
             {
-                if (value != patient)
+                if (value != selectedPatient)
                 {
-                    patient = value;
-                    RaisePropertyChanged("Patient");
+                    selectedPatient = value;
+                    RaisePropertyChanged("SelectedPatient");
                 }
             }
         }
@@ -135,14 +135,14 @@ namespace WPFERA.ViewModel
             }
             else
             {
-                patient.Charge = Charge;
+                selectedPatient.Charge = Charge;
                 MatchAddonToCharge();
             }
         }
 
         private bool IsChargeMatched(Charge charge)
         {
-            if (patient.Charge.Id == charge.Id)
+            if (selectedPatient.Charge.Id == charge.Id)
             {
                 return true;
             }
@@ -168,7 +168,7 @@ namespace WPFERA.ViewModel
             MatchAddonToCharge();
             MatchChargeToPatient();
             ReturnNewPatient();
-            patientRepository.Add(Patient);
+            patientRepository.Add(SelectedPatient);
             UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
             RefreshAllCounters();
@@ -206,7 +206,7 @@ namespace WPFERA.ViewModel
         {
             bool isMatchedAddon = false;
 
-            foreach (AddonCharge addon in Patient.Charge.AddonChargeList)
+            foreach (AddonCharge addon in SelectedPatient.Charge.AddonChargeList)
             {
                 if (addon.Id == this.Addon.Id)
                 {
@@ -261,7 +261,7 @@ namespace WPFERA.ViewModel
 
             else if (Settings.ReuseSamePatientEnabled == false)
             {
-                Patient = new Patient();
+                SelectedPatient = new Patient();
 
             }
             RaisePropertyChanged("Patient");
@@ -276,7 +276,7 @@ namespace WPFERA.ViewModel
 
             else if (Settings.PatientPromptEnabled == false)
             {
-                CloneLastPatient();
+                CloneSelectedPatient();
             }
         }
 
@@ -288,14 +288,14 @@ namespace WPFERA.ViewModel
 
                 if (newPatientDialogResult == MessageBoxResult.Yes)
                 {
-                    CloneLastPatient();
-                    return Patient;
+                    CloneSelectedPatient();
+                    return SelectedPatient;
                 }
 
                 else
                 {
-                    Patient = new Patient();
-                    return patient;
+                    SelectedPatient = new Patient();
+                    return selectedPatient;
                 }
             }
         }
@@ -328,10 +328,10 @@ namespace WPFERA.ViewModel
             }
         }
 
-        private void CloneLastPatient()
+        private void CloneSelectedPatient()
         {
-            Patient = patientRepository.GetAllPatients().Last().CopyPatient();
-            RaisePropertyChanged("Patient");
+            SelectedPatient = patientRepository.GetSelectedPatient(selectedPatient.BillId).CopyPatient();
+            RaisePropertyChanged("SelectedPatient");
         }
 
         private AddonCharge PromptTypeOfNewAddon()
@@ -370,7 +370,7 @@ namespace WPFERA.ViewModel
 
         private bool CanAddPatient(object obj)
         {
-            if (!string.IsNullOrEmpty(Patient.FirstName) && !string.IsNullOrEmpty(patient.BillId))
+            if (!string.IsNullOrEmpty(SelectedPatient.FirstName) && !string.IsNullOrEmpty(selectedPatient.BillId))
             {
                 return true;
             }
@@ -545,9 +545,9 @@ namespace WPFERA.ViewModel
         {
             if (BillingProvider.IsAlsoRendering)
             {
-                patient.Provider.FirstName = BillingProvider.FirstName;
-                patient.Provider.LastName = BillingProvider.LastName;
-                patient.Provider.Npi = BillingProvider.Npi;
+                selectedPatient.Provider.FirstName = BillingProvider.FirstName;
+                selectedPatient.Provider.LastName = BillingProvider.LastName;
+                selectedPatient.Provider.Npi = BillingProvider.Npi;
                 RaisePropertyChanged("Patient");
             }
 
@@ -565,7 +565,7 @@ namespace WPFERA.ViewModel
         {
             Settings.SetDefaultBillingProvider(billingProvider);
             Settings.SetDefaultInsurance(insurance);
-            Settings.SetDefaultPatient(patient);
+            Settings.SetDefaultPatient(selectedPatient);
         }
 
         private void Save(object obj)
@@ -656,7 +656,5 @@ namespace WPFERA.ViewModel
             AddonChargeCount = Charge.AddonChargeList.Count;
             RaisePropertyChanged("AddonChargeCount");
         }
-
-
     }
 }

@@ -1,6 +1,8 @@
 ﻿using EFC.BL;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System;
 
 namespace WPFERA.Services
 {
@@ -32,6 +34,11 @@ namespace WPFERA.Services
         public ObservableCollection<Patient> GetAllPatients()
         {
             return patientList;
+        }
+
+        public Patient GetSelectedPatient(string billId)
+        {
+            return patientList.First(p => p.BillId == billId);
         }
     }
 }

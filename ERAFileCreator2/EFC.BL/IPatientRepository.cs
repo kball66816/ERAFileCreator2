@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-
+using System.Linq;
 namespace EFC.BL
 {
     public interface IPatientRepository
@@ -9,6 +9,9 @@ namespace EFC.BL
         void Delete(Patient patient);
 
         ObservableCollection<Patient> GetAllPatients();
+
+        Patient GetSelectedPatient(string billId);
+
    
     }
 }

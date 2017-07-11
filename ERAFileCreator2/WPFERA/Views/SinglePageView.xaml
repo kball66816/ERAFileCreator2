@@ -67,6 +67,7 @@
             Text="Patients"></TextBlock>
             <ListBox 
                  ItemsSource="{Binding PatientList}"
+                SelectedItem="{Binding SelectedPatient, Mode=TwoWay}"
                      MinWidth="100"
                      Background="#FF7789D8" BorderBrush="#FF7789D8">
                 <ListBox.ItemTemplate>
@@ -536,7 +537,7 @@
             <CheckBox Grid.Row="11" Grid.Column="0"
                   VerticalAlignment="Top"
                   Margin="10,10,0,0"
-            IsChecked="{Binding Patient.UsePlatformId}"
+            IsChecked="{Binding SelectedPatient.UsePlatformId}"
                           Content="Use Platform ID?" />
             <TextBlock Name="PatientFirstNameTag" Grid.Row="12" Grid.Column="0"
                        Text="Patient's First Name*"
@@ -556,7 +557,7 @@
                         </DockPanel>
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
-                <Binding Path="Patient.FirstName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                <Binding Path="SelectedPatient.FirstName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                     <Binding.ValidationRules>
                         <validation:StringValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
@@ -579,7 +580,7 @@
                         </DockPanel>
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
-                <Binding Path="Patient.LastName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                <Binding Path="SelectedPatient.LastName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                     <Binding.ValidationRules>
                         <validation:StringValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
@@ -593,7 +594,7 @@
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left"
-                     Text="{Binding Patient.Charge.Copay, StringFormat=\{0:F2\}}">
+                     Text="{Binding SelectedPatient.Charge.Copay, StringFormat=\{0:F2\}}">
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <DockPanel >
@@ -606,14 +607,14 @@
             </TextBox>
             <CheckBox Name="IncludeSubscriberInput" Grid.Row="13" Grid.Column="0"
                   Margin="10,0,0,0"
-                          IsChecked="{Binding Patient.IncludeSubscriber}"
+                          IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
                           Content="Include Subscriber?"/>
             <TextBlock Name="SubscriberFirstNameTag" Grid.Row="14" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Subscriber's First Name*"/>
             <TextBox Name="SubscriberFirstNameInput" Grid.Row="14" Grid.Column="0"
-                     Text="{Binding Patient.Subscriber.FirstName}"
+                     Text="{Binding SelectedPatient.Subscriber.FirstName}"
                      Width="115"
                  Margin="10,20,0,0"
                      HorizontalAlignment="Left"
@@ -623,7 +624,7 @@
                    Margin="10,0,0,0"
                        Text="Subscriber's Last Name*"/>
             <TextBox x:Name="SubscriberLastNameInput"
-                     Text="{Binding Patient.Subscriber.LastName}" Grid.Row="14" Grid.Column="1"
+                     Text="{Binding SelectedPatient.Subscriber.LastName}" Grid.Row="14" Grid.Column="1"
                  Margin="10,20,0,0"
                      IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
                      Width="115"
@@ -634,7 +635,7 @@
                        Text="Subscriber's Member ID*"/>
             <TextBox Name="SubscriberMemberIdnput" Grid.Row="14" Grid.Column="2"
                  Margin="10,20,0,0"
-                      Text="{Binding Patient.Subscriber.MemberId}"
+                      Text="{Binding SelectedPatient.Subscriber.MemberId}"
                       IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
                       Width="115"
                       HorizontalAlignment="Left"/>
@@ -657,7 +658,7 @@
                        Text="Provider's First Name*"/>
             <TextBox Name="RenderingProviderFirstNameInput" Grid.Row="18" Grid.Column="0"
                  Margin="10,20,0,0"
-                     Text="{Binding Patient.Provider.FirstName}"
+                     Text="{Binding SelectedPatient.Provider.FirstName}"
                      Width="115"
                      HorizontalAlignment="Left"
                      IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked, Converter={StaticResource NotConverter}}"/>
@@ -667,7 +668,7 @@
                        Text="Provider's Last Name*"/>
             <TextBox Name="RenderingProviderLastNameInput" Grid.Row="18" Grid.Column="1"
                  Margin="10,20,0,0"
-                     Text="{Binding Patient.Provider.LastName}"
+                     Text="{Binding SelectedPatient.Provider.LastName}"
                      Width="115"
                      HorizontalAlignment="Left"
                      IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked, Converter={StaticResource NotConverter}}"/>
@@ -677,7 +678,7 @@
                        Text="Provider's NPI*"/>
             <TextBox Name="RenderingProviderNpiInput" Grid.Row="18" Grid.Column="2"
                  Margin="10,20,0,0"
-                     Text="{Binding Patient.Provider.Npi}"
+                     Text="{Binding SelectedPatient.Provider.Npi}"
                      Width="115"
                      MaxLength="10" 
                      HorizontalAlignment="Left"
@@ -730,7 +731,7 @@
                             </DockPanel>
                         </ControlTemplate>
                     </Validation.ErrorTemplate>
-                    <Binding Path="Patient.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                    <Binding Path="SelectedPatient.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                         <Binding.ValidationRules>
                             <validation:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>

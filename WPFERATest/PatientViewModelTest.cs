@@ -47,7 +47,7 @@ namespace WPFERATest
             
             var Pvm = new PatientViewModel();
 
-            Pvm.Patient.FirstName = "Chuck";
+            Pvm.SelectedPatient.FirstName = "Chuck";
 
             //Act
             Pvm.AddPatientCommand.Execute(true);
@@ -108,7 +108,7 @@ namespace WPFERATest
             Pvm.UpdateRenderingProviderCommand.Execute(true);
             
             var expected = "John";
-            var actual = Pvm.Patient.Provider.FirstName;
+            var actual = Pvm.SelectedPatient.Provider.FirstName;
             //Assert
 
             Assert.AreEqual(expected, actual);
@@ -126,7 +126,7 @@ namespace WPFERATest
             Pvm.UpdateRenderingProviderCommand.Execute(true);
 
             string expected = null;
-            var actual = Pvm.Patient.Provider.FirstName;
+            var actual = Pvm.SelectedPatient.Provider.FirstName;
             //Assert
 
             Assert.AreEqual(expected, actual);
@@ -138,15 +138,15 @@ namespace WPFERATest
             //Arrange
             var Pvm = new PatientViewModel();
 
-            Pvm.Patient.FirstName = "John";
-            Pvm.Patient.LastName = "Smith";
+            Pvm.SelectedPatient.FirstName = "John";
+            Pvm.SelectedPatient.LastName = "Smith";
 
             Pvm.Charge.ProcedureCode = "99215";
             Pvm.Charge.PlaceOfService.ServiceLocation = "11";
             //Act
 
             Charge chargeTest = Pvm.Charge;
-            Patient patientTest = Pvm.Patient;
+            Patient patientTest = Pvm.SelectedPatient;
             Pvm.AddPatientCommand.Execute(true);
 
             var expected = chargeTest.Id;
