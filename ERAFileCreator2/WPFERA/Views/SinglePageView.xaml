@@ -738,9 +738,17 @@
                     </Binding>
                 </TextBox>
             </StackPanel>
-            <CheckBox Content="Use Current Code as Default" Grid.Row="20" Grid.Column="3"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="3" Margin="0,30,0,0" Orientation="Vertical" Grid.Row="20">
+                <StackPanel.DataContext>
+                    <viewModel:PreferenceViewModel/>
+                </StackPanel.DataContext>
+                <CheckBox Content="Use Current Code as Default"
+                    IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
+                    Command="{Binding SavePreferenceCommand}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"/>
+
+            </StackPanel>
 
             <TextBlock Name="PrimaryProcedureCodeTag" Grid.Row="21" Grid.Column="0"
                    Margin="10,0,0,0"

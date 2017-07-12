@@ -101,9 +101,31 @@ namespace EFC.BL
         public bool ReloadLastPatientFromLastSession
         {
             get { return reloadLastPatientFromLastSession; }
-            set { reloadLastPatientFromLastSession = value; }
+            set
+            {
+                if (value != reloadLastPatientFromLastSession)
+                {
+                    reloadLastPatientFromLastSession = value;
+                    RaisePropertyChanged("ReloadLastPatientFromLastSession");
+                }
+            }
         }
 
+        private bool reuseLastChargeForNextPatient;
+
+        public bool ReuseLastChargeForNextPatient
+        {
+            get { return reuseLastChargeForNextPatient; }
+            set
+            {
+                if(value!=ReuseLastChargeForNextPatient)
+                {
+                    reuseLastChargeForNextPatient = value;
+                    RaisePropertyChanged("ReuseLastChargeForNextPatient");
+                }
+              
+            }
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

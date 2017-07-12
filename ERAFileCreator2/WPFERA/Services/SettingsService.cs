@@ -50,6 +50,7 @@ namespace WPFERA.Services
             Settings.Default.ReusePatient = preference.ReusePatient;
             Settings.Default.ReuseAddon = preference.ReuseAddon;
             Settings.Default.ReloadLastPatient = preference.ReloadLastPatientFromLastSession;
+            Settings.Default.ReuseChargeForNextPatient = preference.ReuseLastChargeForNextPatient;
             Settings.Default.Save();
         }
 
@@ -60,6 +61,7 @@ namespace WPFERA.Services
             preference.ReusePatient = Settings.Default.ReusePatient;
             preference.ReuseAddon = Settings.Default.ReuseAddon;
             preference.ReloadLastPatientFromLastSession = Settings.Default.ReloadLastPatient;
+            preference.ReuseLastChargeForNextPatient = Settings.Default.ReuseChargeForNextPatient;
 
             return preference;
         }
