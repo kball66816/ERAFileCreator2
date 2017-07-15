@@ -126,6 +126,14 @@ namespace WPFERA.ViewModel
             }
         }
 
+        public ICommand ReturnSelectedPatientChargeCommand { get; private set; }
+
+        private void ReturnSelectedPatientCharge(object obj)
+        {
+            Charge = SelectedPatient.Charge;
+            UpdateCheckAmount();
+            RaisePropertyChanged("Charge");
+        }
 
         private void MatchChargeToPatient()
         {
@@ -537,6 +545,7 @@ namespace WPFERA.ViewModel
             AddAddonCommand = new Command(AddAddon, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
+            ReturnSelectedPatientChargeCommand = new Command(ReturnSelectedPatientCharge);
         }
 
         public ICommand UpdateRenderingProviderCommand { get; private set; }
