@@ -45,7 +45,7 @@
                     Margin="30,0,0,0"/>
                 <TextBlock
                     x:Name="AddonCounter" 
-                    Text="{Binding AddonChargeCount, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding SelectedPatient.Charge.AddonChargeList.Count, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                             Width="auto"
@@ -70,6 +70,11 @@
                 SelectedItem="{Binding SelectedPatient, Mode=TwoWay}"
                      MinWidth="100"
                      Background="#FF7789D8" BorderBrush="#FF7789D8">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding ReturnSelectedPatientChargeCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

@@ -130,7 +130,13 @@ namespace WPFERA.ViewModel
 
         private void ReturnSelectedPatientCharge(object obj)
         {
+            if(bypassSelectedPatientCharge == true)
+            {
+                return;
+            }
+            SupressAddonDialog = false;
             Charge = SelectedPatient.Charge;
+            MatchAddonToCharge();
             UpdateCheckAmount();
             RaisePropertyChanged("Charge");
         }
@@ -171,12 +177,14 @@ namespace WPFERA.ViewModel
         /// <param name="obj"></param>
         private void AddPatient(object obj)
         {
+            bypassSelectedPatientCharge = true;
             SupressAddonDialog = true;
             MatchAdjustmentToCharge();
             MatchAddonToCharge();
             MatchChargeToPatient();
             ReturnNewPatient();
             patientRepository.Add(SelectedPatient);
+            bypassSelectedPatientCharge = false;
             UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
             RefreshAllCounters();
@@ -187,7 +195,7 @@ namespace WPFERA.ViewModel
         {
             if (Settings.ReuseChargeForNextPatient)
             {
-                charge = new Charge(charge);
+                Charge = new Charge(Charge);
             }
 
             else
@@ -214,11 +222,14 @@ namespace WPFERA.ViewModel
         {
             bool isMatchedAddon = false;
 
-            foreach (AddonCharge addon in SelectedPatient.Charge.AddonChargeList)
+            foreach (Patient patient in patientList)
             {
-                if (addon.Id == this.Addon.Id)
+                foreach (AddonCharge addon in patient.Charge.AddonChargeList)
                 {
-                    isMatchedAddon = true;
+                    if (addon.Id == this.Addon.Id)
+                    {
+                        isMatchedAddon = true;
+                    }
                 }
 
             }
@@ -230,6 +241,7 @@ namespace WPFERA.ViewModel
             {
                 if (IsAddonMatched(Addon))
                 {
+                    Addon = new AddonCharge();
                     return;
                 }
 
@@ -478,6 +490,7 @@ namespace WPFERA.ViewModel
         }
 
         private AddonCharge addon;
+        private bool bypassSelectedPatientCharge;
 
         public AddonCharge Addon
         {
