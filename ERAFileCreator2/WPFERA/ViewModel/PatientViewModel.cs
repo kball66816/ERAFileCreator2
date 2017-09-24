@@ -27,9 +27,15 @@ namespace WPFERA.ViewModel
             patientRepository.Add(SelectedPatient);
             Patients = patientRepository.GetAllPatients();
             PlacesOfService = Charge.PlaceOfService.PlacesOfService;
+            PrimaryAdjustmentReasonCodes = Adjustment.AdjustmentReasonCodes;
+            AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
+            PrimaryAdjustmentType = Adjustment.AdjustmentTypes;
+            AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
             LoadCommands();
             RefreshAllCounters();
         }
+
+     
 
         private void LoadInsuranceCompany()
         {
@@ -64,7 +70,15 @@ namespace WPFERA.ViewModel
 
         public Dictionary<string, string> PlacesOfService { get; set; }
 
-    
+        public Dictionary<string,string> PrimaryAdjustmentType { get; set; }
+
+        public Dictionary<string, string> PrimaryAdjustmentReasonCodes { get; set; }
+
+
+        public Dictionary<string,string> AddonAdjustmentType { get; set; }
+
+        public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
+
         private InsuranceCompany insurance;
 
         public InsuranceCompany Insurance
