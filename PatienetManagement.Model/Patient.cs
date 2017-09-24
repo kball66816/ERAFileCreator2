@@ -9,6 +9,7 @@ namespace PatientManagement.Model
             Subscriber = new Subscriber();
             RenderingProvider = new Provider();
             Charge = new PrimaryCharge();
+            billId = string.Empty;
         }
 
         public PrimaryCharge Charge { get; set; }

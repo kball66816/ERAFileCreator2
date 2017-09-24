@@ -354,7 +354,8 @@ namespace WPFERA.ViewModel
 
         private void CloneSelectedPatient()
         {
-            SelectedPatient = patientRepository.GetSelectedPatient(selectedPatient.BillId).CopyPatient();
+             
+            selectedPatient = patientRepository.GetSelectedPatient(selectedPatient.BillId).CopyPatient();
             RaisePropertyChanged("SelectedPatient");
         }
 

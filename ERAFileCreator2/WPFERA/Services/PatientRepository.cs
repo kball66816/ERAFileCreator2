@@ -40,7 +40,7 @@ namespace WPFERA.Services
 
         public Patient GetSelectedPatient(string billId)
         {
-            return GetSelectedPatient(billId);
+            return patientList.FirstOrDefault(p => p.BillId == billId);
         }
     }
 }
