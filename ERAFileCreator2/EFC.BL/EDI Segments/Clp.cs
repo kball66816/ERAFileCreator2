@@ -5,11 +5,11 @@ namespace EFC.BL.EDI_Segments
 {
     class Clp
     {
-        public string BuildClp(Patient patient, PrimaryCharge charge)
+        public string BuildClp(PrimaryCharge charge)
         {
             var buildClp = new StringBuilder();
             buildClp.Append("CLP*");
-            buildClp.Append(patient.FormattedBillId+ "*"); //CLP01 Claim Submitter Identifier
+            buildClp.Append(charge.Id+ "*"); //CLP01 Claim Submitter Identifier
             buildClp.Append("1" + "*");//CLP02 Claim Status Code 
             buildClp.Append(charge.SumOfChargeCost+ "*"); //CLP03 Total Claim Charges Amount
             buildClp.Append(charge.SumOfChargePaid + "*");//CLP04 Total Claim Payment Amount

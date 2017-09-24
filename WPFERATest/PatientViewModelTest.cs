@@ -22,59 +22,7 @@ namespace WPFERATest
            //Test passes. File Command Opens
         }
 
-        [TestMethod]
-        public void AddAddonCommandTest()
-        {
-            //Arrange
-            var Pvm = new PatientViewModel();
-            var Preference = new Preference()
-            {
-                EnableAddonReusePrompt = false
-            };
-            Pvm.Addon.ChargeCost = 100;
-                
-            //Act
-            Pvm.AddAddonCommand.Execute(true);
-            var expected = 100;
-            var actual = Pvm.Charge.AddonChargeList.Last().ChargeCost;
-            //Assert
-
-            Assert.AreEqual(expected, actual);
-        }
-        [TestMethod]
-        public void AddPatientCommandTest()
-        {
-            //Arrange
-            
-            var Pvm = new PatientViewModel();
-
-            Pvm.SelectedPatient.FirstName = "Chuck";
-
-            //Act
-            Pvm.AddPatientCommand.Execute(true);
-            var expected = "Chuck";
-            var actual = Pvm.PatientRepository.GetAllPatients().Last().FirstName;
-            //Assert
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void AddChargeAdjustmentCommandTest()
-        {
-            //Arrange
-            var Pvm = new PatientViewModel();
-
-            Pvm.Adjustment.AdjustmentAmount = 100;
-
-            //Act
-            Pvm.AddChargeAdjustmentCommand.Execute(true);
-            var expected = 100;
-            var actual = Pvm.Charge.AdjustmentList.Last().AdjustmentAmount;
-            //Assert
-
-            Assert.AreEqual(expected, actual);
-        }
+       
 
         [TestMethod]
         public void AddAddonChargeAdjustmentCommandTest()
@@ -133,28 +81,5 @@ namespace WPFERATest
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        public void AddChargeToPatientTest()
-        {
-            //Arrange
-            var Pvm = new PatientViewModel();
-
-            Pvm.SelectedPatient.FirstName = "John";
-            Pvm.SelectedPatient.LastName = "Smith";
-
-            Pvm.Charge.ProcedureCode = "99215";
-            Pvm.Charge.PlaceOfService.ServiceLocation = "11";
-            //Act
-
-            PrimaryCharge chargeTest = Pvm.Charge;
-            Patient patientTest = Pvm.SelectedPatient;
-            Pvm.AddPatientCommand.Execute(true);
-
-            var expected = chargeTest.Id;
-            var actual = patientTest.Charges.First().Id;
-            //Assert
-
-            Assert.AreEqual(expected, actual);
-        }
     }
 }

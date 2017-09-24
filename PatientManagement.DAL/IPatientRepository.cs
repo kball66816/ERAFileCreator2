@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using PatientManagement.Model;
 
 namespace PatientManagement.DAL
@@ -11,7 +12,7 @@ namespace PatientManagement.DAL
 
         ObservableCollection<Patient> GetAllPatients();
 
-        Patient GetSelectedPatient(string billId);
+        Patient GetSelectedPatient(Guid id);
 
     }
 }

@@ -62,7 +62,7 @@ namespace WPFERA.ViewModel
 
         private bool SupressAddonDialog { get; set; }
 
-        SettingsService Settings { get; set; }
+        private SettingsService Settings { get; set; }
 
         public Dictionary<string, string> InsuranceStates { get; set; }
 
@@ -140,43 +140,6 @@ namespace WPFERA.ViewModel
                 }
             }
         }
-
-        //public ICommand ReturnSelectedPatientChargeCommand { get; private set; }
-
-        //private void ReturnSelectedPatientCharge(object obj)
-        //{
-        //    Charge = SelectedPatient.Charge;
-        //    UpdateCheckAmount();
-        //    RaisePropertyChanged("Charge");
-        //}
-
-
-        //private void MatchChargeToPatient()
-        //{
-        //    if (IsChargeMatched(Charge))
-        //    {
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        selectedPatient.Charge = Charge;
-        //        MatchAddonToCharge();
-        //    }
-        //}
-
-        //private bool IsChargeMatched(PrimaryCharge charge)
-        //{
-        //    if (selectedPatient.Charge.Id == charge.Id)
-        //    {
-        //        return true;
-        //    }
-
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
-
         public ICommand AddPatientCommand { get; private set; }
 
         /// <summary>
@@ -232,55 +195,6 @@ namespace WPFERA.ViewModel
             }
         }
 
-        //private bool IsAddonMatched(AddonCharge Addon)
-        //{
-        //    bool isMatchedAddon = false;
-
-        //    foreach (AddonCharge addon in SelectedPatient.Charge.AddonChargeList)
-        //    {
-        //        if (addon.Id == this.Addon.Id)
-        //        {
-        //            isMatchedAddon = true;
-        //        }
-
-        //    }
-        //    return isMatchedAddon;
-        //}
-        //private void MatchAddonToCharge()
-        //{
-        //    if (CanAddAddon(Addon))
-        //    {
-        //        if (IsAddonMatched(Addon))
-        //        {
-        //            return;
-        //        }
-
-        //        else
-        //        {
-        //            MatchAddonAdjustmentToAddon();
-        //            AddAddon(Charge);
-        //        }
-        //    }
-
-        //    else
-        //    {
-        //        return;
-        //    }
-        //}
-
-        //private void MatchAddonAdjustmentToAddon()
-        //{
-        //    if (CanAddAddonAdjustment(AddonAdjustment))
-        //    {
-        //        AddAddonAdjustment(Addon);
-        //    }
-
-        //    else
-        //    {
-        //        return;
-        //    }
-
-        //}
 
         private void ReturnNewPatient()
         {
@@ -361,7 +275,7 @@ namespace WPFERA.ViewModel
         private void CloneSelectedPatient()
         {
 
-            selectedPatient = PatientRepository.GetSelectedPatient(selectedPatient.BillId).CopyPatient();
+            selectedPatient = PatientRepository.GetSelectedPatient(selectedPatient.Id).CopyPatient();
             RaisePropertyChanged("SelectedPatient");
         }
 
@@ -401,7 +315,7 @@ namespace WPFERA.ViewModel
 
         private bool CanAddPatient(object obj)
         {
-            if (!string.IsNullOrEmpty(SelectedPatient.FirstName) && !string.IsNullOrEmpty(selectedPatient.BillId))
+            if (!string.IsNullOrEmpty(SelectedPatient.FirstName) && patients.FirstOrDefault().Id !=selectedPatient.Id)
             {
                 return true;
             }
@@ -454,26 +368,6 @@ namespace WPFERA.ViewModel
             RaisePropertyChanged("Adjustment");
             RefreshAllCounters();
         }
-
-        //private bool CheckIfAddonIsNull()
-        //{
-        //    bool checkIfAddonIsNull = false;
-        //    if (Charge.AddonChargeList.Count > 0)
-        //    {
-        //        checkIfAddonIsNull = CheckifLastAddonIsNull(checkIfAddonIsNull);
-        //    }
-        //    return checkIfAddonIsNull;
-        //}
-
-        //private bool CheckifLastAddonIsNull(bool checkIfAddonIsNull)
-        //{
-        //    if (Charge.AddonChargeList.Last() != null)
-        //    {
-        //        checkIfAddonIsNull = true;
-        //    }
-
-        //    return checkIfAddonIsNull;
-        //}
 
 
         private bool CanAddAddonAdjustment(object obj)
@@ -570,7 +464,6 @@ namespace WPFERA.ViewModel
             SaveFileCommand = new Command(Save, CanSave);
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
             AddChargeToRepositoryCommand = new Command(AddChargeToRepository);
-            // ReturnSelectedPatientChargeCommand = new Command(ReturnSelectedPatientCharge);
         }
 
         public ICommand AddChargeToRepositoryCommand { get; set; }

@@ -11,7 +11,11 @@ namespace PatientManagement.Model
             Id = Guid.NewGuid();
             AdjustmentList = new List<Adjustment>();
             Modifier = new Modifier();
-            new Adjustment();
+        }
+
+        public override decimal AllowedAmount
+        {
+            get { return PaymentAmount; }
         }
     }
 }

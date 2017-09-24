@@ -92,7 +92,7 @@ namespace EFC.BL
                 foreach (PrimaryCharge charge in patient.Charges)
                 {
                     var buildClp = new Clp();
-                    buildEdi.Append(buildClp.BuildClp(patient,charge));
+                    buildEdi.Append(buildClp.BuildClp(charge));
 
                     var buildNmOne = new Nm1();
                     buildEdi.Append(buildNmOne.BuildNm1(patient));

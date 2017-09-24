@@ -38,6 +38,45 @@ namespace PatientManagement.Model
 
         public List<AddonCharge> AddonChargeList { get; set; }
 
+        private string billId;
+
+        public string BillId
+        {
+            get { return billId; }
+            set
+            {
+                if (value != billId)
+                {
+                    billId = value;
+                    RaisePropertyChanged("BillId");
+                }
+            }
+        }
+        private decimal copay;
+
+
+        public decimal Copay
+        {
+            get { return copay; }
+            set
+            {
+                if (value != copay)
+                {
+                    copay = value;
+                    RaisePropertyChanged("Copay");
+                }
+
+            }
+        }
+
+        public override decimal AllowedAmount
+        {
+            get
+            {
+                return PaymentAmount+Copay;
+            }
+        }
+
         private decimal TotalCostofAddonCharge
         {
             get

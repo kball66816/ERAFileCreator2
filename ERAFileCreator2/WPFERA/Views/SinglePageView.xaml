@@ -587,25 +587,7 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <!--<TextBlock x:Name="PatientCopayTag" Grid.Row="12" Grid.Column="2"
-                   VerticalAlignment="Top"
-                   Margin="10,0,0,0"
-                       Text="Patient's Copay*"/>-->
-            <TextBox Name="PatientCopayInput" Grid.Row="12" Grid.Column="2"
-                 Margin="10,20,0,0"
-                     Width="115"
-                      HorizontalAlignment="Left"
-                     Text="{Binding SelectedPatient.Charges.Copay, StringFormat=\{0:F2\}}">
-                <Validation.ErrorTemplate>
-                    <ControlTemplate>
-                        <DockPanel >
-                            <Border BorderBrush="Red" BorderThickness="2">
-                                <AdornedElementPlaceholder/>
-                            </Border>
-                        </DockPanel>
-                    </ControlTemplate>
-                </Validation.ErrorTemplate>
-            </TextBox>
+           
             <CheckBox Name="IncludeSubscriberInput" Grid.Row="13" Grid.Column="0"
                   Margin="10,0,0,0"
                           IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
@@ -692,7 +674,7 @@
                    VerticalAlignment="Top"
                        Text="Date Of Service*"/>
                 <DatePicker Name="DateofServiceInput"
-                            Margin="10,15,0,0"
+                            Margin="10,10,0,0"
                         SelectedDate="{Binding SelectedCharge.DateOfService}"
                         Width="115"
                         HorizontalAlignment="Left"/>
@@ -703,7 +685,7 @@
                    VerticalAlignment="Top"
                        Text="Place Of Service*"/>
                 <ComboBox  Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}"
-                           Margin="10,15,0,0"                 
+                           Margin="10,10,0,0"                 
                    DisplayMemberPath="Key"
                       SelectedValuePath="Key"
                       SelectedValue="{Binding SelectedCharge.PlaceOfService.ServiceLocation}"
@@ -719,7 +701,7 @@
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"/>
                 <TextBox x:Name="BillIdInput"
-                         Margin="7,15,0,0"
+                         Margin="10,10,0,0"
                      Width="115"
                       HorizontalAlignment="Left">
                     <Validation.ErrorTemplate>
@@ -738,10 +720,33 @@
                     </Binding>
                 </TextBox>
             </StackPanel>
-            <StackPanel Grid.Column="3" Margin="0,30,0,0" Orientation="Vertical" Grid.Row="20">
+            <StackPanel Grid.Row="20" Grid.Column="3">
+                <TextBlock x:Name="PatientCopayTag"
+                           VerticalAlignment="Top"
+                           Margin="10,0,0,0"
+                           Text="Patient's Copay*"/>
+                <TextBox Name="PatientCopayInput"
+                         Margin="10,10,0,0"
+                         Width="115"
+                         HorizontalAlignment="Left"
+                         Text="{Binding SelectedCharge.Copay, StringFormat=\{0:F2\}}" VerticalAlignment="Center" HorizontalContentAlignment="Center">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <DockPanel >
+                                <Border BorderBrush="Red" BorderThickness="2">
+                                    <AdornedElementPlaceholder/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </TextBox>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="4" Margin="0,30,0,0" Orientation="Vertical" Grid.Row="20">
                 <StackPanel.DataContext>
                     <viewModel:PreferenceViewModel/>
                 </StackPanel.DataContext>
+              
                 <CheckBox Content="Use Current Code as Default"
                     IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
                     Command="{Binding SavePreferenceCommand}"
@@ -865,7 +870,7 @@
             </StackPanel>
             
             <StackPanel Grid.Row="23" Grid.Column="0" Grid.ColumnSpan="3">
-                <TextBlock Text="Patient Charges"
+                <TextBlock Text="Selected Patient Encounters"
                            VerticalAlignment="Top"></TextBlock>
                 <DataGrid AutoGenerateColumns="False"
                           VerticalAlignment="Bottom"

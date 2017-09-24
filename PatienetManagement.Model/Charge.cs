@@ -25,30 +25,7 @@ namespace PatientManagement.Model
         public Guid Id { get;  set; }
 
 
-        private decimal copay;
-
-        public decimal Copay
-        {
-            get { return copay; }
-            set
-            {
-                if (value != copay)
-                {
-                    copay = value;
-                    RaisePropertyChanged("Copay");
-                }
-
-            }
-        }
-
-        public decimal AllowedAmount
-        {
-            get
-            {
-                decimal allowed = PaymentAmount + Copay;
-                return allowed;
-            }
-        }
+     
 
         private decimal chargeCost;
 
@@ -77,8 +54,9 @@ namespace PatientManagement.Model
         }
 
         public string ProcedureCode { get; set; }
-      
-       
+
+
+        public abstract decimal AllowedAmount { get;}
 
         public string CountAdjustments
         {

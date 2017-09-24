@@ -1,4 +1,5 @@
-﻿using PatientManagement.Model;
+﻿using System;
+using PatientManagement.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -38,9 +39,9 @@ namespace WPFERA.Services
             return patientList;
         }
 
-        public Patient GetSelectedPatient(string billId)
+        public Patient GetSelectedPatient(Guid id)
         {
-            return patientList.FirstOrDefault(p => p.BillId == billId);
+            return patientList.FirstOrDefault(p => p.Id == id);
         }
     }
 }
