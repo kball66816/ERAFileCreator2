@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:validation="clr-namespace:Common.Common;assembly=Common.Common"
              xmlns:viewModel="clr-namespace:WPFERA.ViewModel"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
     x:Class="WPFERA.Views.SinglePageView"
              mc:Ignorable="d" Background="#FFD0E8FF">
     <UserControl.DataContext>
@@ -29,7 +28,7 @@
                 Background="#FFF0F0F0">
             <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right">
-                <TextBlock Grid.Row="21" Grid.Column="0"
+                <TextBlock
                     x:Name="PatientCountTag"
                     Text="Patient Count: "/>
                 <TextBlock 
@@ -92,7 +91,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -113,12 +112,14 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="15*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6"
+            <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
                    Text="Insurance Company" FontSize="24" TextDecorations="Underline"
                    Margin="10,0,0,0"/>
             <TextBlock x:Name="InsuranceCompanyNameTag"  
@@ -317,7 +318,7 @@
                    Width="auto"
                    Height="2"
                    Fill="Gray" VerticalAlignment="Center"/>
-            <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6"
+            <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
                    Text="Billing Provider" FontSize="24" TextDecorations="Underline"
                    Margin="10,0,0,0"/>
             <CheckBox Content="Use Individual Provider" Grid.Row="6" Grid.Column="0"
@@ -532,7 +533,7 @@
                    Height="2"
                    Fill="Gray" 
                    VerticalAlignment="Center"/>
-            <TextBlock Text="Patient" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="6" FontSize="24" TextDecorations="Underline"
+            <TextBlock Text="Patient" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" FontSize="24" TextDecorations="Underline"
                        Margin="10,0,0,0"/>
             <CheckBox Grid.Row="11" Grid.Column="0"
                   VerticalAlignment="Top"
@@ -586,10 +587,10 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <TextBlock x:Name="PatientCopayTag" Grid.Row="12" Grid.Column="2"
+            <!--<TextBlock x:Name="PatientCopayTag" Grid.Row="12" Grid.Column="2"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
-                       Text="Patient's Copay*"/>
+                       Text="Patient's Copay*"/>-->
             <TextBox Name="PatientCopayInput" Grid.Row="12" Grid.Column="2"
                  Margin="10,20,0,0"
                      Width="115"
@@ -643,7 +644,7 @@
                    Width="auto"
                    Height="2"
                    Fill="Gray" VerticalAlignment="Center"/>
-            <TextBlock Text="Patient's Rendering Provider" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="6" FontSize="24" TextDecorations="Underline"
+            <TextBlock Text="Patient's Rendering Provider" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="4" FontSize="24" TextDecorations="Underline"
                        Margin="10,0,0,0"/>
 
             <CheckBox x:Name="IsAlsoRendering" Grid.Row="17" Grid.Column="0"
@@ -662,7 +663,7 @@
                      Width="115"
                      HorizontalAlignment="Left"
                      IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked, Converter={StaticResource NotConverter}}"/>
-            <TextBlock Name="renderingProviderLastNameTag" Grid.Row="18" Grid.Column="1"
+            <TextBlock Name="RenderingProviderLastNameTag" Grid.Row="18" Grid.Column="1"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Provider's Last Name*"/>
@@ -683,29 +684,29 @@
                      MaxLength="10" 
                      HorizontalAlignment="Left"
                      IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked,Converter={StaticResource NotConverter}}"/>
-            <TextBlock Text="Patient's Date of Service" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="6" FontSize="24" TextDecorations="Underline"
+            <TextBlock Text="Patient's Date of Service" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="4" FontSize="24" TextDecorations="Underline"
                        Margin="10,0,0,0"/>
             <StackPanel Grid.Row="20" Grid.Column="0">
-                <TextBlock Name="DateOfServiceTag" Grid.Row="20" Grid.Column="0"
-                   Margin="10,0,0,0"
+                <TextBlock Name="DateOfServiceTag"
+                           Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Date Of Service*"/>
-                <DatePicker Name="DateofServiceInput" Grid.Row="20" Grid.Column="0"
-                    Margin="10,15,0,0"
-                        SelectedDate="{Binding Charge.DateOfService}"
+                <DatePicker Name="DateofServiceInput"
+                            Margin="10,15,0,0"
+                        SelectedDate="{Binding SelectedCharge.DateOfService}"
                         Width="115"
                         HorizontalAlignment="Left"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Row="20" Grid.Column="1" Height="55" VerticalAlignment="Top">
-                <TextBlock Name="PlaceofServiceTag" Grid.Row="20" Grid.Column="1"
-                   Margin="10,0,0,0"
+                <TextBlock Name="PlaceofServiceTag"
+                           Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Place Of Service*"/>
-                <ComboBox  Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}" Grid.Row="20" Grid.Column="1"
-                  Margin="10,15,0,0"                 
+                <ComboBox  Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}"
+                           Margin="10,15,0,0"                 
                    DisplayMemberPath="Key"
                       SelectedValuePath="Key"
-                      SelectedValue="{Binding Charge.PlaceOfService.ServiceLocation}"
+                      SelectedValue="{Binding SelectedCharge.PlaceOfService.ServiceLocation}"
                       MinWidth="115"
                       MaxWidth="115"
                        HorizontalAlignment="Left" Width="115" SelectedIndex="9" 
@@ -713,12 +714,12 @@
 
             </StackPanel>
             <StackPanel Grid.Row="20" Grid.Column="2">
-                <TextBlock x:Name="BillIdTag" Grid.Row="20" Grid.Column="2"
-                       Text="Bill ID*"
+                <TextBlock x:Name="BillIdTag"
+                           Text="Bill ID*"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"/>
-                <TextBox x:Name="BillIdInput" Grid.Row="20" Grid.Column="2"
-                 Margin="10,15,0,0"
+                <TextBox x:Name="BillIdInput"
+                         Margin="7,15,0,0"
                      Width="115"
                       HorizontalAlignment="Left">
                     <Validation.ErrorTemplate>
@@ -767,7 +768,7 @@
                         </DockPanel>
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
-                <Binding Path="Charge.ProcedureCode" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                <Binding Path="SelectedCharge.ProcedureCode" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                     <Binding.ValidationRules>
                         <validation:StringValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
@@ -779,23 +780,23 @@
                    VerticalAlignment="Top"/>
             <StackPanel Orientation="Horizontal" Grid.Row="21" Grid.Column="1"
                     Margin="10,20,0,0"
-                        HorizontalAlignment="Left" Width="115">
+                        HorizontalAlignment="Left" Width="115" DataContext="{Binding SelectedCharge.Modifier}">
                 <TextBox x:Name="PrimaryModifierOneInput"
-                             Text="{Binding Charge.Modifier.ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Width="25"
                              MaxLength="2"/>
                 <TextBox x:Name="PrimaryModifierTwoInput"
-                             Text="{Binding Charge.Modifier.ModifierTwo}"
+                             Text="{Binding ModifierTwo}"
                              Width="25"
                              MaxLength="2"
                          Margin="5,0,0,0"/>
                 <TextBox x:Name="PrimaryModifierThreeInput"
-                             Text="{Binding Charge.Modifier.ModifierThree}"
+                             Text="{Binding ModifierThree}"
                              Width="25"
                              MaxLength="2"
                          Margin="5,0,0,0"/>
                 <TextBox x:Name="PrimaryModifierFourInput"
-                             Text="{Binding Charge.Modifier.ModifierFour}"
+                             Text="{Binding ModifierFour}"
                              Width="25"
                              MaxLength="2"
                          Margin="5,0,0,0"/>
@@ -808,7 +809,7 @@
                  Margin="10,20,0,0"
                      Width="115"
                      HorizontalAlignment="Left"
-                     Text="{Binding Charge.PaymentAmount, StringFormat=\{0:F2\}}">
+                     Text="{Binding SelectedCharge.PaymentAmount, StringFormat=\{0:F2\}}">
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <DockPanel >
@@ -827,7 +828,7 @@
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left"
-                     Text="{Binding Charge.ChargeCost, StringFormat=\{0:F2\}}">
+                     Text="{Binding SelectedCharge.ChargeCost, StringFormat=\{0:F2\}}">
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <DockPanel >
@@ -838,11 +839,55 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
-            <TextBlock x:Name="AdjustmentType" Grid.Row="22" Grid.Column="0"
+            <Button Grid.Row="21" Grid.Column="4"
+                    Command="{Binding AddChargeToRepositoryCommand}"
+                    Content="Add Charge"
+                    Width="115"
+                    Margin="10,10,0,0"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="left"/>
+            <StackPanel Grid.Row="22" Grid.Column="0" Grid.ColumnSpan="3">
+                <TextBlock Text="Unassigned Charges"/>
+                <DataGrid
+                          ItemsSource="{Binding Pcvm.UnaddedCharges}"
+                          AutoGenerateColumns="False"
+                          SourceUpdated="OnContentChanged"
+                          MaxHeight="100"
+                          VerticalScrollBarVisibility="Auto" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Date Of Service" Binding="{Binding DateOfService, StringFormat=\{0:d\}}"/>
+                        <DataGridTextColumn Header="Place Of Service" Binding="{Binding PlaceOfService.ServiceLocation}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
+                        <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
+                        <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="23" Grid.Column="0" Grid.ColumnSpan="3">
+                <TextBlock Text="Patient Charges"
+                           VerticalAlignment="Top"></TextBlock>
+                <DataGrid AutoGenerateColumns="False"
+                          VerticalAlignment="Bottom"
+                          ItemsSource="{Binding SelectedPatient.Charges}"
+                          MaxHeight="100"
+                          VerticalScrollBarVisibility="Auto" 
+                          IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Date Of Service" Binding="{Binding DateOfService}"/>
+                        <DataGridTextColumn Header="Place Of Service" Binding="{Binding PlaceOfService.ServiceLocation}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
+                        <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
+                        <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+          
+            <TextBlock x:Name="AdjustmentType" Grid.Row="24" Grid.Column="0"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                            Text="Adjustment Type"/>
-            <StackPanel Orientation="Horizontal" Grid.Row="22" Grid.Column="0"
+            <StackPanel Orientation="Horizontal" Grid.Row="24" Grid.Column="0"
                     Margin="10,20,0,0">
                 <ComboBox x:Name="AdjustmentTypeDropdown"
                           ItemsSource="{Binding PrimaryAdjustmentType}"
@@ -872,27 +917,27 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
             </StackPanel>
-            <Button Name="AddAdjustmentButton" Grid.Row="22" Grid.Column="1"
+            <Button Name="AddAdjustmentButton" Grid.Row="24" Grid.Column="1"
                 Margin="10,0,0,0"
                             Command="{Binding AddChargeAdjustmentCommand}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                             Content="Add Additional Adjustment"/>
-            
-            <TextBlock Name="AddonProcedureCodeTag" Grid.Row="23" Grid.Column="0"
+
+            <TextBlock Name="AddonProcedureCodeTag" Grid.Row="25" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Addon Procedure Code"/>
-            <TextBox Name="AddonProcedureCodeInput" Grid.Row="23" Grid.Column="0"
+            <TextBox Name="AddonProcedureCodeInput" Grid.Row="25" Grid.Column="0"
                  Margin="10,20,0,0"
                                  Text="{Binding Addon.ProcedureCode}" 
                                  Width="115"
                      HorizontalAlignment="Left"/>
-            <TextBlock Name="AddonModifiersTag" Grid.Row="23" Grid.Column="1"
+            <TextBlock Name="AddonModifiersTag" Grid.Row="25" Grid.Column="1"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                            Text="Modifiers"/>
-            <StackPanel Orientation="Horizontal" Grid.Row="23" Grid.Column="1"
+            <StackPanel Orientation="Horizontal" Grid.Row="25" Grid.Column="1"
                     Margin="10,20,0,0">
                 <TextBox x:Name="AddonModifierOneInput"
                                      Text="{Binding Addon.Modifier.ModifierOne}"                                
@@ -914,36 +959,36 @@
                                      MaxLength="2"
                          Margin="5,0,0,0"/>
             </StackPanel>
-            <TextBlock Name="AddonPaidAmountTag" Grid.Row="23" Grid.Column="2"
+            <TextBlock Name="AddonPaidAmountTag" Grid.Row="25" Grid.Column="2"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                    Text="Addon Paid Amount"/>
-            <TextBox Name="AddonPaidAmountInput" Grid.Row="23" Grid.Column="2"
+            <TextBox Name="AddonPaidAmountInput" Grid.Row="25" Grid.Column="2"
                  Margin="10,20,0,0"
                              Text="{Binding Addon.PaymentAmount}"
                              Width="115"
                      HorizontalAlignment="Left"/>
-            <TextBlock Name="AddonChargesAmountTag" Grid.Row="23" Grid.Column="3"
+            <TextBlock Name="AddonChargesAmountTag" Grid.Row="25" Grid.Column="3"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                            Text="Addon Charges Amount"/>
-            <TextBox Name="AddonChargesAmountInput" Grid.Row="23" Grid.Column="3"
+            <TextBox Name="AddonChargesAmountInput" Grid.Row="25" Grid.Column="3"
                 Margin="10,20,0,0"
                                  Text="{Binding Addon.ChargeCost}" 
                                  Width="115"
                      HorizontalAlignment="Left"/>
-            <Button Name="AddAddonChargesButton" Grid.Row="23" Grid.Column="4"
+            <Button Name="AddAddonChargesButton" Grid.Row="25" Grid.Column="4"
                 Margin="10,0,10,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     Content="Add Additional Addon"
                     Command="{Binding AddAddonCommand}"/>
-            <TextBlock Name="AddonAdjustmentType" Grid.Row="24" Grid.Column="0"
+            <TextBlock Name="AddonAdjustmentType" Grid.Row="26" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                                Text="Adjustment Type"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="24" Grid.Column="0"
+            <StackPanel Orientation="Horizontal" Grid.Row="26" Grid.Column="0"
                     Margin="10,20,0,0">
                 <ComboBox x:Name="AddonAdjustmentTypeDropdown"
                           Width="45"
@@ -952,7 +997,7 @@
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}">
-                    
+
                 </ComboBox>
                 <ComboBox x:Name="AddonAdjustmentReasonCodeDropdown" 
                           Width="45"
@@ -961,7 +1006,7 @@
                           SelectedValuePath="Value"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentReasonCodeDropdown}"
                           SelectedIndex="34">
-                  
+
                 </ComboBox>
                 <TextBox x:Name="AddonAdjustmentAmountInput"
                                              Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}}"
@@ -977,19 +1022,19 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
             </StackPanel>
-            <Button Name="AddonAdjustmentButton" Grid.Row="24" Grid.Column="1"
+            <Button Name="AddonAdjustmentButton" Grid.Row="26" Grid.Column="1"
                 Margin="10,0,0,0"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
                 Content="Add Additional Adjustment"
                 Command="{Binding AddAddonChargeAdjustmentCommand}"/>
-            <Button x:Name="AddPatient" Grid.Row="24" Grid.Column="4"
+            <Button x:Name="AddPatient" Grid.Row="26" Grid.Column="4"
                 Margin="10,0,0,0"
                      Content="Add Additional Patient" 
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                      Command="{Binding AddPatientCommand}"/>
-            <Button Grid.Row="25" Grid.Column="4"
+            <Button Grid.Row="27" Grid.Column="4"
                 Command="{Binding SaveFileCommand}"
                 Content="Create 835 File"
                 Width="115"
@@ -1003,14 +1048,14 @@
                 <viewModel:PreferenceViewModel/>
             </StackPanel.DataContext>
             <StackPanel Orientation="Vertical">
-                <CheckBox Content="Reuse Same Patient" Grid.Row="24" Grid.Column="0"
-                  Margin="10,0,0,0"
+                <CheckBox Content="Reuse Same Patient"
+                          Margin="10,0,0,0"
                   Name="ReusePatientPreference"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.ReusePatient,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 </CheckBox>
-                <CheckBox Content="Reuse Patient Prompt" Grid.Row="24" Grid.Column="0"
-                                Margin="10,0,0,0"
+                <CheckBox Content="Reuse Patient Prompt"
+                          Margin="10,0,0,0"
                                 Command="{Binding SavePreferenceCommand}"
                                 IsChecked="{Binding Preference.EnablePatientReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="{Binding ElementName=ReusePatientPreference,Path=IsChecked}">
@@ -1018,15 +1063,15 @@
                 </CheckBox>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <CheckBox Content="Reuse Same Addon Code" Grid.Row="24" Grid.Column="1"
-                  Margin="10,0,0,0"
+                <CheckBox Content="Reuse Same Addon Code"
+                          Margin="10,0,0,0"
                   Name="ReuseAddonPreference"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.ReuseAddon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
 
                 </CheckBox>
-                <CheckBox Content="Reuse Addon Code Prompt" Grid.Row="24" Grid.Column="1"
-                  Margin="10,0,0,0"
+                <CheckBox Content="Reuse Addon Code Prompt"
+                          Margin="10,0,0,0"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.EnableAddonReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                   IsEnabled="{Binding ElementName=ReuseAddonPreference,Path=IsChecked}">
@@ -1034,8 +1079,8 @@
                 </CheckBox>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <CheckBox Content="Patient From Last Run" Grid.Row="24" Grid.Column="2"
-                  Command="{Binding SavePreferenceCommand}"
+                <CheckBox Content="Patient From Last Run"
+                          Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.ReloadLastPatientFromLastSession,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 </CheckBox>
             </StackPanel>

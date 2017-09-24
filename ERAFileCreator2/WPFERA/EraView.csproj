@@ -60,7 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\ChargeRepository.cs" />
+    <Compile Include="Services\PrimaryChargeRepository.cs" />
     <Compile Include="Utility\NotConverter.cs" />
     <Compile Include="Services\Command.cs" />
     <Compile Include="Services\PatientRepository.cs" />
@@ -73,6 +73,7 @@
     <Compile Include="Utility\Messenger.cs" />
     <Compile Include="ViewModel\PatientViewModel.cs" />
     <Compile Include="ViewModel\PreferenceViewModel.cs" />
+    <Compile Include="ViewModel\PrimaryChargeViewModel.cs" />
     <Compile Include="Views\PatientView.xaml.cs">
       <DependentUpon>PatientView.xaml</DependentUpon>
     </Compile>

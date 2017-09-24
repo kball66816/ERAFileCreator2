@@ -21,12 +21,12 @@ namespace WPFERA.ViewModel
             Addon = new AddonCharge();
             Adjustment = new Adjustment();
             AddonAdjustment = new Adjustment();
-            Charge = new PrimaryCharge();
+            SelectedCharge = new PrimaryCharge();
             LoadInsuranceCompany();
-
-            patientRepository.Add(SelectedPatient);
-            Patients = patientRepository.GetAllPatients();
-            PlacesOfService = Charge.PlaceOfService.PlacesOfService;
+            Pcvm = new PrimaryChargeViewModel();
+            PatientRepository.Add(SelectedPatient);
+            Patients = PatientRepository.GetAllPatients();
+            PlacesOfService = SelectedCharge.PlaceOfService.PlacesOfService;
             PrimaryAdjustmentReasonCodes = Adjustment.AdjustmentReasonCodes;
             AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
             PrimaryAdjustmentType = Adjustment.AdjustmentTypes;
@@ -35,7 +35,7 @@ namespace WPFERA.ViewModel
             RefreshAllCounters();
         }
 
-     
+
 
         private void LoadInsuranceCompany()
         {
@@ -58,9 +58,9 @@ namespace WPFERA.ViewModel
             SelectedPatient = Settings.PullDefaultPatient();
         }
 
-        public PatientRepository patientRepository = new PatientRepository();
+        public readonly PatientRepository PatientRepository = new PatientRepository();
 
-        public bool SupressAddonDialog { get; private set; }
+        private bool SupressAddonDialog { get; set; }
 
         SettingsService Settings { get; set; }
 
@@ -70,12 +70,11 @@ namespace WPFERA.ViewModel
 
         public Dictionary<string, string> PlacesOfService { get; set; }
 
-        public Dictionary<string,string> PrimaryAdjustmentType { get; set; }
+        public Dictionary<string, string> PrimaryAdjustmentType { get; set; }
 
         public Dictionary<string, string> PrimaryAdjustmentReasonCodes { get; set; }
 
-
-        public Dictionary<string,string> AddonAdjustmentType { get; set; }
+        public Dictionary<string, string> AddonAdjustmentType { get; set; }
 
         public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
 
@@ -126,56 +125,57 @@ namespace WPFERA.ViewModel
             }
         }
 
-        private PrimaryCharge charge;
+        private PrimaryCharge selectedCharge;
 
-        public PrimaryCharge Charge
+        public PrimaryCharge SelectedCharge
         {
-            get { return charge; }
+            get { return selectedCharge; }
             set
             {
-                if (value != charge)
+                if (value != selectedCharge)
 
                 {
-                    charge = value;
-                    RaisePropertyChanged("Charge");
+                    selectedCharge = value;
+                    RaisePropertyChanged("SelectedCharge");
                 }
             }
         }
 
-        public ICommand ReturnSelectedPatientChargeCommand { get; private set; }
+        //public ICommand ReturnSelectedPatientChargeCommand { get; private set; }
 
-        private void ReturnSelectedPatientCharge(object obj)
-        {
-            Charge = SelectedPatient.Charge;
-            UpdateCheckAmount();
-            RaisePropertyChanged("Charge");
-        }
+        //private void ReturnSelectedPatientCharge(object obj)
+        //{
+        //    Charge = SelectedPatient.Charge;
+        //    UpdateCheckAmount();
+        //    RaisePropertyChanged("Charge");
+        //}
 
-        private void MatchChargeToPatient()
-        {
-            if (IsChargeMatched(Charge))
-            {
-                return;
-            }
-            else
-            {
-                selectedPatient.Charge = Charge;
-                MatchAddonToCharge();
-            }
-        }
 
-        private bool IsChargeMatched(PrimaryCharge charge)
-        {
-            if (selectedPatient.Charge.Id == charge.Id)
-            {
-                return true;
-            }
+        //private void MatchChargeToPatient()
+        //{
+        //    if (IsChargeMatched(Charge))
+        //    {
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        selectedPatient.Charge = Charge;
+        //        MatchAddonToCharge();
+        //    }
+        //}
 
-            else
-            {
-                return false;
-            }
-        }
+        //private bool IsChargeMatched(PrimaryCharge charge)
+        //{
+        //    if (selectedPatient.Charge.Id == charge.Id)
+        //    {
+        //        return true;
+        //    }
+
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public ICommand AddPatientCommand { get; private set; }
 
@@ -189,35 +189,41 @@ namespace WPFERA.ViewModel
         {
             SupressAddonDialog = true;
             MatchAdjustmentToCharge();
-            MatchAddonToCharge();
-            MatchChargeToPatient();
+            MatchUnaddedChargeToSelectedPatient();
             ReturnNewPatient();
-            patientRepository.Add(SelectedPatient);
+            PatientRepository.Add(SelectedPatient);
             UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
             RefreshAllCounters();
             ReturnNewCharge();
         }
 
+        private void MatchUnaddedChargeToSelectedPatient()
+        {
+            selectedPatient.Charges = Pcvm.UnaddedCharges.ToList();
+            Pcvm = new PrimaryChargeViewModel();
+            RaisePropertyChanged("UnaddedCharges");
+        }
+
         private void ReturnNewCharge()
         {
             if (Settings.ReuseChargeForNextPatient)
             {
-                charge = new PrimaryCharge(charge);
+                SelectedCharge = new PrimaryCharge(SelectedCharge);
             }
 
             else
             {
-                Charge = new PrimaryCharge();
+                SelectedCharge = new PrimaryCharge();
             }
-            RaisePropertyChanged("Charge");
+            RaisePropertyChanged("SelectedCharge");
         }
 
         private void MatchAdjustmentToCharge()
         {
             if (CanAddAdjustment(Adjustment))
             {
-                AddChargeAdjustment(Charge);
+                AddChargeAdjustment(SelectedCharge);
             }
 
             else
@@ -226,55 +232,55 @@ namespace WPFERA.ViewModel
             }
         }
 
-        private bool IsAddonMatched(AddonCharge Addon)
-        {
-            bool isMatchedAddon = false;
+        //private bool IsAddonMatched(AddonCharge Addon)
+        //{
+        //    bool isMatchedAddon = false;
 
-            foreach (AddonCharge addon in SelectedPatient.Charge.AddonChargeList)
-            {
-                if (addon.Id == this.Addon.Id)
-                {
-                    isMatchedAddon = true;
-                }
+        //    foreach (AddonCharge addon in SelectedPatient.Charge.AddonChargeList)
+        //    {
+        //        if (addon.Id == this.Addon.Id)
+        //        {
+        //            isMatchedAddon = true;
+        //        }
 
-            }
-            return isMatchedAddon;
-        }
-        private void MatchAddonToCharge()
-        {
-            if (CanAddAddon(Addon))
-            {
-                if (IsAddonMatched(Addon))
-                {
-                    return;
-                }
+        //    }
+        //    return isMatchedAddon;
+        //}
+        //private void MatchAddonToCharge()
+        //{
+        //    if (CanAddAddon(Addon))
+        //    {
+        //        if (IsAddonMatched(Addon))
+        //        {
+        //            return;
+        //        }
 
-                else
-                {
-                    MatchAddonAdjustmentToAddon();
-                    AddAddon(Charge);
-                }
-            }
+        //        else
+        //        {
+        //            MatchAddonAdjustmentToAddon();
+        //            AddAddon(Charge);
+        //        }
+        //    }
 
-            else
-            {
-                return;
-            }
-        }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //}
 
-        private void MatchAddonAdjustmentToAddon()
-        {
-            if (CanAddAddonAdjustment(AddonAdjustment))
-            {
-                AddAddonAdjustment(Addon);
-            }
+        //private void MatchAddonAdjustmentToAddon()
+        //{
+        //    if (CanAddAddonAdjustment(AddonAdjustment))
+        //    {
+        //        AddAddonAdjustment(Addon);
+        //    }
 
-            else
-            {
-                return;
-            }
+        //    else
+        //    {
+        //        return;
+        //    }
 
-        }
+        //}
 
         private void ReturnNewPatient()
         {
@@ -326,7 +332,7 @@ namespace WPFERA.ViewModel
 
         private void CloneLastAddon()
         {
-            AddonCharge clone = (AddonCharge)Charge.AddonChargeList.Last().Clone();
+            AddonCharge clone = (AddonCharge)SelectedCharge.AddonChargeList.Last().Clone();
             Addon = clone;
             RaisePropertyChanged("Addon");
         }
@@ -354,8 +360,8 @@ namespace WPFERA.ViewModel
 
         private void CloneSelectedPatient()
         {
-             
-            selectedPatient = patientRepository.GetSelectedPatient(selectedPatient.BillId).CopyPatient();
+
+            selectedPatient = PatientRepository.GetSelectedPatient(selectedPatient.BillId).CopyPatient();
             RaisePropertyChanged("SelectedPatient");
         }
 
@@ -443,31 +449,31 @@ namespace WPFERA.ViewModel
 
         private void AddChargeAdjustment(object obj)
         {
-            Charge.AdjustmentList.Add(Adjustment);
+            SelectedCharge.AdjustmentList.Add(Adjustment);
             Adjustment = new Adjustment();
             RaisePropertyChanged("Adjustment");
             RefreshAllCounters();
         }
 
-        private bool CheckIfAddonIsNull()
-        {
-            bool checkIfAddonIsNull = false;
-            if (Charge.AddonChargeList.Count > 0)
-            {
-                checkIfAddonIsNull = CheckifLastAddonIsNull(checkIfAddonIsNull);
-            }
-            return checkIfAddonIsNull;
-        }
+        //private bool CheckIfAddonIsNull()
+        //{
+        //    bool checkIfAddonIsNull = false;
+        //    if (Charge.AddonChargeList.Count > 0)
+        //    {
+        //        checkIfAddonIsNull = CheckifLastAddonIsNull(checkIfAddonIsNull);
+        //    }
+        //    return checkIfAddonIsNull;
+        //}
 
-        private bool CheckifLastAddonIsNull(bool checkIfAddonIsNull)
-        {
-            if (Charge.AddonChargeList.Last() != null)
-            {
-                checkIfAddonIsNull = true;
-            }
+        //private bool CheckifLastAddonIsNull(bool checkIfAddonIsNull)
+        //{
+        //    if (Charge.AddonChargeList.Last() != null)
+        //    {
+        //        checkIfAddonIsNull = true;
+        //    }
 
-            return checkIfAddonIsNull;
-        }
+        //    return checkIfAddonIsNull;
+        //}
 
 
         private bool CanAddAddonAdjustment(object obj)
@@ -495,6 +501,7 @@ namespace WPFERA.ViewModel
         }
 
         private AddonCharge addon;
+        private PrimaryChargeViewModel pcvm;
 
         public AddonCharge Addon
         {
@@ -512,7 +519,7 @@ namespace WPFERA.ViewModel
 
         private void AddAddon(object obj)
         {
-            Charge.AddonChargeList.Add(addon);
+            SelectedCharge.AddonChargeList.Add(addon);
 
             if (Settings.ReuseSameAddonEnabled)
             {
@@ -562,8 +569,11 @@ namespace WPFERA.ViewModel
             AddAddonCommand = new Command(AddAddon, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
-            ReturnSelectedPatientChargeCommand = new Command(ReturnSelectedPatientCharge);
+            AddChargeToRepositoryCommand = new Command(AddChargeToRepository);
+            // ReturnSelectedPatientChargeCommand = new Command(ReturnSelectedPatientCharge);
         }
+
+        public ICommand AddChargeToRepositoryCommand { get; set; }
 
         public ICommand UpdateRenderingProviderCommand { get; private set; }
 
@@ -598,8 +608,8 @@ namespace WPFERA.ViewModel
         {
             SupressAddonDialog = true;
             MatchAdjustmentToCharge();
-            MatchAddonToCharge();
-            MatchChargeToPatient();
+            //   MatchAddonToCharge();
+            //   MatchChargeToPatient();
             UpdateCheckAmount();
             SaveSettings();
             var edi = new ElectronicDataInterchange();
@@ -614,13 +624,17 @@ namespace WPFERA.ViewModel
         private void UpdateCheckAmount()
         {
 
-            decimal chargepaid = 0;
-            decimal calc = 0;
-            foreach (Patient patient in patientRepository.GetAllPatients())
+            decimal chargesPaidAmount = 0;
+            decimal addonsPaidAmount = 0;
+            foreach (Patient patient in PatientRepository.GetAllPatients())
             {
-                chargepaid += patient.Charge.PaymentAmount;
-                calc += patient.Charge.AddonChargeList.Sum(p => p.PaymentAmount);
-                insurance.CheckAmount = chargepaid + calc;
+                foreach (PrimaryCharge charge in patient.Charges)
+                {
+                    chargesPaidAmount += charge.PaymentAmount;
+                    addonsPaidAmount += charge.AddonChargeList.Sum(p => p.PaymentAmount);
+                    insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
+                }
+
             }
 
         }
@@ -645,24 +659,24 @@ namespace WPFERA.ViewModel
 
         private void UpdateAddonAdjustmentCount()
         {
-            if (Charge.AddonChargeList.Count == 0)
+            if (SelectedCharge.AddonChargeList.Count == 0)
             {
                 AddonChargeAdjustmentCount = 0;
             }
 
-            else if (Charge.AddonChargeList == null)
+            else if (SelectedCharge.AddonChargeList == null)
             {
                 AddonChargeAdjustmentCount = 0;
             }
 
-            else if (Charge.AddonChargeList.Last().AdjustmentList == null)
+            else if (SelectedCharge.AddonChargeList.Last().AdjustmentList == null)
             {
                 AddonChargeAdjustmentCount = 0;
             }
 
             else
             {
-                AddonChargeAdjustmentCount = Charge.AddonChargeList.Last().AdjustmentList.Count();
+                AddonChargeAdjustmentCount = SelectedCharge.AddonChargeList.Last().AdjustmentList.Count();
                 RaisePropertyChanged("AddonChargeAdjustmentCount");
             }
         }
@@ -671,7 +685,7 @@ namespace WPFERA.ViewModel
 
         private void UpdateChargeAdjustmentCount()
         {
-            ChargeAdjustmentCount = Charge.AdjustmentList.Count;
+            ChargeAdjustmentCount = SelectedCharge.AdjustmentList.Count;
             RaisePropertyChanged("ChargeAdjustmentCount");
         }
 
@@ -679,8 +693,29 @@ namespace WPFERA.ViewModel
 
         private void UpdateAddonCount()
         {
-            AddonChargeCount = Charge.AddonChargeList.Count;
+            AddonChargeCount = SelectedCharge.AddonChargeList.Count;
             RaisePropertyChanged("AddonChargeCount");
+        }
+
+        public PrimaryChargeViewModel Pcvm
+
+        {
+            get { return pcvm; }
+            set
+            {
+                if (value != pcvm)
+                {
+                    pcvm = value;
+                    RaisePropertyChanged("Pcvm");
+                }
+            }
+        }
+
+        private void AddChargeToRepository(object obj)
+        {
+            Pcvm.ChargeRepository.Add(selectedCharge);
+            selectedCharge = new PrimaryCharge();
+            RaisePropertyChanged("SelectedCharge");
         }
     }
 }

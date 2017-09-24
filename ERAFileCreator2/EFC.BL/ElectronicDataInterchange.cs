@@ -92,7 +92,7 @@ namespace EFC.BL
                 foreach (PrimaryCharge charge in patient.Charges)
                 {
                     var buildClp = new Clp();
-                    buildEdi.Append(buildClp.BuildClp(patient));
+                    buildEdi.Append(buildClp.BuildClp(patient,charge));
 
                     var buildNmOne = new Nm1();
                     buildEdi.Append(buildNmOne.BuildNm1(patient));
@@ -107,7 +107,7 @@ namespace EFC.BL
                     buildEdi.Append(buildRef.BuildRef(patient.RenderingProvider));
 
                     //DTM Statement From or To Date 2100
-                    buildEdi.Append(buildDtm.BuildDtm(patient));
+                    buildEdi.Append(buildDtm.BuildDtm(charge));
 
                     //PER Claim Contact Information 2100
 

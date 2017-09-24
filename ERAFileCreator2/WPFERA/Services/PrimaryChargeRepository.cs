@@ -1,42 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PatientManagement.DAL;
+using PatientManagement.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using PatientManagement.DAL;
-using PatientManagement.Model;
 
 namespace WPFERA.Services
 {
-    class ChargeRepository : IChargeRepository, INotifyPropertyChanged
+    class PrimaryChargeRepository : IPrimaryChargeRepository, INotifyPropertyChanged
     {
 
-        ObservableCollection<Charge> charges = new ObservableCollection<Charge>();
+        private ObservableCollection<PrimaryCharge> charges = new ObservableCollection<PrimaryCharge>();
 
-        public void Add(Charge charge)
+        public void Add(PrimaryCharge charge)
         {
            charges.Add(charge);
         }
 
-        public void Delete(Charge charge)
+        public void Delete(PrimaryCharge charge)
         {
             charges.Remove(charge);
         }
 
-        public ObservableCollection<Charge> GetAllCharges()
+        public ObservableCollection<PrimaryCharge> GetAllCharges()
         {
             return charges;
         }
 
-        public Charge GetSelectedCharge(Guid id)
+        public PrimaryCharge GetSelectedCharge(Guid id)
         {
             return charges.FirstOrDefault(c => c.Id == id);
         }
 
-        public Charge UpdateCharge(Charge charge)
+        public PrimaryCharge UpdateCharge(PrimaryCharge charge)
         {
             throw new NotImplementedException();
         }

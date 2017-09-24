@@ -53,7 +53,7 @@ namespace WPFERATest
             //Act
             Pvm.AddPatientCommand.Execute(true);
             var expected = "Chuck";
-            var actual = Pvm.patientRepository.GetAllPatients().Last().FirstName;
+            var actual = Pvm.PatientRepository.GetAllPatients().Last().FirstName;
             //Assert
 
             Assert.AreEqual(expected, actual);
@@ -151,7 +151,7 @@ namespace WPFERATest
             Pvm.AddPatientCommand.Execute(true);
 
             var expected = chargeTest.Id;
-            var actual = patientTest.Charges.Id;
+            var actual = patientTest.Charges.First().Id;
             //Assert
 
             Assert.AreEqual(expected, actual);

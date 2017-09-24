@@ -12,41 +12,42 @@ namespace EFC.BL.EDI_Segments
 
         public string BuildDtm(List<Patient> retrievePatients)
         {
+            var dateOfService = retrievePatients.First().Charges.First().DateOfService;
             var buildDtm = new StringBuilder();
 
             buildDtm.Append("DTM" + "*");
             buildDtm.Append("405" + "*");
 
             var dateConversion = new DateConversion();
-            buildDtm.Append(dateConversion.ConvertedDate(retrievePatients.First().Charges.DateOfService));
+            buildDtm.Append(dateConversion.ConvertedDate(dateOfService));
             buildDtm.Append("~");
 
             return buildDtm.ToString();
         }
             
-        public string BuildDtm(Patient patient)
+        public string BuildDtm(PrimaryCharge charge)
         {
             var buildDtm = new StringBuilder();
             buildDtm.Append("DTM*");
             buildDtm.Append("232*"); //DTM01 Date Time Qualifier
-            buildDtm.Append(dateConversion.ConvertedDate(patient.Charges.DateOfService)); //DTM02 Start Date
+            buildDtm.Append(dateConversion.ConvertedDate(charge.DateOfService)); //DTM02 Start Date
             buildDtm.Append("~");
 
             //DTM Coverage Expiration Date 2100
             buildDtm.Append("DTM*");
             buildDtm.Append("233*"); //DTM01 Date Time Qualifier
-            buildDtm.Append(dateConversion.ConvertedDate(patient.Charges.DateOfService)); //DTM02 Expiration Date
+            buildDtm.Append(dateConversion.ConvertedDate(charge.DateOfService)); //DTM02 Expiration Date
             buildDtm.Append("~");
 
             //DTM Claim Received Date
            buildDtm.Append("DTM*");
            buildDtm.Append("050*"); //DTM01 Date Time Qualifier
-           buildDtm.Append(dateConversion.ConvertedDate(patient.Charges.DateOfService)); //DTM02 Date of Service Date
+           buildDtm.Append(dateConversion.ConvertedDate(charge.DateOfService)); //DTM02 Date of Service Date
            buildDtm.Append("~");
 
             return buildDtm.ToString();
         }
-        public string BuildDtm(PrimaryCharge charge)
+        public string BuildDtm2(PrimaryCharge charge)
         {
             //DTM Service Start Date 2110
             //DTM01 Date Time QUalifier

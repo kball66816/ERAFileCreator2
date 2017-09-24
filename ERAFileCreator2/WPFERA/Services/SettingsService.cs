@@ -148,7 +148,8 @@ namespace WPFERA.Services
             if (!string.IsNullOrEmpty(Settings.Default.PatientCopay))
             {
                 decimal.TryParse(Settings.Default.PatientCopay, out decimal value);
-                patient.Charges.FirstOrDefault().Copay = value;
+                
+               // patient.Charges.FirstOrDefault().Copay = value;
             }
 
             LoadDefaultRenderingProvider(patient);
