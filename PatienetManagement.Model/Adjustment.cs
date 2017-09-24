@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace EFC.BL
+namespace PatientManagement.Model
 {
     [Serializable]
     public class Adjustment:INotifyPropertyChanged

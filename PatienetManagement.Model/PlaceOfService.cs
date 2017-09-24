@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-namespace EFC.BL
+namespace PatientManagement.Model
 {
     /// <summary>
     /// Places of Service are codified defined locations that a medical or healthcare service is rendered

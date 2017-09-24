@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERAFileCreator", "ERAFileCreator2\ERAFileCreator.csproj", "{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFC.BLTests", "ERAFileCreator2\EFC.BLTests\EFC.BLTests.csproj", "{4C6362C6-CAC8-47EB-847A-8B5C83587086}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFERATest", "WPFERATest\WPFERATest.csproj", "{5743D31B-E61F-4C55-9F25-041D3431D212}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.Model", "PatienetManagement.Model\PatientManagement.Model.csproj", "{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{5743D31B-E61F-4C55-9F25-041D3431D212}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5743D31B-E61F-4C55-9F25-041D3431D212}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5743D31B-E61F-4C55-9F25-041D3431D212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

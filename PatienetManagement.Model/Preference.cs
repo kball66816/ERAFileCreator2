@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace EFC.BL
+namespace PatientManagement.Model
 {
     public class Preference : INotifyPropertyChanged
     {

@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using EFC.BL.EDI_Segments;
 using System.Collections.Generic;
+using PatientManagement.Model;
 
 namespace EFC.BL
 {

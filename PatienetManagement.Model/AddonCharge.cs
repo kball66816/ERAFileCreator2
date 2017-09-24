@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
-namespace EFC.BL
+namespace PatientManagement.Model
 {
     [Serializable]
     public class AddonCharge:ProtoCharge, ICloneable

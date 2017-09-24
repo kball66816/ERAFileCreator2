@@ -1,5 +1,6 @@
 ﻿using Common.Common;
 using EFC.BL;
+using PatientManagement.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -24,7 +25,7 @@ namespace WPFERA.ViewModel
             LoadInsuranceCompany();
 
             patientRepository.Add(SelectedPatient);
-            PatientList = patientRepository.GetAllPatients();
+            Patients = patientRepository.GetAllPatients();
             PlacesOfService = Charge.PlaceOfService.PlacesOfService;
             LoadCommands();
             RefreshAllCounters();
@@ -63,6 +64,7 @@ namespace WPFERA.ViewModel
 
         public Dictionary<string, string> PlacesOfService { get; set; }
 
+    
         private InsuranceCompany insurance;
 
         public InsuranceCompany Insurance
@@ -364,15 +366,15 @@ namespace WPFERA.ViewModel
         }
 
 
-        private ObservableCollection<Patient> patientList;
+        private ObservableCollection<Patient> patients;
 
-        public ObservableCollection<Patient> PatientList
+        public ObservableCollection<Patient> Patients
         {
-            get { return patientList; }
+            get { return patients; }
             private set
             {
-                patientList = value;
-                RaisePropertyChanged("PatientList");
+                patients = value;
+                RaisePropertyChanged("Patients");
             }
         }
 
@@ -588,7 +590,7 @@ namespace WPFERA.ViewModel
             var edi = new ElectronicDataInterchange();
 
             var save = new SaveToFile();
-            save.SaveFile(edi.BuildEdi(patientList.ToList(), insurance, billingProvider));
+            save.SaveFile(edi.BuildEdi(patients.ToList(), insurance, billingProvider));
         }
 
 
@@ -620,7 +622,7 @@ namespace WPFERA.ViewModel
 
         private void UpdatePatientCount()
         {
-            PatientCount = PatientList.Count();
+            PatientCount = Patients.Count();
             RaisePropertyChanged("PatientCount");
         }
 

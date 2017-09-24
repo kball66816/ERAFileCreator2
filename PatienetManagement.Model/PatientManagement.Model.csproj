@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}</ProjectGuid>
+    <ProjectGuid>{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EFC.BL</RootNamespace>
-    <AssemblyName>EFC.BL</AssemblyName>
+    <RootNamespace>PatientManagement.Model</RootNamespace>
+    <AssemblyName>PatientManagement.Model</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,11 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,45 +41,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EDI Segments\Amt.cs" />
-    <Compile Include="EDI Segments\Bpr.cs" />
-    <Compile Include="EDI Segments\Cas.cs" />
-    <Compile Include="EDI Segments\Clp.cs" />
-    <Compile Include="EDI Segments\Dtm.cs" />
-    <Compile Include="EDI Segments\Ge.cs" />
-    <Compile Include="EDI Segments\Iea.cs" />
-    <Compile Include="EDI Segments\Lx.cs" />
-    <Compile Include="EDI Segments\N4.cs" />
-    <Compile Include="EDI Segments\Nm1.cs" />
-    <Compile Include="EDI Segments\N3.cs" />
-    <Compile Include="EDI Segments\Per.cs" />
-    <Compile Include="EDI Segments\Ref.cs" />
-    <Compile Include="EDI Segments\Se.cs" />
-    <Compile Include="EDI Segments\St.cs" />
-    <Compile Include="EDI Segments\Svc.cs" />
-    <Compile Include="EDI Segments\Trn.cs" />
-    <Compile Include="ElectronicDataInterchange.cs" />
-    <Compile Include="EDI Segments\Gs.cs" />
-    <Compile Include="EDI Segments\Isa.cs" />
-    <Compile Include="EDI Segments\N1.cs" />
+    <Compile Include="AddonCharge.cs" />
+    <Compile Include="Address.cs" />
+    <Compile Include="Adjustment.cs" />
+    <Compile Include="BillingProvider.cs" />
+    <Compile Include="Charge.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="InsuranceCompany.cs" />
+    <Compile Include="IPatientRepository.cs" />
+    <Compile Include="Modifier.cs" />
+    <Compile Include="Patient.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="PlaceOfService.cs" />
+    <Compile Include="Preference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtoCharge.cs" />
+    <Compile Include="Provider.cs" />
+    <Compile Include="RenderingProvider.cs" />
+    <Compile Include="Subscriber.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PatienetManagement.Model\PatientManagement.Model.csproj">
-      <Project>{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}</Project>
-      <Name>PatientManagement.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common.Common\Common.Common.csproj">
+    <ProjectReference Include="..\ERAFileCreator2\Common.Common\Common.Common.csproj">
       <Project>{B4E23EFB-5228-40C5-9455-904CA873A7E5}</Project>
       <Name>Common.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

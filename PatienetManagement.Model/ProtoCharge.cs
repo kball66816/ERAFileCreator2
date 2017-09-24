@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace EFC.BL
+namespace PatientManagement.Model
 {
     [Serializable]
     public abstract class ProtoCharge : INotifyPropertyChanged

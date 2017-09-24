@@ -2,6 +2,7 @@
 using WPFERA.ViewModel;
 using EFC.BL;
 using System.Linq;
+using PatientManagement.Model;
 
 namespace WPFERATest
 {

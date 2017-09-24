@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using PatientManagement.Model;
+using System.Text;
 
 namespace EFC.BL.EDI_Segments
 {

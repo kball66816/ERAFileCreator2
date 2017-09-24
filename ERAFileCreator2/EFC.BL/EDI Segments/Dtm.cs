@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PatientManagement.Model;
 
 namespace EFC.BL.EDI_Segments
 {

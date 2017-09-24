@@ -1,6 +1,7 @@
 ﻿using Common.Common;
 using EFC.BL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PatientManagement.Model;
 
 namespace CommonTests
 {

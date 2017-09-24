@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EFC.BL
+namespace PatientManagement.Model
 {
     [Serializable]
     public class Charge : ProtoCharge

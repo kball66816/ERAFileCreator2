@@ -65,6 +65,10 @@
       <Project>{00bb8a7e-46d3-4326-b966-a41231929748}</Project>
       <Name>EraView</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PatienetManagement.Model\PatientManagement.Model.csproj">
+      <Project>{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}</Project>
+      <Name>PatientManagement.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EFC.BL;
+using PatientManagement.Model;
 
 namespace EFC.BLTests
 {

@@ -1,4 +1,5 @@
 ﻿using EFC.BL;
+using PatientManagement.Model;
 using System;
 using System.ComponentModel;
 using System.Windows.Input;

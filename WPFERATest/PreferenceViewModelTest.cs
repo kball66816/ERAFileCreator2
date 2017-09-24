@@ -9,15 +9,15 @@ namespace WPFERATest
         [TestMethod]
         public void SaveCommandTestValueToTrue()
         {
-            PreferenceViewModel Pvm = new PreferenceViewModel();
+            PreferenceViewModel pvm = new PreferenceViewModel();
 
             //Arrange
-            Pvm.Preference.EnablePatientReusePrompt= true;
+            pvm.Preference.EnablePatientReusePrompt= true;
 
             //Act
-            Pvm.SavePreferenceCommand.Execute(true);
+            pvm.SavePreferenceCommand.Execute(true);
 
-            var actual = Pvm.Settings.PatientPromptEnabled;
+            var actual = pvm.Settings.PatientPromptEnabled;
             var expected = true;
 
             //Assert
@@ -27,15 +27,15 @@ namespace WPFERATest
         [TestMethod]
         public void SaveCommandTestValueToFalse()
         {
-            PreferenceViewModel Pvm = new PreferenceViewModel();
+            PreferenceViewModel pvm = new PreferenceViewModel();
 
             //Arrange
-            Pvm.Preference.EnablePatientReusePrompt = false;
+            pvm.Preference.EnablePatientReusePrompt = false;
 
             //Act
-            Pvm.SavePreferenceCommand.Execute(true);
+            pvm.SavePreferenceCommand.Execute(true);
 
-            var actual = Pvm.Settings.PatientPromptEnabled;
+            var actual = pvm.Settings.PatientPromptEnabled;
             var expected = false;
 
             //Assert

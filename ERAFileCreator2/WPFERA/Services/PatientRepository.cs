@@ -1,8 +1,7 @@
-﻿using EFC.BL;
+﻿using PatientManagement.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System;
 
 namespace WPFERA.Services
 {

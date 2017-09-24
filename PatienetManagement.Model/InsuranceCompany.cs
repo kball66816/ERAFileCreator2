@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Common.Common;
 
-namespace EFC.BL
+namespace PatientManagement.Model
 {
     public class InsuranceCompany : INotifyPropertyChanged
     {

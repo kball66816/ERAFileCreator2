@@ -1,6 +1,6 @@
 using System;
 
-namespace EFC.BL
+namespace PatientManagement.Model
 {
     [Serializable]
     public class Modifier

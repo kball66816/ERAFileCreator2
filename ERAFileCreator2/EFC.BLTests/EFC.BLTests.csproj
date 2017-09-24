@@ -60,6 +60,10 @@
     <Compile Include="AddonTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PatienetManagement.Model\PatientManagement.Model.csproj">
+      <Project>{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}</Project>
+      <Name>PatientManagement.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Common\Common.Common.csproj">
       <Project>{b4e23efb-5228-40c5-9455-904ca873a7e5}</Project>
       <Name>Common.Common</Name>

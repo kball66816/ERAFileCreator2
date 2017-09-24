@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
-namespace EFC.BL
+
+namespace PatientManagement.Model
 {
     public interface IPatientRepository
     {

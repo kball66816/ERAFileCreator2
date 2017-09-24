@@ -1,4 +1,4 @@
-﻿namespace EFC.BL
+﻿namespace PatientManagement.Model
 {
     public class Subscriber:Person
     {

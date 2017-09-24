@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace EFC.BL
+namespace PatientManagement.Model
 {
     /// <summary>
     /// Base Properties of a person
