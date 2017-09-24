@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using PatientManagement.DAL;
 
 namespace WPFERA.Services
 {
@@ -19,6 +20,7 @@ namespace WPFERA.Services
             }
         }
 
+
         public void Add(Patient patient)
         {
             patientList.Add(patient);
@@ -28,6 +30,7 @@ namespace WPFERA.Services
         public void Delete(Patient patient)
         {
             patientList.Remove(patient);
+            RaisePropertyChanged("patientList");
         }
 
         public ObservableCollection<Patient> GetAllPatients()
@@ -37,7 +40,7 @@ namespace WPFERA.Services
 
         public Patient GetSelectedPatient(string billId)
         {
-            return patientList.First(p => p.BillId == billId);
+            return GetSelectedPatient(billId);
         }
     }
 }

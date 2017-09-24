@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using PatientManagement.Model;
 
-namespace PatientManagement.Model
+namespace PatientManagement.DAL
 {
     public interface IPatientRepository
     {

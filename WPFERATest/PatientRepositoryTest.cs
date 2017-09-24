@@ -13,17 +13,17 @@ namespace WPFERATest
         public void AddTest()
         {
             //Arrange
-            PatientRepository Pr = new PatientRepository();
+            PatientRepository pr = new PatientRepository();
 
             //Act
             var patient = new Patient()
             {
                 FirstName = "John"
             };
-            Pr.Add(patient);
+            pr.Add(patient);
 
             var expected = "John";
-            var actual = Pr.GetAllPatients().Last().FirstName;
+            var actual = pr.GetAllPatients().First().FirstName;
             //Assert
             Assert.AreEqual(expected, actual);
 

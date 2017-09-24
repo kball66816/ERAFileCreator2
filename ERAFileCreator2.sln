@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFERATest", "WPFERATest\WP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.Model", "PatienetManagement.Model\PatientManagement.Model.csproj", "{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.DAL", "PatientManagement.DAL\PatientManagement.DAL.csproj", "{642F2574-CAEC-4E41-BA46-C3AA96966FBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{642F2574-CAEC-4E41-BA46-C3AA96966FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{642F2574-CAEC-4E41-BA46-C3AA96966FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{642F2574-CAEC-4E41-BA46-C3AA96966FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{642F2574-CAEC-4E41-BA46-C3AA96966FBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

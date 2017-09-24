@@ -137,6 +137,10 @@
       <Project>{24fc5f3c-4a3c-4e22-afb8-96979998e9e6}</Project>
       <Name>PatientManagement.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PatientManagement.DAL\PatientManagement.DAL.csproj">
+      <Project>{642F2574-CAEC-4E41-BA46-C3AA96966FBC}</Project>
+      <Name>PatientManagement.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Common\Common.Common.csproj">
       <Project>{b4e23efb-5228-40c5-9455-904ca873a7e5}</Project>
       <Name>Common.Common</Name>
