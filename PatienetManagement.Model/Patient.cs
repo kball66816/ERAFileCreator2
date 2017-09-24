@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PatientManagement.Model
 {
@@ -8,11 +9,11 @@ namespace PatientManagement.Model
         {
             Subscriber = new Subscriber();
             RenderingProvider = new Provider();
-            Charge = new PrimaryCharge();
+            Charges = new List<PrimaryCharge>();
             billId = string.Empty;
         }
 
-        public PrimaryCharge Charge { get; set; }
+        public List<PrimaryCharge> Charges { get; set; }
 
         public string MemberId { get; set; }
 
@@ -102,8 +103,7 @@ namespace PatientManagement.Model
         {
             var clone = (Patient)MemberwiseClone();
             clone.billId = string.Empty;
-            clone.Charge = new PrimaryCharge();
-            clone.Charge.DateOfService = DateTime.Today;
+            clone.Charges = new List<PrimaryCharge>();
             return clone;
         }
     }

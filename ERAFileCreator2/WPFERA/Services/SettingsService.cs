@@ -1,4 +1,5 @@
-﻿using EFC.BL;
+﻿using System.Linq;
+using EFC.BL;
 using PatientManagement.Model;
 
 namespace WPFERA.Services
@@ -147,7 +148,7 @@ namespace WPFERA.Services
             if (!string.IsNullOrEmpty(Settings.Default.PatientCopay))
             {
                 decimal.TryParse(Settings.Default.PatientCopay, out decimal value);
-                patient.Charge.Copay = value;
+                patient.Charges.FirstOrDefault().Copay = value;
             }
 
             LoadDefaultRenderingProvider(patient);
@@ -179,7 +180,7 @@ namespace WPFERA.Services
         {
             Settings.Default.PatientFirstName = patient.FirstName;
             Settings.Default.PatientLastName = patient.LastName;
-            Settings.Default.PatientCopay = patient.Charge.Copay.ToString();
+            Settings.Default.PatientCopay = patient.Charges.FirstOrDefault().Copay.ToString();
             Settings.Default.RenderingProviderFirstName = patient.RenderingProvider.FirstName;
             Settings.Default.RenderingProviderLastName = patient.RenderingProvider.LastName;
             Settings.Default.RenderingProviderNpi = patient.RenderingProvider.Npi;

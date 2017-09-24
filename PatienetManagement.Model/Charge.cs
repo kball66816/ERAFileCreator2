@@ -15,6 +15,7 @@ namespace PatientManagement.Model
             Id = Guid.NewGuid();
             AdjustmentList = new List<Adjustment>();
             Modifier = new Modifier();
+           
         }
 
         public List<Adjustment> AdjustmentList { get; set; }

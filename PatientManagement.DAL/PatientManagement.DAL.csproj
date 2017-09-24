@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAdjustmentRepository.cs" />
+    <Compile Include="IChargeRepository.cs" />
     <Compile Include="IPatientRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

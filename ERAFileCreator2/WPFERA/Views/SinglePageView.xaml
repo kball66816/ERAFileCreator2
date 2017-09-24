@@ -594,7 +594,7 @@
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left"
-                     Text="{Binding SelectedPatient.Charge.Copay, StringFormat=\{0:F2\}}">
+                     Text="{Binding SelectedPatient.Charges.Copay, StringFormat=\{0:F2\}}">
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <DockPanel >
@@ -819,11 +819,11 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
-            <TextBlock Name ="PrimaryChargeAmountTag" Grid.Row="21" Grid.Column="3"
+            <TextBlock Name ="PrimaryChargesAmountTag" Grid.Row="21" Grid.Column="3"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
-                       Text="Primary Charge Amount*"/>
-            <TextBox Name="PrimaryChargeAmountInput" Grid.Row="21" Grid.Column="3"
+                       Text="Primary Charges Amount*"/>
+            <TextBox Name="PrimaryChargesAmountInput" Grid.Row="21" Grid.Column="3"
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left"
@@ -923,16 +923,16 @@
                              Text="{Binding Addon.PaymentAmount}"
                              Width="115"
                      HorizontalAlignment="Left"/>
-            <TextBlock Name="AddonChargeAmountTag" Grid.Row="23" Grid.Column="3"
+            <TextBlock Name="AddonChargesAmountTag" Grid.Row="23" Grid.Column="3"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
-                           Text="Addon Charge Amount"/>
-            <TextBox Name="AddonChargeAmountInput" Grid.Row="23" Grid.Column="3"
+                           Text="Addon Charges Amount"/>
+            <TextBox Name="AddonChargesAmountInput" Grid.Row="23" Grid.Column="3"
                 Margin="10,20,0,0"
                                  Text="{Binding Addon.ChargeCost}" 
                                  Width="115"
                      HorizontalAlignment="Left"/>
-            <Button Name="AddAddonChargeButton" Grid.Row="23" Grid.Column="4"
+            <Button Name="AddAddonChargesButton" Grid.Row="23" Grid.Column="4"
                 Margin="10,0,10,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"

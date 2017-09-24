@@ -151,7 +151,7 @@ namespace WPFERATest
             Pvm.AddPatientCommand.Execute(true);
 
             var expected = chargeTest.Id;
-            var actual = patientTest.Charge.Id;
+            var actual = patientTest.Charges.Id;
             //Assert
 
             Assert.AreEqual(expected, actual);
