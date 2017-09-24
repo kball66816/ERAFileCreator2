@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace PatientManagement.Model
+namespace Common.Common
 {
     public class Address:INotifyPropertyChanged
     {

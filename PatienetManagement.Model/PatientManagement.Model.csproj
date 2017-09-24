@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddonCharge.cs" />
-    <Compile Include="Address.cs" />
     <Compile Include="Adjustment.cs" />
     <Compile Include="BillingProvider.cs" />
     <Compile Include="Charge.cs" />

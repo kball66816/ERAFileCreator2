@@ -1,4 +1,6 @@
-﻿namespace PatientManagement.Model
+﻿using Common.Common;
+
+namespace PatientManagement.Model
 {
     public class BillingProvider : Provider
 
