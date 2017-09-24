@@ -64,7 +64,7 @@ namespace CommonTests
         public void DecimalTruncateChargesWithNoDecimal()
         {
             //Arrange
-            var charge = new Charge();
+            var charge = new PrimaryCharge();
             string textBoxExample = "14";
             decimal.TryParse(textBoxExample, out decimal value);
             charge.PaymentAmount = value;
@@ -81,7 +81,7 @@ namespace CommonTests
         public void DecimalTruncateChargesWithNoTextValue()
         {
             //Arrange
-            var charge = new Charge();
+            var charge = new PrimaryCharge();
             string textBoxExample = "";
             decimal.TryParse(textBoxExample, out decimal value);
             charge.PaymentAmount = value;

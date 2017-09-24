@@ -13,6 +13,5 @@ namespace PatientManagement.DAL
 
         Patient GetSelectedPatient(string billId);
 
-   
     }
 }

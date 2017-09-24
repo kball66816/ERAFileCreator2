@@ -1,11 +1,29 @@
-﻿namespace PatientManagement.Model
+﻿using Common.Common;
+
+namespace PatientManagement.Model
 {
     /// <summary>
     /// Base properties of a provider
     /// </summary>
-    public abstract class Provider : Person
+    public class Provider : Person
     {
+        public Provider(Provider provider)
+        {
+            Address = provider.Address;
+            FirstName = provider.FirstName;
+            LastName = provider.LastName;
+            Npi = provider.Npi;
+            MiddleInitial = provider.MiddleInitial;
+        }
 
+        public Provider()
+        {
+            Address = new Address();
+        }
+
+        public Address Address { get; set; }
+
+        public bool IsAlsoRendering { get; set; }
 
         private string npi;
 
@@ -21,6 +39,7 @@
                 }
             }
         }
-    }
 
+        public bool IsIndividual { get; set; }
+    }
 }

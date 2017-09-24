@@ -156,7 +156,7 @@ namespace WPFERA.Services
 
         private Provider LoadDefaultRenderingProvider(Patient patient)
         {
-            var provider = new RenderingProvider();
+            var provider = new Provider();
             if(!string.IsNullOrEmpty(Settings.Default.RenderingProviderFirstName))
             {
                provider.FirstName = Settings.Default.RenderingProviderFirstName;
@@ -180,14 +180,14 @@ namespace WPFERA.Services
             Settings.Default.PatientFirstName = patient.FirstName;
             Settings.Default.PatientLastName = patient.LastName;
             Settings.Default.PatientCopay = patient.Charge.Copay.ToString();
-            Settings.Default.RenderingProviderFirstName = patient.Provider.FirstName;
-            Settings.Default.RenderingProviderLastName = patient.Provider.LastName;
-            Settings.Default.RenderingProviderNpi = patient.Provider.Npi;
+            Settings.Default.RenderingProviderFirstName = patient.RenderingProvider.FirstName;
+            Settings.Default.RenderingProviderLastName = patient.RenderingProvider.LastName;
+            Settings.Default.RenderingProviderNpi = patient.RenderingProvider.Npi;
             Settings.Default.Save();
         }
 
        
-        public BillingProvider PullDefaultBillingProvider(BillingProvider billingProvider)
+        public Provider PullDefaultBillingProvider(Provider billingProvider)
         {
             billingProvider.IsIndividual = Settings.Default.BillingProviderIsIndividual;
 
@@ -208,7 +208,7 @@ namespace WPFERA.Services
 
             if (!string.IsNullOrEmpty(Settings.Default.BillingProviderName ))
             {
-                billingProvider.Name = Settings.Default.BillingProviderName;
+                billingProvider.FullName = Settings.Default.BillingProviderName;
             }
 
             if (!string.IsNullOrEmpty(Settings.Default.BillingProviderAddressLineOne))
@@ -239,12 +239,12 @@ namespace WPFERA.Services
             return billingProvider;
         }
 
-        public void SetDefaultBillingProvider(BillingProvider billingProvider)
+        public void SetDefaultBillingProvider(Provider billingProvider)
         {
             Settings.Default.BillingProviderFirstName = billingProvider.FirstName;
             Settings.Default.BillingProviderLastName = billingProvider.LastName;
             Settings.Default.BillingProviderNpi = billingProvider.Npi;
-            Settings.Default.BillingProviderName = billingProvider.Name;
+            Settings.Default.BillingProviderName = billingProvider.FullName;
             Settings.Default.BillingProviderAddressLineOne = billingProvider.Address.StreetOne;
             Settings.Default.BillingProviderAddressLineTwo = billingProvider.Address.StreetTwo;
             Settings.Default.BillingProviderAddressCity = billingProvider.Address.City;

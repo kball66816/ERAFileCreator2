@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WPFERA.Services;
-using EFC.BL;
 using System.Linq;
 using PatientManagement.Model;
 
@@ -33,18 +32,18 @@ namespace WPFERATest
         public void DeleteTest()
         {
             //Arrange
-            PatientRepository Pr = new PatientRepository();
+            PatientRepository pr = new PatientRepository();
 
             //Act
             var patient = new Patient()
             {
                 FirstName = "John"
             };
-            Pr.Add(patient);
-            Pr.Delete(patient);
+            pr.Add(patient);
+            pr.Delete(patient);
 
             var expected = 0;
-            var actual = Pr.GetAllPatients().Count;
+            var actual = pr.GetAllPatients().Count;
             //Assert
             Assert.AreEqual(expected, actual);
 

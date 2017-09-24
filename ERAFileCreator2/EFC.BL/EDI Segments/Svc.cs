@@ -5,7 +5,7 @@ namespace EFC.BL.EDI_Segments
 {
     class Svc
     {
-        public string BuildSvc(Charge charge)
+        public string BuildSvc(PrimaryCharge charge)
         {
             var buildSvc = new StringBuilder();
 

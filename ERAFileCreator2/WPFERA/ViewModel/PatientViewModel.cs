@@ -21,7 +21,7 @@ namespace WPFERA.ViewModel
             Addon = new AddonCharge();
             Adjustment = new Adjustment();
             AddonAdjustment = new Adjustment();
-            Charge = new Charge();
+            Charge = new PrimaryCharge();
             LoadInsuranceCompany();
 
             patientRepository.Add(SelectedPatient);
@@ -41,7 +41,7 @@ namespace WPFERA.ViewModel
 
         private void LoadBillingProvider()
         {
-            BillingProvider = new BillingProvider();
+            BillingProvider = new Provider();
             BillingProvider = Settings.PullDefaultBillingProvider(BillingProvider);
             ProviderStates = BillingProvider.Address.States;
         }
@@ -82,9 +82,9 @@ namespace WPFERA.ViewModel
 
         public Dictionary<string, string> ProviderStates { get; set; }
 
-        private BillingProvider billingProvider;
+        private Provider billingProvider;
 
-        public BillingProvider BillingProvider
+        public Provider BillingProvider
         {
             get { return billingProvider; }
             set
@@ -112,9 +112,9 @@ namespace WPFERA.ViewModel
             }
         }
 
-        private Charge charge;
+        private PrimaryCharge charge;
 
-        public Charge Charge
+        public PrimaryCharge Charge
         {
             get { return charge; }
             set
@@ -150,7 +150,7 @@ namespace WPFERA.ViewModel
             }
         }
 
-        private bool IsChargeMatched(Charge charge)
+        private bool IsChargeMatched(PrimaryCharge charge)
         {
             if (selectedPatient.Charge.Id == charge.Id)
             {
@@ -189,12 +189,12 @@ namespace WPFERA.ViewModel
         {
             if (Settings.ReuseChargeForNextPatient)
             {
-                charge = new Charge(charge);
+                charge = new PrimaryCharge(charge);
             }
 
             else
             {
-                Charge = new Charge();
+                Charge = new PrimaryCharge();
             }
             RaisePropertyChanged("Charge");
         }
@@ -556,9 +556,9 @@ namespace WPFERA.ViewModel
         {
             if (BillingProvider.IsAlsoRendering)
             {
-                selectedPatient.Provider.FirstName = BillingProvider.FirstName;
-                selectedPatient.Provider.LastName = BillingProvider.LastName;
-                selectedPatient.Provider.Npi = BillingProvider.Npi;
+                selectedPatient.RenderingProvider.FirstName = BillingProvider.FirstName;
+                selectedPatient.RenderingProvider.LastName = BillingProvider.LastName;
+                selectedPatient.RenderingProvider.Npi = BillingProvider.Npi;
                 RaisePropertyChanged("Patient");
             }
 

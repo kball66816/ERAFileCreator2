@@ -1,78 +1,109 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace PatientManagement.Model
 {
     [Serializable]
-    public class Charge : ProtoCharge
+    public abstract class Charge : INotifyPropertyChanged
     {
+
         public Charge()
         {
             Id = Guid.NewGuid();
-            AddonChargeList = new List<AddonCharge>();
             AdjustmentList = new List<Adjustment>();
             Modifier = new Modifier();
-            DateOfService = DateTime.Today;
-            PlaceOfService = new PlaceOfService();
         }
 
-        public Charge(Charge charge)
+        public List<Adjustment> AdjustmentList { get; set; }
+
+        public Modifier Modifier { get; set; }
+
+        public Guid Id { get;  set; }
+
+
+        private decimal copay;
+
+        public decimal Copay
         {
-            ProcedureCode = charge.ProcedureCode;
-            ChargeCost = charge.ChargeCost;
-            PaymentAmount = charge.PaymentAmount;
-            PlaceOfService = new PlaceOfService(charge.PlaceOfService);
-            Modifier = new Modifier(charge.Modifier);
-            DateOfService = DateTime.Today;
-
-            AddonChargeList = new List<AddonCharge>();
-            AdjustmentList = new List<Adjustment>();
-            Id = Guid.NewGuid();
-        }
-        public PlaceOfService PlaceOfService { get; set; }
-
-        public DateTime DateOfService { get; set; }
-
-        public List<AddonCharge> AddonChargeList { get; set; }
-
-        private decimal TotalCostofAddonCharge
-        {
-            get
+            get { return copay; }
+            set
             {
-                decimal totalCostOfAddon = AddonChargeList.Sum(addon => addon.ChargeCost);
-                return totalCostOfAddon;
+                if (value != copay)
+                {
+                    copay = value;
+                    RaisePropertyChanged("Copay");
+                }
+
             }
         }
 
-        private decimal TotalAddonChargesPaid
+        public decimal AllowedAmount
         {
             get
             {
-                decimal totalChargesPaid = AddonChargeList.Sum(addon => addon.PaymentAmount);
-                return totalChargesPaid;
+                decimal allowed = PaymentAmount + Copay;
+                return allowed;
             }
         }
 
-        
-        public decimal SumOfChargePaid
+        private decimal chargeCost;
+
+        public decimal ChargeCost
         {
-            get
-            {
-                decimal total = ChargeCost+ TotalAddonChargesPaid;
-                return total;
-            }
+            get { return chargeCost; }
+            set { chargeCost = value; }
         }
 
-        public decimal SumOfChargeCost
+
+        private decimal paymentAmount;
+
+        public decimal PaymentAmount
         {
-            get
+            get { return paymentAmount; }
+            set
             {
-                decimal totalCost = ChargeCost+TotalCostofAddonCharge;
-                return totalCost;
+                if (value != paymentAmount)
+                {
+                    paymentAmount = value;
+                    RaisePropertyChanged("PaymentAmount");
+                    RaisePropertyChanged("CheckAmount");
+                }
+
             }
         }
 
+        public string ProcedureCode { get; set; }
+      
+       
 
+        public string CountAdjustments
+        {
+            get { return AdjustmentList.Count.ToString(); }
+        }
+
+
+        public object Clone()
+        {
+            MemoryStream m = new MemoryStream();
+            BinaryFormatter b = new BinaryFormatter();
+            b.Serialize(m, this);
+            m.Position = 0;
+
+            return (Charge)b.Deserialize(m);
+        }
+
+        [field:NonSerialized]
+    public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }

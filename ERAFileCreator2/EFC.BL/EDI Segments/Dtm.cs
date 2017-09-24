@@ -46,7 +46,7 @@ namespace EFC.BL.EDI_Segments
 
             return buildDtm.ToString();
         }
-        public string BuildDtm(Charge charge)
+        public string BuildDtm(PrimaryCharge charge)
         {
             //DTM Service Start Date 2110
             //DTM01 Date Time QUalifier

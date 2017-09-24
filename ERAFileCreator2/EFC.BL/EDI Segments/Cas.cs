@@ -7,7 +7,7 @@ namespace EFC.BL.EDI_Segments
     class Cas
     {
 
-        public string BuildCas(Charge charge)
+        public string BuildCas(PrimaryCharge charge)
         {
             var buildCas = new StringBuilder();
             {

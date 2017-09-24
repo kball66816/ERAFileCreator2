@@ -12,7 +12,7 @@ namespace EFC.BLTests
         [TestMethod]
         public void ValidProviderNpi()
         {
-            var provider = new RenderingProvider
+            var provider = new Provider
             {
                 FirstName = "John",
                 LastName = "Smith",
@@ -29,9 +29,7 @@ namespace EFC.BLTests
         [TestMethod]
         public void InvalidProviderNpi()
         {
-            var provider = new RenderingProvider
-            {
-            };
+            var provider = new Provider();
 
             try
             {
@@ -50,9 +48,8 @@ namespace EFC.BLTests
         [TestMethod]
         public void ShortProviderNpi()
         {
-            var provider = new RenderingProvider
-            {
-            };
+            var provider = new Provider();
+
             try
             {
                 provider.Npi = "12345678";

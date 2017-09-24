@@ -40,13 +40,13 @@ namespace EFC.BL.EDI_Segments
             buildNm1.Append("NM1" + "*");
             buildNm1.Append("82" + "*"); //NM101 Entity Identifier Code
             buildNm1.Append("1" + "*"); //NM102 Entity Type Qualifier
-            buildNm1.Append(patient.Provider.LastName + "*"); //NM103 Rendering Provider Last Name
-            buildNm1.Append(patient.Provider.FirstName + "*");//NM104 Rendering Provider First Name
-            buildNm1.Append(patient.Provider.MiddleInitial + "*"); //NM105 Rendering Provider Middle Name
+            buildNm1.Append(patient.RenderingProvider.LastName + "*"); //NM103 Rendering Provider Last Name
+            buildNm1.Append(patient.RenderingProvider.FirstName + "*");//NM104 Rendering Provider First Name
+            buildNm1.Append(patient.RenderingProvider.MiddleInitial + "*"); //NM105 Rendering Provider Middle Name
             buildNm1.Append("*"); //NM106 Name Prefix
             buildNm1.Append("*"); //NM107 Rendering Provider Name Suffix
             buildNm1.Append("XX" + "*"); //NM108 Rendering Provider Identification Code Qualifier
-            buildNm1.Append(patient.Provider.Npi); //NM109 Rendering Provider Identifier
+            buildNm1.Append(patient.RenderingProvider.Npi); //NM109 Rendering Provider Identifier
             buildNm1.Append("~");
 
             //NM1 Crossover Carrier

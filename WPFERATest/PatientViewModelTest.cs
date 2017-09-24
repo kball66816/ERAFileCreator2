@@ -109,7 +109,7 @@ namespace WPFERATest
             Pvm.UpdateRenderingProviderCommand.Execute(true);
             
             var expected = "John";
-            var actual = Pvm.SelectedPatient.Provider.FirstName;
+            var actual = Pvm.SelectedPatient.RenderingProvider.FirstName;
             //Assert
 
             Assert.AreEqual(expected, actual);
@@ -127,7 +127,7 @@ namespace WPFERATest
             Pvm.UpdateRenderingProviderCommand.Execute(true);
 
             string expected = null;
-            var actual = Pvm.SelectedPatient.Provider.FirstName;
+            var actual = Pvm.SelectedPatient.RenderingProvider.FirstName;
             //Assert
 
             Assert.AreEqual(expected, actual);
@@ -146,7 +146,7 @@ namespace WPFERATest
             Pvm.Charge.PlaceOfService.ServiceLocation = "11";
             //Act
 
-            Charge chargeTest = Pvm.Charge;
+            PrimaryCharge chargeTest = Pvm.Charge;
             Patient patientTest = Pvm.SelectedPatient;
             Pvm.AddPatientCommand.Execute(true);
 

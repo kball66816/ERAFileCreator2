@@ -17,7 +17,7 @@ namespace EFC.BL.EDI_Segments
 
             return buildN4.ToString();
         }
-        public string BuildN4(BillingProvider billingProvider)
+        public string BuildN4(Provider billingProvider)
         {
             var buildNFour = new StringBuilder();
 

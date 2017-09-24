@@ -43,6 +43,8 @@ namespace PatientManagement.Model
             }
         }
 
+        private string fullName;
+
         public string FullName
         {
             get
@@ -54,6 +56,14 @@ namespace PatientManagement.Model
                     fullName = fullName += " " + LastName;
                 }
                 return fullName;
+            }
+
+            set
+            {
+                if (value != fullName)
+                {
+                    fullName = value;
+                }
             }
         }
                 

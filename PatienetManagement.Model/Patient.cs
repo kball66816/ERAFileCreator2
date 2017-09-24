@@ -7,11 +7,11 @@ namespace PatientManagement.Model
         public Patient()
         {
             Subscriber = new Subscriber();
-            Provider = new RenderingProvider();
-            Charge = new Charge();
+            RenderingProvider = new Provider();
+            Charge = new PrimaryCharge();
         }
 
-        public Charge Charge { get; set; }
+        public PrimaryCharge Charge { get; set; }
 
         public string MemberId { get; set; }
 
@@ -95,13 +95,13 @@ namespace PatientManagement.Model
 
         public Subscriber Subscriber { get; set; }
 
-        public RenderingProvider Provider { get; set; }
+        public Provider RenderingProvider { get; set; }
 
         public Patient CopyPatient()
         {
             var clone = (Patient)MemberwiseClone();
             clone.billId = string.Empty;
-            clone.Charge = new Charge();
+            clone.Charge = new PrimaryCharge();
             clone.Charge.DateOfService = DateTime.Today;
             return clone;
         }

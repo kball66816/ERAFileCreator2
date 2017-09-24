@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace PatientManagement.Model
 {
     [Serializable]
-    public class AddonCharge:ProtoCharge, ICloneable
+    public class AddonCharge:Charge, ICloneable
     {
         public AddonCharge()
         {

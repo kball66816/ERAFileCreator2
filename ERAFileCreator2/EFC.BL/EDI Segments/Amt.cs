@@ -5,7 +5,7 @@ namespace EFC.BL.EDI_Segments
 {
     class Amt
     {
-        public string BuildAmt(ProtoCharge charge)
+        public string BuildAmt(Charge charge)
         {
             var buildAmt = new StringBuilder();
 

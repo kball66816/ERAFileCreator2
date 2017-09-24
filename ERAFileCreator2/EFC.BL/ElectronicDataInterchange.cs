@@ -8,7 +8,7 @@ namespace EFC.BL
     public class ElectronicDataInterchange
     {
         public string BuildEdi(List<Patient> patientList, InsuranceCompany insurance,
-           BillingProvider billingProvider)
+           Provider billingProvider)
         {
             var buildEdi = new StringBuilder();
 
@@ -101,7 +101,7 @@ namespace EFC.BL
 
 
                 //Ref Rendering Provider Identifier 2100
-                buildEdi.Append(buildRef.BuildRef(patient.Provider));
+                buildEdi.Append(buildRef.BuildRef(patient.RenderingProvider));
 
                 //DTM Statement From or To Date 2100
                 buildEdi.Append(buildDtm.BuildDtm(patient));
