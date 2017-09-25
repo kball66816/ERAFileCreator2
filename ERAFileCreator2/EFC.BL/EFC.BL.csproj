@@ -65,8 +65,13 @@
     <Compile Include="EDI Segments\Isa.cs" />
     <Compile Include="EDI Segments\N1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdatedEDI.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Edi835\Edi835.csproj">
+      <Project>{25504fa7-b820-4de4-beed-d84e2fb697e5}</Project>
+      <Name>Edi835</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\PatienetManagement.Model\PatientManagement.Model.csproj">
       <Project>{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}</Project>
       <Name>PatientManagement.Model</Name>

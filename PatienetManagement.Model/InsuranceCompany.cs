@@ -90,6 +90,8 @@ namespace PatientManagement.Model
             }
         }
 
+        public string CheckNumber { get; set; }
+
         //private string FormattedPaymentType(string paymentTypeKey)
         //{
         //    return PaymentTypes.ContainsKey(paymentTypeKey) ? (PaymentTypes[paymentTypeKey])

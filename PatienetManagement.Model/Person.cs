@@ -66,7 +66,9 @@ namespace PatientManagement.Model
                 }
             }
         }
-                
+
+        public string Suffix { get; set; }
+        public string Prefix { get; set; }
         public string MiddleInitial { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
