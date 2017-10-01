@@ -9,13 +9,14 @@ namespace EDI835.Segments
     {
         public Dtm()
         {
+            SegmentIdentifier = "DTM";
             ProductionDate = DateTime.Today.ConvertedDate();
             DateTimeQualifier = "405";
         }
 
-        public Dtm(Patient patient)
+        public Dtm(Patient patient, PrimaryCharge charge)
         {
-            
+            Charge = charge;
             SegmentIdentifier = "DTM";
             ServiceStartDateDetails();
         }

@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.DAL", "Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edi835", "Edi835\Edi835.csproj", "{25504FA7-B820-4DE4-BEED-D84E2FB697E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.ViewModel", "PatientManagement.ViewModel\PatientManagement.ViewModel.csproj", "{CF866762-41EC-448B-B713-97948E9B23F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{25504FA7-B820-4DE4-BEED-D84E2FB697E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25504FA7-B820-4DE4-BEED-D84E2FB697E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25504FA7-B820-4DE4-BEED-D84E2FB697E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF866762-41EC-448B-B713-97948E9B23F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF866762-41EC-448B-B713-97948E9B23F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF866762-41EC-448B-B713-97948E9B23F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF866762-41EC-448B-B713-97948E9B23F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

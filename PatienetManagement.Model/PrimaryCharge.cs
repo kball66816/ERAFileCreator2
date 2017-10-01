@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace PatientManagement.Model
@@ -11,7 +12,7 @@ namespace PatientManagement.Model
         {
             Id = Guid.NewGuid();
             AddonChargeList = new List<AddonCharge>();
-            AdjustmentList = new List<Adjustment>();
+            AdjustmentList = new ObservableCollection<Adjustment>();
             Modifier = new Modifier();
             DateOfService = DateTime.Today;
             PlaceOfService = new PlaceOfService();
@@ -27,7 +28,7 @@ namespace PatientManagement.Model
             DateOfService = DateTime.Today;
 
             AddonChargeList = new List<AddonCharge>();
-            AdjustmentList = new List<Adjustment>();
+            AdjustmentList = new ObservableCollection<Adjustment>();
             Id = Guid.NewGuid();
         }
 

@@ -4,31 +4,36 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using EraView.Services;
+using Common.Common;
+using EFC.BL;
+using PatientManagement.ViewModel.Services;
 using PatientManagement.Model;
+using PatientManagement.DAL;
 
-namespace EraView.ViewModel
+namespace PatientManagement.ViewModel
 {
     public class PatientViewModel : INotifyPropertyChanged
     {
         public PatientViewModel()
         {
+           
             Settings = new SettingsService();
             LoadInitialPatient();
             LoadBillingProvider();
             Addon = new AddonCharge();          
-            Adjustment = new Adjustment();
+            SelectedAdjustment = new Adjustment();
             AddonAdjustment = new Adjustment();
             SelectedCharge = new PrimaryCharge();
+
             LoadInsuranceCompany();
-            Pcvm = new PrimaryChargeViewModel();
             patientRepository.Add(SelectedPatient);
             Patients = patientRepository.GetAllPatients();
             Charges = selectedPatient.Charges;
+            Adjustments = selectedCharge.AdjustmentList;
             PlacesOfService = SelectedCharge.PlaceOfService.PlacesOfService;
-            PrimaryAdjustmentReasonCodes = Adjustment.AdjustmentReasonCodes;
+            PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
             AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
-            PrimaryAdjustmentType = Adjustment.AdjustmentTypes;
+            PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
             AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
             LoadCommands();
             RefreshAllCounters();
@@ -57,7 +62,7 @@ namespace EraView.ViewModel
             SelectedPatient = Settings.PullDefaultPatient();
         }
 
-        private readonly PatientRepository patientRepository = new PatientRepository();
+        private readonly IPatientRepository patientRepository = new PatientRepository();
 
         private bool SupressAddonDialog { get; set; }
 
@@ -166,9 +171,8 @@ namespace EraView.ViewModel
         private void AddPatient(object obj)
         {
             SupressAddonDialog = true;
-            MatchAdjustmentToCharge();
-            // MatchUnaddedChargeToSelectedPatient();
-            AddChargeToPatientEncounter();
+           // MatchAdjustmentToCharge();
+            //AddChargeToPatientEncounter();
             ReturnNewPatient();
             patientRepository.Add(SelectedPatient);
             UpdateCheckAmount();
@@ -177,44 +181,30 @@ namespace EraView.ViewModel
             ReturnNewCharge();
         }
 
-        //private void MatchUnaddedChargeToSelectedPatient()
-        //{
-        //    selectedPatient.Charges = Pcvm.UnaddedCharges.ToList();
-        //    Pcvm = new PrimaryChargeViewModel();
-        //    RaisePropertyChanged("UnaddedCharges");
-        //}
+     
 
-        private void AddChargeToPatientEncounter()
-        {
-            selectedPatient.Charges.Add(selectedCharge);
-        }
+
+        public ICommand ReturnNewChargeCommand { get; private set; }
 
         private void ReturnNewCharge()
         {
-            if (Settings.ReuseChargeForNextPatient)
-            {
-                SelectedCharge = new PrimaryCharge(SelectedCharge);
-            }
+            SelectedCharge = Settings.ReuseChargeForNextPatient ? new PrimaryCharge(SelectedCharge) : new PrimaryCharge();
 
-            else
-            {
-                SelectedCharge = new PrimaryCharge();
-            }
             RaisePropertyChanged("SelectedCharge");
         }
 
-        private void MatchAdjustmentToCharge()
-        {
-            if (CanAddAdjustment(Adjustment))
-            {
-                AddChargeAdjustment(SelectedCharge);
-            }
+        //private void MatchAdjustmentToCharge()
+        //{
+        //    if (CanAddAdjustment(SelectedAdjustment))
+        //    {
+        //        AddChargeAdjustment(SelectedCharge);
+        //    }
 
-            else
-            {
-                return;
-            }
-        }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //}
 
 
         private void ReturnNewPatient()
@@ -347,19 +337,27 @@ namespace EraView.ViewModel
             }
         }
 
-        private Adjustment adjustment;
+        private Adjustment selectedAdjustment;
 
-        public Adjustment Adjustment
+        public Adjustment SelectedAdjustment
         {
-            get { return adjustment; }
+            get { return selectedAdjustment; }
             set
             {
-                if (value != adjustment)
+                if (value != selectedAdjustment)
                 {
-                    adjustment = value;
-                    RaisePropertyChanged("Adjustment");
+                    selectedAdjustment = value;
+                    RaisePropertyChanged("SelectedAdjustment");
                 }
             }
+        }
+
+        private ObservableCollection<Adjustment> adjustments;
+
+        public ObservableCollection<Adjustment> Adjustments
+        {
+            get { return adjustments; }
+            set { adjustments = value; }
         }
 
         private Adjustment addonAdjustment;
@@ -391,8 +389,8 @@ namespace EraView.ViewModel
 
         private void AddChargeAdjustment(object obj)
         {
-            SelectedCharge.AdjustmentList.Add(Adjustment);
-            Adjustment = new Adjustment();
+            SelectedCharge.AdjustmentList.Add(SelectedAdjustment);
+            SelectedAdjustment = new Adjustment();
             RaisePropertyChanged("Adjustment");
             RefreshAllCounters();
         }
@@ -413,7 +411,7 @@ namespace EraView.ViewModel
 
         private bool CanAddAdjustment(object obj)
         {
-            if (Adjustment.AdjustmentReasonCode != null && Adjustment.AdjustmentType != null)
+            if (SelectedAdjustment.AdjustmentReasonCode != null && SelectedAdjustment.AdjustmentAmount >0)
             {
                 return true;
             }
@@ -424,7 +422,6 @@ namespace EraView.ViewModel
         }
 
         private AddonCharge addon;
-        private PrimaryChargeViewModel pcvm;
         private ObservableCollection<PrimaryCharge> charges;
 
         public AddonCharge Addon
@@ -531,19 +528,33 @@ namespace EraView.ViewModel
         private void Save(object obj)
         {
             SupressAddonDialog = true;
-            MatchAdjustmentToCharge();
+            //  MatchAdjustmentToCharge();
             //   MatchAddonToCharge();
             //   MatchChargeToPatient();
             UpdateCheckAmount();
             SaveSettings();
-            //var edi = new ElectronicDataInterchange();
+           
+            SaveProviderToRepository();
+            SaveInsuranceToRepository();
 
-            //var save = new SaveToFile();
-            // save.SaveFile(edi.BuildEdi(patients.ToList(), insurance, billingProvider));
+            var edi = new UpdatedEdi();
+
+            var save = new SaveToFile();
+
+            save.SaveFile(edi.Create835File());
         }
 
+        private void SaveInsuranceToRepository()
+        {
+            IInsurance saveInsurance = new InsuranceRepository();
+            saveInsurance.AddInsurance(insurance);
+        }
 
-
+        private void SaveProviderToRepository()
+        {
+            IProvider saveProvider = new BillingProviderRepository();
+            saveProvider.AddBillingProvider(billingProvider);
+        }
 
         private void UpdateCheckAmount()
         {
@@ -568,9 +579,9 @@ namespace EraView.ViewModel
         private void RefreshAllCounters()
         {
             UpdatePatientCount();
-            UpdateAddonCount();
-            UpdateChargeAdjustmentCount();
-            UpdateAddonAdjustmentCount();
+            //UpdateAddonCount();
+            //UpdateChargeAdjustmentCount();
+           // UpdateAddonAdjustmentCount();
         }
 
         private void UpdatePatientCount()
@@ -607,54 +618,46 @@ namespace EraView.ViewModel
 
         public int ChargeAdjustmentCount { get; private set; }
 
-        private void UpdateChargeAdjustmentCount()
-        {
-            ChargeAdjustmentCount = SelectedCharge.AdjustmentList.Count;
-            RaisePropertyChanged("ChargeAdjustmentCount");
-        }
+        //private void UpdateChargeAdjustmentCount()
+        //{
+        //    ChargeAdjustmentCount = SelectedCharge.AdjustmentList.Count;
+        //    RaisePropertyChanged("ChargeAdjustmentCount");
+        //}
 
         public int AddonChargeAdjustmentCount { get; private set; }
 
-        private void UpdateAddonCount()
-        {
-            AddonChargeCount = SelectedCharge.AddonChargeList.Count;
-            RaisePropertyChanged("AddonChargeCount");
-        }
-
-        public PrimaryChargeViewModel Pcvm
-
-        {
-            get { return pcvm; }
-            set
-            {
-                if (value != pcvm)
-                {
-                    pcvm = value;
-                    RaisePropertyChanged("Pcvm");
-                }
-            }
-        }
-
-        //private void AddChargeToRepository(object obj)
+        //private void UpdateAddonCount()
         //{
-        //    Pcvm.ChargeRepository.Add(selectedCharge);
-        //    selectedCharge = new PrimaryCharge();
-        //    RaisePropertyChanged("SelectedCharge");
+        //    AddonChargeCount = SelectedCharge.AddonChargeList.Count;
+        //    RaisePropertyChanged("AddonChargeCount");
         //}
+
 
         private void AddChargeToPatient(object obj)
         {
+            //AddValidAdjustmentToCharge();
             selectedPatient.Charges.Add(selectedCharge);
-            selectedCharge = new PrimaryCharge();
+            ReturnNewCharge();
             RaisePropertyChanged("SelectedCharge");
             RaisePropertyChanged("Charges");
         }
 
-        private bool CanAddChargeToPatient(object obj)
+        private void AddValidAdjustmentToCharge()
         {
+            if (selectedAdjustment.AdjustmentAmount > 0 && CanAddAdjustment(selectedAdjustment) == true)
+            {
+                bool execute = true;
+                AddChargeAdjustmentCommand.Execute(execute);
+            }
+        }
+
+        private bool CanAddChargeToPatient(object obj)
+        { 
             bool b = selectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(selectedCharge.ProcedureCode);
 
             return b;
         }
+
+       
     }
 }

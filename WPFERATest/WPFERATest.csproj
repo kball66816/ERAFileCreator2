@@ -73,6 +73,10 @@
       <Project>{642f2574-caec-4e41-ba46-c3aa96966fbc}</Project>
       <Name>PatientManagement.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PatientManagement.ViewModel\PatientManagement.ViewModel.csproj">
+      <Project>{CF866762-41EC-448B-B713-97948E9B23F9}</Project>
+      <Name>PatientManagement.ViewModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

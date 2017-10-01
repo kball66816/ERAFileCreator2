@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace EraView.Services
+namespace PatientManagement.ViewModel.Services
 {
     class Command : ICommand
     {

@@ -6,6 +6,7 @@ namespace EDI835.Segments
     {
         public Se(int totalSegmentCount)
         {
+            SegmentIdentifier = "SE";
             TransactionSegmentCount = totalSegmentCount;
             TransactionSetControlNumber = "000000001";
 

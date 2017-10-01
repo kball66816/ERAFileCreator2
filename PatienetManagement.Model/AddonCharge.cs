@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PatientManagement.Model
 {
@@ -9,7 +10,7 @@ namespace PatientManagement.Model
         public AddonCharge()
         {
             Id = Guid.NewGuid();
-            AdjustmentList = new List<Adjustment>();
+            AdjustmentList = new ObservableCollection<Adjustment>();
             Modifier = new Modifier();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using EFC.BL.EDI_Segments;
 using System.Collections.Generic;
+using System.Linq;
 using PatientManagement.Model;
 
 namespace EFC.BL
@@ -120,7 +121,7 @@ namespace EFC.BL
                     var buildCas = new Cas();
                     if (charge.AdjustmentList != null)
                     {
-                        buildEdi.Append(buildCas.BuildCas(charge.AdjustmentList));
+                        buildEdi.Append(buildCas.BuildCas(charge.AdjustmentList.ToList()));
                         buildEdi.Append(buildCas.BuildCas(charge));
                     }
                     else
@@ -140,7 +141,7 @@ namespace EFC.BL
                     foreach (AddonCharge addon in charge.AddonChargeList)
                     {
                         buildEdi.Append(buildSvc.BuildSvc(addon));
-                        buildEdi.Append(buildCas.BuildCas(addon.AdjustmentList));
+                        buildEdi.Append(buildCas.BuildCas(addon.AdjustmentList.ToList()));
                         buildEdi.Append(buildRef.BuildRefControlNumber());
                         buildEdi.Append(buildAmt.BuildAmt(addon));
                     }

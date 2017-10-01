@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using EraView.Services;
+using EFC.BL;
 using PatientManagement.Model;
+using PatientManagement.ViewModel.Services;
 
 namespace WPFERATest
 {

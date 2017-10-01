@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -13,12 +14,12 @@ namespace PatientManagement.Model
         public Charge()
         {
             Id = Guid.NewGuid();
-            AdjustmentList = new List<Adjustment>();
+            AdjustmentList = new ObservableCollection<Adjustment>();
             Modifier = new Modifier();
            
         }
 
-        public List<Adjustment> AdjustmentList { get; set; }
+        public ObservableCollection<Adjustment> AdjustmentList { get; set; }
 
         public Modifier Modifier { get; set; }
 

@@ -1,5 +1,5 @@
-﻿using EraView.ViewModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PatientManagement.ViewModel;
 
 namespace WPFERATest
 {

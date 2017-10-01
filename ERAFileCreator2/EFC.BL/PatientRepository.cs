@@ -5,11 +5,11 @@ using System.Linq;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 
-namespace EraView.Services
+namespace EFC.BL
 {
     public class PatientRepository : IPatientRepository, INotifyPropertyChanged
     {
-        ObservableCollection<Patient> patientList = new ObservableCollection<Patient>();
+         static ObservableCollection<Patient> patientList = new ObservableCollection<Patient>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

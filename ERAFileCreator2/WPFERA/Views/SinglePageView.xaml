@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:validation="clr-namespace:Common.Common;assembly=Common.Common"
-             xmlns:viewModel="clr-namespace:EraView.ViewModel"
+             xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              x:Class="EraView.Views.SinglePageView"
              mc:Ignorable="d" Background="#FFD0E8FF">
     <UserControl.DataContext>
@@ -113,6 +113,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
@@ -854,7 +855,8 @@
                            VerticalAlignment="Top"></TextBlock>
                 <DataGrid AutoGenerateColumns="False"
                           VerticalAlignment="Bottom"
-                          ItemsSource="{Binding Charges}"
+                          ItemsSource="{Binding SelectedPatient.Charges}"
+                          SelectedItem="{Binding SelectedCharge}"
                           MaxHeight="100"
                           VerticalScrollBarVisibility="Auto" 
                           IsReadOnly="True">
@@ -878,6 +880,7 @@
                           ItemsSource="{Binding PrimaryAdjustmentType}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
+                          SelectedValue="{Binding SelectedAdjustment.AdjustmentType}"
                           SelectedIndex="0"
                           ToolTip="{Binding SelectedItem.Key,ElementName=AdjustmentTypeDropdown}"
                           Width="45">
@@ -886,10 +889,11 @@
                           ItemsSource="{Binding PrimaryAdjustmentReasonCodes}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
+                          SelectedValue="{Binding SelectedAdjustment.AdjustmentReasonCode}"
                           Width="45" ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}" SelectedIndex="34">
                 </ComboBox>
                 <TextBox x:Name="PrimaryAdjustmentAmountInput"
-                             Text="{Binding Adjustment.AdjustmentAmount, StringFormat=\{0:F2\}}"
+                             Text="{Binding SelectedAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}}"
                              Width="30">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
@@ -902,6 +906,23 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
             </StackPanel>
+            <StackPanel Grid.Row="24" Grid.Column="0" Grid.ColumnSpan="3">
+                <TextBlock Text="Selected Charge Adjustments"
+                           VerticalAlignment="Top"></TextBlock>
+                <DataGrid AutoGenerateColumns="False"
+                          VerticalAlignment="Bottom"
+                          SelectedItem="{Binding SelectedAdjustment}"
+                          ItemsSource="{Binding SelectedCharge.AdjustmentList}"
+                          MaxHeight="100"
+                          VerticalScrollBarVisibility="Auto" 
+                          IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Type" Binding="{Binding AdjustmentType}"/>
+                        <DataGridTextColumn Header="Reason Code" Binding="{Binding AdjustmentReasonCode}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Amount" Binding="{Binding AdjustmentAmount}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
             <Button Name="AddAdjustmentButton" Grid.Row="23" Grid.Column="1"
                 Margin="10,0,0,0"
                             Command="{Binding AddChargeAdjustmentCommand}"
@@ -909,20 +930,20 @@
                     VerticalAlignment="Bottom"
                             Content="Add Additional Adjustment"/>
 
-            <TextBlock Name="AddonProcedureCodeTag" Grid.Row="24" Grid.Column="0"
+            <TextBlock Name="AddonProcedureCodeTag" Grid.Row="25" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                        Text="Addon Procedure Code"/>
-            <TextBox Name="AddonProcedureCodeInput" Grid.Row="24" Grid.Column="0"
+            <TextBox Name="AddonProcedureCodeInput" Grid.Row="25" Grid.Column="0"
                  Margin="10,20,0,0"
                                  Text="{Binding Addon.ProcedureCode}" 
                                  Width="115"
                      HorizontalAlignment="Left"/>
-            <TextBlock Name="AddonModifiersTag" Grid.Row="24" Grid.Column="1"
+            <TextBlock Name="AddonModifiersTag" Grid.Row="25" Grid.Column="1"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                            Text="Modifiers"/>
-            <StackPanel Orientation="Horizontal" Grid.Row="24" Grid.Column="1"
+            <StackPanel Orientation="Horizontal" Grid.Row="25" Grid.Column="1"
                     Margin="10,20,0,0">
                 <TextBox x:Name="AddonModifierOneInput"
                                      Text="{Binding Addon.Modifier.ModifierOne}"                                
@@ -944,36 +965,36 @@
                                      MaxLength="2"
                          Margin="5,0,0,0"/>
             </StackPanel>
-            <TextBlock Name="AddonPaidAmountTag" Grid.Row="24" Grid.Column="2"
+            <TextBlock Name="AddonPaidAmountTag" Grid.Row="25" Grid.Column="2"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                    Text="Addon Paid Amount"/>
-            <TextBox Name="AddonPaidAmountInput" Grid.Row="24" Grid.Column="2"
+            <TextBox Name="AddonPaidAmountInput" Grid.Row="25" Grid.Column="2"
                  Margin="10,20,0,0"
                              Text="{Binding Addon.PaymentAmount}"
                              Width="115"
                      HorizontalAlignment="Left"/>
-            <TextBlock Name="AddonChargesAmountTag" Grid.Row="24" Grid.Column="3"
+            <TextBlock Name="AddonChargesAmountTag" Grid.Row="25" Grid.Column="3"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                            Text="Addon Charges Amount"/>
-            <TextBox Name="AddonChargesAmountInput" Grid.Row="24" Grid.Column="3"
+            <TextBox Name="AddonChargesAmountInput" Grid.Row="25" Grid.Column="3"
                 Margin="10,20,0,0"
                                  Text="{Binding Addon.ChargeCost}" 
                                  Width="115"
                      HorizontalAlignment="Left"/>
-            <Button Name="AddAddonChargesButton" Grid.Row="24" Grid.Column="4"
+            <Button Name="AddAddonChargesButton" Grid.Row="25" Grid.Column="4"
                 Margin="10,0,10,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     Content="Add Additional Addon"
                     Command="{Binding AddAddonCommand}"/>
-            <TextBlock Name="AddonAdjustmentType" Grid.Row="25" Grid.Column="0"
+            <TextBlock Name="AddonAdjustmentType" Grid.Row="26" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                                Text="Adjustment Type"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="25" Grid.Column="0"
+            <StackPanel Orientation="Horizontal" Grid.Row="26" Grid.Column="0"
                     Margin="10,20,0,0">
                 <ComboBox x:Name="AddonAdjustmentTypeDropdown"
                           Width="45"
@@ -1007,19 +1028,19 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
             </StackPanel>
-            <Button Name="AddonAdjustmentButton" Grid.Row="25" Grid.Column="1"
+            <Button Name="AddonAdjustmentButton" Grid.Row="26" Grid.Column="1"
                 Margin="10,0,0,0"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
                 Content="Add Additional Adjustment"
                 Command="{Binding AddAddonChargeAdjustmentCommand}"/>
-            <Button x:Name="AddPatient" Grid.Row="25" Grid.Column="4"
+            <Button x:Name="AddPatient" Grid.Row="26" Grid.Column="4"
                 Margin="10,0,0,0"
                      Content="Add Additional Patient" 
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                      Command="{Binding AddPatientCommand}"/>
-            <Button Grid.Row="26" Grid.Column="4"
+            <Button Grid.Row="27" Grid.Column="4"
                 Command="{Binding SaveFileCommand}"
                 Content="Create 835 File"
                 Width="115"

@@ -60,20 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\PrimaryChargeRepository.cs" />
     <Compile Include="Utility\NotConverter.cs" />
-    <Compile Include="Services\Command.cs" />
-    <Compile Include="Services\PatientRepository.cs" />
-    <Compile Include="Services\SettingsService.cs" />
-    <Compile Include="Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Utility\Messenger.cs" />
-    <Compile Include="ViewModel\PatientViewModel.cs" />
-    <Compile Include="ViewModel\PreferenceViewModel.cs" />
-    <Compile Include="ViewModel\PrimaryChargeViewModel.cs" />
     <Compile Include="Views\PatientView.xaml.cs">
       <DependentUpon>PatientView.xaml</DependentUpon>
     </Compile>
@@ -124,10 +112,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -143,10 +127,17 @@
       <Project>{642F2574-CAEC-4E41-BA46-C3AA96966FBC}</Project>
       <Name>PatientManagement.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PatientManagement.ViewModel\PatientManagement.ViewModel.csproj">
+      <Project>{cf866762-41ec-448b-b713-97948e9b23f9}</Project>
+      <Name>PatientManagement.ViewModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Common\Common.Common.csproj">
       <Project>{b4e23efb-5228-40c5-9455-904ca873a7e5}</Project>
       <Name>Common.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

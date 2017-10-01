@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EDI835.Segments;
-using EraView.ViewModel;
 using PatientManagement.Model;
+using PatientManagement.DAL;
+
 
 namespace EFC.BL
 {
-    class UpdatedEdi
+    public class UpdatedEdi
     {
 
-        public UpdatedEdi(PatientViewModel pvm)
-        {
-            insurance = pvm.Insurance;
-            billingProvider = pvm.BillingProvider;
-            patients = pvm.Patients.ToList();
+        public UpdatedEdi()
+        { 
+            IInsurance insuranceCompany = new InsuranceRepository();
+            insurance = insuranceCompany.GetInsurance();
+
+            IPatientRepository patientList = new PatientRepository();
+            patients = patientList.GetAllPatients().ToList();
+
+            IProvider provider = new BillingProviderRepository();
+            billingProvider = provider.GetBillingProvider();
         }
 
         private int segmentCount = 6;
+
         private readonly InsuranceCompany insurance;
 
         private readonly Provider billingProvider; 
@@ -100,9 +107,10 @@ namespace EFC.BL
 
             foreach (Patient patient in patients)
             {
+                int chargeCount = 0;
+                
                 foreach (PrimaryCharge charge in patient.Charges)
                 {
-                    int chargeCount = 0;
                     chargeCount++;
 
                     var clp = new Clp(charge);
@@ -124,7 +132,7 @@ namespace EFC.BL
                     edi.Append(renderingNm1.BuildNm1());
                     segmentCount++;
 
-                    var startDtm = new Dtm(patient);
+                    var startDtm = new Dtm(patient, charge);
                     edi.Append(startDtm.BuildDtm());
                     segmentCount++;
 
@@ -187,21 +195,21 @@ namespace EFC.BL
                         }
                     }
 
-                    var se = new Se(segmentCount);
-                    edi.Append(se.BuildSe());
-                    
-
-                    var ge = new Ge();
-                    edi.Append(ge.BuildGe());
-                    
-
-                    var iea = new Iea();
-                    edi.Append(iea.BuildIea());
-
                 }
 
 
             }
+
+            var se = new Se(segmentCount);
+            edi.Append(se.BuildSe());
+
+
+            var ge = new Ge();
+            edi.Append(ge.BuildGe());
+
+
+            var iea = new Iea();
+            edi.Append(iea.BuildIea());
 
             return edi.ToString();
 

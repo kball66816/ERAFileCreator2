@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using EraView;
 using PatientManagement.Model;
 
-namespace EraView.Services
+namespace PatientManagement.ViewModel.Services
 {
     public class SettingsService
     {

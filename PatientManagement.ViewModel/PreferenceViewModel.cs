@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Input;
-using EraView.Services;
 using PatientManagement.Model;
+using PatientManagement.ViewModel.Services;
 
-namespace EraView.ViewModel
+namespace PatientManagement.ViewModel
 {
     public class PreferenceViewModel : INotifyPropertyChanged
     {
