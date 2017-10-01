@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WPFERA.ViewModel;
 using EFC.BL;
 using System.Linq;
+using EraView.ViewModel;
 using PatientManagement.Model;
 
 namespace WPFERATest

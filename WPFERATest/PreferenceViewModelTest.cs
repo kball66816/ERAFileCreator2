@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WPFERA.ViewModel;
+﻿using EraView.ViewModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace WPFERATest
 {

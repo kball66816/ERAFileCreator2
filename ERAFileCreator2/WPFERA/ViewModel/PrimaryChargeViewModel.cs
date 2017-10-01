@@ -1,10 +1,10 @@
-﻿using PatientManagement.DAL;
-using PatientManagement.Model;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using WPFERA.Services;
+using EraView.Services;
+using PatientManagement.DAL;
+using PatientManagement.Model;
 
-namespace WPFERA.ViewModel
+namespace EraView.ViewModel
 {
     public class PrimaryChargeViewModel
     {

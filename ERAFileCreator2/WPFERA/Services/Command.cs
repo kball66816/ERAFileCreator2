@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace WPFERA.Services
+namespace EraView.Services
 {
     class Command : ICommand
     {

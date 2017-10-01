@@ -15,22 +15,20 @@ namespace EDI835.Segments
 
         public Dtm(Patient patient)
         {
-
-            this.Patient = patient;
+            
             SegmentIdentifier = "DTM";
             ServiceStartDateDetails();
         }
 
         public Dtm(PrimaryCharge charge)
         {
-            this.Charge = charge;
+            Charge = charge;
             SegmentIdentifier = "DTM";
             DateTimeQualifier = "472";
             Date = charge.DateOfService.ConvertedDate();
         }
 
         private PrimaryCharge Charge { get; set; }
-        private Patient Patient { get; set; }
         private string DateTimeQualifier { get; set; }
         private string ProductionDate { get; set; }
         private string ServiceDate { get; set; }
@@ -132,25 +130,25 @@ namespace EDI835.Segments
             return buildDtm.ToString();
         }
 
-        public string BuildDtm(PrimaryCharge charge)
-        {
-            //DTM Service Start Date 2110
-            //DTM01 Date Time QUalifier
-            //DTM02 Service Date
+        //public string BuildDtm(PrimaryCharge charge)
+        //{
+        //    //DTM Service Start Date 2110
+        //    //DTM01 Date Time QUalifier
+        //    //DTM02 Service Date
 
-            //DTM Service End Date 2110
-            //DTM01 Date Time Qualifier
-            //DTM02 Service Date
-            //DTM Service Date 2110
-            var buildDtm = new StringBuilder();
+        //    //DTM Service End Date 2110
+        //    //DTM01 Date Time Qualifier
+        //    //DTM02 Service Date
+        //    //DTM Service Date 2110
+        //    var buildDtm = new StringBuilder();
 
-            buildDtm.Append("DTM" + "*");
-            buildDtm.Append("472" + "*"); //DTM01 Date Time Qualifier
-            buildDtm.Append(charge.DateOfService.ConvertedDate()); //DTM02 Service Date
-            buildDtm.Append("~");
+        //    buildDtm.Append("DTM" + "*");
+        //    buildDtm.Append("472" + "*"); //DTM01 Date Time Qualifier
+        //    buildDtm.Append(charge.DateOfService.ConvertedDate()); //DTM02 Service Date
+        //    buildDtm.Append("~");
 
-            return buildDtm.ToString();
+        //    return buildDtm.ToString();
 
-        }
+        //}
     }
 }

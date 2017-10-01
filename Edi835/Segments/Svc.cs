@@ -3,7 +3,7 @@ using System.Text;
 
 namespace EDI835.Segments
 {
-    class Svc:SegmentBase
+    public class Svc:SegmentBase
     {
         public Svc(Charge charge)
         {

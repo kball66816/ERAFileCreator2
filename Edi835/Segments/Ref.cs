@@ -3,21 +3,34 @@ using PatientManagement.Model;
 
 namespace EDI835.Segments
 {
-    class Ref:SegmentBase
+   public class Ref:SegmentBase
     {
 
-        public Ref(Provider renderingProvider)
+        public Ref(Provider billingProvider)
         {
             SegmentIdentifier = "REF";
             ReferenceIdQualifier = "TJ";
             ReferenceIdentification = "1440054";
         }
 
-        public Ref(PrimaryCharge charge)
+        public Ref(Provider billingProvider, bool b)
+        {
+            SegmentIdentifier = "REF";
+            ReferenceIdQualifier = "TJ";
+            ReferenceIdentification = "123456789";
+        }
+        public Ref(InsuranceCompany insurance)
+        {
+            SegmentIdentifier = "REF";
+            ReferenceIdQualifier = "2U";
+            ReferenceIdentification = "20123";
+        }
+
+        public Ref(PrimaryCharge charge, int chargeCount)
         {
             SegmentIdentifier = "REF";
             ReferenceIdentification = "6R";
-            ReferenceIdentification = charge.BillId;
+            ReferenceIdentification = charge.BillId + chargeCount;
         }
         private string ReferenceIdQualifier { get; set; }
         private string ReferenceIdentification { get; set; }

@@ -80,6 +80,10 @@
       <Project>{B4E23EFB-5228-40C5-9455-904CA873A7E5}</Project>
       <Name>Common.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WPFERA\EraView.csproj">
+      <Project>{00BB8A7E-46D3-4326-B966-A41231929748}</Project>
+      <Name>EraView</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,7 +13,7 @@ namespace PatientManagement.Model
     {
         public PlaceOfService()
         {
-
+            serviceLocation = "11";
         }
 
         public PlaceOfService(PlaceOfService placeOfService)

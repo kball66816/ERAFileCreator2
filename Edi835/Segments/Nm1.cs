@@ -3,7 +3,7 @@ using System.Text;
 
 namespace EDI835.Segments
 {
-    class Nm1 : SegmentBase
+   public class Nm1 : SegmentBase
     {
         public Nm1(Patient patient)
         {

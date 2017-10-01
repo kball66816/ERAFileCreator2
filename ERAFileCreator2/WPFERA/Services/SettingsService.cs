@@ -1,8 +1,7 @@
 ﻿using System.Linq;
-using EFC.BL;
 using PatientManagement.Model;
 
-namespace WPFERA.Services
+namespace EraView.Services
 {
     public class SettingsService
     {

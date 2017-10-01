@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WPFERA
+namespace EraView
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

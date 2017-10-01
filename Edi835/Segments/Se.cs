@@ -2,7 +2,7 @@
 
 namespace EDI835.Segments
 {
-    class Se:SegmentBase
+    public class Se:SegmentBase
     {
         public Se(int totalSegmentCount)
         {

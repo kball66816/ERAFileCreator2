@@ -1,15 +1,13 @@
-﻿using Common.Common;
-using EFC.BL;
-using PatientManagement.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using WPFERA.Services;
+using EraView.Services;
+using PatientManagement.Model;
 
-namespace WPFERA.ViewModel
+namespace EraView.ViewModel
 {
     public class PatientViewModel : INotifyPropertyChanged
     {
@@ -18,14 +16,15 @@ namespace WPFERA.ViewModel
             Settings = new SettingsService();
             LoadInitialPatient();
             LoadBillingProvider();
-            Addon = new AddonCharge();
+            Addon = new AddonCharge();          
             Adjustment = new Adjustment();
             AddonAdjustment = new Adjustment();
             SelectedCharge = new PrimaryCharge();
             LoadInsuranceCompany();
             Pcvm = new PrimaryChargeViewModel();
-            PatientRepository.Add(SelectedPatient);
-            Patients = PatientRepository.GetAllPatients();
+            patientRepository.Add(SelectedPatient);
+            Patients = patientRepository.GetAllPatients();
+            Charges = selectedPatient.Charges;
             PlacesOfService = SelectedCharge.PlaceOfService.PlacesOfService;
             PrimaryAdjustmentReasonCodes = Adjustment.AdjustmentReasonCodes;
             AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
@@ -58,7 +57,7 @@ namespace WPFERA.ViewModel
             SelectedPatient = Settings.PullDefaultPatient();
         }
 
-        public readonly PatientRepository PatientRepository = new PatientRepository();
+        private readonly PatientRepository patientRepository = new PatientRepository();
 
         private bool SupressAddonDialog { get; set; }
 
@@ -77,6 +76,21 @@ namespace WPFERA.ViewModel
         public Dictionary<string, string> AddonAdjustmentType { get; set; }
 
         public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
+
+        public ObservableCollection<PrimaryCharge> Charges
+
+        {
+            get { return charges; }
+            set
+            {
+                if (value != charges)
+                {
+                    charges = value;
+                    RaisePropertyChanged("Charges");
+                }
+
+            }
+        }
 
         private InsuranceCompany insurance;
 
@@ -140,6 +154,7 @@ namespace WPFERA.ViewModel
                 }
             }
         }
+
         public ICommand AddPatientCommand { get; private set; }
 
         /// <summary>
@@ -152,20 +167,26 @@ namespace WPFERA.ViewModel
         {
             SupressAddonDialog = true;
             MatchAdjustmentToCharge();
-            MatchUnaddedChargeToSelectedPatient();
+            // MatchUnaddedChargeToSelectedPatient();
+            AddChargeToPatientEncounter();
             ReturnNewPatient();
-            PatientRepository.Add(SelectedPatient);
+            patientRepository.Add(SelectedPatient);
             UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
             RefreshAllCounters();
             ReturnNewCharge();
         }
 
-        private void MatchUnaddedChargeToSelectedPatient()
+        //private void MatchUnaddedChargeToSelectedPatient()
+        //{
+        //    selectedPatient.Charges = Pcvm.UnaddedCharges.ToList();
+        //    Pcvm = new PrimaryChargeViewModel();
+        //    RaisePropertyChanged("UnaddedCharges");
+        //}
+
+        private void AddChargeToPatientEncounter()
         {
-            selectedPatient.Charges = Pcvm.UnaddedCharges.ToList();
-            Pcvm = new PrimaryChargeViewModel();
-            RaisePropertyChanged("UnaddedCharges");
+            selectedPatient.Charges.Add(selectedCharge);
         }
 
         private void ReturnNewCharge()
@@ -227,7 +248,7 @@ namespace WPFERA.ViewModel
         private Patient PromptTypeOfNewPatient()
         {
             var newPatientDialogResult =
-                MessageBox.Show("Do you want to reuse this Patient?", "Return new patient", MessageBoxButton.YesNo);
+                MessageBox.Show("Do you want to add additional encounters to this patient?", "Return new patient", MessageBoxButton.YesNo);
             {
 
                 if (newPatientDialogResult == MessageBoxResult.Yes)
@@ -246,7 +267,7 @@ namespace WPFERA.ViewModel
 
         private void CloneLastAddon()
         {
-            AddonCharge clone = (AddonCharge)SelectedCharge.AddonChargeList.Last().Clone();
+            AddonCharge clone = (AddonCharge) SelectedCharge.AddonChargeList.Last().Clone();
             Addon = clone;
             RaisePropertyChanged("Addon");
         }
@@ -275,14 +296,15 @@ namespace WPFERA.ViewModel
         private void CloneSelectedPatient()
         {
 
-            selectedPatient = PatientRepository.GetSelectedPatient(selectedPatient.Id).CopyPatient();
+            selectedPatient = patientRepository.GetSelectedPatient(selectedPatient.Id).CopyPatient();
             RaisePropertyChanged("SelectedPatient");
         }
 
         private AddonCharge PromptTypeOfNewAddon()
         {
 
-            var newAddonDialogResult = MessageBox.Show("Do you want to reuse this Addon?", "Return new Addon", MessageBoxButton.YesNo);
+            var newAddonDialogResult = MessageBox.Show("Do you want to reuse this Addon?", "Return new Addon",
+                MessageBoxButton.YesNo);
             {
 
                 if (newAddonDialogResult == MessageBoxResult.Yes)
@@ -315,7 +337,7 @@ namespace WPFERA.ViewModel
 
         private bool CanAddPatient(object obj)
         {
-            if (!string.IsNullOrEmpty(SelectedPatient.FirstName) && patients.FirstOrDefault().Id !=selectedPatient.Id)
+            if (!string.IsNullOrEmpty(SelectedPatient.FirstName) && !string.IsNullOrEmpty(selectedPatient.LastName))
             {
                 return true;
             }
@@ -331,7 +353,13 @@ namespace WPFERA.ViewModel
         {
             get { return adjustment; }
             set
-            { if (value != adjustment) { adjustment = value; RaisePropertyChanged("Adjustment"); } }
+            {
+                if (value != adjustment)
+                {
+                    adjustment = value;
+                    RaisePropertyChanged("Adjustment");
+                }
+            }
         }
 
         private Adjustment addonAdjustment;
@@ -372,7 +400,8 @@ namespace WPFERA.ViewModel
 
         private bool CanAddAddonAdjustment(object obj)
         {
-            if (!string.IsNullOrEmpty(addonAdjustment.AdjustmentReasonCode) && !string.IsNullOrEmpty(addonAdjustment.AdjustmentType))
+            if (!string.IsNullOrEmpty(addonAdjustment.AdjustmentReasonCode) &&
+                !string.IsNullOrEmpty(addonAdjustment.AdjustmentType))
             {
                 return true;
             }
@@ -396,6 +425,7 @@ namespace WPFERA.ViewModel
 
         private AddonCharge addon;
         private PrimaryChargeViewModel pcvm;
+        private ObservableCollection<PrimaryCharge> charges;
 
         public AddonCharge Addon
         {
@@ -404,7 +434,8 @@ namespace WPFERA.ViewModel
             {
                 if (value != addon)
                 {
-                    addon = value; RaisePropertyChanged("Addon");
+                    addon = value;
+                    RaisePropertyChanged("Addon");
                 }
             }
         }
@@ -447,12 +478,9 @@ namespace WPFERA.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void RaisePropertyChanged(string propertyName)
+        private void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void LoadCommands()
@@ -463,10 +491,12 @@ namespace WPFERA.ViewModel
             AddAddonCommand = new Command(AddAddon, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
-            AddChargeToRepositoryCommand = new Command(AddChargeToRepository);
+            // AddChargeToRepositoryCommand = new Command(AddChargeToRepository);
+            AddChargeToPatientCommand = new Command(AddChargeToPatient, CanAddChargeToPatient);
         }
 
-        public ICommand AddChargeToRepositoryCommand { get; set; }
+        public ICommand AddChargeToPatientCommand { get; set; }
+        //public ICommand AddChargeToRepositoryCommand { get; set; }
 
         public ICommand UpdateRenderingProviderCommand { get; private set; }
 
@@ -485,6 +515,7 @@ namespace WPFERA.ViewModel
                 return;
             }
         }
+
         private bool CanSave(object obj)
         {
             return true;
@@ -505,10 +536,10 @@ namespace WPFERA.ViewModel
             //   MatchChargeToPatient();
             UpdateCheckAmount();
             SaveSettings();
-            var edi = new ElectronicDataInterchange();
+            //var edi = new ElectronicDataInterchange();
 
-            var save = new SaveToFile();
-            save.SaveFile(edi.BuildEdi(patients.ToList(), insurance, billingProvider));
+            //var save = new SaveToFile();
+            // save.SaveFile(edi.BuildEdi(patients.ToList(), insurance, billingProvider));
         }
 
 
@@ -519,7 +550,7 @@ namespace WPFERA.ViewModel
 
             decimal chargesPaidAmount = 0;
             decimal addonsPaidAmount = 0;
-            foreach (Patient patient in PatientRepository.GetAllPatients())
+            foreach (Patient patient in patientRepository.GetAllPatients())
             {
                 foreach (PrimaryCharge charge in patient.Charges)
                 {
@@ -604,11 +635,26 @@ namespace WPFERA.ViewModel
             }
         }
 
-        private void AddChargeToRepository(object obj)
+        //private void AddChargeToRepository(object obj)
+        //{
+        //    Pcvm.ChargeRepository.Add(selectedCharge);
+        //    selectedCharge = new PrimaryCharge();
+        //    RaisePropertyChanged("SelectedCharge");
+        //}
+
+        private void AddChargeToPatient(object obj)
         {
-            Pcvm.ChargeRepository.Add(selectedCharge);
+            selectedPatient.Charges.Add(selectedCharge);
             selectedCharge = new PrimaryCharge();
             RaisePropertyChanged("SelectedCharge");
+            RaisePropertyChanged("Charges");
+        }
+
+        private bool CanAddChargeToPatient(object obj)
+        {
+            bool b = selectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(selectedCharge.ProcedureCode);
+
+            return b;
         }
     }
 }

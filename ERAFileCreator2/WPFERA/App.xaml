@@ -1,9 +1,9 @@
-﻿<Application x:Class="WPFERA.App"
+﻿<Application x:Class="EraView.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WPFERA"
+             xmlns:utility="clr-namespace:EraView.Utility"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <local:NotConverter x:Key="NotConverter"/>
+        <utility:NotConverter x:Key="NotConverter"/>
     </Application.Resources>
 </Application>

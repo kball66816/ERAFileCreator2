@@ -11,12 +11,12 @@ namespace CommonTests
         public void DateTimeShortConversion()
         {
             //Arrange
-            var convertDate = new DateConversion();
+
             DateTime date = new DateTime(2016,01,16);
 
             //Act
             var expected = "20160116";
-            var actual = convertDate.ConvertedDate(date);
+            var actual = date.ConvertedDate();
 
             Assert.AreEqual(expected, actual);
         }
@@ -24,12 +24,11 @@ namespace CommonTests
         public void DateTimeLongConversion()
         {
             //Arrange
-            var convertDate = new DateConversion();
             DateTime date = new DateTime(2016,01,16,0,1,1);
 
             //Act
             var expected = "20160116";
-            var actual = convertDate.ConvertedDate(date);
+            var actual = date.ConvertedDate();
 
             Assert.AreEqual(expected, actual);
         }
@@ -38,11 +37,10 @@ namespace CommonTests
         public void DateTimeMatchedToFail()
         {
             //Arrange
-            var convertDate = new DateConversion();
             DateTime date = new DateTime(2016, 01, 01);
             //Act
             var expected = "20160116";
-            var actual = convertDate.ConvertedDate(date);
+            var actual = date.ConvertedDate();
 
             Assert.AreNotEqual(expected, actual);
         }

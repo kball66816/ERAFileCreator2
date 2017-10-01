@@ -1,11 +1,10 @@
-﻿using EFC.BL;
-using PatientManagement.Model;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows.Input;
-using WPFERA.Services;
+using EraView.Services;
+using PatientManagement.Model;
 
-namespace WPFERA.ViewModel
+namespace EraView.ViewModel
 {
     public class PreferenceViewModel : INotifyPropertyChanged
     {
@@ -17,7 +16,7 @@ namespace WPFERA.ViewModel
             LoadCommands();
         }
 
-        public SettingsService Settings { get; set; }
+        public SettingsService Settings;
 
         private Preference preference;
 

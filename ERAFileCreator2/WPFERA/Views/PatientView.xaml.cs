@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace WPFERA.Views
+namespace EraView.Views
 {
     /// <summary>
     /// Interaction logic for ProgramView.xaml

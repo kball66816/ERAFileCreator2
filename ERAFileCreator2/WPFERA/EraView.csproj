@@ -7,8 +7,8 @@
     <ProjectGuid>{00BB8A7E-46D3-4326-B966-A41231929748}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WPFERA</RootNamespace>
-    <AssemblyName>WPFERA</AssemblyName>
+    <RootNamespace>EraView</RootNamespace>
+    <AssemblyName>EraView</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -146,10 +146,6 @@
     <ProjectReference Include="..\Common.Common\Common.Common.csproj">
       <Project>{b4e23efb-5228-40c5-9455-904ca873a7e5}</Project>
       <Name>Common.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EFC.BL\EFC.BL.csproj">
-      <Project>{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}</Project>
-      <Name>EFC.BL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

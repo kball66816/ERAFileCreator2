@@ -1,19 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PatientManagement.Model
 {
     public class Patient : Person
     {
+        private ObservableCollection<PrimaryCharge> charges;
+
         public Patient()
         {
             Subscriber = new Subscriber();
             RenderingProvider = new Provider();
-            Charges = new List<PrimaryCharge>();
+            Charges = new ObservableCollection<PrimaryCharge>();
             Id = Guid.NewGuid();
         }
 
-        public List<PrimaryCharge> Charges { get; set; }
+        public ObservableCollection<PrimaryCharge> Charges
+        {
+            get { return charges; }
+            set
+            {
+                if (value != charges)
+                {
+                    charges = value;
+                    RaisePropertyChanged("Charges");
+
+                }
+
+            }
+        }
 
         public string MemberId { get; set; }
 
@@ -90,7 +106,7 @@ namespace PatientManagement.Model
         public Patient CopyPatient()
         {
             var clone = (Patient)MemberwiseClone();
-            clone.Charges = new List<PrimaryCharge>();
+            clone.Charges = new ObservableCollection<PrimaryCharge>();
             return clone;
         }
     }

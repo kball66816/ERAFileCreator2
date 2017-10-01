@@ -1,11 +1,11 @@
 ﻿using System;
-using PatientManagement.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using PatientManagement.DAL;
+using PatientManagement.Model;
 
-namespace WPFERA.Services
+namespace EraView.Services
 {
     public class PatientRepository : IPatientRepository, INotifyPropertyChanged
     {
