@@ -28,9 +28,6 @@ namespace EraView.Views
             RestrictTextToNumericOnly(e);
         }
 
-        private void Preferences_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
     }
 }

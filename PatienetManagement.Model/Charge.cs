@@ -14,8 +14,7 @@ namespace PatientManagement.Model
         public Charge()
         {
             Id = Guid.NewGuid();
-            AdjustmentList = new ObservableCollection<Adjustment>();
-            Modifier = new Modifier();
+         
            
         }
 

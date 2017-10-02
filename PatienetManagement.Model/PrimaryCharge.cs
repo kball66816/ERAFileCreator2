@@ -12,7 +12,7 @@ namespace PatientManagement.Model
         {
             Id = Guid.NewGuid();
             AddonChargeList = new List<AddonCharge>();
-            AdjustmentList = new ObservableCollection<Adjustment>();
+            //AdjustmentList = new ObservableCollection<Adjustment>();
             Modifier = new Modifier();
             DateOfService = DateTime.Today;
             PlaceOfService = new PlaceOfService();

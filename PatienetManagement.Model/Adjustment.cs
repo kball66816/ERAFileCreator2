@@ -7,6 +7,11 @@ namespace PatientManagement.Model
     [Serializable]
     public class Adjustment:INotifyPropertyChanged
     {
+        public Adjustment()
+        {
+            adjustmentType = "CO";
+            adjustmentReasonCode = "45";
+        }
         private string adjustmentType;
 
         public string AdjustmentType
@@ -21,10 +26,18 @@ namespace PatientManagement.Model
         public string AdjustmentReasonCode
         {
             get { return adjustmentReasonCode; }
-            set { if (value != adjustmentReasonCode) { adjustmentReasonCode = value; }RaisePropertyChanged("AdjustmentReasonCode"); }
+            set
+            {
+                if (value != adjustmentReasonCode)
+                {
+                    adjustmentReasonCode = value;
+                    RaisePropertyChanged("AdjustmentReasonCode");
+                }
+  
+            }
         }
 
-        public Dictionary<string, string> AdjustmentTypes = new Dictionary<string, string>
+        public readonly Dictionary<string, string> AdjustmentTypes = new Dictionary<string, string>
         {
             {"Contractual Obligation", "CO"},
             {"Patient Responsibility", "PR"},
@@ -33,7 +46,7 @@ namespace PatientManagement.Model
 
         };
 
-        public Dictionary<string, string> AdjustmentReasonCodes = new Dictionary<string, string>
+        public readonly Dictionary<string, string> AdjustmentReasonCodes = new Dictionary<string, string>
         {
             {"Deductible", "1" },
             {"Coinsurance","2" },

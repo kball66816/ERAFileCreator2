@@ -728,7 +728,7 @@
                          Margin="10,10,0,0"
                          Width="115"
                          HorizontalAlignment="Left"
-                         Text="{Binding SelectedCharge.Copay, StringFormat=\{0:F2\}}" VerticalAlignment="Center" HorizontalContentAlignment="Center">
+                         Text="{Binding SelectedCharge.Copay, StringFormat=\{0:F2\}}" VerticalAlignment="Center">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -772,7 +772,7 @@
                         </DockPanel>
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
-                <Binding Path="SelectedCharge.ProcedureCode" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                <Binding Path="SelectedCharge.ProcedureCode" UpdateSourceTrigger="PropertyChanged"  Mode="TwoWay">
                     <Binding.ValidationRules>
                         <validation:StringValidationRule ValidationStep="RawProposedValue"/>
                     </Binding.ValidationRules>
@@ -832,7 +832,8 @@
                  Margin="10,20,0,0"
                      Width="115"
                       HorizontalAlignment="Left"
-                     Text="{Binding SelectedCharge.ChargeCost, StringFormat=\{0:F2\}}">
+                     Text="{Binding SelectedCharge.ChargeCost, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
+                     >
                 <Validation.ErrorTemplate>
                     <ControlTemplate>
                         <DockPanel >
@@ -844,6 +845,7 @@
                 </Validation.ErrorTemplate>
             </TextBox>
             <Button Grid.Row="21" Grid.Column="4"
+                    Name="AddChargeToPatient"
                     Command="{Binding AddChargeToPatientCommand}"
                     Content="Add Charge"
                     Width="115"
@@ -855,22 +857,43 @@
                            VerticalAlignment="Top"></TextBlock>
                 <DataGrid AutoGenerateColumns="False"
                           VerticalAlignment="Bottom"
+                          SelectedItem="{Binding SelectedCharge, Mode=TwoWay}"
                           ItemsSource="{Binding SelectedPatient.Charges}"
-                          SelectedItem="{Binding SelectedCharge}"
                           MaxHeight="100"
                           VerticalScrollBarVisibility="Auto" 
-                          IsReadOnly="True">
+                          IsReadOnly="True"
+                          Name="ChargesForEncounter">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Date Of Service" Binding="{Binding DateOfService}"/>
-                        <DataGridTextColumn Header="Place Of Service" Binding="{Binding PlaceOfService.ServiceLocation}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Date Of Service" Binding="{Binding DateOfService, StringFormat=\{0:d\}}"/>
+                        <DataGridTextColumn Header="Place Of Service" Binding="{Binding PlaceOfService.ServiceLocation}"/>
                         <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
                         <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
                         <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
-
-            <TextBlock x:Name="AdjustmentType" Grid.Row="23" Grid.Column="0"
+            <Button Grid.Row="22" Grid.Column="3"
+                    Name="DeleteCharge"
+                    Content="Delete Selected Charges"
+                    Width="115"
+                    Margin="10,10,0,0"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="left"
+                    Command="{Binding DeleteSelectedChargeCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="Opacity" Value="1"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=ChargesForEncounter, Path=SelectedItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="Opacity" Value=".5"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+                <TextBlock x:Name="AdjustmentType" Grid.Row="23" Grid.Column="0"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                            Text="Adjustment Type"/>
