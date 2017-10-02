@@ -28,48 +28,47 @@
                 Background="#FFF0F0F0">
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Grid.Column="0"
-                               x:Name="PatientCountTag"
+                    <TextBlock
+                        x:Name="PatientCountTag"
                                Text="Patient Count: "/>
-                    <TextBlock Grid.Column="0"
-                               x:Name="PatientCounter"
+                    <TextBlock
+                        x:Name="PatientCounter"
                                Margin="0,0,0,0"
                                Text="{Binding PatientCount}"/>
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Grid.Column="1"
-                               x:Name="AddonCountTag" 
+                    <TextBlock
+                        x:Name="AddonCountTag" 
                                Text="Addon Code Count: "
                                Margin="10,0,0,0"/>
-                    <TextBlock Grid.Column="1"
-                               x:Name="AddonCounter" 
+                    <TextBlock
+                        x:Name="AddonCounter" 
                                Text="{Binding AddonChargeCount, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </StatusBarItem>
-            <StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Grid.Column="2"
-                               x:Name="CheckAmountStatus" 
-                               Text="Check Amount: $"/>
-                    <TextBlock Grid.Column="2"
-                               x:Name="PaidAmountCounter" 
-                               Text="{Binding Insurance.CheckAmount, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
-            </StatusBarItem>
-            <StatusBarItem>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Grid.Column="3"
-                               Text="Check Number: "
+                    <TextBlock
+                        Text="Check Number: "
                                Margin="0,0,0,0"
                                HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="3"
-                               Name="CheckNumber"
+                    <TextBlock
+                        Name="CheckNumber"
                                Text="{Binding Insurance.CheckNumber}"/>
                 </StackPanel>
             </StatusBarItem>
-
+            <StatusBarItem HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        x:Name="CheckAmountStatus" 
+                        Text="Check Amount: $"/>
+                    <TextBlock
+                        x:Name="PaidAmountCounter" 
+                        Text="{Binding Insurance.CheckAmount, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </StatusBarItem>
         </StatusBar>
         <StackPanel DockPanel.Dock="Left"
                          Background="#FF7789D8">
@@ -1089,13 +1088,13 @@
             </StackPanel.DataContext>
             <StackPanel Orientation="Vertical">
                 <CheckBox Content="Reuse Same Patient"
-                          Margin="10,0,0,0"
+                          Margin="0,0,0,0"
                   Name="ReusePatientPreference"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.ReusePatient,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 </CheckBox>
                 <CheckBox Content="Reuse Patient Prompt"
-                          Margin="10,0,0,0"
+                          Margin="0,0,0,0"
                                 Command="{Binding SavePreferenceCommand}"
                                 IsChecked="{Binding Preference.EnablePatientReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="{Binding ElementName=ReusePatientPreference,Path=IsChecked}">
