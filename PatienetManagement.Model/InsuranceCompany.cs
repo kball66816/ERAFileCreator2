@@ -16,6 +16,7 @@ namespace PatientManagement.Model
             Address = new Address();
 
             CheckDate = DateTime.Today;
+            CheckNumber = DateTime.Now.ToString("yyyyMMddhhmmssff");
         }
 
         private string name;
