@@ -63,6 +63,7 @@ namespace PatientManagement.Model
                 if (value != fullName)
                 {
                     fullName = value;
+                    RaisePropertyChanged("FullName");
                 }
             }
         }

@@ -1,16 +1,10 @@
-﻿namespace EDI835
+﻿namespace Edi835.Segments
 {
-    public class SegmentBase
+    public abstract class SegmentBase
     {
-        public SegmentBase()
-        {
-            DataElementTerminator = "*";
-            ComponentIdentifier = ":";
-            SegmentTerminator = "~";
-        }
-        public string SegmentIdentifier { get; set; }
-        public string DataElementTerminator { get; set; }
-        public string ComponentIdentifier { get; set; }
-        public string SegmentTerminator { get; set; }
+        protected string SegmentIdentifier { get; set; }
+        protected string DataElementTerminator = "*";
+        protected string ComponentIdentifier = ":";
+        protected string SegmentTerminator = "~";
     }
 }

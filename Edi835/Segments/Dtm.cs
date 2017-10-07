@@ -2,6 +2,7 @@
 using PatientManagement.Model;
 using System;
 using System.Text;
+using Edi835.Segments;
 
 namespace EDI835.Segments
 {
@@ -103,53 +104,7 @@ namespace EDI835.Segments
 
         }
 
-        private string BuildDtmProductionDate()
-        {
-            buildDtm = new StringBuilder();
-            buildDtm.Append(SegmentIdentifier);
-            buildDtm.Append(DataElementTerminator);
-            buildDtm.Append(DateTimeQualifier);
-            buildDtm.Append(DataElementTerminator);
-            buildDtm.Append(ProductionDate);
-            buildDtm.Append(SegmentTerminator);
 
-            return buildDtm.ToString();
-        }
 
-      
-      
-        private string BuildDtmServiceDate()
-        {
-            buildDtm = new StringBuilder();
-            buildDtm.Append(SegmentIdentifier);
-            buildDtm.Append(DataElementTerminator);
-            buildDtm.Append(DateTimeQualifier);
-            buildDtm.Append(DataElementTerminator);
-            buildDtm.Append(ServiceDate);
-            buildDtm.Append(SegmentIdentifier);
-
-            return buildDtm.ToString();
-        }
-
-        //public string BuildDtm(PrimaryCharge charge)
-        //{
-        //    //DTM Service Start Date 2110
-        //    //DTM01 Date Time QUalifier
-        //    //DTM02 Service Date
-
-        //    //DTM Service End Date 2110
-        //    //DTM01 Date Time Qualifier
-        //    //DTM02 Service Date
-        //    //DTM Service Date 2110
-        //    var buildDtm = new StringBuilder();
-
-        //    buildDtm.Append("DTM" + "*");
-        //    buildDtm.Append("472" + "*"); //DTM01 Date Time Qualifier
-        //    buildDtm.Append(charge.DateOfService.ConvertedDate()); //DTM02 Service Date
-        //    buildDtm.Append("~");
-
-        //    return buildDtm.ToString();
-
-        //}
     }
 }

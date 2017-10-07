@@ -662,17 +662,18 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("Charges");
         }
 
-        private void AddValidAdjustmentToCharge()
-        {
-            if (selectedAdjustment.AdjustmentAmount > 0)
-            {
-                bool execute = true;
-                AddChargeAdjustmentCommand.Execute(execute);
-            }
-        }
+        //private void AddValidAdjustmentToCharge()
+        //{
+        //    if (selectedAdjustment.AdjustmentAmount > 0)
+        //    {
+        //        bool execute = true;
+        //        AddChargeAdjustmentCommand.Execute(execute);
+        //    }
+        //}
 
         private bool CanAddChargeToPatient(object obj)
         {
+
             bool b = selectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(selectedCharge.ProcedureCode);
 
             return b;

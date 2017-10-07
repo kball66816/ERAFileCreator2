@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Edi835.Segments;
 using PatientManagement.Model;
 
 namespace EDI835.Segments
@@ -7,10 +8,9 @@ namespace EDI835.Segments
     {
         public Amt(Charge charge)
         {
-            this.Charge = charge;
             SegmentIdentifier = "AMT";
             AmountQualifier = "B6";
-            allowedAmount = charge.AllowedAmount;
+            AllowedAmount = charge.AllowedAmount;
         }
         public string BuildAmt()
         {
@@ -21,13 +21,12 @@ namespace EDI835.Segments
             buildAmt.Append(DataElementTerminator);
             buildAmt.Append(AmountQualifier);
             buildAmt.Append(DataElementTerminator);
-            buildAmt.Append(Charge.AllowedAmount);
+            buildAmt.Append(AllowedAmount);
             buildAmt.Append(SegmentTerminator);
             return buildAmt.ToString();
         }
 
         private string AmountQualifier { get; set; }
-        private Charge Charge { get; set; }
-        private decimal allowedAmount { get; set; }
+        private decimal AllowedAmount { get; set; }
     }
 }

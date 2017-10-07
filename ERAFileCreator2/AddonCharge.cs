@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERAFileCreator
 {
-    class AddonCharge
+    public class AddonCharge
     {
         private string addonProcedureCode;
 

@@ -34,7 +34,7 @@ namespace Common.Common
 
         public string ZipCode { get; set; }
 
-        public Dictionary<string, string> States = new Dictionary<string, string>
+        public readonly Dictionary<string, string> States = new Dictionary<string, string>
             {
                 {"Alabama", "AL"},
                 {"Alaska", "AK"},
@@ -90,12 +90,10 @@ namespace Common.Common
             };
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged(string propertyName)
+
+        private void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

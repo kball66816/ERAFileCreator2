@@ -1,5 +1,6 @@
 ﻿using PatientManagement.Model;
 using System.Text;
+using Edi835.Segments;
 
 namespace EDI835.Segments
 {
@@ -7,7 +8,7 @@ namespace EDI835.Segments
     {
         public Clp(PrimaryCharge charge)
         {
-            this.Charge = Charge;
+            Charge = charge;
             SegmentIdentifier = "CLP";
 
             ClaimSubmittersIdentifier = charge.BillId;

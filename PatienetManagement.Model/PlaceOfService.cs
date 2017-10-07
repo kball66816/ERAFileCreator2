@@ -36,7 +36,7 @@ namespace PatientManagement.Model
             }
         }
 
-        public Dictionary<string, string> PlacesOfService = new Dictionary<string, string>
+        public readonly Dictionary<string, string> PlacesOfService = new Dictionary<string, string>
         {
             {"01","Pharmacy" },
             {"02","TeleHealth" },
@@ -90,12 +90,9 @@ namespace PatientManagement.Model
         [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void RaisePropertyChanged(string propertyName)
+        private void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

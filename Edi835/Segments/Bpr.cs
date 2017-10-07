@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Common.Common;
+using Edi835.Segments;
 using PatientManagement.Model;
 
 namespace EDI835.Segments
