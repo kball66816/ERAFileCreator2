@@ -15,5 +15,9 @@ namespace PatientManagement.DAL
         ObservableCollection<PrimaryCharge> GetAllCharges();
 
         PrimaryCharge GetSelectedCharge(Guid id);
+
+        IAdjustmentRepository AdjustmentRepository { get; set; }
+           
+        
     } 
 }

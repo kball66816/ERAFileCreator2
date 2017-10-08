@@ -12,7 +12,6 @@ namespace PatientManagement.DAL
 
         ObservableCollection<Patient> GetAllPatients();
 
-        Patient GetSelectedPatient(Guid id);
-
+        Patient GetSelectedPatient(Guid id);    
     }
 }

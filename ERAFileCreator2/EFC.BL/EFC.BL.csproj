@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdjustmentRepository.cs" />
     <Compile Include="BillingProviderRepository.cs" />
     <Compile Include="EDI Segments\Amt.cs" />
     <Compile Include="EDI Segments\Bpr.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="EDI Segments\Isa.cs" />
     <Compile Include="EDI Segments\N1.cs" />
     <Compile Include="PatientRepository.cs" />
+    <Compile Include="PrimaryChargeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdatedEDI.cs" />
   </ItemGroup>

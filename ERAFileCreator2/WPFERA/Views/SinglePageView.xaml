@@ -867,7 +867,7 @@
                            VerticalAlignment="Top"></TextBlock>
                 <DataGrid AutoGenerateColumns="False"
                           VerticalAlignment="Bottom"
-                          SelectedItem="{Binding SelectedCharge, Mode=TwoWay}"
+                          SelectedItem="{Binding SelectedListChargeIndex, Mode=TwoWay}"
                           ItemsSource="{Binding SelectedPatient.Charges}"
                           MaxHeight="100"
                           VerticalScrollBarVisibility="Auto" 

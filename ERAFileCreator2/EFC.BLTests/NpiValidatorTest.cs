@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EFC.BL;
 using Common.Common;
 using PatientManagement.Model;
 
@@ -20,11 +19,10 @@ namespace EFC.BLTests
             };
 
             var npiValidator = new NpivalidationRule();
-            var expected = false;
             npiValidator.ParseNpi(provider.Npi);
-            var actual = npiValidator.InvalidNpi;
+            var actual = npiValidator.InvalidNPI;
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(false, actual);
         }
         [TestMethod]
         public void InvalidProviderNpi()
@@ -37,7 +35,7 @@ namespace EFC.BLTests
             }
             catch (ArgumentException)
             {
-                string npi = "1234567893";
+                var npi = "1234567893";
                 provider.Npi = npi;
                 var expected = "1234567893";
                 var actual = npi;

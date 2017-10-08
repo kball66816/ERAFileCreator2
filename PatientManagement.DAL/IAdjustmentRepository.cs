@@ -4,13 +4,13 @@ using System.Collections.ObjectModel;
 
 namespace PatientManagement.DAL
 {
-    interface IAdjustmentRepository
+    public interface IAdjustmentRepository
     {
         void Add(Adjustment adjustment);
 
         void Delete(Adjustment adjustment);
 
-        Adjustment UpdatePatient(Adjustment adjustment);
+        Adjustment UpdateAdjustment(Adjustment adjustment);
 
         ObservableCollection<Adjustment> GetAllAdjustments();
 

@@ -9,11 +9,12 @@ namespace EFC.BL
 {
     public class PatientRepository : IPatientRepository, INotifyPropertyChanged
     {
-         static ObservableCollection<Patient> patientList = new ObservableCollection<Patient>();
+
+        static ObservableCollection<Patient> patientList = new ObservableCollection<Patient>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void RaisePropertyChanged(string propertyName)
+        private void RaisePropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
             {
@@ -24,8 +25,8 @@ namespace EFC.BL
 
         public void Add(Patient patient)
         {
-            patientList.Add(patient);
-            RaisePropertyChanged("patientList");
+           patientList.Add(patient);
+           RaisePropertyChanged("patientList");
         }
 
         public void Delete(Patient patient)
@@ -43,5 +44,7 @@ namespace EFC.BL
         {
             return patientList.FirstOrDefault(p => p.Id == id);
         }
+
+
     }
 }

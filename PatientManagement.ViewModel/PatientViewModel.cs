@@ -30,7 +30,7 @@ namespace PatientManagement.ViewModel
             Patients = patientRepository.GetAllPatients();
             Charges = selectedPatient.Charges;
             Adjustments = selectedCharge.AdjustmentList;
-            PlacesOfService = SelectedCharge.PlaceOfService.PlacesOfService;
+            PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
             PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
             AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
             PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
@@ -40,6 +40,10 @@ namespace PatientManagement.ViewModel
         }
 
 
+        private void AddPatient()
+        {
+            patientRepository.Add(SelectedPatient);
+        }
 
         private void LoadInsuranceCompany()
         {
@@ -62,7 +66,7 @@ namespace PatientManagement.ViewModel
             SelectedPatient = Settings.PullDefaultPatient();
         }
 
-        private readonly IPatientRepository patientRepository = new PatientRepository();
+        private IPatientRepository patientRepository = new PatientRepository();
 
         private bool SupressAddonDialog { get; set; }
 
@@ -160,7 +164,7 @@ namespace PatientManagement.ViewModel
             }
         }
 
-
+        public PrimaryCharge SelectedListChargeIndex { get; set; }
 
         public ICommand AddPatientCommand { get; private set; }
 
@@ -180,7 +184,6 @@ namespace PatientManagement.ViewModel
             UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
             RefreshAllCounters();
-            ReturnNewCharge();
         }
 
 
@@ -190,7 +193,16 @@ namespace PatientManagement.ViewModel
 
         private void ReturnNewCharge()
         {
-            SelectedCharge = Settings.ReuseChargeForNextPatient ? new PrimaryCharge(SelectedCharge) : new PrimaryCharge();
+            if (Settings.ReuseChargeForNextPatient)
+            {
+                SelectedCharge = new PrimaryCharge(SelectedCharge);
+            }
+
+            else
+            {
+                SelectedCharge = new PrimaryCharge();
+            }
+            //SelectedCharge = Settings.ReuseChargeForNextPatient ? new PrimaryCharge(SelectedCharge) : new PrimaryCharge();
 
             RaisePropertyChanged("SelectedCharge");
         }
@@ -407,14 +419,21 @@ namespace PatientManagement.ViewModel
             RefreshAllCounters();
         }
 
-        private void AddChargeAdjustment(object obj)
+        //private void AddChargeAdjustment(object obj)
+        //{
+        //    SelectedCharge.AdjustmentList.Add(SelectedAdjustment);
+        //    SelectedAdjustment = new Adjustment();
+        //    RaisePropertyChanged("SelectedAdjustment");
+        //    RefreshAllCounters();
+        //}
+
+        private void AddAdjustmentToCharge(object obj)
         {
-            SelectedCharge.AdjustmentList.Add(SelectedAdjustment);
+            //patientRepository.PrimaryChargeRepository.AdjustmentRepository.Add(selectedAdjustment);
             SelectedAdjustment = new Adjustment();
             RaisePropertyChanged("SelectedAdjustment");
             RefreshAllCounters();
         }
-
 
         private bool CanAddAddonAdjustment(object obj)
         {
@@ -503,13 +522,12 @@ namespace PatientManagement.ViewModel
         private void LoadCommands()
         {
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
-            AddChargeAdjustmentCommand = new Command(AddChargeAdjustment, CanAddAdjustment);
+            AddChargeAdjustmentCommand = new Command(AddAdjustmentToCharge, CanAddAdjustment);
             AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
             AddAddonCommand = new Command(AddAddon, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
-            // AddChargeToRepositoryCommand = new Command(AddChargeToRepository);
-            AddChargeToPatientCommand = new Command(AddChargeToPatient, CanAddChargeToPatient);
+            AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
             DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge);
         }
 
@@ -653,15 +671,16 @@ namespace PatientManagement.ViewModel
         //}
 
 
-        private void AddChargeToPatient(object obj)
+        private void AddChargeToPatientV2(object obj)
         {
-            //AddValidAdjustmentToCharge();
-            selectedPatient.Charges.Add(selectedCharge);
-            ReturnNewCharge();
+            var chargeRepository = new PrimaryChargeRepository(selectedPatient);
+            chargeRepository.Add(SelectedCharge);
+
+            SelectedCharge = new PrimaryCharge();
+            //ReturnNewCharge();
             RaisePropertyChanged("SelectedCharge");
             RaisePropertyChanged("Charges");
         }
-
         //private void AddValidAdjustmentToCharge()
         //{
         //    if (selectedAdjustment.AdjustmentAmount > 0)
@@ -674,8 +693,8 @@ namespace PatientManagement.ViewModel
         private bool CanAddChargeToPatient(object obj)
         {
 
-            bool b = selectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(selectedCharge.ProcedureCode);
-
+            bool b = SelectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
+            
             return b;
         }
 
@@ -684,14 +703,18 @@ namespace PatientManagement.ViewModel
 
         private void DeleteSelectedCharge(object obj)
         {
-
-            var index = selectedPatient.Charges.IndexOf(selectedCharge);
-            if (index > -1)
+            if (SelectedListChargeIndex !=null)
             {
-                selectedPatient.Charges.RemoveAt(index);
+                var index = selectedPatient.Charges.IndexOf(SelectedListChargeIndex);
+                if (index > -1)
+                {
+                    selectedPatient.Charges.RemoveAt(index);
 
-                ReturnNewCharge();
+                    ReturnNewCharge();
+                }
             }
+           
+           
         }
 
       

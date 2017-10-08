@@ -11,7 +11,10 @@ namespace PatientManagement.Model
         {
             adjustmentType = "CO";
             adjustmentReasonCode = "45";
+            Id = Guid.NewGuid();
         }
+
+        public Guid Id { get; set; }
         private string adjustmentType;
 
         public string AdjustmentType

@@ -13,12 +13,21 @@ namespace PatientManagement.Model
 
         public Charge()
         {
-            Id = Guid.NewGuid();
-         
-           
+            Id = Guid.NewGuid();           
         }
 
-        public ObservableCollection<Adjustment> AdjustmentList { get; set; }
+        public ObservableCollection<Adjustment> AdjustmentList
+        {
+            get { return adjustmentList; }
+            set
+            {
+                if (value != adjustmentList)
+                {
+                    adjustmentList = value;
+                    RaisePropertyChanged("AdjustmentList");
+                }
+            }
+        }
 
         public Modifier Modifier { get; set; }
 
@@ -32,11 +41,20 @@ namespace PatientManagement.Model
         public decimal ChargeCost
         {
             get { return chargeCost; }
-            set { chargeCost = value; }
+            set
+            {
+                if (value != chargeCost)
+                {
+                    chargeCost = value;
+                    RaisePropertyChanged("ChargeCost");
+                }
+            }
         }
 
 
         private decimal paymentAmount;
+        private string procedureCode;
+        private ObservableCollection<Adjustment> adjustmentList;
 
         public decimal PaymentAmount
         {
@@ -53,7 +71,18 @@ namespace PatientManagement.Model
             }
         }
 
-        public string ProcedureCode { get; set; }
+        public string ProcedureCode
+        {
+            get { return procedureCode; }
+            set
+            {
+                if (value != procedureCode)
+                {
+                    procedureCode = value;
+                    RaisePropertyChanged("ProcedureCode");
+                }
+            }
+        }
 
 
         public abstract decimal AllowedAmount { get;}
