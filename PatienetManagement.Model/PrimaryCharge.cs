@@ -11,7 +11,7 @@ namespace PatientManagement.Model
         public PrimaryCharge()
         {
             Id = Guid.NewGuid();
-            AddonChargeList = new List<AddonCharge>();
+            AddonChargeList = new ObservableCollection<AddonCharge>();
             AdjustmentList = new ObservableCollection<Adjustment>();
             Modifier = new Modifier();
             DateOfService = DateTime.Today;
@@ -27,7 +27,7 @@ namespace PatientManagement.Model
             Modifier = new Modifier(charge.Modifier);
             DateOfService = DateTime.Today;
 
-            AddonChargeList = new List<AddonCharge>();
+            AddonChargeList = new ObservableCollection<AddonCharge>();
             AdjustmentList = new ObservableCollection<Adjustment>();
             Id = Guid.NewGuid();
         }
@@ -37,7 +37,7 @@ namespace PatientManagement.Model
 
         public DateTime DateOfService { get; set; }
 
-        public List<AddonCharge> AddonChargeList { get; set; }
+        public ObservableCollection<AddonCharge> AddonChargeList { get; set; }
 
         private string billId;
 

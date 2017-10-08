@@ -9,8 +9,13 @@ using PatientManagement.Model;
 
 namespace EFC.BL
 {
-    class AdjustmentRepository:IAdjustmentRepository
+   public class AdjustmentRepository : IAdjustmentRepository
     {
+        public AdjustmentRepository(Charge charge)
+        {
+            Adjustments = charge.AdjustmentList;
+
+        }
         public AdjustmentRepository(PrimaryCharge charge)
         {
             Adjustments = charge.AdjustmentList;
@@ -40,7 +45,7 @@ namespace EFC.BL
 
         public Adjustment GetSelectedAdjustment(Guid id)
         {
-          return  Adjustments.FirstOrDefault(a => a.Id == id);
+            return Adjustments.FirstOrDefault(a => a.Id == id);
         }
     }
 }

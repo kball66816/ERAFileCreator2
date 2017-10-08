@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAddonChargeRepository.cs" />
     <Compile Include="IAdjustmentRepository.cs" />
     <Compile Include="IInsurance.cs" />
     <Compile Include="IPrimaryChargeRepository.cs" />

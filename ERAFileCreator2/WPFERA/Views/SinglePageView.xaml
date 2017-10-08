@@ -41,7 +41,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         x:Name="AddonCountTag" 
-                               Text="Addon Code Count: "
+                               Text="SelectedAddonCharge Code Count: "
                                Margin="10,0,0,0"/>
                     <TextBlock
                         x:Name="AddonCounter" 
@@ -125,6 +125,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="80"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -879,6 +880,8 @@
                         <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
                         <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
                         <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
+                        <DataGridTextColumn Header="Copay" Binding="{Binding Copay}"/>
+                        <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
@@ -903,7 +906,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-                <TextBlock x:Name="AdjustmentType" Grid.Row="23" Grid.Column="0"
+            <TextBlock x:Name="AdjustmentType" Grid.Row="23" Grid.Column="0"
                    VerticalAlignment="Top"
                    Margin="10,0,0,0"
                            Text="Adjustment Type"/>
@@ -926,8 +929,8 @@
                           Width="45" ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}" SelectedIndex="34">
                 </ComboBox>
                 <TextBox x:Name="PrimaryAdjustmentAmountInput"
-                             Text="{Binding SelectedAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}}"
-                             Width="30">
+                             Text="{Binding SelectedAdjustment.AdjustmentAmount, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:F2\}}"
+                             Width="30" Height="22" VerticalAlignment="Top">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -944,7 +947,7 @@
                            VerticalAlignment="Top"></TextBlock>
                 <DataGrid AutoGenerateColumns="False"
                           VerticalAlignment="Bottom"
-                          SelectedItem="{Binding SelectedAdjustment}"
+                          SelectedItem="{Binding SelectedChargeAdjustmentIndex}"
                           ItemsSource="{Binding SelectedCharge.AdjustmentList}"
                           MaxHeight="100"
                           VerticalScrollBarVisibility="Auto" 
@@ -969,7 +972,7 @@
                        Text="Addon Procedure Code"/>
             <TextBox Name="AddonProcedureCodeInput" Grid.Row="25" Grid.Column="0"
                  Margin="10,20,0,0"
-                                 Text="{Binding Addon.ProcedureCode}" 
+                                 Text="{Binding SelectedAddonCharge.ProcedureCode}" 
                                  Width="115"
                      HorizontalAlignment="Left"/>
             <TextBlock Name="AddonModifiersTag" Grid.Row="25" Grid.Column="1"
@@ -979,21 +982,21 @@
             <StackPanel Orientation="Horizontal" Grid.Row="25" Grid.Column="1"
                     Margin="10,20,0,0">
                 <TextBox x:Name="AddonModifierOneInput"
-                                     Text="{Binding Addon.Modifier.ModifierOne}"                                
+                                     Text="{Binding SelectedAddonCharge.Modifier.ModifierOne}"                                
                                      Width="25"                                                                  
                                      MaxLength="2"/>
                 <TextBox x:Name="AddonModifierTwoInput"
-                                     Text="{Binding Addon.Modifier.ModifierTwo}"
+                                     Text="{Binding SelectedAddonCharge.Modifier.ModifierTwo}"
                                      Width="25"
                                      MaxLength="2"
                          Margin="5,0,0,0"/>
                 <TextBox x:Name="AddonModifierThreeInput"
-                                     Text="{Binding Addon.Modifier.ModifierThree}"
+                                     Text="{Binding SelectedAddonCharge.Modifier.ModifierThree}"
                                      Width="25"
                                      MaxLength="2"
                          Margin="5,0,0,0"/>
                 <TextBox x:Name="AddonModifierFourInput"
-                                     Text="{Binding Addon.Modifier.ModifierFour}"
+                                     Text="{Binding SelectedAddonCharge.Modifier.ModifierFour}"
                                      Width="25"
                                      MaxLength="2"
                          Margin="5,0,0,0"/>
@@ -1004,30 +1007,50 @@
                    Text="Addon Paid Amount"/>
             <TextBox Name="AddonPaidAmountInput" Grid.Row="25" Grid.Column="2"
                  Margin="10,20,0,0"
-                             Text="{Binding Addon.PaymentAmount}"
+                             Text="{Binding SelectedAddonCharge.PaymentAmount}"
                              Width="115"
                      HorizontalAlignment="Left"/>
             <TextBlock Name="AddonChargesAmountTag" Grid.Row="25" Grid.Column="3"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
-                           Text="Addon Charges Amount"/>
+                           Text="Addon Charge Amount"/>
             <TextBox Name="AddonChargesAmountInput" Grid.Row="25" Grid.Column="3"
                 Margin="10,20,0,0"
-                                 Text="{Binding Addon.ChargeCost}" 
+                                 Text="{Binding SelectedAddonCharge.ChargeCost}" 
                                  Width="115"
                      HorizontalAlignment="Left"/>
             <Button Name="AddAddonChargesButton" Grid.Row="25" Grid.Column="4"
                 Margin="10,0,10,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
-                    Content="Add Additional Addon"
+                    Content="Add Additional SelectedAddonCharge"
                     Command="{Binding AddAddonCommand}"/>
-            <TextBlock Name="AddonAdjustmentType" Grid.Row="26" Grid.Column="0"
+            <StackPanel Grid.Row="26" Grid.Column="0" Grid.ColumnSpan="3">
+                <TextBlock Text="Selected Charge Addons"/>
+                <DataGrid AutoGenerateColumns="False"
+                          VerticalAlignment="Bottom"
+                          SelectedItem="{Binding SelectedAddonChargeIndex, Mode=TwoWay}"
+                          ItemsSource="{Binding SelectedCharge.AddonChargeList}"
+                          MaxHeight="100"
+                          VerticalScrollBarVisibility="Auto" 
+                          IsReadOnly="True"
+                          Name="Addons">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
+                        <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
+                        <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
+                        <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"/>
+                    
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </StackPanel>
+            <TextBlock Name="AddonAdjustmentType" Grid.Row="27" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
                                Text="Adjustment Type"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="26" Grid.Column="0"
+            <StackPanel Orientation="Horizontal" Grid.Row="27" Grid.Column="0"
                     Margin="10,20,0,0">
                 <ComboBox x:Name="AddonAdjustmentTypeDropdown"
                           Width="45"
@@ -1061,19 +1084,19 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
             </StackPanel>
-            <Button Name="AddonAdjustmentButton" Grid.Row="26" Grid.Column="1"
+            <Button Name="AddonAdjustmentButton" Grid.Row="27" Grid.Column="1"
                 Margin="10,0,0,0"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
                 Content="Add Additional Adjustment"
                 Command="{Binding AddAddonChargeAdjustmentCommand}"/>
-            <Button x:Name="AddPatient" Grid.Row="26" Grid.Column="4"
+            <Button x:Name="AddPatient" Grid.Row="27" Grid.Column="4"
                 Margin="10,0,0,0"
                      Content="Add Additional Patient" 
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                      Command="{Binding AddPatientCommand}"/>
-            <Button Grid.Row="27" Grid.Column="4"
+            <Button Grid.Row="28" Grid.Column="4"
                 Command="{Binding SaveFileCommand}"
                 Content="Create 835 File"
                 Width="115"
@@ -1102,14 +1125,14 @@
                 </CheckBox>
             </StackPanel>
             <StackPanel Orientation="Vertical">
-                <CheckBox Content="Reuse Same Addon Code"
+                <CheckBox Content="Reuse Same SelectedAddonCharge Code"
                           Margin="10,0,0,0"
                   Name="ReuseAddonPreference"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.ReuseAddon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
 
                 </CheckBox>
-                <CheckBox Content="Reuse Addon Code Prompt"
+                <CheckBox Content="Reuse SelectedAddonCharge Code Prompt"
                           Margin="10,0,0,0"
                   Command="{Binding SavePreferenceCommand}"
                   IsChecked="{Binding Preference.EnableAddonReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

@@ -60,7 +60,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                     x:Name="AddonCountTag" 
-                    Text="Addon Code Count: "
+                    Text="SelectedAddonCharge Code Count: "
                     Margin="30,0,0,0"/>
                     <TextBlock
                     x:Name="AddonCounter" 
@@ -1134,47 +1134,47 @@
                                 <Expander IsExpanded="True"
                                           Margin="0,10,0,0"
                                           x:Name="AddonExpander"
-                                          Header="Addon Codes">
+                                          Header="SelectedAddonCharge Codes">
                                     <StackPanel Orientation="Horizontal">
                                         <StackPanel Orientation="Vertical">
                                             <TextBlock x:Name="AddonProcedureCodeTag"
-                                                         Text="Addon Procedure Code"/>
+                                                         Text="SelectedAddonCharge Procedure Code"/>
                                             <TextBlock x:Name="AddonModifiersTag"
                                                          Text="Modifiers"
                                                          Margin="0,10,0,0"/>
                                             <TextBlock x:Name="AddonChargeAmountTag"
-                                                         Text="Addon Charges Amount"
+                                                         Text="SelectedAddonCharge Charges Amount"
                                                          Margin="0,10,0,0"/>
                                             <TextBlock x:Name="AddonPaidAmountTag"
-                                                         Text="Addon Paid Amount"
+                                                         Text="SelectedAddonCharge Paid Amount"
                                                          Margin="0,10,0,0"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Vertical">
                                             <TextBox x:Name="AddonProcedureCodeInput" 
-                                                       Text="{Binding Addon.ProcedureCode}" 
+                                                       Text="{Binding SelectedAddonCharge.ProcedureCode}" 
                                                        Width="130"
                                                        Margin="10,0,0,0"/>
                                             <StackPanel Orientation="Horizontal"
                                                         Margin="10,10,0,0">
                                                 <TextBox x:Name="AddonModifierOneInput"
-                                                       Text="{Binding Addon.Modifier.ModifierOne}"                                
+                                                       Text="{Binding SelectedAddonCharge.Modifier.ModifierOne}"                                
                                                        Width="25"                                                                  
                                                        MaxLength="2"                          
                                                        Height="20"/>
                                                 <TextBox x:Name="AddonModifierTwoInput"
-                                                      Text="{Binding Addon.Modifier.ModifierTwo}"
+                                                      Text="{Binding SelectedAddonCharge.Modifier.ModifierTwo}"
                                                       Width="25"
                                                       MaxLength="2"
                                                       Height="20"
                                                          Margin="10,0,0,0"/>
                                                 <TextBox x:Name="AddonModifierThreeInput"
-                                                       Text="{Binding Addon.Modifier.ModifierThree}"
+                                                       Text="{Binding SelectedAddonCharge.Modifier.ModifierThree}"
                                                        Width="25"
                                                        MaxLength="2"
                                                        Height="20"
                                                          Margin="10,0,0,0"/>
                                                 <TextBox x:Name="AddonModifierFourInput"
-                                                       Text="{Binding Addon.Modifier.ModifierFour}"
+                                                       Text="{Binding SelectedAddonCharge.Modifier.ModifierFour}"
                                                        Width="25"
                                                        Height="20"
                                                        MaxLength="2"
@@ -1184,10 +1184,10 @@
                                             
                                             <TextBox x:Name="AddonChargeAmountInput"
                                                        Margin="10,10,0,0"
-                                                       Text="{Binding Addon.ChargeCost}" 
+                                                       Text="{Binding SelectedAddonCharge.ChargeCost}" 
                                                        Width="130"/>
                                             <TextBox x:Name="AddonPaidAmountInput"
-                                                       Text="{Binding Addon.PaymentAmount}"
+                                                       Text="{Binding SelectedAddonCharge.PaymentAmount}"
                                                        Margin="10,10,0,0"
                                                        Width="130"
                                                        HorizontalAlignment="Left"
@@ -1199,7 +1199,7 @@
                                                 Height="21"
                                                 Width="78"
                                                 Margin="10,0,0,0"
-                                                Content="Add Addon"
+                                                Content="Add SelectedAddonCharge"
                                                 Command="{Binding AddAddonCommand}"/>
                                         </StackPanel>
                                     </StackPanel>
@@ -1207,7 +1207,7 @@
                                 <Expander
                                     IsExpanded="True"
                                     x:Name="AddonChargeAdjustments"                                                        
-                                    Header="Addon Charges Adjustments"                                                             
+                                    Header="SelectedAddonCharge Charges Adjustments"                                                             
                                     Margin="0,10,0,0">
                                     <StackPanel Orientation="Horizontal">
                                         <StackPanel Orientation="Vertical">
@@ -1604,10 +1604,10 @@
                                 Text="Enable Reuse Patient Prompt"
                                 Margin="0,10,0,0"/>
                             <TextBlock
-                                Text="Reuse Same Addon Code"
+                                Text="Reuse Same SelectedAddonCharge Code"
                                 Margin="0,10,0,0"/>
                             <TextBlock
-                                Text="Enable Reuse Addon Code Prompt"
+                                Text="Enable Reuse SelectedAddonCharge Code Prompt"
                                 Margin="0,10,0,0"/>
                             <TextBlock
                                 Text="Reload Last Patient From Last Run"

@@ -20,7 +20,7 @@ namespace PatientManagement.ViewModel
             Settings = new SettingsService();
             LoadInitialPatient();
             LoadBillingProvider();
-            Addon = new AddonCharge();
+            SelectedAddonCharge = new AddonCharge();
             SelectedAdjustment = new Adjustment();
             AddonAdjustment = new Adjustment();
             SelectedCharge = new PrimaryCharge();
@@ -272,7 +272,7 @@ namespace PatientManagement.ViewModel
         private void CloneLastAddon()
         {
             AddonCharge clone = (AddonCharge)SelectedCharge.AddonChargeList.Last().Clone();
-            Addon = clone;
+            SelectedAddonCharge = clone;
             RaisePropertyChanged("Addon");
         }
 
@@ -319,10 +319,10 @@ namespace PatientManagement.ViewModel
 
                 else
                 {
-                    Addon = new AddonCharge();
+                    SelectedAddonCharge = new AddonCharge();
                 }
 
-                return Addon;
+                return SelectedAddonCharge;
             }
         }
 
@@ -358,23 +358,15 @@ namespace PatientManagement.ViewModel
             get { return selectedAdjustment; }
             set
             {
-                //Bug Unable to identify source. After a new charge is returned
-                //Then the instance of value becomes null.
-
-                if (value == null)
-                {
-                    value = new Adjustment();
-                    selectedAdjustment = value;
-                    RaisePropertyChanged("SelectedAdjustment");
-                }
-
-                else if (value != selectedAdjustment)
+                if (value != selectedAdjustment)
                 {
                     selectedAdjustment = value;
                     RaisePropertyChanged("SelectedAdjustment");
                 }
             }
         }
+
+        public Adjustment SelectedChargeAdjustmentIndex { get; set; }
 
         private ObservableCollection<Adjustment> adjustments;
 
@@ -413,7 +405,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAddonAdjustment(object obj)
         {
-            Addon.AdjustmentList.Add(AddonAdjustment);
+            SelectedAddonCharge.AdjustmentList.Add(AddonAdjustment);
             AddonAdjustment = new Adjustment();
             RaisePropertyChanged("SelectedAdjustment");
             RefreshAllCounters();
@@ -430,6 +422,8 @@ namespace PatientManagement.ViewModel
         private void AddAdjustmentToCharge(object obj)
         {
             //patientRepository.PrimaryChargeRepository.AdjustmentRepository.Add(selectedAdjustment);
+            IAdjustmentRepository adjustmentRepository = new AdjustmentRepository(SelectedCharge);
+            adjustmentRepository.Add(SelectedAdjustment);
             SelectedAdjustment = new Adjustment();
             RaisePropertyChanged("SelectedAdjustment");
             RefreshAllCounters();
@@ -460,47 +454,50 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        private AddonCharge addon;
+
         private ObservableCollection<PrimaryCharge> charges;
 
-        public AddonCharge Addon
+        private AddonCharge selectedAddonCharge;
+
+        public AddonCharge SelectedAddonCharge
         {
-            get { return addon; }
+            get { return selectedAddonCharge; }
             set
             {
-                if (value != addon)
+                if (value != selectedAddonCharge)
                 {
-                    addon = value;
+                    selectedAddonCharge = value;
                     RaisePropertyChanged("Addon");
                 }
             }
         }
 
+        public AddonCharge SelectedAddonChargeIndex { get; set; }
+
         public ICommand AddAddonCommand { get; private set; }
 
-        private void AddAddon(object obj)
+        public void AddAddonToCharge(object obj)
         {
-            SelectedCharge.AddonChargeList.Add(addon);
+            IAddonChargeRepository addonChargeRepository = new AddonChargeRepository(selectedCharge);
+            addonChargeRepository.Add(SelectedAddonCharge);
 
             if (Settings.ReuseSameAddonEnabled)
             {
                 GetNewAddonDependentOnUserPromptPreference();
             }
-
-            else if (Settings.ReuseSameAddonEnabled == false)
+            else
             {
-                Addon = new AddonCharge();
-
+                SelectedAddonCharge = new AddonCharge();
             }
-            RaisePropertyChanged("Addon");
+            RaisePropertyChanged("SelectedAddonCharge");
             UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
             RefreshAllCounters();
-        }
 
+        }
         private bool CanAddAddon(object obj)
         {
-            if (!string.IsNullOrEmpty(Addon.ProcedureCode))
+            if (!string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode))
             {
                 return true;
             }
@@ -524,7 +521,7 @@ namespace PatientManagement.ViewModel
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
             AddChargeAdjustmentCommand = new Command(AddAdjustmentToCharge, CanAddAdjustment);
             AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
-            AddAddonCommand = new Command(AddAddon, CanAddAddon);
+            AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
             AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
@@ -708,9 +705,10 @@ namespace PatientManagement.ViewModel
                 var index = selectedPatient.Charges.IndexOf(SelectedListChargeIndex);
                 if (index > -1)
                 {
-                    selectedPatient.Charges.RemoveAt(index);
+                    IPrimaryChargeRepository cp = new PrimaryChargeRepository(SelectedPatient);
+                   cp.Delete(SelectedListChargeIndex);
 
-                    ReturnNewCharge();
+                   // ReturnNewCharge();
                 }
             }
            

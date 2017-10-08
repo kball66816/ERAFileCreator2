@@ -20,7 +20,15 @@ namespace PatientManagement.Model
         public string AdjustmentType
         {
             get { return adjustmentType; }
-            set { if (value != AdjustmentType) { adjustmentType = value; }RaisePropertyChanged("AdjustmentType"); }
+            set
+            {
+                if (value != AdjustmentType)
+                {
+                    adjustmentType = value;
+                    RaisePropertyChanged("AdjustmentType");
+
+                }
+            }
         }
 
 
@@ -317,7 +325,21 @@ namespace PatientManagement.Model
             {"Payment adjusted based on Medical Payments Coverage (MPC) or Personal Injury Protection (PIP) Benefits jurisdictional regulations or payment policies, use only if no other code is applicable. Usage: If adjustment is at the Claim Level, the payer must send and the provider should refer to the 835 Insurance Policy Number Segment (Loop 2100 Other Claim Related Information REF qualifier 'IG') if the jurisdictional regulation applies. If adjustment is at the Line Level, the payer must send and the provider should refer to the 835 Healthcare Policy Identification Segment (loop 2110 Service Payment information REF) if the regulations apply. To be used for Property and Casualty Auto only.","P22" },
             {"Medical Payments Coverage (MPC) or Personal Injury Protection (PIP) Benefits jurisdictional fee schedule adjustment. Usage: If adjustment is at the Claim Level, the payer must send and the provider should refer to the 835 Class of Contract Code Identification Segment (Loop 2100 Other Claim Related Information REF). If adjustment is at the Line Level, the payer must send and the provider should refer to the 835 Healthcare Policy Identification Segment (loop 2110 Service Payment information REF) if the regulations apply. To be used for Property and Casualty Auto only.","P23" }
         };
-        public decimal AdjustmentAmount { get; set; }
+
+        private decimal adjustmentAmount;
+
+        public decimal AdjustmentAmount
+        {
+            get { return adjustmentAmount; }
+            set
+            {
+                if (value != adjustmentAmount)
+                {
+                    adjustmentAmount = value;
+                    RaisePropertyChanged("AdjustmentAmount");
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddonChargeRepository.cs" />
     <Compile Include="AdjustmentRepository.cs" />
     <Compile Include="BillingProviderRepository.cs" />
     <Compile Include="EDI Segments\Amt.cs" />
