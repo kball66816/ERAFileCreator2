@@ -38,15 +38,7 @@
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        x:Name="AddonCountTag" 
-                               Text="SelectedAddonCharge Code Count: "
-                               Margin="10,0,0,0"/>
-                    <TextBlock
-                        x:Name="AddonCounter" 
-                               Text="{Binding AddonChargeCount, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
+              
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
@@ -82,8 +74,6 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding BillId}"/>
-                            <TextBlock Text=" "/>
                             <TextBlock Text="{Binding FullName}"/>
                         </StackPanel>
                     </DataTemplate>
@@ -125,12 +115,12 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="80"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
-                   Text="Insurance Company" FontSize="24" TextDecorations="Underline"
+                   Text="Insurance Company" FontSize="16" TextDecorations="Underline"
                    Margin="10,0,0,0"/>
             <TextBlock x:Name="InsuranceCompanyNameTag"  
                    HorizontalAlignment="Left"
@@ -140,7 +130,6 @@
                    Grid.Row="2" Grid.Column="0"/>
             <TextBox x:Name="InsuranceCompanyNameInput"
                  HorizontalAlignment="Left"
-                 VerticalAlignment="Bottom"
                  Width="115"
                  Grid.Row="2" Grid.Column="0"
                  Margin="10,20,0,0">
@@ -329,7 +318,7 @@
                    Height="2"
                    Fill="Gray" VerticalAlignment="Center"/>
             <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
-                   Text="Billing Provider" FontSize="24" TextDecorations="Underline"
+                   Text="Billing Provider" FontSize="16" TextDecorations="Underline"
                    Margin="10,0,0,0"/>
             <CheckBox Content="Use Individual Provider" Grid.Row="6" Grid.Column="0"
                   Name="IsIndividualBillingTag"
@@ -543,13 +532,17 @@
                    Height="2"
                    Fill="Gray" 
                    VerticalAlignment="Center"/>
-            <TextBlock Text="Patient" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" FontSize="24" TextDecorations="Underline"
+            <TextBlock Text="Patient" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" FontSize="16" TextDecorations="Underline"
                        Margin="10,0,0,0"/>
             <CheckBox Grid.Row="11" Grid.Column="0"
                   VerticalAlignment="Top"
                   Margin="10,10,0,0"
             IsChecked="{Binding SelectedPatient.UsePlatformId}"
                           Content="Use Platform ID?" />
+            <CheckBox Name="IncludeSubscriberInput" Grid.Row="11" Grid.Column="1"
+                      Margin="10,10,0,0"
+                      IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
+                      Content="Include Subscriber?"/>
             <TextBlock Name="PatientFirstNameTag" Grid.Row="12" Grid.Column="0"
                        Text="Patient's First Name*"
                        Height="20"
@@ -598,10 +591,7 @@
                 </Binding>
             </TextBox>
 
-            <CheckBox Name="IncludeSubscriberInput" Grid.Row="13" Grid.Column="0"
-                  Margin="10,0,0,0"
-                          IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
-                          Content="Include Subscriber?"/>
+
             <TextBlock Name="SubscriberFirstNameTag" Grid.Row="14" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
@@ -636,7 +626,7 @@
                    Width="auto"
                    Height="2"
                    Fill="Gray" VerticalAlignment="Center"/>
-            <TextBlock Text="Patient's Rendering Provider" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="4" FontSize="24" TextDecorations="Underline"
+            <TextBlock Text="Patient's Rendering Provider" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="4" FontSize="16" TextDecorations="Underline"
                        Margin="10,0,0,0"/>
 
             <CheckBox x:Name="IsAlsoRendering" Grid.Row="17" Grid.Column="0"
@@ -676,7 +666,7 @@
                      MaxLength="10" 
                      HorizontalAlignment="Left"
                      IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked,Converter={StaticResource NotConverter}}"/>
-            <TextBlock Text="Patient's Date of Service" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="4" FontSize="24" TextDecorations="Underline"
+            <TextBlock Text="Patient Encounters" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="4" FontSize="16" TextDecorations="Underline"
                        Margin="10,0,0,0"/>
             <StackPanel Grid.Row="20" Grid.Column="0">
                 <TextBlock Name="DateOfServiceTag"
@@ -863,29 +853,37 @@
                     Margin="10,10,0,0"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="left"/>
-            <StackPanel Grid.Row="22" Grid.Column="0" Grid.ColumnSpan="3">
-                <TextBlock Text="Selected Patient Encounters"
-                           VerticalAlignment="Top"></TextBlock>
-                <DataGrid AutoGenerateColumns="False"
-                          VerticalAlignment="Bottom"
-                          SelectedItem="{Binding SelectedListChargeIndex, Mode=TwoWay}"
-                          ItemsSource="{Binding SelectedPatient.Charges}"
-                          MaxHeight="100"
-                          VerticalScrollBarVisibility="Auto" 
-                          IsReadOnly="True"
-                          Name="ChargesForEncounter">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Date Of Service" Binding="{Binding DateOfService, StringFormat=\{0:d\}}"/>
-                        <DataGridTextColumn Header="Place Of Service" Binding="{Binding PlaceOfService.ServiceLocation}"/>
-                        <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
-                        <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
-                        <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
-                        <DataGridTextColumn Header="Copay" Binding="{Binding Copay}"/>
-                        <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"></DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+            <TextBlock Text="Selected Patient Encounters" Grid.Row="22" Grid.Column="0"
+                       VerticalAlignment="Top"/>
+            <DataGrid AutoGenerateColumns="False"
+                      VerticalAlignment="Bottom"
+                      SelectedItem="{Binding SelectedListChargeIndex, Mode=TwoWay}"
+                      ItemsSource="{Binding SelectedPatient.Charges}"
+                      MaxHeight="60"
+                      VerticalScrollBarVisibility="Auto" 
+                      IsReadOnly="True"
+                      x:Name="ChargesForEncounter"
+                      Grid.Column="0" Grid.Row="22" Grid.ColumnSpan="3"
+                      Margin="0,20,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Date Of Service" Binding="{Binding DateOfService, StringFormat=\{0:d\}}"/>
+                    <DataGridTextColumn Header="Place Of Service" Binding="{Binding PlaceOfService.ServiceLocation}"/>
+                    <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
+                    <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
+                    <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
+                    <DataGridTextColumn Header="Copay" Binding="{Binding Copay}"/>
+                    <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"/>
+                </DataGrid.Columns>
+            </DataGrid>
             <Button Grid.Row="22" Grid.Column="3"
+                    Name="EditCharge"
+                    Command="{Binding EditSelectedChargeCommand}"
+                    Content="Edit Charge"
+                    Width="115"
+                    Margin="10,20,0,0"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="left" Click="EditCharge_Click"/>
+            <Button Grid.Row="22" Grid.Column="4"
                     Name="DeleteCharge"
                     Content="Delete Selected Charges"
                     Width="115"
@@ -893,18 +891,6 @@
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="left"
                     Command="{Binding DeleteSelectedChargeCommand}">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="IsEnabled" Value="True"/>
-                        <Setter Property="Opacity" Value="1"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=ChargesForEncounter, Path=SelectedItem}" Value="{x:Null}">
-                                <Setter Property="IsEnabled" Value="False"/>
-                                <Setter Property="Opacity" Value=".5"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
             </Button>
             <TextBlock x:Name="AdjustmentType" Grid.Row="23" Grid.Column="0"
                    VerticalAlignment="Top"
@@ -942,30 +928,46 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
             </StackPanel>
-            <StackPanel Grid.Row="24" Grid.Column="0" Grid.ColumnSpan="3">
-                <TextBlock Text="Selected Charge Adjustments"
-                           VerticalAlignment="Top"></TextBlock>
-                <DataGrid AutoGenerateColumns="False"
-                          VerticalAlignment="Bottom"
-                          SelectedItem="{Binding SelectedChargeAdjustmentIndex}"
-                          ItemsSource="{Binding SelectedCharge.AdjustmentList}"
-                          MaxHeight="100"
-                          VerticalScrollBarVisibility="Auto" 
-                          IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Type" Binding="{Binding AdjustmentType}"/>
-                        <DataGridTextColumn Header="Reason Code" Binding="{Binding AdjustmentReasonCode}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Amount" Binding="{Binding AdjustmentAmount}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+            <TextBlock Text="Selected Charge Adjustments"
+                       VerticalAlignment="Top" Grid.Row="24" Grid.Column="0"/>
+            <DataGrid AutoGenerateColumns="False"
+                      Grid.Row="24" Grid.Column="0" Grid.ColumnSpan="3"
+                      VerticalAlignment="Bottom"
+                      SelectedItem="{Binding SelectedChargeAdjustmentIndex}"
+                      ItemsSource="{Binding SelectedCharge.AdjustmentList}"
+                      MaxHeight="60"
+                      VerticalScrollBarVisibility="Auto" 
+                      IsReadOnly="True"
+                      Margin="0,20,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type" Binding="{Binding AdjustmentType}"/>
+                    <DataGridTextColumn Header="Reason Code" Binding="{Binding AdjustmentReasonCode}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding AdjustmentAmount}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
             <Button Name="AddAdjustmentButton" Grid.Row="23" Grid.Column="1"
                 Margin="10,0,0,0"
                             Command="{Binding AddChargeAdjustmentCommand}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                             Content="Add Additional Adjustment"/>
-
+            <Button Grid.Row="24" Grid.Column="3"
+                    Name="EditChargeAdjustment"
+                    Command="{Binding EditSelectedAdjustmentCommand}"
+                    Content="Edit Adjustment"
+                    Width="115"
+                    Margin="10,20,0,0"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="left"/>
+            <Button Grid.Row="24" Grid.Column="4"
+                    Name="DeleteAdjustment"
+                    Command="{Binding DeleteSelectedAdjustmentCommand}"
+                    Content="Delete Adjustment"
+                    Width="115"
+                    Margin="10,20,0,0"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="left"/>
             <TextBlock Name="AddonProcedureCodeTag" Grid.Row="25" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
@@ -1023,28 +1025,27 @@
                 Margin="10,0,10,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
-                    Content="Add Additional SelectedAddonCharge"
+                    Content="Add Additional Addons"
                     Command="{Binding AddAddonCommand}"/>
-            <StackPanel Grid.Row="26" Grid.Column="0" Grid.ColumnSpan="3">
-                <TextBlock Text="Selected Charge Addons"/>
-                <DataGrid AutoGenerateColumns="False"
-                          VerticalAlignment="Bottom"
-                          SelectedItem="{Binding SelectedAddonChargeIndex, Mode=TwoWay}"
-                          ItemsSource="{Binding SelectedCharge.AddonChargeList}"
-                          MaxHeight="100"
-                          VerticalScrollBarVisibility="Auto" 
-                          IsReadOnly="True"
-                          Name="Addons">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
-                        <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
-                        <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
-                        <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"/>
-                    
-                    </DataGrid.Columns>
-                </DataGrid>
+            <TextBlock Text="Selected Charge Addons" Grid.Row="26" Grid.Column="0"/>
+            <DataGrid AutoGenerateColumns="False"
+                      VerticalAlignment="Bottom"
+                      SelectedItem="{Binding SelectedAddonChargeIndex, Mode=TwoWay}"
+                      ItemsSource="{Binding SelectedCharge.AddonChargeList}"
+                      MaxHeight="60"
+                      VerticalScrollBarVisibility="Auto" 
+                      IsReadOnly="True"
+                      Name="Addons"
+                      Grid.Row="26" Grid.Column="0" Grid.ColumnSpan="3"
+                      Margin="0,20,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
+                    <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
+                    <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
+                    <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"/>
 
-            </StackPanel>
+                </DataGrid.Columns>
+            </DataGrid>
             <TextBlock Name="AddonAdjustmentType" Grid.Row="27" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
