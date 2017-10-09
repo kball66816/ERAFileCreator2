@@ -11,7 +11,7 @@ namespace EDI835.Segments
         public Dtm()
         {
             SegmentIdentifier = "DTM";
-            ProductionDate = DateTime.Today.ConvertedDate();
+            Date = DateTime.Today.ConvertedDate();
             DateTimeQualifier = "405";
         }
 

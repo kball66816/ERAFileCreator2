@@ -38,7 +38,7 @@
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem>
-              
+
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
@@ -117,6 +117,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
@@ -1113,7 +1114,23 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                      Command="{Binding AddPatientCommand}"/>
-            <Button Grid.Row="28" Grid.Column="4"
+            <TextBlock Text="Selected Addon Codes" Grid.Row="28"/>
+            <DataGrid AutoGenerateColumns="False"
+                      Grid.Row="28"  Grid.Column="0" Grid.ColumnSpan="3"
+                      VerticalAlignment="Bottom"
+                      SelectedItem="{Binding SelectedChargeAdjustmentIndex}"
+                      ItemsSource="{Binding SelectedCharge.AdjustmentList}"
+                      MaxHeight="60"
+                      VerticalScrollBarVisibility="Auto" 
+                      IsReadOnly="True"
+                      Margin="0,20,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type" Binding="{Binding AdjustmentType}"/>
+                    <DataGridTextColumn Header="Reason Code" Binding="{Binding AdjustmentReasonCode}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding AdjustmentAmount}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Grid.Row="29" Grid.Column="4"
                 Command="{Binding SaveFileCommand}"
                 Content="Create 835 File"
                 Width="115"

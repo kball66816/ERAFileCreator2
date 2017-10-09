@@ -12,10 +12,11 @@ namespace EDI835.Segments
             Insurance = insurance;
             SegmentIdentifier = "BPR"; //bpr 1
             TransactionHandlingCode = "I"; // bpr 2
-            insurance.CheckAmount = MonetaryAmount; //bpr3 
+            MonetaryAmount = insurance.CheckAmount; //bpr3 
             CreditOrDebtFlag = "C"; //bpr4
-            insurance.PaymentType = PaymentMethodCode; //bpr5
-            PaymentMethodCode = "CCP"; //bpr6
+            PaymentMethodCode = insurance.PaymentType;
+            //insurance.PaymentType = PaymentMethodCode; //bpr5
+            PaymentFormatCode = "CCP"; //bpr6
             SenderDfiIdNumberQualifier = "01"; //bpr7
             SenderDfiIdNumber = "043000096"; //bpr8
             SenderAccountNumberQualifier = "DA"; //bpr9
@@ -55,14 +56,28 @@ namespace EDI835.Segments
 
             buildBpr.Append(SegmentIdentifier);
             buildBpr.Append(DataElementTerminator);
-            buildBpr.Append(MonetaryAmount);
-            buildBpr.Append(DataElementTerminator);
-            buildBpr.Append(CreditOrDebtFlag);
-            buildBpr.Append(DataElementTerminator);
-            buildBpr.Append(PaymentMethodCode);
-            buildBpr.Append(DataElementTerminator);
-            buildBpr.Append(PaymentFormatCode);
-            buildBpr.Append(DataElementTerminator);
+            buildBpr.Append(TransactionHandlingCode)
+                .Append(DataElementTerminator)
+                .Append(MonetaryAmount)
+                .Append(DataElementTerminator)
+                .Append(CreditOrDebtFlag)
+                .Append(DataElementTerminator)
+                .Append(PaymentMethodCode)
+                .Append(DataElementTerminator)
+                .Append(PaymentFormatCode)
+                .Append(DataElementTerminator)
+                .Append(DataElementTerminator);
+
+            //buildBpr.Append(CreditOrDebtFlag);
+            //buildBpr.Append(DataElementTerminator);
+            //buildBpr.Append(MonetaryAmount);
+
+
+            //buildBpr.Append(DataElementTerminator);
+            //buildBpr.Append(PaymentMethodCode);
+            //buildBpr.Append(DataElementTerminator);
+            //buildBpr.Append(PaymentFormatCode);
+            //buildBpr.Append(DataElementTerminator);
 
             if(SenderDfiIdNumberQualifier !=null || SenderDfiIdNumber!=null)
             {
