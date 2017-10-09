@@ -86,12 +86,9 @@ namespace PatientManagement.ViewModel
             get { return charges; }
             set
             {
-                if (value != charges)
-                {
-                    charges = value;
-                    RaisePropertyChanged("Charges");
-                }
-
+                if (value == charges) return;
+                charges = value;
+                RaisePropertyChanged("Charges");
             }
         }
 
@@ -102,11 +99,9 @@ namespace PatientManagement.ViewModel
             get { return insurance; }
             set
             {
-                if (value != insurance)
-                {
-                    insurance = value;
-                    RaisePropertyChanged("Insurance");
-                }
+                if (value == insurance) return;
+                insurance = value;
+                RaisePropertyChanged("Insurance");
             }
         }
 
@@ -119,11 +114,9 @@ namespace PatientManagement.ViewModel
             get { return billingProvider; }
             set
             {
-                if (value != billingProvider)
-                {
-                    billingProvider = value;
-                    RaisePropertyChanged("BillingProvider");
-                }
+                if (value == billingProvider) return;
+                billingProvider = value;
+                RaisePropertyChanged("BillingProvider");
             }
         }
 
@@ -134,11 +127,9 @@ namespace PatientManagement.ViewModel
             get { return selectedPatient; }
             set
             {
-                if (value != selectedPatient)
-                {
-                    selectedPatient = value;
-                    RaisePropertyChanged("SelectedPatient");
-                }
+                if (value == selectedPatient) return;
+                selectedPatient = value;
+                RaisePropertyChanged("SelectedPatient");
             }
         }
 
@@ -149,12 +140,9 @@ namespace PatientManagement.ViewModel
             get { return selectedCharge; }
             set
             {
-                if (value != selectedCharge)
-
-                {
-                    selectedCharge = value;
-                    RaisePropertyChanged("SelectedCharge");
-                }
+                if (value == selectedCharge) return;
+                selectedCharge = value;
+                RaisePropertyChanged("SelectedCharge");
             }
         }
 
@@ -241,7 +229,7 @@ namespace PatientManagement.ViewModel
 
         private void CloneLastAddon()
         {
-            AddonCharge clone = (AddonCharge) SelectedCharge.AddonChargeList.Last().Clone();
+            var clone = (AddonCharge) SelectedCharge.AddonChargeList.Last().Clone();
             SelectedAddonCharge = clone;
             RaisePropertyChanged("Addon");
         }
@@ -311,14 +299,8 @@ namespace PatientManagement.ViewModel
 
         private bool CanAddPatient(object obj)
         {
-            if (!string.IsNullOrEmpty(SelectedPatient.FirstName) && !string.IsNullOrEmpty(selectedPatient.LastName))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return !string.IsNullOrEmpty(SelectedPatient.FirstName) 
+                && !string.IsNullOrEmpty(selectedPatient.LastName);
         }
 
         private Adjustment selectedAdjustment;
@@ -328,11 +310,9 @@ namespace PatientManagement.ViewModel
             get { return selectedAdjustment; }
             set
             {
-                if (value != selectedAdjustment)
-                {
-                    selectedAdjustment = value;
-                    RaisePropertyChanged("SelectedAdjustment");
-                }
+                if (value == selectedAdjustment) return;
+                selectedAdjustment = value;
+                RaisePropertyChanged("SelectedAdjustment");
             }
         }
 
@@ -345,12 +325,9 @@ namespace PatientManagement.ViewModel
             get { return adjustments; }
             set
             {
-                if (value != adjustments)
-                {
-                    adjustments = value;
-                    RaisePropertyChanged("Adjustments");
-                }
-
+                if (value == adjustments) return;
+                adjustments = value;
+                RaisePropertyChanged("Adjustments");
             }
         }
 
@@ -361,11 +338,9 @@ namespace PatientManagement.ViewModel
             get { return addonAdjustment; }
             set
             {
-                if (value != addonAdjustment)
-                {
-                    addonAdjustment = value;
-                    RaisePropertyChanged("AddonAdjustment");
-                }
+                if (value == addonAdjustment) return;
+                addonAdjustment = value;
+                RaisePropertyChanged("AddonAdjustment");
             }
         }
 
@@ -381,17 +356,8 @@ namespace PatientManagement.ViewModel
             RefreshAllCounters();
         }
 
-        //private void AddChargeAdjustment(object obj)
-        //{
-        //    SelectedCharge.AdjustmentList.Add(SelectedAdjustment);
-        //    SelectedAdjustment = new Adjustment();
-        //    RaisePropertyChanged("SelectedAdjustment");
-        //    RefreshAllCounters();
-        //}
-
         private void AddAdjustmentToCharge(object obj)
         {
-            //patientRepository.PrimaryChargeRepository.AdjustmentRepository.Add(selectedAdjustment);
             IAdjustmentRepository adjustmentRepository = new AdjustmentRepository(SelectedCharge);
             adjustmentRepository.Add(SelectedAdjustment);
             SelectedAdjustment = new Adjustment();
@@ -401,28 +367,14 @@ namespace PatientManagement.ViewModel
 
         private bool CanAddAddonAdjustment(object obj)
         {
-            if (!string.IsNullOrEmpty(addonAdjustment.AdjustmentReasonCode) &&
-                !string.IsNullOrEmpty(addonAdjustment.AdjustmentType))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return !string.IsNullOrEmpty(addonAdjustment.AdjustmentReasonCode) &&
+                   !string.IsNullOrEmpty(addonAdjustment.AdjustmentType);
         }
 
         private bool CanAddAdjustment(object obj)
         {
-            if (!string.IsNullOrEmpty(SelectedAdjustment.AdjustmentReasonCode) &&
-                SelectedAdjustment.AdjustmentAmount > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return !string.IsNullOrEmpty(SelectedAdjustment.AdjustmentReasonCode) &&
+                   SelectedAdjustment.AdjustmentAmount > 0;
         }
 
 
@@ -435,11 +387,9 @@ namespace PatientManagement.ViewModel
             get { return selectedAddonCharge; }
             set
             {
-                if (value != selectedAddonCharge)
-                {
-                    selectedAddonCharge = value;
-                    RaisePropertyChanged("Addon");
-                }
+                if (value == selectedAddonCharge) return;
+                selectedAddonCharge = value;
+                RaisePropertyChanged("Addon");
             }
         }
 
@@ -447,7 +397,7 @@ namespace PatientManagement.ViewModel
 
         public ICommand AddAddonCommand { get; private set; }
 
-        public void AddAddonToCharge(object obj)
+        private void AddAddonToCharge(object obj)
         {
             IAddonChargeRepository addonChargeRepository = new AddonChargeRepository(selectedCharge);
             addonChargeRepository.Add(SelectedAddonCharge);
@@ -469,14 +419,7 @@ namespace PatientManagement.ViewModel
 
         private bool CanAddAddon(object obj)
         {
-            if (!string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode);
         }
 
         public ICommand SaveFileCommand { get; private set; }
@@ -524,7 +467,7 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        private bool CanSave(object obj)
+        private static bool CanSave(object obj)
         {
             return true;
         }
@@ -572,9 +515,9 @@ namespace PatientManagement.ViewModel
 
             decimal chargesPaidAmount = 0;
             decimal addonsPaidAmount = 0;
-            foreach (Patient patient in patientRepository.GetAllPatients())
+            foreach (var patient in patientRepository.GetAllPatients())
             {
-                foreach (PrimaryCharge charge in patient.Charges)
+                foreach (var charge in patient.Charges)
                 {
                     chargesPaidAmount += charge.PaymentAmount;
                     addonsPaidAmount += charge.AddonChargeList.Sum(p => p.PaymentAmount);
@@ -602,33 +545,6 @@ namespace PatientManagement.ViewModel
         }
 
 
-        //private void UpdateAddonAdjustmentCount()
-        //{
-        //    if (SelectedCharge.AddonChargeList.Count == 0)
-        //    {
-        //        AddonChargeAdjustmentCount = 0;
-        //    }
-
-        //    else if (SelectedCharge.AddonChargeList == null)
-        //    {
-        //        AddonChargeAdjustmentCount = 0;
-        //    }
-
-        //    else if (SelectedCharge.AddonChargeList.Last().AdjustmentList == null)
-        //    {
-        //        AddonChargeAdjustmentCount = 0;
-        //    }
-
-        //    else
-        //    {
-        //        AddonChargeAdjustmentCount = SelectedCharge.AddonChargeList.Last().AdjustmentList.Count();
-        //        RaisePropertyChanged("AddonChargeAdjustmentCount");
-        //    }
-        //}
-
-
-
-
         private void AddChargeToPatientV2(object obj)
         {
             var chargeRepository = new PrimaryChargeRepository(selectedPatient);
@@ -639,14 +555,6 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("SelectedCharge");
             RaisePropertyChanged("Charges");
         }
-        //private void AddValidAdjustmentToCharge()
-        //{
-        //    if (selectedAdjustment.AdjustmentAmount > 0)
-        //    {
-        //        bool execute = true;
-        //        AddChargeAdjustmentCommand.Execute(execute);
-        //    }
-        //}
 
         private bool CanAddChargeToPatient(object obj)
         {
@@ -665,20 +573,15 @@ namespace PatientManagement.ViewModel
 
         private void DeleteSelectedCharge(object obj)
         {
-            if (SelectedListChargeIndex != null)
+            if (SelectedListChargeIndex == null) return;
+            var index = selectedPatient.Charges.IndexOf(SelectedListChargeIndex);
+            if (index <= -1) return;
+            IPrimaryChargeRepository cp = new PrimaryChargeRepository(SelectedPatient);
+            cp.Delete(SelectedListChargeIndex);
+            if (editModeEnabled)
             {
-                var index = selectedPatient.Charges.IndexOf(SelectedListChargeIndex);
-                if (index > -1)
-                {
-                    IPrimaryChargeRepository cp = new PrimaryChargeRepository(SelectedPatient);
-                    cp.Delete(SelectedListChargeIndex);
-                    if (editModeEnabled)
-                    {
-                        editModeEnabled = false;
-                    }
-                }
-
-            }       
+                editModeEnabled = false;
+            }
         }
 
         public ICommand EditSelectedChargeCommand { get; private set; }
@@ -731,15 +634,11 @@ namespace PatientManagement.ViewModel
     
         private void DeleteSelectedAdjustment(object obj)
         {
-            if (SelectedChargeAdjustmentIndex != null)
-            {
-                var index = SelectedCharge.AdjustmentList.IndexOf(SelectedChargeAdjustmentIndex);
-                if (index > -1)
-                {
-                   IAdjustmentRepository ar = new AdjustmentRepository(selectedCharge);
-                    ar.Delete(SelectedChargeAdjustmentIndex);
-                }
-            }
+            if (SelectedChargeAdjustmentIndex == null) return;
+            var index = SelectedCharge.AdjustmentList.IndexOf(SelectedChargeAdjustmentIndex);
+            if (index <= -1) return;
+            IAdjustmentRepository ar = new AdjustmentRepository(selectedCharge);
+            ar.Delete(SelectedChargeAdjustmentIndex);
         }
 
         private bool CanDeleteSelectedAdjustment(object obj)
