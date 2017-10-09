@@ -444,6 +444,9 @@ namespace PatientManagement.ViewModel
             EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
             EditSelectedAdjustmentCommand = new Command(EditSelectedAdjustment, CanEditSelectedAdjustment);
             DeleteSelectedAdjustmentCommand = new Command(DeleteSelectedAdjustment, CanDeleteSelectedAdjustment);
+            DeleteSelectedAddonCommand = new Command(DeleteSelectedAddon,CanDeleteSelectedAddon);
+            EditSelectedAddonCommand = new Command(EditSelectedAddon, CanEditSelectedAddon);
+            
 
         }
 
@@ -645,6 +648,39 @@ namespace PatientManagement.ViewModel
         {
             bool b = !string.IsNullOrEmpty(SelectedChargeAdjustmentIndex?.AdjustmentReasonCode);
             return b;
+        }
+        public ICommand DeleteSelectedAddonCommand { get; set; }
+
+        private void DeleteSelectedAddon(object obj)
+        {
+            if (SelectedAddonChargeIndex == null) return;
+            var index = SelectedCharge.AddonChargeList.IndexOf(SelectedAddonChargeIndex);
+            if (index <= -1) return;
+            IAddonChargeRepository ar = new AddonChargeRepository(selectedCharge);
+            ar.Delete(SelectedAddonChargeIndex);
+        }
+
+        private bool CanDeleteSelectedAddon(object obj)
+        {
+            bool b = !string.IsNullOrEmpty(SelectedAddonChargeIndex?.ProcedureCode);
+            return b;
+        }
+        public ICommand EditSelectedAddonCommand { get; private set; }
+
+        private void EditSelectedAddon(object obj)
+        {
+
+            SelectedAddonCharge = SelectedAddonChargeIndex;
+            RaisePropertyChanged("SelectedAddonCharge");
+
+
+        }
+
+        private bool CanEditSelectedAddon(object obj)
+        {
+            bool b = editModeEnabled && (!string.IsNullOrEmpty(SelectedAddonChargeIndex?.ProcedureCode));
+            return b;
+
         }
     }
 }
