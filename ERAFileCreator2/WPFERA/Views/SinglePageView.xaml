@@ -1090,7 +1090,7 @@
                 </ComboBox>
                 <TextBox x:Name="AddonAdjustmentAmountInput"
                                              Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}}"
-                                             Width="30">
+                                             Width="30" Height="22" VerticalAlignment="Top">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -1114,7 +1114,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                      Command="{Binding AddPatientCommand}"/>
-            <TextBlock Text="Selected Addon Codes" Grid.Row="28"/>
+            <TextBlock Text="Selected Addon Codes" Grid.Row="28" Grid.Column="0"/>
             <DataGrid AutoGenerateColumns="False"
                       Grid.Row="28"  Grid.Column="0" Grid.ColumnSpan="3"
                       VerticalAlignment="Bottom"

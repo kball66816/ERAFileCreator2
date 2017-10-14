@@ -10,6 +10,8 @@ namespace PatientManagement.Model
         public AddonCharge()
         {
             Id = Guid.NewGuid();
+            AdjustmentList = new ObservableCollection<Adjustment>();
+            Modifier = new Modifier();
           
         }
 

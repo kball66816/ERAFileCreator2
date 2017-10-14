@@ -39,10 +39,14 @@ namespace EDI835.Segments
                .Append(ComponentIdentifier)
                .Append(ServiceId);
 
-            AppendModifierOne(svc);
-            AppendModifierTwo(svc);
-            AppendModifierThree(svc);
-            AppendModifierFour(svc);
+            if (ProcedureModifier != null)
+            {
+                AppendModifierOne(svc);
+                AppendModifierTwo(svc);
+                AppendModifierThree(svc);
+                AppendModifierFour(svc);
+            }
+
 
             svc.Append(DataElementTerminator)
                .Append(ChargeAmount)

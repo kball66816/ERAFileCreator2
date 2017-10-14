@@ -1,27 +1,32 @@
-﻿using PatientManagement.Model;
+﻿using Edi835.Segments;
+using PatientManagement.Model;
+using System.Linq;
 using System.Text;
-using Edi835.Segments;
 
 namespace EDI835.Segments
 {
     public class Clp : SegmentBase
     {
-        public Clp(PrimaryCharge charge)
+        public Clp(Patient patient)
         {
-            Charge = charge;
+            PrimaryCharge charge = patient.Charges.FirstOrDefault();
             SegmentIdentifier = "CLP";
 
+            if (charge == null) return;
             ClaimSubmittersIdentifier = charge.BillId;
             ClaimStatusCode = "1";
-            TotalClaimChargeAmount = charge.SumOfChargeCost;
-            TotalClaimPaymentAmount = charge.SumOfChargePaid;
+            TotalClaimChargeAmount = patient.Charges.Sum(c=>c.ChargeCost);
+            TotalClaimPaymentAmount = patient.Charges.Sum(c=>c.SumOfChargePaid);
             PatientResponsibility = charge.Copay;
             ClaimFilingIndicatorCode = "12";
             PayerClaimControlNumber = "EMC5841338";
             FacilityTypeCode = charge.PlaceOfService.ServiceLocation;
+            ClaimFrequencyCode = string.Empty;
+            DrgCode = string.Empty;
+            DrgWeight = 0;
+            Dischargefractionpercentage = 0;
         }
 
-        private Charge Charge { get; set; }
         private string ClaimSubmittersIdentifier { get; set; }
         private string ClaimStatusCode { get; set; }
         private decimal TotalClaimChargeAmount { get; set; }

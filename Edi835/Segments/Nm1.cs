@@ -10,6 +10,7 @@ namespace EDI835.Segments
         {
             SegmentIdentifier = "NM1";
             EntityTypeQualifier = "QC";
+            EntityIdCode = "1";
             LastNameOrOrganizationName = patient.LastName;
             FirstName = patient.FirstName;
             MiddleName = patient.MiddleInitial;
@@ -24,6 +25,7 @@ namespace EDI835.Segments
         {
             SegmentIdentifier = "NM1";
             EntityTypeQualifier = "82";
+            EntityIdCode = "1";
             LastNameOrOrganizationName = renderingProvider.LastName;
             FirstName = renderingProvider.FirstName;
             MiddleName = renderingProvider.MiddleInitial;
@@ -62,9 +64,9 @@ namespace EDI835.Segments
 
             buildNm1.Append(SegmentIdentifier)
                     .Append(DataElementTerminator)
-                    .Append(EntityIdCode)
-                    .Append(DataElementTerminator)
                     .Append(EntityTypeQualifier)
+                    .Append(DataElementTerminator)
+                    .Append(EntityIdCode)
                     .Append(DataElementTerminator)
                     .Append(LastNameOrOrganizationName)
                     .Append(DataElementTerminator)

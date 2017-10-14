@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace PatientManagement.Model
@@ -10,6 +9,7 @@ namespace PatientManagement.Model
 
         public Patient()
         {
+            MemberId = "ZLF1155487866";
             Subscriber = new Subscriber();
             RenderingProvider = new Provider();
             Charges = new ObservableCollection<PrimaryCharge>();
@@ -21,13 +21,9 @@ namespace PatientManagement.Model
             get { return charges; }
             set
             {
-                if (value != charges)
-                {
-                    charges = value;
-                    RaisePropertyChanged("Charges");
-
-                }
-
+                if (value == charges) return;
+                charges = value;
+                RaisePropertyChanged("Charges");
             }
         }
 

@@ -42,6 +42,7 @@ namespace EFC.BL
             return charges.FirstOrDefault(c=>c.Id == id);
         }
 
+
         public IAdjustmentRepository AdjustmentRepository { get; set; }
     }
 }
