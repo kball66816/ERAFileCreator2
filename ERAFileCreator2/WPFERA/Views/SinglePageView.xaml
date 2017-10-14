@@ -38,7 +38,7 @@
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem>
-              
+
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
@@ -117,6 +117,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
@@ -1046,6 +1047,22 @@
 
                 </DataGrid.Columns>
             </DataGrid>
+            <Button Grid.Row="26" Grid.Column="3"
+                    Name="EditAddon"
+                    Command="{Binding EditSelectedAddonCommand}"
+                    Content="Edit Addon"
+                    Width="115"
+                    Margin="10,20,0,0"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="left"/>
+            <Button Grid.Row="26" Grid.Column="4"
+                    Name="DeleteAddon"
+                    Command="{Binding DeleteSelectedAddonCommand}"
+                    Content="Delete Addon"
+                    Width="115"
+                    Margin="10,20,0,0"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="left"/>
             <TextBlock Name="AddonAdjustmentType" Grid.Row="27" Grid.Column="0"
                    Margin="10,0,0,0"
                    VerticalAlignment="Top"
@@ -1097,7 +1114,23 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                      Command="{Binding AddPatientCommand}"/>
-            <Button Grid.Row="28" Grid.Column="4"
+            <TextBlock Text="Selected Addon Codes" Grid.Row="28"/>
+            <DataGrid AutoGenerateColumns="False"
+                      Grid.Row="28"  Grid.Column="0" Grid.ColumnSpan="3"
+                      VerticalAlignment="Bottom"
+                      SelectedItem="{Binding SelectedChargeAdjustmentIndex}"
+                      ItemsSource="{Binding SelectedCharge.AdjustmentList}"
+                      MaxHeight="60"
+                      VerticalScrollBarVisibility="Auto" 
+                      IsReadOnly="True"
+                      Margin="0,20,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type" Binding="{Binding AdjustmentType}"/>
+                    <DataGridTextColumn Header="Reason Code" Binding="{Binding AdjustmentReasonCode}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding AdjustmentAmount}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Grid.Row="29" Grid.Column="4"
                 Command="{Binding SaveFileCommand}"
                 Content="Create 835 File"
                 Width="115"
@@ -1105,7 +1138,7 @@
                     VerticalAlignment="Bottom"
                 HorizontalAlignment="left"/>
         </Grid>
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="#FF7789D8"
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="#FF7789D8"
                     Margin="0,0,0,0">
             <StackPanel.DataContext>
                 <viewModel:PreferenceViewModel/>
