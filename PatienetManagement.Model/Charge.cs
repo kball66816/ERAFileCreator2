@@ -11,11 +11,6 @@ namespace PatientManagement.Model
     public abstract class Charge : INotifyPropertyChanged
     {
 
-        public Charge()
-        {
-            Id = Guid.NewGuid();           
-        }
-
         public ObservableCollection<Adjustment> AdjustmentList
         {
             get { return adjustmentList; }
@@ -47,14 +42,16 @@ namespace PatientManagement.Model
                 {
                     chargeCost = value;
                     RaisePropertyChanged("ChargeCost");
+                    
                 }
             }
         }
 
 
-        private decimal paymentAmount;
         private string procedureCode;
         private ObservableCollection<Adjustment> adjustmentList;
+
+        private decimal paymentAmount;
 
         public decimal PaymentAmount
         {
@@ -66,6 +63,7 @@ namespace PatientManagement.Model
                     paymentAmount = value;
                     RaisePropertyChanged("PaymentAmount");
                     RaisePropertyChanged("CheckAmount");
+                    RaisePropertyChanged("AllowedAmount");
                 }
 
             }

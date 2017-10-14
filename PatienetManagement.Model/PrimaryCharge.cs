@@ -36,7 +36,20 @@ namespace PatientManagement.Model
 
         public PlaceOfService PlaceOfService { get; set; }
 
-        public DateTime DateOfService { get; set; }
+        public DateTime DateOfService
+        {
+            get { return dateOfService; }
+            set
+            {
+                if(value!=dateOfService)
+                {
+                    dateOfService = value;
+                    RaisePropertyChanged("DateOfService");
+
+                }
+
+            }
+        }
 
         public ObservableCollection<AddonCharge> AddonChargeList { get; set; }
 
@@ -55,6 +68,7 @@ namespace PatientManagement.Model
             }
         }
         private decimal copay;
+        private DateTime dateOfService;
 
 
         public decimal Copay
@@ -66,6 +80,7 @@ namespace PatientManagement.Model
                 {
                     copay = value;
                     RaisePropertyChanged("Copay");
+                    RaisePropertyChanged("AllowedAmount");
                 }
 
             }
