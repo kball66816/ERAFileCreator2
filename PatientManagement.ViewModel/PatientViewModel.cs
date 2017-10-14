@@ -552,9 +552,7 @@ namespace PatientManagement.ViewModel
         {
             var chargeRepository = new PrimaryChargeRepository(selectedPatient);
             chargeRepository.Add(SelectedCharge);
-
-            SelectedCharge = new PrimaryCharge();
-            //ReturnNewCharge();
+            ReturnNewCharge();
             RaisePropertyChanged("SelectedCharge");
             RaisePropertyChanged("Charges");
         }

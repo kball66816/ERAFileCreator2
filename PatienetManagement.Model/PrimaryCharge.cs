@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -20,12 +19,14 @@ namespace PatientManagement.Model
 
         public PrimaryCharge(PrimaryCharge charge)
         {
+            BillId = charge.BillId;
+            Copay = charge.Copay;
             ProcedureCode = charge.ProcedureCode;
             ChargeCost = charge.ChargeCost;
             PaymentAmount = charge.PaymentAmount;
             PlaceOfService = new PlaceOfService(charge.PlaceOfService);
             Modifier = new Modifier(charge.Modifier);
-            DateOfService = DateTime.Today;
+            DateOfService = charge.DateOfService;
 
             AddonChargeList = new ObservableCollection<AddonCharge>();
             AdjustmentList = new ObservableCollection<Adjustment>();
