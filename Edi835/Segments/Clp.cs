@@ -41,6 +41,8 @@ namespace EDI835.Segments
 
             buildClp.Append(SegmentIdentifier);
             buildClp.Append(DataElementTerminator);
+            buildClp.Append(ClaimSubmittersIdentifier);
+            buildClp.Append(DataElementTerminator);
             buildClp.Append(ClaimStatusCode);
             buildClp.Append(DataElementTerminator);
             buildClp.Append(TotalClaimChargeAmount);

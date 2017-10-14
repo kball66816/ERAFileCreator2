@@ -30,8 +30,8 @@ namespace EDI835.Segments
         public Ref(PrimaryCharge charge, int chargeCount)
         {
             SegmentIdentifier = "REF";
-            ReferenceIdentification = "6R";
-            ReferenceIdentification = charge.BillId + chargeCount;
+            ReferenceIdQualifier = "6R";
+            ReferenceIdentification = charge.BillId +"-"+ chargeCount;
         }
         private string ReferenceIdQualifier { get; set; }
         private string ReferenceIdentification { get; set; }

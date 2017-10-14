@@ -36,6 +36,13 @@ namespace EFC.BL
         public String Create835File()
         {
             var edi = new StringBuilder();
+
+            var isa = new Isa();
+            edi.Append(isa.BuildIsa());
+
+            var gs = new Gs();
+            edi.Append(gs.BuildGs());
+
             var st = new St();
 
             edi.Append(st.BuildSt());

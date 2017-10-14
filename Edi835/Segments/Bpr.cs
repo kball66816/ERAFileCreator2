@@ -12,20 +12,24 @@ namespace EDI835.Segments
             Insurance = insurance;
             SegmentIdentifier = "BPR"; //bpr 1
             TransactionHandlingCode = "I"; // bpr 2
-            insurance.CheckAmount = MonetaryAmount; //bpr3 
+            MonetaryAmount = insurance.CheckAmount;
+            //insurance.CheckAmount = MonetaryAmount; //bpr3 
             CreditOrDebtFlag = "C"; //bpr4
+            PaymentMethodCode = insurance.PaymentType;
             insurance.PaymentType = PaymentMethodCode; //bpr5
-            PaymentMethodCode = "CCP"; //bpr6
+            PaymentFormatCode = "CCP"; //bpr6
             SenderDfiIdNumberQualifier = "01"; //bpr7
             SenderDfiIdNumber = "043000096"; //bpr8
             SenderAccountNumberQualifier = "DA"; //bpr9
             SenderAccountNumber = "0"; //bpr10
             OriginatingCompanyId = "5135511997";//bpr11
-            SenderDfiIdNumberQualifier = string.Empty; //bpr12
-            SenderDfiIdNumber = string.Empty; //bpr13
-            SenderAccountNumberQualifier = string.Empty; //bpr14
-            SenderAccountNumber = string.Empty;//bpr15
+            OriginatingCompanyCode = string.Empty;
+            ReceivingDfiIdNumberQualifier = "01"; //bpr12
+            ReceivingDfiNumber = "GAPFILL"; //bpr13
+            ReceivingAccountNumberQualifier = "DA"; //bpr14
+            ReceivingAccountNumber = "0";//bpr15
             Date = insurance.CheckDate.ConvertedDate();
+           
 
         }
 
@@ -54,7 +58,9 @@ namespace EDI835.Segments
             //Begin BPR     
 
             buildBpr.Append(SegmentIdentifier);
-            buildBpr.Append(DataElementTerminator);
+            buildBpr.Append(DataElementTerminator)
+                .Append(TransactionHandlingCode)
+                .Append(DataElementTerminator);
             buildBpr.Append(MonetaryAmount);
             buildBpr.Append(DataElementTerminator);
             buildBpr.Append(CreditOrDebtFlag);
@@ -72,7 +78,8 @@ namespace EDI835.Segments
                 buildBpr.Append(DataElementTerminator);
             }
 
-            if(SenderAccountNumberQualifier !=null||SenderDfiIdNumber!=null)
+           
+            if (SenderAccountNumberQualifier !=null||SenderDfiIdNumber!=null)
             {
                 buildBpr.Append(SenderAccountNumberQualifier);
                 buildBpr.Append(DataElementTerminator);
@@ -83,6 +90,7 @@ namespace EDI835.Segments
             buildBpr.Append(OriginatingCompanyId);
             buildBpr.Append(DataElementTerminator);
             buildBpr.Append(OriginatingCompanyCode);
+            buildBpr.Append(DataElementTerminator);
 
             if(!string.IsNullOrEmpty(ReceivingDfiIdNumberQualifier) ||!string.IsNullOrEmpty(ReceivingDfiNumber))
             {

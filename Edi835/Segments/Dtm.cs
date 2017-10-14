@@ -11,7 +11,7 @@ namespace EDI835.Segments
         public Dtm()
         {
             SegmentIdentifier = "DTM";
-            ProductionDate = DateTime.Today.ConvertedDate();
+            Date = DateTime.Today.ConvertedDate();
             DateTimeQualifier = "405";
         }
 
@@ -32,8 +32,6 @@ namespace EDI835.Segments
 
         private PrimaryCharge Charge { get; set; }
         private string DateTimeQualifier { get; set; }
-        private string ProductionDate { get; set; }
-        private string ServiceDate { get; set; }
         private string Date { get; set; }
         private StringBuilder buildDtm;
 

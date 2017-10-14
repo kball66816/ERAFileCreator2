@@ -12,7 +12,7 @@ namespace EDI835.Segments
             TraceTypeCode = "1";
             ReferenceIdentification = insurance.CheckNumber;
             OriginatingCompanyIdentifier = "1" + insurance.TaxId;
-            OriginatingCompanySupplementalCode = "5135511997";
+            OriginatingCompanySupplementalCode = "13551";
         }
 
         private string TraceTypeCode { get; set; }
