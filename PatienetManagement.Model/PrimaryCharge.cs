@@ -101,7 +101,7 @@ namespace PatientManagement.Model
         {
             get
             {
-                decimal total = ChargeCost+ TotalAddonChargesPaid;
+                decimal total = PaymentAmount+ TotalAddonChargesPaid;
                 return total;
             }
         }
