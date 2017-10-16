@@ -25,7 +25,6 @@ namespace PatientManagement.ViewModel
             AddonAdjustment = new Adjustment();
             SelectedCharge = new PrimaryCharge();
 
-            LoadInsuranceCompany();
             patientRepository.Add(SelectedPatient);
             Patients = patientRepository.GetAllPatients();
             Charges = selectedPatient.Charges;
@@ -39,13 +38,7 @@ namespace PatientManagement.ViewModel
             RefreshAllCounters();
         }
 
-        private void LoadInsuranceCompany()
-        {
-            Insurance = new InsuranceCompany();
-            Insurance = Settings.PullDefaultInsurance(Insurance);
-            PaymentTypes = Insurance.PaymentTypes;
-            InsuranceStates = Insurance.Address.States;
-        }
+
 
         private void LoadBillingProvider()
         {
@@ -66,9 +59,7 @@ namespace PatientManagement.ViewModel
 
         private SettingsService Settings { get; set; }
 
-        public Dictionary<string, string> InsuranceStates { get; set; }
 
-        public Dictionary<string, string> PaymentTypes { get; set; }
 
         public Dictionary<string, string> PlacesOfService { get; set; }
 
@@ -92,16 +83,20 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        private InsuranceCompany insurance;
+        private InsuranceCompany insuranceCompany;
 
-        public InsuranceCompany Insurance
+        public InsuranceCompany InsuranceCompany
+
         {
-            get { return insurance; }
+            get { return insuranceCompany; }
             set
             {
-                if (value == insurance) return;
-                insurance = value;
-                RaisePropertyChanged("Insurance");
+                if (value != insuranceCompany)
+                {
+                    insuranceCompany = value;
+                    RaisePropertyChanged("InsuranceCompany");
+
+                }
             }
         }
 
@@ -163,7 +158,7 @@ namespace PatientManagement.ViewModel
             //AddChargeToPatientEncounter();
             ReturnNewPatient();
             patientRepository.Add(SelectedPatient);
-            UpdateCheckAmount();
+            //UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
             RefreshAllCounters();
         }
@@ -399,6 +394,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAddonToCharge(object obj)
         {
+
             IAddonChargeRepository addonChargeRepository = new AddonChargeRepository(selectedCharge);
             addonChargeRepository.Add(SelectedAddonCharge);
 
@@ -410,8 +406,10 @@ namespace PatientManagement.ViewModel
             {
                 SelectedAddonCharge = new AddonCharge();
             }
+
+            Messenger.Default.Send<UpdateCalculations>(new UpdateCalculations());
             RaisePropertyChanged("SelectedAddonCharge");
-            UpdateCheckAmount();
+            //UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
             RefreshAllCounters();
 
@@ -447,7 +445,6 @@ namespace PatientManagement.ViewModel
             DeleteSelectedAddonCommand = new Command(DeleteSelectedAddon,CanDeleteSelectedAddon);
             EditSelectedAddonCommand = new Command(EditSelectedAddon, CanEditSelectedAddon);
             
-
         }
 
         public ICommand AddChargeToPatientCommand { get; set; }
@@ -478,21 +475,23 @@ namespace PatientManagement.ViewModel
         private void SaveSettings()
         {
             Settings.SetDefaultBillingProvider(billingProvider);
-            Settings.SetDefaultInsurance(insurance);
+            //Settings.SetDefaultInsurance(insuranceCompany);
             Settings.SetDefaultPatient(selectedPatient);
         }
 
         private void Save(object obj)
         {
+
+            Messenger.Default.Send<UpdateRepositoriesMessage>(new UpdateRepositoriesMessage());
             SupressAddonDialog = true;
             //  MatchAdjustmentToCharge();
             //   MatchAddonToCharge();
             //   MatchChargeToPatient();
-            UpdateCheckAmount();
+          //  UpdateCheckAmount();
             SaveSettings();
 
             SaveProviderToRepository();
-            SaveInsuranceToRepository();
+            //SaveInsuranceToRepository();
 
             var edi = new UpdatedEdi();
 
@@ -501,11 +500,6 @@ namespace PatientManagement.ViewModel
             save.SaveFile(edi.Create835File());
         }
 
-        private void SaveInsuranceToRepository()
-        {
-            IInsurance saveInsurance = new InsuranceRepository();
-            saveInsurance.AddInsurance(insurance);
-        }
 
         private void SaveProviderToRepository()
         {
@@ -513,23 +507,23 @@ namespace PatientManagement.ViewModel
             saveProvider.AddBillingProvider(billingProvider);
         }
 
-        private void UpdateCheckAmount()
-        {
+        //private void UpdateCheckAmount()
+        //{
 
-            decimal chargesPaidAmount = 0;
-            decimal addonsPaidAmount = 0;
-            foreach (var patient in patientRepository.GetAllPatients())
-            {
-                foreach (var charge in patient.Charges)
-                {
-                    chargesPaidAmount += charge.PaymentAmount;
-                    addonsPaidAmount += charge.AddonChargeList.Sum(p => p.PaymentAmount);
-                    insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
-                }
+        //    decimal chargesPaidAmount = 0;
+        //    decimal addonsPaidAmount = 0;
+        //    foreach (var patient in patientRepository.GetAllPatients())
+        //    {
+        //        foreach (var charge in patient.Charges)
+        //        {
+        //            chargesPaidAmount += charge.PaymentAmount;
+        //            addonsPaidAmount += charge.AddonChargeList.Sum(p => p.PaymentAmount);
+        //            insuranceCompany.CheckAmount = chargesPaidAmount + addonsPaidAmount;
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
         public decimal PatientCount { get; private set; }
 
@@ -550,9 +544,12 @@ namespace PatientManagement.ViewModel
 
         private void AddChargeToPatientV2(object obj)
         {
+
             var chargeRepository = new PrimaryChargeRepository(selectedPatient);
             chargeRepository.Add(SelectedCharge);
             ReturnNewCharge();
+
+            Messenger.Default.Send<UpdateCalculations>(new UpdateCalculations());
             RaisePropertyChanged("SelectedCharge");
             RaisePropertyChanged("Charges");
         }
@@ -667,11 +664,8 @@ namespace PatientManagement.ViewModel
 
         private void EditSelectedAddon(object obj)
         {
-
             SelectedAddonCharge = SelectedAddonChargeIndex;
             RaisePropertyChanged("SelectedAddonCharge");
-
-
         }
 
         private bool CanEditSelectedAddon(object obj)

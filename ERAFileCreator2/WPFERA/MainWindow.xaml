@@ -9,6 +9,14 @@
         SizeToContent="WidthAndHeight">
     
     <Grid x:Name="TopGrid">
-        <views:SinglePageView x:Name="TestView"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <views:InsuranceCompanyView Grid.Row="0"/>
+
+            <views:SinglePageView x:Name="TestView" Grid.Row="1"/>
     </Grid>
 </Window>

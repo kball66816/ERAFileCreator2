@@ -181,7 +181,7 @@ namespace PatientManagement.ViewModel.Services
         {
             Settings.Default.PatientFirstName = patient.FirstName;
             Settings.Default.PatientLastName = patient.LastName;
-            Settings.Default.PatientCopay = patient.Charges.FirstOrDefault().Copay.ToString();
+            //Settings.Default.PatientCopay = patient.Charges.FirstOrDefault().Copay.ToString();
             Settings.Default.RenderingProviderFirstName = patient.RenderingProvider.FirstName;
             Settings.Default.RenderingProviderLastName = patient.RenderingProvider.LastName;
             Settings.Default.RenderingProviderNpi = patient.RenderingProvider.Npi;

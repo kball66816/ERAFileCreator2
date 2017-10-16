@@ -1,0 +1,220 @@
+﻿<UserControl x:Class="EraView.Views.InsuranceCompanyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EraView.Views"
+             xmlns:validation="clr-namespace:Common.Common;assembly=Common.Common"
+             xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <viewModel:InsuranceViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="4"
+                   Text="Insurance Company" FontSize="16" TextDecorations="Underline"
+                   Margin="10,0,0,0"/>
+        <TextBlock x:Name="InsuranceCompanyNameTag"  
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10,0,0,0"
+                   Text="Insurance Company Name*"
+                   Grid.Row="1" Grid.Column="0"/>
+        <TextBox x:Name="InsuranceCompanyNameInput"
+                 HorizontalAlignment="Left"
+                 Width="115"
+                 Grid.Row="1" Grid.Column="0"
+                 Margin="10,20,0,0">
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <DockPanel >
+                        <Border BorderBrush="Red" BorderThickness="2">
+                            <AdornedElementPlaceholder/>
+                        </Border>
+                    </DockPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+            <Binding Path="Insurance.Name" UpdateSourceTrigger="LostFocus">
+                <Binding.ValidationRules>
+                    <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="PaymentTypeTag"
+                   Text="Payment Type" 
+                   Grid.Row="1" Grid.Column="1"
+                   Margin="10,0,0,0"/>
+        <ComboBox x:Name="PaymentTypeDropdown"
+                  Grid.Row="1" Grid.Column="1"
+                  HorizontalAlignment="Left"
+                  Margin="10,20,0,0"
+                  Width="115"
+                  SelectedValuePath="Value"
+                  DisplayMemberPath="Key"
+                  SelectedValue="{Binding Insurance.PaymentType}"
+                  ItemsSource="{Binding PaymentTypes}"/>
+        <TextBlock x:Name="CheckAmountTag" Grid.Row="1" Grid.Column="2"
+                   Text="Insurance Check Amount*"
+                   Margin="10,0,0,0"
+                   VerticalAlignment="Top"/>
+        <TextBox x:Name="CheckAmountInput"
+                 Grid.Row="1" Grid.Column="2"
+                 Margin="10,20,0,0"
+                 Width="115"
+                 IsEnabled="False"
+                 HorizontalAlignment="Left"
+                 Text="{Binding Insurance.CheckAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock x:Name="InsuranceCompanyTaxIdTag" Grid.Row="1" Grid.Column="3"
+                   Margin="10,0,0,0"    
+                   Text="Insurance Company Tax ID*"
+                   VerticalAlignment="Top"/>
+        <TextBox x:Name="InsuranceCompanyTaxIdInput" Grid.Row="1" Grid.Column="3"
+                 HorizontalAlignment="Left"
+                 Margin="10,20,0,0"
+                 Width="115">
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <DockPanel >
+                        <Border BorderBrush="Red" BorderThickness="2">
+                            <AdornedElementPlaceholder/>
+                        </Border>
+                    </DockPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+            <Binding Path="Insurance.TaxId" UpdateSourceTrigger="LostFocus">
+                <Binding.ValidationRules>
+                    <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="CheckDateTag"   Grid.Row="1" Grid.Column="4"
+                   Margin="10,0,0,0"
+                   VerticalAlignment="Top"
+                   Text="Insurance Check Date*"/>
+        <DatePicker x:Name="CheckDateInput" Grid.Row="1" Grid.Column="4"
+                    Margin="10,20,0,0"
+                    HorizontalAlignment="Left"
+                    SelectedDate="{Binding Insurance.CheckDate}"
+                    Width="115"/>
+        <TextBlock x:Name="InsuranceAddressLineOneTag" Grid.Row="2" Grid.Column="0"
+                   Text="Street Line One*"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Margin="10,0,0,0" Width="86"/>
+        <TextBox x:Name="InsuranceStreetLineOneInput" Grid.Row="2" Grid.Column="0"
+                 Width="115"
+                 HorizontalAlignment="Left"
+                 Margin="10,20,0,0">
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <DockPanel >
+                        <Border BorderBrush="Red" BorderThickness="2">
+                            <AdornedElementPlaceholder/>
+                        </Border>
+                    </DockPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+            <Binding Path="Insurance.Address.StreetOne" UpdateSourceTrigger="LostFocus">
+                <Binding.ValidationRules>
+                    <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="InsuranceStreetLineTwoTag" Grid.Row="2" Grid.Column="1"
+                   Text="Street Line Two"
+                   Margin="10,0,0,0"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left" Width="80"/>
+        <TextBox x:Name="InsuranceStreetLineTwoInput" Grid.Row="2" Grid.Column="1"
+                 Width="115"
+                 HorizontalAlignment="Left"
+                 Margin="10,20,0,0">
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <DockPanel >
+                        <Border BorderBrush="Red" BorderThickness="2">
+                            <AdornedElementPlaceholder/>
+                        </Border>
+                    </DockPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+            <Binding Path="Insurance.Address.StreetTwo" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="InsuranceCityTag" Grid.Row="2" Grid.Column="2"
+                   Text="City"
+                   VerticalAlignment="Top"
+                   Margin="10,0,0,0"/>
+        <TextBox x:Name="InsuranceCityInput" Grid.Row="2" Grid.Column="2"
+                 Width="115"
+                 HorizontalAlignment="Left"
+                 Margin="10,20,0,0">
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <DockPanel >
+                        <Border BorderBrush="Red" BorderThickness="2">
+                            <AdornedElementPlaceholder/>
+                        </Border>
+                    </DockPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+            <Binding Path="Insurance.Address.City" UpdateSourceTrigger="LostFocus">
+                <Binding.ValidationRules>
+                    <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="InsuranceStateTag" Grid.Row="2" Grid.Column="3"
+                   VerticalAlignment="Top"
+                   Margin="10,0,0,0"
+                   Text="State"/>
+        <ComboBox x:Name="InsuranceAddressStateInput" Grid.Row="2" Grid.Column="3"
+                  Width="115"
+                  Margin="10,20,0,0"
+                  ItemsSource="{Binding InsuranceStates}"
+                  SelectedValuePath="Value"
+                  DisplayMemberPath="Key"
+                  SelectedValue="{Binding Insurance.Address.State}"
+                  HorizontalAlignment="Left"/>
+        <TextBlock x:Name="InsuranceZipCodeTag" Grid.Row="2" Grid.Column="4"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Margin="10,0,0,0"
+                   Text="Zip Code" Width="48"/>
+        <TextBox x:Name="InsuranceZipCodeInput" Grid.Row="2" Grid.Column="4"
+                 Margin="10,20,0,0"
+                 Width="115"
+                 MaxLength="9"
+                 HorizontalAlignment="Left">
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <DockPanel >
+                        <Border BorderBrush="Red" BorderThickness="2">
+                            <AdornedElementPlaceholder/>
+                        </Border>
+                    </DockPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+            <Binding Path="Insurance.Address.ZipCode" UpdateSourceTrigger="LostFocus">
+                <Binding.ValidationRules>
+                    <validation:ZipCodeValidationRule ValidationStep="RawProposedValue"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+    </Grid>
+</UserControl>

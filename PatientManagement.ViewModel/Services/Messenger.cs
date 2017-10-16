@@ -3,19 +3,16 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EraView.Utility
+namespace PatientManagement.ViewModel.Services
 {
-    class Messenger
+    public class Messenger
     {
-        private Messenger()
-        {
-
-        }
         private static readonly object CreationLock = new object();
-
         private static readonly ConcurrentDictionary<MessengerKey, object> Dictionary = new ConcurrentDictionary<MessengerKey, object>();
 
-        private static Messenger instance;
+        #region Default property
+
+        private static Messenger _instance;
 
         /// <summary>
         /// Gets the single instance of the Messenger.
@@ -24,21 +21,22 @@ namespace EraView.Utility
         {
             get
             {
-                if(instance==null)
+                if (_instance == null)
                 {
                     lock (CreationLock)
                     {
-                        if(instance==null)
+                        if (_instance == null)
                         {
-                            instance = new Messenger();
+                            _instance = new Messenger();
                         }
                     }
                 }
-                return instance;
+
+                return _instance;
             }
         }
 
-
+        #endregion
 
         /// <summary>
         /// Registers a recipient for a type of message T. The action parameter will be executed
@@ -65,6 +63,17 @@ namespace EraView.Utility
             var key = new MessengerKey(recipient, context);
             Dictionary.TryAdd(key, action);
         }
+
+        /// <summary>
+        /// Initializes a new instance of the Messenger class.
+        /// </summary>
+        private Messenger()
+        {
+        }
+
+
+
+       
 
         /// <summary>
         /// Unregisters a messenger recipient completely. After this method is executed, the recipient will
@@ -107,39 +116,43 @@ namespace EraView.Utility
         /// <typeparam name="T"></typeparam>
         /// <param name="message"></param>
         /// <param name="context"></param>
-        public void Send<T>(T Message, object context)
+        public void Send<T>(T message, object context)
         {
             IEnumerable<KeyValuePair<MessengerKey, object>> result;
 
-            if(context==null)
+            if (context == null)
             {
                 // Get all recipients where the context is null.
                 result = from r in Dictionary where r.Key.Context == null select r;
             }
-
             else
             {
                 // Get all recipients where the context is matching.
                 result = from r in Dictionary where r.Key.Context != null && r.Key.Context.Equals(context) select r;
             }
 
-            foreach (var action in result.Select(x=>x.Value).OfType<Action<T>>())
+            foreach (var action in result.Select(x => x.Value).OfType<Action<T>>())
             {
                 // Send the message to all recipients.
-                action(Message);
+                action(message);
             }
         }
 
         protected class MessengerKey
         {
+            public object Recipient { get; private set; }
+            public object Context { get; private set; }
+
+            /// <summary>
+            /// Initializes a new instance of the MessengerKey class.
+            /// </summary>
+            /// <param name="recipient"></param>
+            /// <param name="context"></param>
             public MessengerKey(object recipient, object context)
             {
                 Recipient = recipient;
                 Context = context;
             }
-
-            public object Recipient { get; private set; }
-            public object Context { get; private set; }
 
             /// <summary>
             /// Determines whether the specified MessengerKey is equal to the current MessengerKey.
@@ -173,10 +186,9 @@ namespace EraView.Utility
             {
                 unchecked
                 {
-                    return((Recipient!=null ? Recipient.GetHashCode() : 0)*397)^(Context!=null? Context.GetHashCode():0);
+                    return ((Recipient != null ? Recipient.GetHashCode() : 0) * 397) ^ (Context != null ? Context.GetHashCode() : 0);
                 }
             }
         }
-
     }
 }
