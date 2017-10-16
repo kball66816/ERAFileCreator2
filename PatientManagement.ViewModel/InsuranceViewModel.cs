@@ -16,8 +16,6 @@ namespace PatientManagement.ViewModel
         {
             Settings = new SettingsService();
             LoadInsuranceCompany();
-
-            Messenger.Default.Send<InsuranceCompany>(insurance);
             Messenger.Default.Register<UpdateCalculations>(this, OnUpdateCalculation);
             Messenger.Default.Register<UpdateRepositoriesMessage>(this,OnUpdateRepositoriesMessageReceieved);
             Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved);
@@ -57,12 +55,10 @@ namespace PatientManagement.ViewModel
 
             foreach (var patient in patients.GetAllPatients())
             {
-                decimal chargesPaidAmount = 0;
-                chargesPaidAmount = patient.Charges.Sum(c => c.PaymentAmount);
-                
+                var chargesPaidAmount = patient.Charges.Sum(c => c.PaymentAmount);
+
                 foreach (var charge in patient.Charges)
                 {
-                    //chargesPaidAmount += charge.PaymentAmount;
                     addonsPaidAmount += charge.AddonChargeList.Sum(p => p.PaymentAmount);
                     Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
                     RaisePropertyChanged("CheckAmount");

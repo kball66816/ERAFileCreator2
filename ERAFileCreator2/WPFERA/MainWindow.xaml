@@ -16,7 +16,8 @@
         </Grid.RowDefinitions>
 
         <views:InsuranceCompanyView Grid.Row="0"/>
+        <views:BillingProviderView Grid.Row="1"/>
+        <views:SinglePageView x:Name="TestView" Grid.Row="2"/>
 
-            <views:SinglePageView x:Name="TestView" Grid.Row="1"/>
     </Grid>
 </Window>

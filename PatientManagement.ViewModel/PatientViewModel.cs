@@ -19,7 +19,6 @@ namespace PatientManagement.ViewModel
 
             Settings = new SettingsService();
             LoadInitialPatient();
-            LoadBillingProvider();
             SelectedAddonCharge = new AddonCharge();
             SelectedAdjustment = new Adjustment();
             AddonAdjustment = new Adjustment();
@@ -40,12 +39,7 @@ namespace PatientManagement.ViewModel
 
 
 
-        private void LoadBillingProvider()
-        {
-            BillingProvider = new Provider();
-            BillingProvider = Settings.PullDefaultBillingProvider(BillingProvider);
-            ProviderStates = BillingProvider.Address.States;
-        }
+
 
         private void LoadInitialPatient()
         {
@@ -100,20 +94,6 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        public Dictionary<string, string> ProviderStates { get; set; }
-
-        private Provider billingProvider;
-
-        public Provider BillingProvider
-        {
-            get { return billingProvider; }
-            set
-            {
-                if (value == billingProvider) return;
-                billingProvider = value;
-                RaisePropertyChanged("BillingProvider");
-            }
-        }
 
         private Patient selectedPatient;
 
@@ -224,7 +204,7 @@ namespace PatientManagement.ViewModel
 
         private void CloneLastAddon()
         {
-            var clone = (AddonCharge) SelectedCharge.AddonChargeList.Last().Clone();
+            var clone = (AddonCharge)SelectedCharge.AddonChargeList.Last().Clone();
             SelectedAddonCharge = clone;
             RaisePropertyChanged("Addon");
         }
@@ -294,7 +274,7 @@ namespace PatientManagement.ViewModel
 
         private bool CanAddPatient(object obj)
         {
-            return !string.IsNullOrEmpty(SelectedPatient.FirstName) 
+            return !string.IsNullOrEmpty(SelectedPatient.FirstName)
                 && !string.IsNullOrEmpty(selectedPatient.LastName);
         }
 
@@ -436,36 +416,36 @@ namespace PatientManagement.ViewModel
             AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
             AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
-            UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
+            //UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
             AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
             DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
             EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
             EditSelectedAdjustmentCommand = new Command(EditSelectedAdjustment, CanEditSelectedAdjustment);
             DeleteSelectedAdjustmentCommand = new Command(DeleteSelectedAdjustment, CanDeleteSelectedAdjustment);
-            DeleteSelectedAddonCommand = new Command(DeleteSelectedAddon,CanDeleteSelectedAddon);
+            DeleteSelectedAddonCommand = new Command(DeleteSelectedAddon, CanDeleteSelectedAddon);
             EditSelectedAddonCommand = new Command(EditSelectedAddon, CanEditSelectedAddon);
-            
+
         }
 
         public ICommand AddChargeToPatientCommand { get; set; }
 
         public ICommand UpdateRenderingProviderCommand { get; private set; }
 
-        private void UpdateRenderingProvider(object obj)
-        {
-            if (BillingProvider.IsAlsoRendering)
-            {
-                selectedPatient.RenderingProvider.FirstName = BillingProvider.FirstName;
-                selectedPatient.RenderingProvider.LastName = BillingProvider.LastName;
-                selectedPatient.RenderingProvider.Npi = BillingProvider.Npi;
-                RaisePropertyChanged("Patient");
-            }
+        //private void UpdateRenderingProvider(object obj)
+        //{
+        //    if (BillingProvider.IsAlsoRendering)
+        //    {
+        //        selectedPatient.RenderingProvider.FirstName = BillingProvider.FirstName;
+        //        selectedPatient.RenderingProvider.LastName = BillingProvider.LastName;
+        //        selectedPatient.RenderingProvider.Npi = BillingProvider.Npi;
+        //        RaisePropertyChanged("Patient");
+        //    }
 
-            else if (billingProvider.IsAlsoRendering == false)
-            {
-                return;
-            }
-        }
+        //    else if (billingProvider.IsAlsoRendering == false)
+        //    {
+        //        return;
+        //    }
+        //}
 
         private static bool CanSave(object obj)
         {
@@ -474,7 +454,7 @@ namespace PatientManagement.ViewModel
 
         private void SaveSettings()
         {
-            Settings.SetDefaultBillingProvider(billingProvider);
+            //Settings.SetDefaultBillingProvider(billingProvider);
             //Settings.SetDefaultInsurance(insuranceCompany);
             Settings.SetDefaultPatient(selectedPatient);
         }
@@ -487,10 +467,10 @@ namespace PatientManagement.ViewModel
             //  MatchAdjustmentToCharge();
             //   MatchAddonToCharge();
             //   MatchChargeToPatient();
-          //  UpdateCheckAmount();
+            //  UpdateCheckAmount();
             SaveSettings();
 
-            SaveProviderToRepository();
+            //SaveProviderToRepository();
             //SaveInsuranceToRepository();
 
             var edi = new UpdatedEdi();
@@ -501,11 +481,11 @@ namespace PatientManagement.ViewModel
         }
 
 
-        private void SaveProviderToRepository()
-        {
-            IProvider saveProvider = new BillingProviderRepository();
-            saveProvider.AddBillingProvider(billingProvider);
-        }
+        //private void SaveProviderToRepository()
+        //{
+        //    IProvider saveProvider = new BillingProviderRepository();
+        //    saveProvider.AddBillingProvider(billingProvider);
+        //}
 
         //private void UpdateCheckAmount()
         //{
@@ -629,7 +609,7 @@ namespace PatientManagement.ViewModel
         }
 
         public ICommand DeleteSelectedAdjustmentCommand { get; set; }
-    
+
         private void DeleteSelectedAdjustment(object obj)
         {
             if (SelectedChargeAdjustmentIndex == null) return;

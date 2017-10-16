@@ -51,8 +51,8 @@ namespace WPFERATest
             //Arrange
             var Pvm = new PatientViewModel();
 
-            Pvm.BillingProvider.FirstName = "John";
-            Pvm.BillingProvider.IsAlsoRendering = true;
+         //   Pvm.BillingProvider.FirstName = "John";
+           // Pvm.BillingProvider.IsAlsoRendering = true;
             //Act
             Pvm.UpdateRenderingProviderCommand.Execute(true);
             
@@ -69,8 +69,8 @@ namespace WPFERATest
             //Arrange
             var Pvm = new PatientViewModel();
 
-            Pvm.BillingProvider.FirstName = "John";
-            Pvm.BillingProvider.IsAlsoRendering = false;
+          //  Pvm.BillingProvider.FirstName = "John";
+          //  Pvm.BillingProvider.IsAlsoRendering = false;
             //Act
             Pvm.UpdateRenderingProviderCommand.Execute(true);
 
