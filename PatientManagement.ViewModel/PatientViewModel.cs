@@ -9,6 +9,7 @@ using EFC.BL;
 using PatientManagement.ViewModel.Services;
 using PatientManagement.Model;
 using PatientManagement.DAL;
+using System;
 
 namespace PatientManagement.ViewModel
 {
@@ -35,8 +36,16 @@ namespace PatientManagement.ViewModel
             //AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
             LoadCommands();
             RefreshAllCounters();
+
+            Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved);
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
         }
+
+        private void OnAddonAdjustmentReceieved(Adjustment adjustment)
+        {
+            selectedAddonCharge.AdjustmentList.Add(adjustment);
+        }
+
 
         private void OnPatientReceived(Patient patient)
         {
