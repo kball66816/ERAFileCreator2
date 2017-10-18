@@ -14,13 +14,14 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <views:SinglePageView x:Name="TestView" Grid.Row="3" Grid.Column="1"/>
-
+        <views:SinglePageView x:Name="TestView" Grid.Row="4" Grid.Column="1"/>
+        <views:AddonAdjustmentView Grid.Row="3" Grid.Column="0"/>
         <views:InsuranceCompanyView Grid.Row="1" Grid.Column="1"/>
         <views:BillingProviderView Grid.Row="2" Grid.Column="1"/>
         <views:PatientListView Grid.Row="0" Grid.Column="0"/>

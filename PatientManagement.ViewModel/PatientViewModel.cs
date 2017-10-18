@@ -21,7 +21,7 @@ namespace PatientManagement.ViewModel
             LoadInitialPatient();
             SelectedAddonCharge = new AddonCharge();
             SelectedAdjustment = new Adjustment();
-            AddonAdjustment = new Adjustment();
+            //AddonAdjustment = new Adjustment();
             SelectedCharge = new PrimaryCharge();
 
             patientRepository.Add(SelectedPatient);
@@ -30,12 +30,12 @@ namespace PatientManagement.ViewModel
             Adjustments = selectedCharge.AdjustmentList;
             PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
             PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
-            AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
+            //AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
             PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
-            AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
+            //AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
             LoadCommands();
             RefreshAllCounters();
-            Messenger.Default.Register<Patient>(this,OnPatientReceived);
+            Messenger.Default.Register<Patient>(this, OnPatientReceived);
         }
 
         private void OnPatientReceived(Patient patient)
@@ -65,9 +65,9 @@ namespace PatientManagement.ViewModel
 
         public Dictionary<string, string> PrimaryAdjustmentReasonCodes { get; set; }
 
-        public Dictionary<string, string> AddonAdjustmentType { get; set; }
+    //    public Dictionary<string, string> AddonAdjustmentType { get; set; }
 
-        public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
+      //  public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
 
         public ObservableCollection<PrimaryCharge> Charges
 
@@ -310,30 +310,30 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        private Adjustment addonAdjustment;
+        //private Adjustment addonAdjustment;
 
-        public Adjustment AddonAdjustment
-        {
-            get { return addonAdjustment; }
-            set
-            {
-                if (value == addonAdjustment) return;
-                addonAdjustment = value;
-                RaisePropertyChanged("AddonAdjustment");
-            }
-        }
+        //public Adjustment AddonAdjustment
+        //{
+        //    get { return addonAdjustment; }
+        //    set
+        //    {
+        //        if (value == addonAdjustment) return;
+        //        addonAdjustment = value;
+        //        RaisePropertyChanged("AddonAdjustment");
+        //    }
+        //}
 
         public ICommand AddChargeAdjustmentCommand { get; private set; }
 
         public ICommand AddAddonChargeAdjustmentCommand { get; private set; }
 
-        private void AddAddonAdjustment(object obj)
-        {
-            SelectedAddonCharge.AdjustmentList.Add(AddonAdjustment);
-            AddonAdjustment = new Adjustment();
-            RaisePropertyChanged("SelectedAdjustment");
-            RefreshAllCounters();
-        }
+        //private void AddAddonAdjustment(object obj)
+        //{
+        //    SelectedAddonCharge.AdjustmentList.Add(AddonAdjustment);
+        //    AddonAdjustment = new Adjustment();
+        //    RaisePropertyChanged("SelectedAdjustment");
+        //    RefreshAllCounters();
+        //}
 
         private void AddAdjustmentToCharge(object obj)
         {
@@ -344,11 +344,11 @@ namespace PatientManagement.ViewModel
             RefreshAllCounters();
         }
 
-        private bool CanAddAddonAdjustment(object obj)
-        {
-            return !string.IsNullOrEmpty(addonAdjustment.AdjustmentReasonCode) &&
-                   !string.IsNullOrEmpty(addonAdjustment.AdjustmentType);
-        }
+        //private bool CanAddAddonAdjustment(object obj)
+        //{
+        //    return !string.IsNullOrEmpty(addonAdjustment.AdjustmentReasonCode) &&
+        //           !string.IsNullOrEmpty(addonAdjustment.AdjustmentType);
+        //}
 
         private bool CanAddAdjustment(object obj)
         {
@@ -417,7 +417,7 @@ namespace PatientManagement.ViewModel
         {
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
             AddChargeAdjustmentCommand = new Command(AddAdjustmentToCharge, CanAddAdjustment);
-            AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
+//            AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
             AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
@@ -438,7 +438,7 @@ namespace PatientManagement.ViewModel
         private void UpdateRenderingProvider(object obj)
         {
 
-            Messenger.Default.Send<Provider>(selectedPatient.RenderingProvider);
+            Messenger.Default.Send(selectedPatient.RenderingProvider);
             IProvider pr = new BillingProviderRepository();
 
             //if (pr.GetBillingProvider().IsAlsoRendering)

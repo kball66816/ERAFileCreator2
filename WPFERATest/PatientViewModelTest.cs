@@ -33,7 +33,7 @@ namespace WPFERATest
             {
                 EnableAddonReusePrompt = false
             };
-            pvm.AddonAdjustment.AdjustmentAmount = 100;
+            //pvm.AddonAdjustment.AdjustmentAmount = 100;
 
             //Act
             pvm.AddAddonCommand.Execute(true);
