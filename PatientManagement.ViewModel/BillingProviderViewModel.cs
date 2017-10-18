@@ -13,11 +13,10 @@ namespace PatientManagement.ViewModel
         {
             Settings = new SettingsService();
             LoadBillingProvider();
-            Messenger.Default.Register<Provider>(this, x);
+            SaveProviderToRepository();
+            Messenger.Default.Register<Provider>(this, OnUpdateRenderingProvider);
             Messenger.Default.Register<UpdateRepositoriesMessage>(this,OnUpdateRepositoriesMessage);
             Messenger.Default.Register<SettingsSavedMessage>(this,OnSettingsSavedMessage);
-
-
         }
 
 
@@ -73,7 +72,7 @@ namespace PatientManagement.ViewModel
             saveProvider.AddBillingProvider(billingProvider);
         }
 
-        private void x(Provider renderingProvider)
+        private void OnUpdateRenderingProvider(Provider renderingProvider)
         {
             if (BillingProvider.IsAlsoRendering)
             {
@@ -89,10 +88,5 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        private void x()
-        {
-            
-          
-        }
     }
 }

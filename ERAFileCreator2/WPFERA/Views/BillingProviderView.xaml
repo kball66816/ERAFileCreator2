@@ -28,6 +28,7 @@
                    Text="Billing Provider" FontSize="16" TextDecorations="Underline"
                    Margin="10,0,0,0"/>
         <CheckBox Content="Use Individual Provider" Grid.Row="1" Grid.Column="0"
+                  IsChecked="{Binding BillingProvider.IsAlsoRendering}"
                   Name="IsIndividualBillingTag"
                   Margin="10,10,0,0"/>
         <TextBlock Name="BillingProviderNameTag" Grid.Row="2" Grid.Column="0"

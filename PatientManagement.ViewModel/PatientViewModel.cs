@@ -437,7 +437,9 @@ namespace PatientManagement.ViewModel
 
         private void UpdateRenderingProvider(object obj)
         {
-            //IProvider pr = new BillingProviderRepository();
+
+            Messenger.Default.Send<Provider>(selectedPatient.RenderingProvider);
+            IProvider pr = new BillingProviderRepository();
 
             //if (pr.GetBillingProvider().IsAlsoRendering)
             //{
@@ -446,18 +448,17 @@ namespace PatientManagement.ViewModel
             //    selectedPatient.RenderingProvider.Npi = pr.GetBillingProvider().Npi;
             //}
 
-            //Messenger.Default.Send<Provider>(selectedPatient.RenderingProvider);
             //if (BillingProvider.IsAlsoRendering)
             //{
-                //selectedPatient.RenderingProvider.FirstName = BillingProvider.FirstName;
-                //selectedPatient.RenderingProvider.LastName = BillingProvider.LastName;
-                //selectedPatient.RenderingProvider.Npi = BillingProvider.Npi;
-                //RaisePropertyChanged("Patient");
+            //selectedPatient.RenderingProvider.FirstName = BillingProvider.FirstName;
+            //selectedPatient.RenderingProvider.LastName = BillingProvider.LastName;
+            //selectedPatient.RenderingProvider.Npi = BillingProvider.Npi;
+            //RaisePropertyChanged("Patient");
             //}
 
             //else if (billingProvider.IsAlsoRendering == false)
             //{
-                //return;
+            //return;
             //}
         }
 
