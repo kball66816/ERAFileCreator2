@@ -387,7 +387,7 @@ namespace PatientManagement.ViewModel
                 SelectedAddonCharge = new AddonCharge();
             }
 
-            Messenger.Default.Send<UpdateCalculations>(new UpdateCalculations());
+            Messenger.Default.Send(new UpdateCalculations());
             RaisePropertyChanged("SelectedAddonCharge");
             //UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
