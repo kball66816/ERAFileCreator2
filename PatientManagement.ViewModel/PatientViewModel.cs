@@ -35,10 +35,14 @@ namespace PatientManagement.ViewModel
             AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
             LoadCommands();
             RefreshAllCounters();
+            Messenger.Default.Register<Patient>(this,OnPatientReceived);
         }
 
-
-
+        private void OnPatientReceived(Patient patient)
+        {
+            SelectedPatient = patient;
+            RaisePropertyChanged("SelectedPatient");
+        }
 
 
         private void LoadInitialPatient()
@@ -416,7 +420,7 @@ namespace PatientManagement.ViewModel
             AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
             AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
-            //UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
+            UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
             AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
             DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
             EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
@@ -431,21 +435,31 @@ namespace PatientManagement.ViewModel
 
         public ICommand UpdateRenderingProviderCommand { get; private set; }
 
-        //private void UpdateRenderingProvider(object obj)
-        //{
-        //    if (BillingProvider.IsAlsoRendering)
-        //    {
-        //        selectedPatient.RenderingProvider.FirstName = BillingProvider.FirstName;
-        //        selectedPatient.RenderingProvider.LastName = BillingProvider.LastName;
-        //        selectedPatient.RenderingProvider.Npi = BillingProvider.Npi;
-        //        RaisePropertyChanged("Patient");
-        //    }
+        private void UpdateRenderingProvider(object obj)
+        {
+            //IProvider pr = new BillingProviderRepository();
 
-        //    else if (billingProvider.IsAlsoRendering == false)
-        //    {
-        //        return;
-        //    }
-        //}
+            //if (pr.GetBillingProvider().IsAlsoRendering)
+            //{
+            //    selectedPatient.RenderingProvider.FirstName = pr.GetBillingProvider().FirstName;
+            //    selectedPatient.RenderingProvider.LastName = pr.GetBillingProvider().LastName;
+            //    selectedPatient.RenderingProvider.Npi = pr.GetBillingProvider().Npi;
+            //}
+
+            //Messenger.Default.Send<Provider>(selectedPatient.RenderingProvider);
+            //if (BillingProvider.IsAlsoRendering)
+            //{
+                //selectedPatient.RenderingProvider.FirstName = BillingProvider.FirstName;
+                //selectedPatient.RenderingProvider.LastName = BillingProvider.LastName;
+                //selectedPatient.RenderingProvider.Npi = BillingProvider.Npi;
+                //RaisePropertyChanged("Patient");
+            //}
+
+            //else if (billingProvider.IsAlsoRendering == false)
+            //{
+                //return;
+            //}
+        }
 
         private static bool CanSave(object obj)
         {

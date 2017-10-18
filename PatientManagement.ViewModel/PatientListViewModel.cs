@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EFC.BL;
+﻿using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
-    class PatientListViewModel:INotifyPropertyChanged
+   public class PatientListViewModel:INotifyPropertyChanged
     {
         public PatientListViewModel()
         {
@@ -28,23 +24,30 @@ namespace PatientManagement.ViewModel
             get { return patients; }
             private set
             {
-                patients = value;
-                RaisePropertyChanged("Patients");
+                if (value != patients)
+                {
+                    patients = value;
+                    RaisePropertyChanged("Patients");
+                }
+
             }
         }
 
-        private Patient selectedPatient;
+        private Patient patient;
 
-        public Patient SelectedPatient
+        public Patient Patient
         {
-            get { return selectedPatient; }
+            get { return patient; }
             set
             {
-                if (value == selectedPatient) return;
-                selectedPatient = value;
-                RaisePropertyChanged("SelectedPatient");
+                if (value == patient) return;
+                patient = value;
+                RaisePropertyChanged("Patient");
+                Messenger.Default.Send<Patient>(Patient);
             }
         }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)

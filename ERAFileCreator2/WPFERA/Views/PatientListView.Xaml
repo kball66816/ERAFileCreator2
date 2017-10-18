@@ -3,17 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:EraView.Views"
+             xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <local:PatientListView/>
+        <viewModel:PatientListViewModel/>
     </UserControl.DataContext>
     <StackPanel>
         <TextBlock DockPanel.Dock="top"
                    Text="Patients"></TextBlock>
         <ListBox 
             ItemsSource="{Binding Patients}"
-            SelectedItem="{Binding SelectedPatient, Mode=TwoWay}"
+            SelectedItem="{Binding Patient, Mode=TwoWay}"
             MinWidth="100"
             Background="#FF7789D8" BorderBrush="#FF7789D8">
             <ListBox.ItemTemplate>
