@@ -64,6 +64,9 @@
     <Compile Include="Views\AddonAdjustmentView.xaml.cs">
       <DependentUpon>AddonAdjustmentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddonChargeView.xaml.cs">
+      <DependentUpon>AddonChargeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BillingProviderView.xaml.cs">
       <DependentUpon>BillingProviderView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +95,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddonAdjustmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddonChargeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

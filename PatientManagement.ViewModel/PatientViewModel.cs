@@ -20,7 +20,7 @@ namespace PatientManagement.ViewModel
 
             Settings = new SettingsService();
             LoadInitialPatient();
-            SelectedAddonCharge = new AddonCharge();
+            //SelectedAddonCharge = new AddonCharge();
             SelectedAdjustment = new Adjustment();
             //AddonAdjustment = new Adjustment();
             SelectedCharge = new PrimaryCharge();
@@ -37,14 +37,14 @@ namespace PatientManagement.ViewModel
             LoadCommands();
             RefreshAllCounters();
 
-            Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved);
+            //Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved);
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
         }
 
-        private void OnAddonAdjustmentReceieved(Adjustment adjustment)
-        {
-            selectedAddonCharge.AdjustmentList.Add(adjustment);
-        }
+        //private void OnAddonAdjustmentReceieved(Adjustment adjustment)
+        //{
+        //    selectedAddonCharge.AdjustmentList.Add(adjustment);
+        //}
 
 
         private void OnPatientReceived(Patient patient)
@@ -74,9 +74,9 @@ namespace PatientManagement.ViewModel
 
         public Dictionary<string, string> PrimaryAdjustmentReasonCodes { get; set; }
 
-    //    public Dictionary<string, string> AddonAdjustmentType { get; set; }
+        //    public Dictionary<string, string> AddonAdjustmentType { get; set; }
 
-      //  public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
+        //  public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
 
         public ObservableCollection<PrimaryCharge> Charges
 
@@ -215,33 +215,33 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        private void CloneLastAddon()
-        {
-            var clone = (AddonCharge)SelectedCharge.AddonChargeList.Last().Clone();
-            SelectedAddonCharge = clone;
-            RaisePropertyChanged("Addon");
-        }
+        //private void CloneLastAddon()
+        //{
+        //    var clone = (AddonCharge)SelectedCharge.AddonChargeList.Last().Clone();
+        //    SelectedAddonCharge = clone;
+        //    RaisePropertyChanged("Addon");
+        //}
 
-        private void GetNewAddonDependentOnUserPromptPreference()
-        {
-            if (Settings.AddonPromptEnabled)
-            {
-                if (SupressAddonDialog == false)
-                {
-                    PromptTypeOfNewAddon();
-                }
+        //private void GetNewAddonDependentOnUserPromptPreference()
+        //{
+        //    if (Settings.AddonPromptEnabled)
+        //    {
+        //        if (SupressAddonDialog == false)
+        //        {
+        //            PromptTypeOfNewAddon();
+        //        }
 
-                else
-                {
-                    return;
-                }
-            }
+        //        else
+        //        {
+        //            return;
+        //        }
+        //    }
 
-            else if (Settings.AddonPromptEnabled == false)
-            {
-                CloneLastAddon();
-            }
-        }
+        //    else if (Settings.AddonPromptEnabled == false)
+        //    {
+        //        CloneLastAddon();
+        //    }
+        //}
 
         private void CloneSelectedPatient()
         {
@@ -250,27 +250,27 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("SelectedPatient");
         }
 
-        private AddonCharge PromptTypeOfNewAddon()
-        {
+        //private AddonCharge PromptTypeOfNewAddon()
+        //{
 
-            var newAddonDialogResult = MessageBox.Show("Do you want to reuse this Addon?", "Return new Addon",
-                MessageBoxButton.YesNo);
-            {
+        //    var newAddonDialogResult = MessageBox.Show("Do you want to reuse this Addon?", "Return new Addon",
+        //        MessageBoxButton.YesNo);
+        //    {
 
-                if (newAddonDialogResult == MessageBoxResult.Yes)
-                {
-                    CloneLastAddon();
+        //        if (newAddonDialogResult == MessageBoxResult.Yes)
+        //        {
+        //            CloneLastAddon();
 
-                }
+        //        }
 
-                else
-                {
-                    SelectedAddonCharge = new AddonCharge();
-                }
+        //        else
+        //        {
+        //            SelectedAddonCharge = new AddonCharge();
+        //        }
 
-                return SelectedAddonCharge;
-            }
-        }
+        //        return SelectedAddonCharge;
+        //    }
+        //}
 
 
         private ObservableCollection<Patient> patients;
@@ -368,50 +368,50 @@ namespace PatientManagement.ViewModel
 
         private ObservableCollection<PrimaryCharge> charges;
 
-        private AddonCharge selectedAddonCharge;
+        //private AddonCharge selectedAddonCharge;
 
-        public AddonCharge SelectedAddonCharge
-        {
-            get { return selectedAddonCharge; }
-            set
-            {
-                if (value == selectedAddonCharge) return;
-                selectedAddonCharge = value;
-                RaisePropertyChanged("Addon");
-            }
-        }
+        //public AddonCharge SelectedAddonCharge
+        //{
+        //    get { return selectedAddonCharge; }
+        //    set
+        //    {
+        //        if (value == selectedAddonCharge) return;
+        //        selectedAddonCharge = value;
+        //        RaisePropertyChanged("Addon");
+        //    }
+        //}
 
         public AddonCharge SelectedAddonChargeIndex { get; set; }
 
         public ICommand AddAddonCommand { get; private set; }
 
-        private void AddAddonToCharge(object obj)
-        {
+        //private void AddAddonToCharge(object obj)
+        //{
 
-            IAddonChargeRepository addonChargeRepository = new AddonChargeRepository(selectedCharge);
-            addonChargeRepository.Add(SelectedAddonCharge);
+        //    IAddonChargeRepository addonChargeRepository = new AddonChargeRepository(selectedCharge);
+        //    addonChargeRepository.Add(SelectedAddonCharge);
 
-            if (Settings.ReuseSameAddonEnabled)
-            {
-                GetNewAddonDependentOnUserPromptPreference();
-            }
-            else
-            {
-                SelectedAddonCharge = new AddonCharge();
-            }
+        //    if (Settings.ReuseSameAddonEnabled)
+        //    {
+        //        GetNewAddonDependentOnUserPromptPreference();
+        //    }
+        //    else
+        //    {
+        //        SelectedAddonCharge = new AddonCharge();
+        //    }
 
-            Messenger.Default.Send(new UpdateCalculations());
-            RaisePropertyChanged("SelectedAddonCharge");
-            //UpdateCheckAmount();
-            RaisePropertyChanged("CheckAmount");
-            RefreshAllCounters();
+        //    Messenger.Default.Send(new UpdateCalculations());
+        //    RaisePropertyChanged("SelectedAddonCharge");
+        //    //UpdateCheckAmount();
+        //    RaisePropertyChanged("CheckAmount");
+        //    RefreshAllCounters();
 
-        }
+        //}
 
-        private bool CanAddAddon(object obj)
-        {
-            return !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode);
-        }
+        //private bool CanAddAddon(object obj)
+        //{
+        //    return !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode);
+        //}
 
         public ICommand SaveFileCommand { get; private set; }
 
@@ -426,8 +426,8 @@ namespace PatientManagement.ViewModel
         {
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
             AddChargeAdjustmentCommand = new Command(AddAdjustmentToCharge, CanAddAdjustment);
-//            AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
-            AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
+            // AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
+            //AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
             AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
@@ -435,8 +435,8 @@ namespace PatientManagement.ViewModel
             EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
             EditSelectedAdjustmentCommand = new Command(EditSelectedAdjustment, CanEditSelectedAdjustment);
             DeleteSelectedAdjustmentCommand = new Command(DeleteSelectedAdjustment, CanDeleteSelectedAdjustment);
-            DeleteSelectedAddonCommand = new Command(DeleteSelectedAddon, CanDeleteSelectedAddon);
-            EditSelectedAddonCommand = new Command(EditSelectedAddon, CanEditSelectedAddon);
+            //DeleteSelectedAddonCommand = new Command(DeleteSelectedAddon, CanDeleteSelectedAddon);
+            //EditSelectedAddonCommand = new Command(EditSelectedAddon, CanEditSelectedAddon);
 
         }
 
@@ -448,7 +448,7 @@ namespace PatientManagement.ViewModel
         {
 
             Messenger.Default.Send(selectedPatient.RenderingProvider);
-            IProvider pr = new BillingProviderRepository();
+            //IProvider pr = new BillingProviderRepository();
 
             //if (pr.GetBillingProvider().IsAlsoRendering)
             //{
@@ -486,7 +486,7 @@ namespace PatientManagement.ViewModel
         private void Save(object obj)
         {
 
-            Messenger.Default.Send<UpdateRepositoriesMessage>(new UpdateRepositoriesMessage());
+            Messenger.Default.Send(new UpdateRepositoriesMessage());
             SupressAddonDialog = true;
             //  MatchAdjustmentToCharge();
             //   MatchAddonToCharge();
@@ -553,7 +553,7 @@ namespace PatientManagement.ViewModel
             chargeRepository.Add(SelectedCharge);
             ReturnNewCharge();
 
-            Messenger.Default.Send<UpdateCalculations>(new UpdateCalculations());
+            Messenger.Default.Send(new UpdateCalculations());
             RaisePropertyChanged("SelectedCharge");
             RaisePropertyChanged("Charges");
         }
@@ -650,33 +650,33 @@ namespace PatientManagement.ViewModel
         }
         public ICommand DeleteSelectedAddonCommand { get; set; }
 
-        private void DeleteSelectedAddon(object obj)
-        {
-            if (SelectedAddonChargeIndex == null) return;
-            var index = SelectedCharge.AddonChargeList.IndexOf(SelectedAddonChargeIndex);
-            if (index <= -1) return;
-            IAddonChargeRepository ar = new AddonChargeRepository(selectedCharge);
-            ar.Delete(SelectedAddonChargeIndex);
-        }
+        //private void DeleteSelectedAddon(object obj)
+        //{
+        //    if (SelectedAddonChargeIndex == null) return;
+        //    var index = SelectedCharge.AddonChargeList.IndexOf(SelectedAddonChargeIndex);
+        //    if (index <= -1) return;
+        //    IAddonChargeRepository ar = new AddonChargeRepository(selectedCharge);
+        //    ar.Delete(SelectedAddonChargeIndex);
+        //}
 
-        private bool CanDeleteSelectedAddon(object obj)
-        {
-            bool b = !string.IsNullOrEmpty(SelectedAddonChargeIndex?.ProcedureCode);
-            return b;
-        }
-        public ICommand EditSelectedAddonCommand { get; private set; }
+        //private bool CanDeleteSelectedAddon(object obj)
+        //{
+        //    bool b = !string.IsNullOrEmpty(SelectedAddonChargeIndex?.ProcedureCode);
+        //    return b;
+        //}
+        //public ICommand EditSelectedAddonCommand { get; private set; }
 
-        private void EditSelectedAddon(object obj)
-        {
-            SelectedAddonCharge = SelectedAddonChargeIndex;
-            RaisePropertyChanged("SelectedAddonCharge");
-        }
+        //private void EditSelectedAddon(object obj)
+        //{
+        //    SelectedAddonCharge = SelectedAddonChargeIndex;
+        //    RaisePropertyChanged("SelectedAddonCharge");
+        //}
 
-        private bool CanEditSelectedAddon(object obj)
-        {
-            bool b = editModeEnabled && (!string.IsNullOrEmpty(SelectedAddonChargeIndex?.ProcedureCode));
-            return b;
+        //private bool CanEditSelectedAddon(object obj)
+        //{
+        //    bool b = editModeEnabled && (!string.IsNullOrEmpty(SelectedAddonChargeIndex?.ProcedureCode));
+        //    return b;
 
-        }
+        //}
     }
 }

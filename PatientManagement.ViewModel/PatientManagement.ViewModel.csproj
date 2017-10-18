@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddonAdjustmentViewModel.cs" />
+    <Compile Include="AddonChargeViewModel.cs" />
     <Compile Include="BillingProviderViewModel.cs" />
     <Compile Include="InsuranceViewModel.cs" />
     <Compile Include="PatientListViewModel.cs" />
