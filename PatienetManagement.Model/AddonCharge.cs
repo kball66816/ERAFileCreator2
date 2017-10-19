@@ -21,6 +21,7 @@ namespace PatientManagement.Model
             Modifier = new Modifier(addon.Modifier);
             ChargeCost = addon.ChargeCost;
             PaymentAmount = addon.PaymentAmount;
+            ProcedureCode = addon.ProcedureCode;
 
         }
         public override decimal AllowedAmount

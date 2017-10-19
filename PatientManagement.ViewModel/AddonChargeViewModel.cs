@@ -3,7 +3,6 @@ using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
@@ -16,7 +15,6 @@ namespace PatientManagement.ViewModel
             Settings = new SettingsService();
             AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
             Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved, "AddonCharge");
-
 
         }
 
@@ -40,22 +38,19 @@ namespace PatientManagement.ViewModel
 
         private void AddAddonToCharge(object obj)
         {
-            Messenger.Default.Send<AddonCharge>(SelectedAddonCharge, "AddonCharge");
-            //IAddonChargeRepository addonChargeRepository = new AddonChargeRepository(selectedCharge);
-            //addonChargeRepository.Add(SelectedAddonCharge);
+            Messenger.Default.Send(SelectedAddonCharge, "AddonCharge");
 
             if (Settings.ReuseSameAddonEnabled)
             {
-                //GetNewAddonDependentOnUserPromptPreference();
+                GetNewAddonDependentOnUserPromptPreference();
             }
             else
             {
                 SelectedAddonCharge = new AddonCharge();
             }
             RaisePropertyChanged("SelectedAddonCharge");
-            // UpdateCheckAmount();
+        
             RaisePropertyChanged("CheckAmount");
-            //RefreshAllCounters();
 
         }
 
@@ -90,23 +85,20 @@ namespace PatientManagement.ViewModel
 
         private AddonCharge PromptTypeOfNewAddon()
         {
+            var dialogPrompt = new DialogService(SelectedAddonCharge);
 
-            var newAddonDialogResult = MessageBox.Show("Do you want to reuse this Addon?", "Return new Addon",
-                MessageBoxButton.YesNo);
+            if (dialogPrompt.ShowDialog())
             {
-
-                if (newAddonDialogResult == MessageBoxResult.Yes)
-                {
-                    CloneLastAddon();
-                }
-
-                else
-                {
-                    SelectedAddonCharge = new AddonCharge();
-                }
-
-                return SelectedAddonCharge;
+                CloneLastAddon();
             }
+
+            else
+            {
+                SelectedAddonCharge = new AddonCharge();
+
+            }
+            return SelectedAddonCharge;
+
         }
 
         private void OnAddonAdjustmentReceieved(Adjustment adjustment)
@@ -114,10 +106,7 @@ namespace PatientManagement.ViewModel
             IAdjustmentRepository ar = new AdjustmentRepository(selectedAddonCharge);
 
             ar.Add(adjustment);
-            // SelectedAddonCharge.AdjustmentList.Add(adjustment);
-            //AddonAdjustment = new Adjustment();
-            //RaisePropertyChanged("SelectedAdjustment");
-            //selectedAddonCharge.AdjustmentList.Add(adjustment);
+         
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
