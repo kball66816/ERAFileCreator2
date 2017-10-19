@@ -27,7 +27,7 @@ namespace PatientManagement.ViewModel
 
             patientRepository.Add(SelectedPatient);
             Patients = patientRepository.GetAllPatients();
-            Charges = selectedPatient.Charges;
+            //Charges = selectedPatient.Charges;
             //Adjustments = selectedCharge.AdjustmentList;
             //PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
             //PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
@@ -87,17 +87,17 @@ namespace PatientManagement.ViewModel
 
         //  public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
 
-        public ObservableCollection<PrimaryCharge> Charges
+        //public ObservableCollection<PrimaryCharge> Charges
 
-        {
-            get { return charges; }
-            set
-            {
-                if (value == charges) return;
-                charges = value;
-                RaisePropertyChanged("Charges");
-            }
-        }
+        //{
+        //    get { return charges; }
+        //    set
+        //    {
+        //        if (value == charges) return;
+        //        charges = value;
+        //        RaisePropertyChanged("Charges");
+        //    }
+        //}
 
         private InsuranceCompany insuranceCompany;
 
@@ -375,7 +375,7 @@ namespace PatientManagement.ViewModel
         //}
 
 
-        private ObservableCollection<PrimaryCharge> charges;
+        //private ObservableCollection<PrimaryCharge> charges;
 
         //private AddonCharge selectedAddonCharge;
 
@@ -392,7 +392,7 @@ namespace PatientManagement.ViewModel
 
         public AddonCharge SelectedAddonChargeIndex { get; set; }
 
-        public ICommand AddAddonCommand { get; private set; }
+        //public ICommand AddAddonCommand { get; private set; }
 
         //private void AddAddonToCharge(object obj)
         //{

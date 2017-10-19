@@ -17,9 +17,6 @@ namespace PatientManagement.ViewModel
             PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
             Messenger.Default.Register<Adjustment>(this, OnAdjustmentReceived, "PrimaryCharge");
             AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
-
-
-
         }
 
         public ICommand AddChargeToPatientCommand { get; set; }
@@ -85,6 +82,27 @@ namespace PatientManagement.ViewModel
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public ICommand EditSelectedChargeCommand { get; private set; }
+
+        private bool editModeEnabled;
+
+        private void EditSelectedCharge(object obj)
+        {
+            if (!editModeEnabled)
+            {
+                SelectedCharge = SelectedListChargeIndex;
+                RaisePropertyChanged("SelectedCharge");
+                editModeEnabled = true;
+
+            }
+            else
+            {
+                ReturnNewCharge();
+                editModeEnabled = false;
+            }
+
         }
     }
 }
