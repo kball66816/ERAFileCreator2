@@ -9,55 +9,57 @@
     <UserControl.DataContext>
         <viewModel:AddonAdjustmentViewModel/>
     </UserControl.DataContext>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBlock Name="AddonAdjustmentType" Grid.Row="0" Grid.Column="0"
-                   Margin="10,0,0,0"
-                   VerticalAlignment="Top"
-                   Text="Adjustment Type"/>
+    <DockPanel>
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="AddonAdjustmentType" Grid.Row="0" Grid.Column="0"
+                       Margin="10,0,0,0"
+                       VerticalAlignment="Top"
+                       Text="Adjustment Type"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0"
-                    Margin="10,20,0,0">
-            <ComboBox x:Name="AddonAdjustmentTypeDropdown"
-                      Width="45"
-                      SelectedIndex="0"
-                      ItemsSource="{Binding AddonAdjustmentType}"
-                      DisplayMemberPath="Value"
-                      SelectedValuePath="Value"
-                      ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}">
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0"
+                        Margin="10,20,0,0">
+                <ComboBox x:Name="AddonAdjustmentTypeDropdown"
+                          Width="45"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding AddonAdjustmentType}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Value"
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}">
 
-            </ComboBox>
-            <ComboBox x:Name="AddonAdjustmentReasonCodeDropdown" 
-                      Width="45"
-                      ItemsSource="{Binding AddonAdjustmentReasonCodes}"
-                      DisplayMemberPath="Value"
-                      SelectedValuePath="Value"
-                      ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentReasonCodeDropdown}"
-                      SelectedIndex="34">
+                </ComboBox>
+                <ComboBox x:Name="AddonAdjustmentReasonCodeDropdown" 
+                          Width="45"
+                          ItemsSource="{Binding AddonAdjustmentReasonCodes}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Value"
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentReasonCodeDropdown}"
+                          SelectedIndex="34">
 
-            </ComboBox>
-            <TextBox x:Name="AddonAdjustmentAmountInput"
-                     Text="{Binding AddonAdjustment.AdjustmentAmount,UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:F2\}}"
-                     Width="30" Height="22" VerticalAlignment="Top">
-                <Validation.ErrorTemplate>
-                    <ControlTemplate>
-                        <DockPanel >
-                            <Border BorderBrush="Red" BorderThickness="2">
-                                <AdornedElementPlaceholder/>
-                            </Border>
-                        </DockPanel>
-                    </ControlTemplate>
-                </Validation.ErrorTemplate>
-            </TextBox>
-        </StackPanel>
-        <Button Name="AddonAdjustmentButton" Grid.Row="0" Grid.Column="1"
-                Margin="10,0,0,0"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Left"
-                Content="Add Additional Adjustment"
-                Command="{Binding AddAddonChargeAdjustmentCommand}"/>
-    </Grid>
+                </ComboBox>
+                <TextBox x:Name="AddonAdjustmentAmountInput"
+                         Text="{Binding AddonAdjustment.AdjustmentAmount,UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:F2\}}"
+                         Width="30" Height="22" VerticalAlignment="Top">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <DockPanel >
+                                <Border BorderBrush="Red" BorderThickness="2">
+                                    <AdornedElementPlaceholder/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </TextBox>
+            </StackPanel>
+            <Button Name="AddonAdjustmentButton" Grid.Row="0" Grid.Column="1"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Content="Add Additional Adjustment"
+                    Command="{Binding AddAddonChargeAdjustmentCommand}"/>
+        </Grid>
+    </DockPanel>
 </UserControl>
