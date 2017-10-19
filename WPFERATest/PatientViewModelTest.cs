@@ -36,7 +36,7 @@ namespace WPFERATest
             //pvm.AddonAdjustment.AdjustmentAmount = 100;
 
             //Act
-            pvm.AddAddonCommand.Execute(true);
+            //pvm.AddAddonCommand.Execute(true);
             //pvm.AddAddonChargeAdjustmentCommand.Execute(true);
             //var expected = 100;
            // var actual = pvm.SelectedAddonCharge.AdjustmentList.Last().AdjustmentAmount;

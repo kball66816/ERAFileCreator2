@@ -24,5 +24,18 @@ namespace EraView.Views
         {
             InitializeComponent();
         }
+
+        private void EditCharge_Click(object sender, RoutedEventArgs e)
+        {
+            if (EditCharge.Content.ToString() == "Edit Charge")
+            {
+                EditCharge.Content = "Disable Charge Edit Mode";
+            }
+
+            else if (EditCharge.Content.ToString() == "Disable Charge Edit Mode")
+            {
+                EditCharge.Content = "Edit Charge";
+            }
+        }
     }
 }

@@ -48,7 +48,6 @@
     <Compile Include="AddonAdjustmentViewModel.cs" />
     <Compile Include="AddonChargeViewModel.cs" />
     <Compile Include="BillingProviderViewModel.cs" />
-    <Compile Include="ChargesViewModel.cs" />
     <Compile Include="InsuranceViewModel.cs" />
     <Compile Include="PatientListViewModel.cs" />
     <Compile Include="PrimaryAdjustmentViewModel.cs" />

@@ -47,6 +47,7 @@ namespace PatientManagement.ViewModel
            IPrimaryChargeRepository crp = new PrimaryChargeRepository(SelectedPatient);
             crp.Add(charge);
             RaisePropertyChanged("SelectedPatient");
+            Messenger.Default.Send<ObservableCollection<PrimaryCharge>>(selectedPatient.Charges,"UpdateChargesList");
         }
 
 
@@ -60,6 +61,8 @@ namespace PatientManagement.ViewModel
         {
             SelectedPatient = patient;
             RaisePropertyChanged("SelectedPatient");
+            Messenger.Default.Send<ObservableCollection<PrimaryCharge>>(selectedPatient.Charges, "UpdateChargesList");
+
         }
 
 
@@ -71,7 +74,7 @@ namespace PatientManagement.ViewModel
 
         private IPatientRepository patientRepository = new PatientRepository();
 
-        private bool SupressAddonDialog { get; set; }
+        //private bool SupressAddonDialog { get; set; }
 
         private SettingsService Settings { get; set; }
 
@@ -155,11 +158,13 @@ namespace PatientManagement.ViewModel
         /// <param name="obj"></param>
         private void AddPatient(object obj)
         {
-            SupressAddonDialog = true;
+            //SupressAddonDialog = true;
             // MatchAdjustmentToCharge();
             //AddChargeToPatientEncounter();
             ReturnNewPatient();
             patientRepository.Add(SelectedPatient);
+            Messenger.Default.Send<ObservableCollection<PrimaryCharge>>(selectedPatient.Charges, "UpdateChargesList");
+
             //UpdateCheckAmount();
             RaisePropertyChanged("CheckAmount");
             RefreshAllCounters();
@@ -496,7 +501,7 @@ namespace PatientManagement.ViewModel
         {
 
             Messenger.Default.Send(new UpdateRepositoriesMessage());
-            SupressAddonDialog = true;
+            //SupressAddonDialog = true;
             //  MatchAdjustmentToCharge();
             //   MatchAddonToCharge();
             //   MatchChargeToPatient();

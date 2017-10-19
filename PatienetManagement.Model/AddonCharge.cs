@@ -12,9 +12,17 @@ namespace PatientManagement.Model
             Id = Guid.NewGuid();
             AdjustmentList = new ObservableCollection<Adjustment>();
             Modifier = new Modifier();
-          
         }
 
+        public AddonCharge(AddonCharge addon)
+        {
+            Id = Guid.NewGuid();
+            AdjustmentList = new ObservableCollection<Adjustment>();
+            Modifier = new Modifier(addon.Modifier);
+            ChargeCost = addon.ChargeCost;
+            PaymentAmount = addon.PaymentAmount;
+
+        }
         public override decimal AllowedAmount
         {
             get { return PaymentAmount; }

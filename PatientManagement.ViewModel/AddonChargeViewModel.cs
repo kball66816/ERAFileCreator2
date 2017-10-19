@@ -40,7 +40,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAddonToCharge(object obj)
         {
-
+            Messenger.Default.Send<AddonCharge>(SelectedAddonCharge, "AddonCharge");
             //IAddonChargeRepository addonChargeRepository = new AddonChargeRepository(selectedCharge);
             //addonChargeRepository.Add(SelectedAddonCharge);
 
@@ -59,33 +59,34 @@ namespace PatientManagement.ViewModel
 
         }
 
-        //private void CloneLastAddon()
-        //{
-        //    //var clone = (AddonCharge)SelectedCharge.AddonChargeList.Last().Clone();
-        //    SelectedAddonCharge = clone;
-        //    RaisePropertyChanged("Addon");
-        //}
+        private bool SupressAddonDialog { get; set; }
 
-        //private void GetNewAddonDependentOnUserPromptPreference()
-        //{
-        //    if (Settings.AddonPromptEnabled)
-        //    {
-        //        if (SupressAddonDialog == false)
-        //        {
-        //            PromptTypeOfNewAddon();
-        //        }
+        private void CloneLastAddon()
+        {
+            SelectedAddonCharge = new AddonCharge(SelectedAddonCharge);
+            RaisePropertyChanged("SelectedAddonCharge");
+        }
 
-        //        else
-        //        {
-        //            return;
-        //        }
-        //    }
+        private void GetNewAddonDependentOnUserPromptPreference()
+        {
+            if (Settings.AddonPromptEnabled)
+            {
+                if (SupressAddonDialog == false)
+                {
+                    PromptTypeOfNewAddon();
+                }
 
-        //    else if (Settings.AddonPromptEnabled == false)
-        //    {
-        //        CloneLastAddon();
-        //    }
-        //}
+                else
+                {
+                    return;
+                }
+            }
+
+            else if (Settings.AddonPromptEnabled == false)
+            {
+                CloneLastAddon();
+            }
+        }
 
         private AddonCharge PromptTypeOfNewAddon()
         {
@@ -96,9 +97,7 @@ namespace PatientManagement.ViewModel
 
                 if (newAddonDialogResult == MessageBoxResult.Yes)
                 {
-                    //CloneLastAddon();
-                    SelectedAddonCharge = new AddonCharge();
-
+                    CloneLastAddon();
                 }
 
                 else
