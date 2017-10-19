@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using EraView;
 using PatientManagement.Model;
 
 namespace PatientManagement.ViewModel.Services
@@ -237,7 +236,6 @@ namespace PatientManagement.ViewModel.Services
             {
                 billingProvider.Address.ZipCode = Settings.Default.BillingProviderAddressZipCode;
             }
-
             return billingProvider;
         }
 

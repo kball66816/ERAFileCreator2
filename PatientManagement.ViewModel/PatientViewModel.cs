@@ -19,19 +19,24 @@ namespace PatientManagement.ViewModel
             Settings = new SettingsService();
             LoadInitialPatient();
             patientRepository.Add(SelectedPatient);
-            Patients = patientRepository.GetAllPatients();
             LoadCommands();
-            RefreshAllCounters();
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
-            Messenger.Default.Register<PrimaryCharge>(this,OnPrimaryChargeReceived,"Patient");
+            Messenger.Default.Register<PrimaryCharge>(this, OnPrimaryChargeReceived, "Patient");
+            Messenger.Default.Register<Provider>(this, OnProviderReceived, "RenderingProvider");
+        }
+
+        private void OnProviderReceived(Provider provider)
+        {
+            selectedPatient.RenderingProvider = provider;
+            RaisePropertyChanged("SelectedPatient");
         }
 
         private void OnPrimaryChargeReceived(PrimaryCharge charge)
         {
-           IPrimaryChargeRepository crp = new PrimaryChargeRepository(SelectedPatient);
+            IPrimaryChargeRepository crp = new PrimaryChargeRepository(SelectedPatient);
             crp.Add(charge);
             RaisePropertyChanged("SelectedPatient");
-            Messenger.Default.Send(selectedPatient.Charges,"UpdateChargesList");
+            Messenger.Default.Send(selectedPatient.Charges, "UpdateChargesList");
         }
 
 
@@ -40,7 +45,6 @@ namespace PatientManagement.ViewModel
             SelectedPatient = patient;
             RaisePropertyChanged("SelectedPatient");
             Messenger.Default.Send(selectedPatient.Charges, "UpdateChargesList");
-
         }
 
 
@@ -69,20 +73,13 @@ namespace PatientManagement.ViewModel
 
         public ICommand AddPatientCommand { get; private set; }
 
-        /// <summary>
-        /// Adds a new patient to the list by ensuring all unmatched details
-        /// in the form match to the previous patient then returning a new instance
-        /// of a patient
-        /// </summary>
-        /// <param name="obj"></param>
         private void AddPatient(object obj)
         {
+            Messenger.Default.Send(SelectedPatient, "AddRenderingProvider");
             ReturnNewPatient();
             patientRepository.Add(SelectedPatient);
             Messenger.Default.Send(selectedPatient.Charges, "UpdateChargesList");
-
             RaisePropertyChanged("CheckAmount");
-            RefreshAllCounters();
         }
 
         private void ReturnNewPatient()
@@ -139,18 +136,6 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("SelectedPatient");
         }
 
-        private ObservableCollection<Patient> patients;
-
-        public ObservableCollection<Patient> Patients
-        {
-            get { return patients; }
-            private set
-            {
-                patients = value;
-                RaisePropertyChanged("Patients");
-            }
-        }
-
         private bool CanAddPatient(object obj)
         {
             return !string.IsNullOrEmpty(SelectedPatient.FirstName)
@@ -173,7 +158,6 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        public AddonCharge SelectedAddonChargeIndex { get; set; }
 
         public ICommand SaveFileCommand { get; private set; }
 
@@ -186,19 +170,18 @@ namespace PatientManagement.ViewModel
 
         private void LoadCommands()
         {
-            AddPatientCommand = new Command(AddPatient, CanAddPatient); 
+            AddPatientCommand = new Command(AddPatient, CanAddPatient);
             SaveFileCommand = new Command(Save, CanSave);
-            UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
         }
 
         public ICommand AddChargeToPatientCommand { get; set; }
 
-        public ICommand UpdateRenderingProviderCommand { get; private set; }
+        //public ICommand UpdateRenderingProviderCommand { get; private set; }
 
-        private void UpdateRenderingProvider(object obj)
-        {
-            Messenger.Default.Send(selectedPatient.RenderingProvider);
-        }
+        //private void UpdateRenderingProvider(object obj)
+        //{
+        //    Messenger.Default.Send(selectedPatient.RenderingProvider);
+        //}
 
         private static bool CanSave(object obj)
         {
@@ -207,6 +190,7 @@ namespace PatientManagement.ViewModel
 
         private void SaveSettings()
         {
+            Messenger.Default.Send<SettingsSavedMessage>(new SettingsSavedMessage(),"UpdateSettings");
             Settings.SetDefaultPatient(selectedPatient);
         }
 
@@ -222,16 +206,5 @@ namespace PatientManagement.ViewModel
 
         public decimal PatientCount { get; private set; }
 
-        private void RefreshAllCounters()
-        {
-            UpdatePatientCount();
-   
-        }
-
-        private void UpdatePatientCount()
-        {
-            PatientCount = Patients.Count();
-            RaisePropertyChanged("PatientCount");
-        }
     }
 }

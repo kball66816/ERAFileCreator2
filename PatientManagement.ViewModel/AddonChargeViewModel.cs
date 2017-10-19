@@ -1,4 +1,5 @@
-﻿using EFC.BL;
+﻿using System.Collections.ObjectModel;
+using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
@@ -15,10 +16,74 @@ namespace PatientManagement.ViewModel
             Settings = new SettingsService();
             AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
             Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved, "AddonCharge");
+            Messenger.Default.Register<ObservableCollection<AddonCharge>>(this,OnChargeCollectionReceived,"AddonList");
+            DeleteSelectedAddonCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
+            EditSelectedAddonCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
 
         }
 
-        public SettingsService Settings { get; private set; }
+        public ICommand DeleteSelectedAddonCommand { get; private set; }
+
+        public ICommand EditSelectedAddonCommand { get; private set; }
+
+        public AddonCharge SelectedAddonChargeIndex { get; set; }
+
+        bool editModeEnabled;
+        private void EditSelectedCharge(object obj)
+        {
+   
+            if (!editModeEnabled)
+            {
+                SelectedAddonCharge = SelectedAddonChargeIndex;
+                RaisePropertyChanged("SelectedCharge");
+                editModeEnabled = true;
+            }
+            else
+            {
+                GetNewAddonDependentOnUserPromptPreference();
+                editModeEnabled = false;
+            }
+        }
+
+        private bool CanEditOrDeleteSelectedCharge(object obj)
+        {
+            bool canEditOrDelete = (!string.IsNullOrEmpty(SelectedAddonChargeIndex?.ProcedureCode));
+            return canEditOrDelete;
+           
+
+        }
+
+        private void DeleteSelectedCharge(object obj)
+        {
+            if (SelectedAddonChargeIndex == null) return;
+            var index = Charges.IndexOf(SelectedAddonChargeIndex);
+            if (index <= -1) return;
+            Charges.RemoveAt(index);
+            RaisePropertyChanged("Charges");
+            if (!editModeEnabled) return;
+            editModeEnabled = false;
+        }
+
+        private ObservableCollection<AddonCharge> charges;
+
+        public ObservableCollection<AddonCharge> Charges
+
+        {
+            get { return charges; }
+            set
+            {
+                if (value == charges) return;
+                charges = value;
+                RaisePropertyChanged("Charges");
+            }
+        }
+        private void OnChargeCollectionReceived(ObservableCollection<AddonCharge> chargesList)
+        {
+            Charges = chargesList;
+            RaisePropertyChanged("Charges");
+        }
+
+        private SettingsService Settings { get; set; }
 
         public ICommand AddAddonCommand { get; private set; }
 
@@ -54,7 +119,7 @@ namespace PatientManagement.ViewModel
 
         }
 
-        private bool SupressAddonDialog { get; set; }
+        private bool SupressAddonDialog = false;
 
         private void CloneLastAddon()
         {
@@ -118,7 +183,13 @@ namespace PatientManagement.ViewModel
 
         private bool CanAddAddon(object obj)
         {
-            return !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode);
+            bool b = false;
+            if (!editModeEnabled)
+            {
+                b= !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode);
+
+            }
+            return b;
         }
     }
 }

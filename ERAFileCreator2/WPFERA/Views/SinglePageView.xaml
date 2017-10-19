@@ -62,24 +62,6 @@
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
-        <StackPanel DockPanel.Dock="Left"
-                         Background="#FF7789D8">
-            <TextBlock DockPanel.Dock="top"
-            Text="Patients"></TextBlock>
-            <ListBox 
-                 ItemsSource="{Binding Patients}"
-                SelectedItem="{Binding SelectedPatient, Mode=TwoWay}"
-                     MinWidth="100"
-                     Background="#FF7789D8" BorderBrush="#FF7789D8">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding FullName}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -226,53 +208,11 @@
                    Width="auto"
                    Height="2"
                    Fill="Gray" VerticalAlignment="Center"/>
-            <TextBlock Text="Patient's Rendering Provider" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="4" FontSize="16" TextDecorations="Underline"
-                       Margin="10,0,0,0"/>
-
-            <CheckBox x:Name="IsAlsoRendering" Grid.Row="17" Grid.Column="0"
-              Margin="10,10,0,0"
-              IsEnabled="{Binding ElementName=IsIndividualBillingTag,Path=IsChecked}"
-              Content="Copy Billing Provider?"
-              IsChecked="{Binding BillingProvider.IsAlsoRendering, UpdateSourceTrigger=PropertyChanged}"
-              Command="{Binding UpdateRenderingProviderCommand}"/>
-            <TextBlock Name="RenderingProviderFirstNameTag" Grid.Row="18" Grid.Column="0"
-                   VerticalAlignment="Top"
-                   Margin="10,0,0,0"
-                       Text="Provider's First Name*"/>
-            <TextBox Name="RenderingProviderFirstNameInput" Grid.Row="18" Grid.Column="0"
-                 Margin="10,20,0,0"
-                     Text="{Binding SelectedPatient.RenderingProvider.FirstName}"
-                     Width="115"
-                     HorizontalAlignment="Left"
-                     IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked, Converter={StaticResource NotConverter}}"/>
-            <TextBlock Name="RenderingProviderLastNameTag" Grid.Row="18" Grid.Column="1"
-                   Margin="10,0,0,0"
-                   VerticalAlignment="Top"
-                       Text="Provider's Last Name*"/>
-            <TextBox Name="RenderingProviderLastNameInput" Grid.Row="18" Grid.Column="1"
-                 Margin="10,20,0,0"
-                     Text="{Binding SelectedPatient.RenderingProvider.LastName}"
-                     Width="115"
-                     HorizontalAlignment="Left"
-                     IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked, Converter={StaticResource NotConverter}}"/>
-            <TextBlock Name="RenderingProviderNpiTag" Grid.Row="18" Grid.Column="2"
-                   VerticalAlignment="Top"
-                   Margin="10,0,0,0"
-                       Text="Provider's NPI*"/>
-            <TextBox Name="RenderingProviderNpiInput" Grid.Row="18" Grid.Column="2"
-                 Margin="10,20,0,0"
-                     Text="{Binding SelectedPatient.RenderingProvider.Npi}"
-                     Width="115"
-                     MaxLength="10" 
-                     HorizontalAlignment="Left"
-                     IsEnabled="{Binding ElementName=IsAlsoRendering, Path=IsChecked,Converter={StaticResource NotConverter}}"/>
-         
-           
             <TextBlock Text="Selected Patient Encounters" Grid.Row="22" Grid.Column="0"
                        VerticalAlignment="Top"/>
-            
-           
-           
+
+
+
             <TextBlock Text="Selected Charge Adjustments"
                        VerticalAlignment="Top" Grid.Row="24" Grid.Column="0"/>
             <Expander Grid.Row="24" Grid.Column="0" 
@@ -320,18 +260,15 @@
                                            Margin="0,20,0,0">
                 <DataGrid AutoGenerateColumns="False"
                           VerticalAlignment="Bottom"
-                          SelectedItem="{Binding SelectedAddonChargeIndex, Mode=TwoWay}"
-                          ItemsSource="{Binding SelectedCharge.AddonChargeList}"
+                          SelectedItem="{Binding SelectedChargeAdjustmentIndex}"
+                          ItemsSource="{Binding SelectedCharge.AdjustmentList}"
                           MaxHeight="100"
                           VerticalScrollBarVisibility="Auto" 
-                          IsReadOnly="True"
-                          Name="Addons">
+                          IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
-                        <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
-                        <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
-                        <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"/>
-
+                        <DataGridTextColumn Header="Type" Binding="{Binding AdjustmentType}"/>
+                        <DataGridTextColumn Header="Reason Code" Binding="{Binding AdjustmentReasonCode}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Amount" Binding="{Binding AdjustmentAmount}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Expander>
@@ -353,49 +290,6 @@
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="left"/>
         </Grid>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="#FF7789D8"
-                    Margin="0,0,0,0">
-            <StackPanel.DataContext>
-                <viewModel:PreferenceViewModel/>
-            </StackPanel.DataContext>
-            <StackPanel Orientation="Vertical">
-                <CheckBox Content="Reuse Same Patient"
-                          Margin="0,0,0,0"
-                  Name="ReusePatientPreference"
-                  Command="{Binding SavePreferenceCommand}"
-                  IsChecked="{Binding Preference.ReusePatient,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                </CheckBox>
-                <CheckBox Content="Reuse Patient Prompt"
-                          Margin="0,0,0,0"
-                                Command="{Binding SavePreferenceCommand}"
-                                IsChecked="{Binding Preference.EnablePatientReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                IsEnabled="{Binding ElementName=ReusePatientPreference,Path=IsChecked}">
-
-                </CheckBox>
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <CheckBox Content="Reuse Same SelectedAddonCharge Code"
-                          Margin="10,0,0,0"
-                  Name="ReuseAddonPreference"
-                  Command="{Binding SavePreferenceCommand}"
-                  IsChecked="{Binding Preference.ReuseAddon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-
-                </CheckBox>
-                <CheckBox Content="Reuse SelectedAddonCharge Code Prompt"
-                          Margin="10,0,0,0"
-                  Command="{Binding SavePreferenceCommand}"
-                  IsChecked="{Binding Preference.EnableAddonReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                  IsEnabled="{Binding ElementName=ReuseAddonPreference,Path=IsChecked}">
-
-                </CheckBox>
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <CheckBox Content="Patient From Last Run"
-                          Command="{Binding SavePreferenceCommand}"
-                  IsChecked="{Binding Preference.ReloadLastPatientFromLastSession,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                </CheckBox>
-            </StackPanel>
-        </StackPanel>
     </DockPanel>
 
 </UserControl>

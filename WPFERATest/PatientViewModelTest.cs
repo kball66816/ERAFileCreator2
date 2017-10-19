@@ -54,7 +54,7 @@ namespace WPFERATest
          //   Pvm.BillingProvider.FirstName = "John";
            // Pvm.BillingProvider.IsAlsoRendering = true;
             //Act
-            Pvm.UpdateRenderingProviderCommand.Execute(true);
+           // Pvm.UpdateRenderingProviderCommand.Execute(true);
             
             var expected = "John";
             var actual = Pvm.SelectedPatient.RenderingProvider.FirstName;
@@ -72,7 +72,7 @@ namespace WPFERATest
           //  Pvm.BillingProvider.FirstName = "John";
           //  Pvm.BillingProvider.IsAlsoRendering = false;
             //Act
-            Pvm.UpdateRenderingProviderCommand.Execute(true);
+           // Pvm.UpdateRenderingProviderCommand.Execute(true);
 
             string expected = null;
             var actual = Pvm.SelectedPatient.RenderingProvider.FirstName;

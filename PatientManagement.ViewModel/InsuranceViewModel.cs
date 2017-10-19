@@ -18,7 +18,7 @@ namespace PatientManagement.ViewModel
             LoadInsuranceCompany();
             Messenger.Default.Register<UpdateCalculations>(this, OnUpdateCalculation);
             Messenger.Default.Register<UpdateRepositoriesMessage>(this,OnUpdateRepositoriesMessageReceieved);
-            Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved);
+            Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved,"UpdateSettings");
         }
 
         private void OnSettingsSaved(SettingsSavedMessage obj)

@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
 {
-    public class PrimaryChargeViewModel:INotifyPropertyChanged
+    public class PrimaryChargeViewModel : INotifyPropertyChanged
     {
         public PrimaryChargeViewModel()
         {
@@ -17,8 +17,8 @@ namespace PatientManagement.ViewModel
             SelectedCharge = new PrimaryCharge();
             PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
             Messenger.Default.Register<Adjustment>(this, OnAdjustmentReceived, "PrimaryCharge");
-            Messenger.Default.Register<AddonCharge>(this,OnAddonChargeReceived, "AddonCharge");
-            Messenger.Default.Register <ObservableCollection<PrimaryCharge>>(this, OnChargeCollectionReceived, "UpdateChargesList");
+            Messenger.Default.Register<AddonCharge>(this, OnAddonChargeReceived, "AddonCharge");
+            Messenger.Default.Register<ObservableCollection<PrimaryCharge>>(this, OnChargeCollectionReceived, "UpdateChargesList");
             AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
             DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
             EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
@@ -26,9 +26,10 @@ namespace PatientManagement.ViewModel
 
         private void OnAddonChargeReceived(AddonCharge charge)
         {
-         IAddonChargeRepository acr = new AddonChargeRepository(SelectedCharge);
+            IAddonChargeRepository acr = new AddonChargeRepository(SelectedCharge);
             acr.Add(charge);
             RaisePropertyChanged("SelectedCharge");
+            Messenger.Default.Send(selectedCharge.AddonChargeList, "AddonList");
         }
 
         private void OnChargeCollectionReceived(ObservableCollection<PrimaryCharge> chargesList)

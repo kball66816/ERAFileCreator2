@@ -53,6 +53,7 @@
     <Compile Include="PatientListViewModel.cs" />
     <Compile Include="PrimaryAdjustmentViewModel.cs" />
     <Compile Include="PrimaryChargeViewModel.cs" />
+    <Compile Include="RenderingProviderViewModel.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\Messenger.cs" />
     <Compile Include="PatientViewModel.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Command.cs" />
     <Compile Include="Services\SendAddonAdjustmentMessage.cs" />
+    <Compile Include="Services\SendRenderingProviderMessage.cs" />
     <Compile Include="Services\SettingsSavedMessage.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\UpdateCalculations.cs" />
@@ -89,6 +91,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

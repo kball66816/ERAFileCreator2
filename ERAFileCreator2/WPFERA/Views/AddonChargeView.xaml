@@ -80,34 +80,42 @@
         </Grid>
         <TextBlock Text="Selected Addon Codes" DockPanel.Dock="Top"/>
         <Expander>
-            <DataGrid AutoGenerateColumns="False"
-                      VerticalAlignment="Bottom"
-                      SelectedItem="{Binding SelectedChargeAdjustmentIndex}"
-                      ItemsSource="{Binding SelectedCharge.AdjustmentList}"
-                      MaxHeight="100"
-                      VerticalScrollBarVisibility="Auto" 
-                      IsReadOnly="True">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Type" Binding="{Binding AdjustmentType}"/>
-                    <DataGridTextColumn Header="Reason Code" Binding="{Binding AdjustmentReasonCode}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Amount" Binding="{Binding AdjustmentAmount}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <StackPanel Orientation="Horizontal">
+                <DataGrid AutoGenerateColumns="False"
+                          VerticalAlignment="Bottom"
+                          SelectedItem="{Binding SelectedAddonChargeIndex, Mode=TwoWay}"
+                          ItemsSource="{Binding Charges}"
+                          MaxHeight="100"
+                          VerticalScrollBarVisibility="Auto" 
+                          HorizontalAlignment="Left"
+                          IsReadOnly="True"
+                          Name="Addons">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
+                        <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
+                        <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
+                        <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Name="EditAddon"
+                        Command="{Binding EditSelectedAddonCommand}"
+                        Content="Edit Addon"
+                        Width="115"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="left"
+                        Margin="10,0,0,0"/>
+                <Button Name="DeleteAddon"
+                        Command="{Binding DeleteSelectedAddonCommand}"
+                        Content="Delete Addon"
+                        Width="115"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="left"/>
+            </StackPanel>
+           
+            
         </Expander>
-        <Button Name="EditAddon"
-                Command="{Binding EditSelectedAddonCommand}"
-                Content="Edit Addon"
-                Width="115"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="left"
-                Margin="10,0,0,0"/>
-        <Button Name="DeleteAddon"
-                Command="{Binding DeleteSelectedAddonCommand}"
-                Content="Delete Addon"
-                Width="115"
-                Margin="10,0,0,0"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="left"/>
+       
     </DockPanel>
     
 </UserControl>
