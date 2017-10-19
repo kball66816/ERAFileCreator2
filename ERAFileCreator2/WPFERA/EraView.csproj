@@ -79,6 +79,12 @@
     <Compile Include="Views\PatientView.xaml.cs">
       <DependentUpon>PatientView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PrimaryChargeAdjustmentView.xaml.cs">
+      <DependentUpon>PrimaryChargeAdjustmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrimaryChargeView.xaml.cs">
+      <DependentUpon>PrimaryChargeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SinglePageView.xaml.cs">
       <DependentUpon>SinglePageView.xaml</DependentUpon>
     </Compile>
@@ -117,6 +123,14 @@
     <Page Include="Views\PatientView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrimaryChargeAdjustmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PrimaryChargeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SinglePageView.xaml">
       <SubType>Designer</SubType>

@@ -21,25 +21,34 @@ namespace PatientManagement.ViewModel
             Settings = new SettingsService();
             LoadInitialPatient();
             //SelectedAddonCharge = new AddonCharge();
-            SelectedAdjustment = new Adjustment();
+            //SelectedAdjustment = new Adjustment();
             //AddonAdjustment = new Adjustment();
-            SelectedCharge = new PrimaryCharge();
+            //SelectedCharge = new PrimaryCharge();
 
             patientRepository.Add(SelectedPatient);
             Patients = patientRepository.GetAllPatients();
             Charges = selectedPatient.Charges;
-            Adjustments = selectedCharge.AdjustmentList;
-            PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
-            PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
+            //Adjustments = selectedCharge.AdjustmentList;
+            //PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
+            //PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
             //AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
-            PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
+            //PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
             //AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
             LoadCommands();
             RefreshAllCounters();
 
             //Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved);
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
+            Messenger.Default.Register<PrimaryCharge>(this,OnPrimaryChargeReceived,"Patient");
         }
+
+        private void OnPrimaryChargeReceived(PrimaryCharge charge)
+        {
+           IPrimaryChargeRepository crp = new PrimaryChargeRepository(SelectedPatient);
+            crp.Add(charge);
+            RaisePropertyChanged("SelectedPatient");
+        }
+
 
         //private void OnAddonAdjustmentReceieved(Adjustment adjustment)
         //{
@@ -68,11 +77,11 @@ namespace PatientManagement.ViewModel
 
 
 
-        public Dictionary<string, string> PlacesOfService { get; set; }
+        //public Dictionary<string, string> PlacesOfService { get; set; }
 
-        public Dictionary<string, string> PrimaryAdjustmentType { get; set; }
+        //public Dictionary<string, string> PrimaryAdjustmentType { get; set; }
 
-        public Dictionary<string, string> PrimaryAdjustmentReasonCodes { get; set; }
+        //public Dictionary<string, string> PrimaryAdjustmentReasonCodes { get; set; }
 
         //    public Dictionary<string, string> AddonAdjustmentType { get; set; }
 
@@ -121,18 +130,18 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        private PrimaryCharge selectedCharge;
+        //private PrimaryCharge selectedCharge;
 
-        public PrimaryCharge SelectedCharge
-        {
-            get { return selectedCharge; }
-            set
-            {
-                if (value == selectedCharge) return;
-                selectedCharge = value;
-                RaisePropertyChanged("SelectedCharge");
-            }
-        }
+        //public PrimaryCharge SelectedCharge
+        //{
+        //    get { return selectedCharge; }
+        //    set
+        //    {
+        //        if (value == selectedCharge) return;
+        //        selectedCharge = value;
+        //        RaisePropertyChanged("SelectedCharge");
+        //    }
+        //}
 
         public PrimaryCharge SelectedListChargeIndex { get; set; }
 
@@ -156,13 +165,13 @@ namespace PatientManagement.ViewModel
             RefreshAllCounters();
         }
 
-        private void ReturnNewCharge()
-        {
-            SelectedCharge = Settings.ReuseChargeForNextPatient
-                ? new PrimaryCharge(SelectedCharge)
-                : new PrimaryCharge();
-            RaisePropertyChanged("SelectedCharge");
-        }
+        //private void ReturnNewCharge()
+        //{
+        //    SelectedCharge = Settings.ReuseChargeForNextPatient
+        //        ? new PrimaryCharge(SelectedCharge)
+        //        : new PrimaryCharge();
+        //    RaisePropertyChanged("SelectedCharge");
+        //}
 
 
 
@@ -291,18 +300,18 @@ namespace PatientManagement.ViewModel
                 && !string.IsNullOrEmpty(selectedPatient.LastName);
         }
 
-        private Adjustment selectedAdjustment;
+        //private Adjustment selectedAdjustment;
 
-        public Adjustment SelectedAdjustment
-        {
-            get { return selectedAdjustment; }
-            set
-            {
-                if (value == selectedAdjustment) return;
-                selectedAdjustment = value;
-                RaisePropertyChanged("SelectedAdjustment");
-            }
-        }
+        //public Adjustment SelectedAdjustment
+        //{
+        //    get { return selectedAdjustment; }
+        //    set
+        //    {
+        //        if (value == selectedAdjustment) return;
+        //        selectedAdjustment = value;
+        //        RaisePropertyChanged("SelectedAdjustment");
+        //    }
+        //}
 
         public Adjustment SelectedChargeAdjustmentIndex { get; set; }
 
@@ -332,9 +341,9 @@ namespace PatientManagement.ViewModel
         //    }
         //}
 
-        public ICommand AddChargeAdjustmentCommand { get; private set; }
+        //public ICommand AddChargeAdjustmentCommand { get; private set; }
 
-        public ICommand AddAddonChargeAdjustmentCommand { get; private set; }
+        //public ICommand AddAddonChargeAdjustmentCommand { get; private set; }
 
         //private void AddAddonAdjustment(object obj)
         //{
@@ -344,14 +353,14 @@ namespace PatientManagement.ViewModel
         //    RefreshAllCounters();
         //}
 
-        private void AddAdjustmentToCharge(object obj)
-        {
-            IAdjustmentRepository adjustmentRepository = new AdjustmentRepository(SelectedCharge);
-            adjustmentRepository.Add(SelectedAdjustment);
-            SelectedAdjustment = new Adjustment();
-            RaisePropertyChanged("SelectedAdjustment");
-            RefreshAllCounters();
-        }
+        //private void AddAdjustmentToCharge(object obj)
+        //{
+        //    IAdjustmentRepository adjustmentRepository = new AdjustmentRepository(SelectedCharge);
+        //    adjustmentRepository.Add(SelectedAdjustment);
+        //    SelectedAdjustment = new Adjustment();
+        //    RaisePropertyChanged("SelectedAdjustment");
+        //    RefreshAllCounters();
+        //}
 
         //private bool CanAddAddonAdjustment(object obj)
         //{
@@ -359,11 +368,11 @@ namespace PatientManagement.ViewModel
         //           !string.IsNullOrEmpty(addonAdjustment.AdjustmentType);
         //}
 
-        private bool CanAddAdjustment(object obj)
-        {
-            return !string.IsNullOrEmpty(SelectedAdjustment.AdjustmentReasonCode) &&
-                   SelectedAdjustment.AdjustmentAmount > 0;
-        }
+        //private bool CanAddAdjustment(object obj)
+        //{
+        //    return !string.IsNullOrEmpty(SelectedAdjustment.AdjustmentReasonCode) &&
+        //           SelectedAdjustment.AdjustmentAmount > 0;
+        //}
 
 
         private ObservableCollection<PrimaryCharge> charges;
@@ -425,16 +434,16 @@ namespace PatientManagement.ViewModel
         private void LoadCommands()
         {
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
-            AddChargeAdjustmentCommand = new Command(AddAdjustmentToCharge, CanAddAdjustment);
+            //AddChargeAdjustmentCommand = new Command(AddAdjustmentToCharge, CanAddAdjustment);
             // AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
             //AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
             SaveFileCommand = new Command(Save, CanSave);
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider);
-            AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
-            DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
-            EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
-            EditSelectedAdjustmentCommand = new Command(EditSelectedAdjustment, CanEditSelectedAdjustment);
-            DeleteSelectedAdjustmentCommand = new Command(DeleteSelectedAdjustment, CanDeleteSelectedAdjustment);
+            //AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
+            //DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
+            //EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
+            //EditSelectedAdjustmentCommand = new Command(EditSelectedAdjustment, CanEditSelectedAdjustment);
+            //DeleteSelectedAdjustmentCommand = new Command(DeleteSelectedAdjustment, CanDeleteSelectedAdjustment);
             //DeleteSelectedAddonCommand = new Command(DeleteSelectedAddon, CanDeleteSelectedAddon);
             //EditSelectedAddonCommand = new Command(EditSelectedAddon, CanEditSelectedAddon);
 
@@ -546,29 +555,29 @@ namespace PatientManagement.ViewModel
         }
 
 
-        private void AddChargeToPatientV2(object obj)
-        {
+        //private void AddChargeToPatientV2(object obj)
+        //{
 
-            var chargeRepository = new PrimaryChargeRepository(selectedPatient);
-            chargeRepository.Add(SelectedCharge);
-            ReturnNewCharge();
+        //    var chargeRepository = new PrimaryChargeRepository(selectedPatient);
+        //    chargeRepository.Add(SelectedCharge);
+        //    ReturnNewCharge();
 
-            Messenger.Default.Send(new UpdateCalculations());
-            RaisePropertyChanged("SelectedCharge");
-            RaisePropertyChanged("Charges");
-        }
+        //    Messenger.Default.Send(new UpdateCalculations());
+        //    RaisePropertyChanged("SelectedCharge");
+        //    RaisePropertyChanged("Charges");
+        //}
 
-        private bool CanAddChargeToPatient(object obj)
-        {
-            bool b = false;
-            if (!editModeEnabled)
-            {
-                b = SelectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
+        //private bool CanAddChargeToPatient(object obj)
+        //{
+        //    bool b = false;
+        //    if (!editModeEnabled)
+        //    {
+        //        b = SelectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
 
-            }
+        //    }
 
-            return b;
-        }
+        //    return b;
+        //}
 
         public ICommand DeleteSelectedChargeCommand { get; private set; }
 
@@ -590,65 +599,65 @@ namespace PatientManagement.ViewModel
 
         private bool editModeEnabled;
 
-        private void EditSelectedCharge(object obj)
-        {
-            if (!editModeEnabled)
-            {
-                SelectedCharge = SelectedListChargeIndex;
-                RaisePropertyChanged("SelectedCharge");
-                editModeEnabled = true;
+        //private void EditSelectedCharge(object obj)
+        //{
+        //    if (!editModeEnabled)
+        //    {
+        //        SelectedCharge = SelectedListChargeIndex;
+        //        RaisePropertyChanged("SelectedCharge");
+        //        editModeEnabled = true;
 
-            }
-            else
-            {
-                ReturnNewCharge();
-                editModeEnabled = false;
-            }
+        //    }
+        //    else
+        //    {
+        //        ReturnNewCharge();
+        //        editModeEnabled = false;
+        //    }
 
-        }
+        //}
 
-        private bool CanEditOrDeleteSelectedCharge(object obj)
-        {
-            bool b = !string.IsNullOrEmpty(SelectedListChargeIndex?.ProcedureCode);
+        //private bool CanEditOrDeleteSelectedCharge(object obj)
+        //{
+        //    bool b = !string.IsNullOrEmpty(SelectedListChargeIndex?.ProcedureCode);
 
-            return b;
-        }
+        //    return b;
+        //}
 
-        public ICommand EditSelectedAdjustmentCommand { get; private set; }
+        //public ICommand EditSelectedAdjustmentCommand { get; private set; }
 
-        private void EditSelectedAdjustment(object obj)
-        {
+        //private void EditSelectedAdjustment(object obj)
+        //{
 
-            selectedAdjustment = SelectedChargeAdjustmentIndex;
-            RaisePropertyChanged("SelectedAdjustment");
+        //    selectedAdjustment = SelectedChargeAdjustmentIndex;
+        //    RaisePropertyChanged("SelectedAdjustment");
 
 
-        }
+        //}
 
-        private bool CanEditSelectedAdjustment(object obj)
-        {
-            bool b = editModeEnabled && (!string.IsNullOrEmpty(SelectedChargeAdjustmentIndex?.AdjustmentReasonCode));
-            return b;
+        //private bool CanEditSelectedAdjustment(object obj)
+        //{
+        //    bool b = editModeEnabled && (!string.IsNullOrEmpty(SelectedChargeAdjustmentIndex?.AdjustmentReasonCode));
+        //    return b;
 
-        }
+        //}
 
-        public ICommand DeleteSelectedAdjustmentCommand { get; set; }
+        //public ICommand DeleteSelectedAdjustmentCommand { get; set; }
 
-        private void DeleteSelectedAdjustment(object obj)
-        {
-            if (SelectedChargeAdjustmentIndex == null) return;
-            var index = SelectedCharge.AdjustmentList.IndexOf(SelectedChargeAdjustmentIndex);
-            if (index <= -1) return;
-            IAdjustmentRepository ar = new AdjustmentRepository(selectedCharge);
-            ar.Delete(SelectedChargeAdjustmentIndex);
-        }
+        //private void DeleteSelectedAdjustment(object obj)
+        //{
+        //    if (SelectedChargeAdjustmentIndex == null) return;
+        //    var index = SelectedCharge.AdjustmentList.IndexOf(SelectedChargeAdjustmentIndex);
+        //    if (index <= -1) return;
+        //    IAdjustmentRepository ar = new AdjustmentRepository(selectedCharge);
+        //    ar.Delete(SelectedChargeAdjustmentIndex);
+        //}
 
-        private bool CanDeleteSelectedAdjustment(object obj)
-        {
-            bool b = !string.IsNullOrEmpty(SelectedChargeAdjustmentIndex?.AdjustmentReasonCode);
-            return b;
-        }
-        public ICommand DeleteSelectedAddonCommand { get; set; }
+        //private bool CanDeleteSelectedAdjustment(object obj)
+        //{
+        //    bool b = !string.IsNullOrEmpty(SelectedChargeAdjustmentIndex?.AdjustmentReasonCode);
+        //    return b;
+        //}
+        //public ICommand DeleteSelectedAddonCommand { get; set; }
 
         //private void DeleteSelectedAddon(object obj)
         //{

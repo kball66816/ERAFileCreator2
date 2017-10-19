@@ -26,7 +26,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAddonAdjustment(object obj)
         {
-            Messenger.Default.Send<Adjustment>(AddonAdjustment);
+            Messenger.Default.Send<Adjustment>(AddonAdjustment, "AddonCharge");
            // Messenger.Default.Send(new SendAddonAdjustmentMessage(AddonAdjustment), AddonAdjustment);
             // SelectedAddonCharge.AdjustmentList.Add(AddonAdjustment);
             AddonAdjustment = new Adjustment();

@@ -15,7 +15,7 @@ namespace PatientManagement.ViewModel
             SelectedAddonCharge = new AddonCharge();
             Settings = new SettingsService();
             AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
-            Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved);
+            Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved, "AddonCharge");
 
 
         }

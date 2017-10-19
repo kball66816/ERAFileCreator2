@@ -50,6 +50,8 @@
     <Compile Include="BillingProviderViewModel.cs" />
     <Compile Include="InsuranceViewModel.cs" />
     <Compile Include="PatientListViewModel.cs" />
+    <Compile Include="PrimaryAdjustmentViewModel.cs" />
+    <Compile Include="PrimaryChargeViewModel.cs" />
     <Compile Include="Services\Messenger.cs" />
     <Compile Include="PatientViewModel.cs" />
     <Compile Include="PreferenceViewModel.cs" />
