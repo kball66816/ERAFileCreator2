@@ -5,8 +5,6 @@ using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
@@ -15,14 +13,12 @@ namespace PatientManagement.ViewModel
     {
         public PatientViewModel()
         {
-
-            Settings = new SettingsService();
             LoadInitialPatient();
             patientRepository.Add(SelectedPatient);
             LoadCommands();
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
             Messenger.Default.Register<PrimaryCharge>(this, OnPrimaryChargeReceived, "Patient");
-            Messenger.Default.Register<Provider>(this, OnProviderReceived, "RenderingProvider");
+            Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
         }
 
         private void OnProviderReceived(Provider provider)
@@ -31,12 +27,18 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("SelectedPatient");
         }
 
+        private void SendPatientCharges()
+        {
+            Messenger.Default.Send(selectedPatient.Charges, "UpdateChargesList");
+        }
+
+
         private void OnPrimaryChargeReceived(PrimaryCharge charge)
         {
             IPrimaryChargeRepository crp = new PrimaryChargeRepository(SelectedPatient);
             crp.Add(charge);
             RaisePropertyChanged("SelectedPatient");
-            Messenger.Default.Send(selectedPatient.Charges, "UpdateChargesList");
+            SendPatientCharges();
         }
 
 
@@ -44,19 +46,19 @@ namespace PatientManagement.ViewModel
         {
             SelectedPatient = patient;
             RaisePropertyChanged("SelectedPatient");
-            Messenger.Default.Send(selectedPatient.Charges, "UpdateChargesList");
+            Messenger.Default.Send(selectedPatient,"GiveSelectedPatientProvider");
+            SendPatientCharges();
         }
 
 
         private void LoadInitialPatient()
         {
             SelectedPatient = new Patient();
-            SelectedPatient = Settings.PullDefaultPatient();
+            SelectedPatient = SettingsService.PullDefaultPatient();
         }
 
         private IPatientRepository patientRepository = new PatientRepository();
 
-        private SettingsService Settings { get; set; }
 
         private Patient selectedPatient;
 
@@ -68,6 +70,8 @@ namespace PatientManagement.ViewModel
                 if (value == selectedPatient) return;
                 selectedPatient = value;
                 RaisePropertyChanged("SelectedPatient");
+                SendPatientCharges();
+
             }
         }
 
@@ -78,33 +82,32 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Send(SelectedPatient, "AddRenderingProvider");
             ReturnNewPatient();
             patientRepository.Add(SelectedPatient);
-            Messenger.Default.Send(selectedPatient.Charges, "UpdateChargesList");
+            SendPatientCharges();
             RaisePropertyChanged("CheckAmount");
         }
-
+        
         private void ReturnNewPatient()
         {
-            if (Settings.ReuseSamePatientEnabled)
+            if (SettingsService.ReuseSamePatientEnabled)
             {
                 GetNewPatientDependentOnUserPromptPreference();
             }
 
-            else if (Settings.ReuseSamePatientEnabled == false)
+            else if (SettingsService.ReuseSamePatientEnabled == false)
             {
                 SelectedPatient = new Patient();
-
             }
             RaisePropertyChanged("Patient");
         }
 
         private void GetNewPatientDependentOnUserPromptPreference()
         {
-            if (Settings.PatientPromptEnabled)
+            if (SettingsService.PatientPromptEnabled)
             {
                 PromptTypeOfNewPatient();
             }
 
-            else if (Settings.PatientPromptEnabled == false)
+            else if (SettingsService.PatientPromptEnabled == false)
             {
                 CloneSelectedPatient();
             }
@@ -112,7 +115,6 @@ namespace PatientManagement.ViewModel
 
         private Patient PromptTypeOfNewPatient()
         {
-
             var dialogPrompt = new DialogService(selectedPatient);
 
             if (dialogPrompt.ShowDialog())
@@ -124,15 +126,13 @@ namespace PatientManagement.ViewModel
             {
                 SelectedPatient = new Patient();
             }
-
-            return selectedPatient;
+            return SelectedPatient;
         }
 
 
         private void CloneSelectedPatient()
         {
-
-            selectedPatient = patientRepository.GetSelectedPatient(selectedPatient.Id).CopyPatient();
+            SelectedPatient = patientRepository.GetSelectedPatient(selectedPatient.Id).CopyPatient();
             RaisePropertyChanged("SelectedPatient");
         }
 
@@ -176,13 +176,6 @@ namespace PatientManagement.ViewModel
 
         public ICommand AddChargeToPatientCommand { get; set; }
 
-        //public ICommand UpdateRenderingProviderCommand { get; private set; }
-
-        //private void UpdateRenderingProvider(object obj)
-        //{
-        //    Messenger.Default.Send(selectedPatient.RenderingProvider);
-        //}
-
         private static bool CanSave(object obj)
         {
             return true;
@@ -190,21 +183,17 @@ namespace PatientManagement.ViewModel
 
         private void SaveSettings()
         {
-            Messenger.Default.Send<SettingsSavedMessage>(new SettingsSavedMessage(),"UpdateSettings");
-            Settings.SetDefaultPatient(selectedPatient);
+            Messenger.Default.Send(new SettingsSavedMessage(), "UpdateSettings");
+            SettingsService.SetDefaultPatient(selectedPatient);
         }
 
         private void Save(object obj)
         {
-
             Messenger.Default.Send(new UpdateRepositoriesMessage());
             SaveSettings();
             var edi = new UpdatedEdi();
             var save = new SaveToFile();
             save.SaveFile(edi.Create835File());
         }
-
-        public decimal PatientCount { get; private set; }
-
     }
 }

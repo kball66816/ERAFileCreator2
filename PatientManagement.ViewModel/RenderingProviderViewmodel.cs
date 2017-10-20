@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using PatientManagement.Model;
+﻿using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
+using System.ComponentModel;
 
 namespace PatientManagement.ViewModel
 {
@@ -14,19 +8,44 @@ namespace PatientManagement.ViewModel
     {
         public RenderingProviderViewModel()
         {
-        
             RenderingProvider = new Provider();
-            Messenger.Default.Register<UpdateRepositoriesMessage>(this, OnUpdateRepositoriesMessage);
+            LoadSettings();
             Messenger.Default.Register<Provider>(this, OnReceiptOfBillingProvider, "BillingProvider");
             Messenger.Default.Register<Patient>(this, OnReceiptOfPatient, "AddRenderingProvider");
+            Messenger.Default.Register<SettingsSavedMessage>(this,OnSettingsSaved, "UpdateSettings");
+            Messenger.Default.Register<Patient>(this,OnPatientChanged,"GiveSelectedPatientProvider");
+            Messenger.Default.Send(RenderingProvider, "RenderingProvider");
+        }
 
+        private void OnPatientChanged(Patient patient)
+        {
+            RenderingProvider = patient.RenderingProvider;
+        }
+
+        private void OnSettingsSaved(SettingsSavedMessage obj)
+        {
+            SaveSettings();
+        }
+
+
+        private void LoadSettings()
+        {
+            RenderingProvider = SettingsService.PullDefaultRenderingProvider(RenderingProvider);
         }
 
         private void OnReceiptOfPatient(Patient patient)
         {
             patient.RenderingProvider = RenderingProvider;
+            SaveSettings();
             RaisePropertyChanged("SelectedPatient");
+            RenderingProvider = new Provider();
+            LoadSettings();
+            RaisePropertyChanged("RenderingProvider");
+        }
 
+        private void SaveSettings()
+        {
+            SettingsService.SetDefaultRenderingProvider(RenderingProvider);
         }
 
         private void OnReceiptOfBillingProvider(Provider billingProvider)
@@ -34,10 +53,6 @@ namespace PatientManagement.ViewModel
             if (billingProvider.IsIndividual)
             {
                 RenderingProvider = billingProvider;
-                //    renderingProvider.FirstName = billingProvider.FirstName;
-                //    renderingProvider.LastName = billingProvider.LastName;
-                //    renderingProvider.Npi = billingProvider.Npi;
-                //    RaisePropertyChanged("RenderingProvider");
             }
 
             else if (billingProvider.IsAlsoRendering == false)
@@ -56,13 +71,7 @@ namespace PatientManagement.ViewModel
                 if (renderingProvider == value) return;
                 renderingProvider = value;
                 RaisePropertyChanged("RenderingProvider");
-
             }
-        }
-
-        private void OnUpdateRepositoriesMessage(UpdateRepositoriesMessage obj)
-        {
-            Messenger.Default.Send(RenderingProvider, "RenderingProvider");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -213,40 +213,44 @@
                 HorizontalAlignment="left"/>
         <Expander  Grid.Row="3" Grid.Column="0" Margin="0,20,0,0"
                    Grid.ColumnSpan="3">
-            <DataGrid AutoGenerateColumns="False"
-                      VerticalAlignment="Bottom"
-                      SelectedItem="{Binding SelectedListChargeIndex, Mode=TwoWay}"
-                      ItemsSource="{Binding Charges}"
-                      VerticalScrollBarVisibility="Auto" 
-                      IsReadOnly="True"
-                      x:Name="ChargesForEncounter" MinWidth="3" MaxHeight="100">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Date Of Service" Binding="{Binding DateOfService, StringFormat=\{0:d\}}"/>
-                    <DataGridTextColumn Header="Place Of Service" Binding="{Binding PlaceOfService.ServiceLocation}"/>
-                    <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
-                    <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
-                    <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
-                    <DataGridTextColumn Header="Copay" Binding="{Binding Copay}"/>
-                    <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <StackPanel Orientation="Horizontal">
+                <DataGrid AutoGenerateColumns="False"
+                          VerticalAlignment="Bottom"
+                          SelectedItem="{Binding SelectedListChargeIndex, Mode=TwoWay}"
+                          ItemsSource="{Binding Charges}"
+                          VerticalScrollBarVisibility="Auto" 
+                          IsReadOnly="True"
+                          x:Name="ChargesForEncounter" MinWidth="3" MaxHeight="100">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Date Of Service" Binding="{Binding DateOfService, StringFormat=\{0:d\}}"/>
+                        <DataGridTextColumn Header="Place Of Service" Binding="{Binding PlaceOfService.ServiceLocation}"/>
+                        <DataGridTextColumn Header="CPT Code" Binding="{Binding ProcedureCode}"/>
+                        <DataGridTextColumn Header="Charged" Binding="{Binding ChargeCost}"/>
+                        <DataGridTextColumn Header="Paid" Binding="{Binding PaymentAmount}"/>
+                        <DataGridTextColumn Header="Copay" Binding="{Binding Copay}"/>
+                        <DataGridTextColumn Header="Allowed Amount" Binding="{Binding AllowedAmount}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Grid.Row="3" Grid.Column="3"
+                        Name="EditCharge"
+                        Command="{Binding EditSelectedChargeCommand}"
+                        Content="Edit Charge"
+                        Width="115"
+                        Margin="10,20,0,0"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="left" Click="EditCharge_Click"/>
+                <Button Grid.Row="3" Grid.Column="4"
+                        Name="DeleteCharge"
+                        Content="Delete Selected Charges"
+                        Width="115"
+                        Margin="10,10,0,0"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="left"
+                        Command="{Binding DeleteSelectedChargeCommand}">
+                </Button>
+            </StackPanel>
+            
         </Expander>
-        <Button Grid.Row="3" Grid.Column="3"
-                Name="EditCharge"
-                Command="{Binding EditSelectedChargeCommand}"
-                Content="Edit Charge"
-                Width="115"
-                Margin="10,20,0,0"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="left" Click="EditCharge_Click"/>
-        <Button Grid.Row="3" Grid.Column="4"
-                Name="DeleteCharge"
-                Content="Delete Selected Charges"
-                Width="115"
-                Margin="10,10,0,0"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="left"
-                Command="{Binding DeleteSelectedChargeCommand}">
-        </Button>
+     
     </Grid>
 </UserControl>

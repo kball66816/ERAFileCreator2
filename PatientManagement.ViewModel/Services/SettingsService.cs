@@ -1,19 +1,18 @@
-﻿using System.Linq;
-using PatientManagement.Model;
+﻿using PatientManagement.Model;
 
 namespace PatientManagement.ViewModel.Services
 {
     public class SettingsService
     {
 
-        public bool ReuseChargeForNextPatient
+        public static bool ReuseChargeForNextPatient
         {
             get
             {
                 return Settings.Default.ReuseChargeForNextPatient;
             }
         }
-        public bool PatientPromptEnabled
+        public static bool PatientPromptEnabled
         {
             get
             {
@@ -21,7 +20,7 @@ namespace PatientManagement.ViewModel.Services
             }
         }
 
-        public bool ReuseSamePatientEnabled
+        public static bool ReuseSamePatientEnabled
         {
             get
             {
@@ -29,7 +28,7 @@ namespace PatientManagement.ViewModel.Services
             }
         }
 
-        public bool AddonPromptEnabled
+        public static bool AddonPromptEnabled
         {
             get
             {
@@ -37,14 +36,14 @@ namespace PatientManagement.ViewModel.Services
             }
         }
 
-        public bool ReuseSameAddonEnabled
+        public static bool ReuseSameAddonEnabled
         {
             get
             {
                 return Settings.Default.ReuseAddon;
             }
         }
-        public void SetDefaultPreferences(Preference preference)
+        public static void SetDefaultPreferences(Preference preference)
         {
             Settings.Default.EnableReusePatientPrompt = preference.EnablePatientReusePrompt;
             Settings.Default.EnableReuseAddonPrompt = preference.EnableAddonReusePrompt;
@@ -55,7 +54,7 @@ namespace PatientManagement.ViewModel.Services
             Settings.Default.Save();
         }
 
-        public Preference PullDefaultPreferences(Preference preference)
+        public static Preference PullDefaultPreferences(Preference preference)
         {
             preference.EnableAddonReusePrompt = Settings.Default.EnableReuseAddonPrompt;
             preference.EnablePatientReusePrompt = Settings.Default.EnableReusePatientPrompt;
@@ -66,7 +65,7 @@ namespace PatientManagement.ViewModel.Services
 
             return preference;
         }
-        public InsuranceCompany PullDefaultInsurance(InsuranceCompany insurance)
+        public static InsuranceCompany PullDefaultInsurance(InsuranceCompany insurance)
         {
 
             if(!string.IsNullOrEmpty(Settings.Default.InsuranceCompanyName))
@@ -98,7 +97,7 @@ namespace PatientManagement.ViewModel.Services
                 insurance.Address.State = Settings.Default.InsuranceCompanyAddressState;
             }
 
-            if(!string.IsNullOrEmpty(Settings.Default.InsuranceCompanyAddressZipCode.ToString()))
+            if(!string.IsNullOrEmpty(Settings.Default.InsuranceCompanyAddressZipCode))
             {
                 insurance.Address.ZipCode = Settings.Default.InsuranceCompanyAddressZipCode;
             }
@@ -106,7 +105,7 @@ namespace PatientManagement.ViewModel.Services
             return insurance;
         }
 
-        public void SetDefaultInsurance(InsuranceCompany insurance)
+        public static void SetDefaultInsurance(InsuranceCompany insurance)
         {
             Settings.Default.InsuranceCompanyName = insurance.Name;
             Settings.Default.InsuranceCompanyTaxId = insurance.TaxId;
@@ -119,20 +118,13 @@ namespace PatientManagement.ViewModel.Services
 
         }
 
-        public Patient PullDefaultPatient()
+        public static Patient PullDefaultPatient()
         {
             var patient = new Patient();
-            if (Settings.Default.ReloadLastPatient)
-            {
-                return LoadPatientFromSettings(patient);
-            }
-            else
-            {
-                return patient;
-            }
+            return Settings.Default.ReloadLastPatient ? LoadPatientFromSettings(patient) : patient;
         }
 
-        private Patient LoadPatientFromSettings(Patient patient)
+        private static Patient LoadPatientFromSettings(Patient patient)
         {
             if (!string.IsNullOrEmpty(Settings.Default.PatientFirstName))
             {
@@ -143,44 +135,40 @@ namespace PatientManagement.ViewModel.Services
             {
                 patient.LastName = Settings.Default.PatientLastName;
             }
-
-            if (!string.IsNullOrEmpty(Settings.Default.PatientCopay))
-            {
-                decimal.TryParse(Settings.Default.PatientCopay, out decimal value);
-                
-               // patient.Charges.FirstOrDefault().Copay = value;
-            }
-
-            LoadDefaultRenderingProvider(patient);
             return patient;
         }
 
-        private Provider LoadDefaultRenderingProvider(Patient patient)
+        public static Provider PullDefaultRenderingProvider(Provider renderingProvider)
         {
-            var provider = new Provider();
             if(!string.IsNullOrEmpty(Settings.Default.RenderingProviderFirstName))
             {
-               provider.FirstName = Settings.Default.RenderingProviderFirstName;
+               renderingProvider.FirstName = Settings.Default.RenderingProviderFirstName;
             }
 
             if(!string.IsNullOrEmpty(Settings.Default.RenderingProviderLastName))
             {
-                provider.LastName = Settings.Default.RenderingProviderLastName;
+                renderingProvider.LastName = Settings.Default.RenderingProviderLastName;
             }
 
             if(!string.IsNullOrEmpty(Settings.Default.RenderingProviderNpi))
             {
-                provider.Npi = Settings.Default.RenderingProviderNpi;
+                renderingProvider.Npi = Settings.Default.RenderingProviderNpi;
             }
 
-            return provider;
+            return renderingProvider;
         }
 
-        public void SetDefaultPatient(Patient patient)
+        public static void SetDefaultRenderingProvider(Provider renderingProvider)
+        {
+            Settings.Default.RenderingProviderFirstName = renderingProvider.FirstName;
+            Settings.Default.RenderingProviderLastName = renderingProvider.LastName;
+            Settings.Default.RenderingProviderNpi = renderingProvider.Npi;
+            Settings.Default.Save();
+        }
+        public static void SetDefaultPatient(Patient patient)
         {
             Settings.Default.PatientFirstName = patient.FirstName;
             Settings.Default.PatientLastName = patient.LastName;
-            //Settings.Default.PatientCopay = patient.Charges.FirstOrDefault().Copay.ToString();
             Settings.Default.RenderingProviderFirstName = patient.RenderingProvider.FirstName;
             Settings.Default.RenderingProviderLastName = patient.RenderingProvider.LastName;
             Settings.Default.RenderingProviderNpi = patient.RenderingProvider.Npi;
@@ -188,7 +176,7 @@ namespace PatientManagement.ViewModel.Services
         }
 
        
-        public Provider PullDefaultBillingProvider(Provider billingProvider)
+        public static Provider PullDefaultBillingProvider(Provider billingProvider)
         {
             billingProvider.IsIndividual = Settings.Default.BillingProviderIsIndividual;
 
@@ -239,7 +227,7 @@ namespace PatientManagement.ViewModel.Services
             return billingProvider;
         }
 
-        public void SetDefaultBillingProvider(Provider billingProvider)
+        public static void SetDefaultBillingProvider(Provider billingProvider)
         {
             Settings.Default.BillingProviderFirstName = billingProvider.FirstName;
             Settings.Default.BillingProviderLastName = billingProvider.LastName;

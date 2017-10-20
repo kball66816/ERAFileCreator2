@@ -13,10 +13,9 @@ namespace PatientManagement.ViewModel
     {
         public PrimaryChargeViewModel()
         {
-            Settings = new SettingsService();
             SelectedCharge = new PrimaryCharge();
             PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
-            Messenger.Default.Register<Adjustment>(this, OnAdjustmentReceived, "PrimaryCharge");
+            Messenger.Default.Register<Adjustment>(this, OnAdjustmentReceived, "PrimaryChargeAdjustment");
             Messenger.Default.Register<AddonCharge>(this, OnAddonChargeReceived, "AddonCharge");
             Messenger.Default.Register<ObservableCollection<PrimaryCharge>>(this, OnChargeCollectionReceived, "UpdateChargesList");
             AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
@@ -24,12 +23,22 @@ namespace PatientManagement.ViewModel
             EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
         }
 
+        private void SendAddonChargeList()
+        {
+            Messenger.Default.Send(SelectedCharge.AddonChargeList, "AddonList");
+        }
+
+        private void SendAdjustmentsList()
+        {
+            Messenger.Default.Send(SelectedCharge.AdjustmentList, "PrimaryChargeAdjustments");
+        }
+
         private void OnAddonChargeReceived(AddonCharge charge)
         {
             IAddonChargeRepository acr = new AddonChargeRepository(SelectedCharge);
             acr.Add(charge);
             RaisePropertyChanged("SelectedCharge");
-            Messenger.Default.Send(selectedCharge.AddonChargeList, "AddonList");
+            SendAddonChargeList();
         }
 
         private void OnChargeCollectionReceived(ObservableCollection<PrimaryCharge> chargesList)
@@ -40,8 +49,6 @@ namespace PatientManagement.ViewModel
 
 
         public ICommand AddChargeToPatientCommand { get; set; }
-
-        private SettingsService Settings { get; set; }
 
         private PrimaryCharge selectedCharge;
 
@@ -65,20 +72,22 @@ namespace PatientManagement.ViewModel
             IAdjustmentRepository ar = new AdjustmentRepository(SelectedCharge);
             ar.Add(adjustment);
             RaisePropertyChanged("SelectedCharge");
+            SendAdjustmentsList();
         }
 
         private void AddChargeToPatientV2(object obj)
         {
-            Messenger.Default.Send<PrimaryCharge>(SelectedCharge, "Patient");
-
-            //var chargeRepository = new PrimaryChargeRepository(selectedPatient);
-            //chargeRepository.Add(SelectedCharge);
+            Messenger.Default.Send(SelectedCharge, "Patient");
             ReturnNewCharge();
 
             Messenger.Default.Send(new UpdateCalculations());
             RaisePropertyChanged("SelectedCharge");
             RaisePropertyChanged("Charges");
+            SendAdjustmentsList();
+            SendAddonChargeList();
         }
+
+
 
         private bool CanAddChargeToPatient(object obj)
         {
@@ -100,8 +109,12 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("Charges");
             if (editModeEnabled)
             {
+;
                 editModeEnabled = false;
             }
+            ReturnNewCharge();
+            SendAddonChargeList();
+            SendAdjustmentsList();
         }
         public ICommand EditSelectedChargeCommand { get; private set; }
 
@@ -120,6 +133,9 @@ namespace PatientManagement.ViewModel
                 ReturnNewCharge();
                 editModeEnabled = false;
             }
+
+            SendAddonChargeList();
+            SendAdjustmentsList();
         }
 
         private bool CanEditOrDeleteSelectedCharge(object obj)
@@ -147,7 +163,7 @@ namespace PatientManagement.ViewModel
 
         private void ReturnNewCharge()
         {
-            SelectedCharge = Settings.ReuseChargeForNextPatient
+            SelectedCharge = SettingsService.ReuseChargeForNextPatient
                 ? new PrimaryCharge(SelectedCharge)
                 : new PrimaryCharge();
             RaisePropertyChanged("SelectedCharge");

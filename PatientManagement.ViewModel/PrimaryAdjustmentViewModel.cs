@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using EFC.BL;
-using PatientManagement.DAL;
-using PatientManagement.Model;
+﻿using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
 {
@@ -20,11 +15,27 @@ namespace PatientManagement.ViewModel
             PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
             PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
             AddChargeAdjustmentCommand = new Command(AddAdjustmentToCharge, CanAddAdjustment);
-
-
+            Messenger.Default.Register<ObservableCollection<Adjustment>>(this, OnAdjustmentReceived, "PrimaryChargeAdjustments");
         }
 
-       
+        private void OnAdjustmentReceived(ObservableCollection<Adjustment> adjustmentList)
+        {
+            Adjustments = adjustmentList;
+        }
+
+        private ObservableCollection<Adjustment> adjustments;
+
+        public ObservableCollection<Adjustment> Adjustments
+        {
+            get { return adjustments; }
+            set
+            {
+                if (adjustments == value) return;
+                adjustments = value;
+                RaisePropertyChanged("Adjustments");
+            }
+        }
+
 
         private Adjustment selectedAdjustment;
 
@@ -52,13 +63,9 @@ namespace PatientManagement.ViewModel
 
         private void AddAdjustmentToCharge(object obj)
         {
-            Messenger.Default.Send<Adjustment>(selectedAdjustment,"PrimaryCharge");
-
-            // IAdjustmentRepository adjustmentRepository = new AdjustmentRepository(SelectedCharge);
-            //  adjustmentRepository.Add(SelectedAdjustment);
+            Messenger.Default.Send(selectedAdjustment,"PrimaryChargeAdjustment");
             SelectedAdjustment = new Adjustment();
             RaisePropertyChanged("SelectedAdjustment");
-           // RefreshAllCounters();
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PatientManagement.ViewModel;
+using PatientManagement.ViewModel.Services;
 
 namespace WPFERATest
 {
@@ -17,7 +18,7 @@ namespace WPFERATest
             //Act
             pvm.SavePreferenceCommand.Execute(true);
 
-            var actual = pvm.Settings.PatientPromptEnabled;
+            var actual = SettingsService.PatientPromptEnabled;
             var expected = true;
 
             //Assert

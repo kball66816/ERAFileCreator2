@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Input;
-using EFC.BL;
+﻿using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
 {
@@ -13,13 +12,12 @@ namespace PatientManagement.ViewModel
     {
         public BillingProviderViewModel()
         {
-            Settings = new SettingsService();
             LoadBillingProvider();
             SaveProviderToRepository();
-            //Messenger.Default.Register<Provider>(this, OnUpdateRenderingProvider);
             Messenger.Default.Register<UpdateRepositoriesMessage>(this, OnUpdateRepositoriesMessage);
             Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSavedMessage,"UpdateSettings");
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider, CanUpdateRenderingProvider);
+            UpdateRenderingProvider(null);
         }
 
         private void UpdateRenderingProvider(object obj)
@@ -59,12 +57,11 @@ namespace PatientManagement.ViewModel
         }
         public Dictionary<string, string> ProviderStates { get; set; }
 
-        private SettingsService Settings { get; set; }
 
         private void LoadBillingProvider()
         {
             BillingProvider = new Provider();
-            BillingProvider = Settings.PullDefaultBillingProvider(BillingProvider);
+            BillingProvider = SettingsService.PullDefaultBillingProvider(BillingProvider);
             ProviderStates = BillingProvider.Address.States;
         }
 
@@ -77,7 +74,7 @@ namespace PatientManagement.ViewModel
 
         private void SaveSettings()
         {
-            Settings.SetDefaultBillingProvider(billingProvider);
+            SettingsService.SetDefaultBillingProvider(billingProvider);
         }
 
         private void SaveProviderToRepository()

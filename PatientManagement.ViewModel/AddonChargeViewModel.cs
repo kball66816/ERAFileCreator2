@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using EFC.BL;
+﻿using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -13,9 +13,8 @@ namespace PatientManagement.ViewModel
         public AddonChargeViewModel()
         {
             SelectedAddonCharge = new AddonCharge();
-            Settings = new SettingsService();
             AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
-            Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved, "AddonCharge");
+            Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved, "AddonChargeAdjustment");
             Messenger.Default.Register<ObservableCollection<AddonCharge>>(this,OnChargeCollectionReceived,"AddonList");
             DeleteSelectedAddonCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
             EditSelectedAddonCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
@@ -28,7 +27,13 @@ namespace PatientManagement.ViewModel
 
         public AddonCharge SelectedAddonChargeIndex { get; set; }
 
-        bool editModeEnabled;
+        private bool editModeEnabled;
+
+        private void SendAdjustmentList()
+        {
+            Messenger.Default.Send(SelectedAddonCharge.AdjustmentList, "AddonAdjustmentList");
+        }
+
         private void EditSelectedCharge(object obj)
         {
    
@@ -43,6 +48,7 @@ namespace PatientManagement.ViewModel
                 GetNewAddonDependentOnUserPromptPreference();
                 editModeEnabled = false;
             }
+            SendAdjustmentList();
         }
 
         private bool CanEditOrDeleteSelectedCharge(object obj)
@@ -62,6 +68,7 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("Charges");
             if (!editModeEnabled) return;
             editModeEnabled = false;
+            SendAdjustmentList();
         }
 
         private ObservableCollection<AddonCharge> charges;
@@ -83,8 +90,6 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("Charges");
         }
 
-        private SettingsService Settings { get; set; }
-
         public ICommand AddAddonCommand { get; private set; }
 
         private AddonCharge selectedAddonCharge;
@@ -105,7 +110,7 @@ namespace PatientManagement.ViewModel
         {
             Messenger.Default.Send(SelectedAddonCharge, "AddonCharge");
 
-            if (Settings.ReuseSameAddonEnabled)
+            if (SettingsService.ReuseSameAddonEnabled)
             {
                 GetNewAddonDependentOnUserPromptPreference();
             }
@@ -113,13 +118,14 @@ namespace PatientManagement.ViewModel
             {
                 SelectedAddonCharge = new AddonCharge();
             }
-            RaisePropertyChanged("SelectedAddonCharge");
-        
+            RaisePropertyChanged("SelectedAddonCharge");    
             RaisePropertyChanged("CheckAmount");
+            SendAdjustmentList();
 
         }
 
         private bool SupressAddonDialog = false;
+
 
         private void CloneLastAddon()
         {
@@ -129,7 +135,7 @@ namespace PatientManagement.ViewModel
 
         private void GetNewAddonDependentOnUserPromptPreference()
         {
-            if (Settings.AddonPromptEnabled)
+            if (SettingsService.AddonPromptEnabled)
             {
                 if (SupressAddonDialog == false)
                 {
@@ -142,7 +148,7 @@ namespace PatientManagement.ViewModel
                 }
             }
 
-            else if (Settings.AddonPromptEnabled == false)
+            else if (SettingsService.AddonPromptEnabled == false)
             {
                 CloneLastAddon();
             }
@@ -169,8 +175,9 @@ namespace PatientManagement.ViewModel
         private void OnAddonAdjustmentReceieved(Adjustment adjustment)
         {
             IAdjustmentRepository ar = new AdjustmentRepository(selectedAddonCharge);
-
             ar.Add(adjustment);
+            RaisePropertyChanged("SelectedAddonCharge");
+            SendAdjustmentList();
          
         }
 

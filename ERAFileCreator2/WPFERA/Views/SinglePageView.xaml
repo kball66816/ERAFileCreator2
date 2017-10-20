@@ -114,96 +114,7 @@
                    Height="2"
                    Fill="Gray" 
                    VerticalAlignment="Center"/>
-            <TextBlock Text="Patient" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" FontSize="16" TextDecorations="Underline"
-                       Margin="10,0,0,0"/>
-            <CheckBox Grid.Row="11" Grid.Column="0"
-                  VerticalAlignment="Top"
-                  Margin="10,10,0,0"
-            IsChecked="{Binding SelectedPatient.UsePlatformId}"
-                          Content="Use Platform ID?" />
-            <CheckBox Name="IncludeSubscriberInput" Grid.Row="11" Grid.Column="1"
-                      Margin="10,10,0,0"
-                      IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
-                      Content="Include Subscriber?"/>
-            <TextBlock Name="PatientFirstNameTag" Grid.Row="12" Grid.Column="0"
-                       Text="Patient's First Name*"
-                       Height="20"
-                   Margin="10,0,0,0"
-                   VerticalAlignment="Top"/>
-            <TextBox Name="PatientFirstNameInput" Grid.Row="12" Grid.Column="0"
-                     Width="115"
-                 Margin="10,20,0,0"
-                      HorizontalAlignment="Left">
-                <Validation.ErrorTemplate>
-                    <ControlTemplate>
-                        <DockPanel >
-                            <Border BorderBrush="Red" BorderThickness="2">
-                                <AdornedElementPlaceholder/>
-                            </Border>
-                        </DockPanel>
-                    </ControlTemplate>
-                </Validation.ErrorTemplate>
-                <Binding Path="SelectedPatient.FirstName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                    <Binding.ValidationRules>
-                        <validation:StringValidationRule ValidationStep="RawProposedValue"/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox>
-            <TextBlock Name="PatientLastNameTag" Grid.Row="12" Grid.Column="1"
-                   VerticalAlignment="Top"
-                   Margin="10,0,0,0"
-                       Text="Patients's Last Name*"/>
-            <TextBox Name="PatientLastNameInput" Grid.Row="12" Grid.Column="1"
-                 Margin="10,20,0,0"
-                     Width="115"
-                      HorizontalAlignment="Left">
-                <Validation.ErrorTemplate>
-                    <ControlTemplate>
-                        <DockPanel >
-                            <Border BorderBrush="Red" BorderThickness="2">
-                                <AdornedElementPlaceholder/>
-                            </Border>
-                        </DockPanel>
-                    </ControlTemplate>
-                </Validation.ErrorTemplate>
-                <Binding Path="SelectedPatient.LastName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                    <Binding.ValidationRules>
-                        <validation:StringValidationRule ValidationStep="RawProposedValue"/>
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox>
-
-
-            <TextBlock Name="SubscriberFirstNameTag" Grid.Row="14" Grid.Column="0"
-                   Margin="10,0,0,0"
-                   VerticalAlignment="Top"
-                       Text="Subscriber's First Name*"/>
-            <TextBox Name="SubscriberFirstNameInput" Grid.Row="14" Grid.Column="0"
-                     Text="{Binding SelectedPatient.Subscriber.FirstName}"
-                     Width="115"
-                 Margin="10,20,0,0"
-                     HorizontalAlignment="Left"
-                     IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"/>
-            <TextBlock Name="SubscriberLastNameTag" Grid.Row="14" Grid.Column="1"
-                   VerticalAlignment="Top"
-                   Margin="10,0,0,0"
-                       Text="Subscriber's Last Name*"/>
-            <TextBox x:Name="SubscriberLastNameInput"
-                     Text="{Binding SelectedPatient.Subscriber.LastName}" Grid.Row="14" Grid.Column="1"
-                 Margin="10,20,0,0"
-                     IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
-                     Width="115"
-                     HorizontalAlignment="Left"/>
-            <TextBlock Name="SubscriberMemberIdTag" Grid.Row="14" Grid.Column="2"
-                   Margin="10,0,0,0"
-                   VerticalAlignment="Top"
-                       Text="Subscriber's Member ID*"/>
-            <TextBox Name="SubscriberMemberIdnput" Grid.Row="14" Grid.Column="2"
-                 Margin="10,20,0,0"
-                      Text="{Binding SelectedPatient.Subscriber.MemberId}"
-                      IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
-                      Width="115"
-                      HorizontalAlignment="Left"/>
+            
             <Rectangle Grid.Row="15" Margin="0,5,0,0" Grid.Column="0" Grid.ColumnSpan="5"
                    Width="auto"
                    Height="2"
@@ -215,80 +126,20 @@
 
             <TextBlock Text="Selected Charge Adjustments"
                        VerticalAlignment="Top" Grid.Row="24" Grid.Column="0"/>
-            <Expander Grid.Row="24" Grid.Column="0" 
-                      Grid.ColumnSpan="3" Margin="0,20,0,0">
-                <DataGrid AutoGenerateColumns="False"
-                 
-                          VerticalAlignment="Bottom"
-                          SelectedItem="{Binding SelectedChargeAdjustmentIndex}"
-                          ItemsSource="{Binding SelectedCharge.AdjustmentList}"
-                          MaxHeight="100"
-                          VerticalScrollBarVisibility="Auto" 
-                          IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Type" Binding="{Binding AdjustmentType}"/>
-                        <DataGridTextColumn Header="Reason Code" Binding="{Binding AdjustmentReasonCode}"/>
-                        <DataGridTextColumn Header="Amount" Binding="{Binding AdjustmentAmount}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Expander>
+            
             <Button Name="AddAdjustmentButton" Grid.Row="23" Grid.Column="1"
                 Margin="10,0,0,0"
                             Command="{Binding AddChargeAdjustmentCommand}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                             Content="Add Additional Adjustment"/>
-            <Button Grid.Row="24" Grid.Column="3"
-                    Name="EditChargeAdjustment"
-                    Command="{Binding EditSelectedAdjustmentCommand}"
-                    Content="Edit Adjustment"
-                    Width="115"
-                    Margin="10,20,0,0"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="left"/>
-            <Button Grid.Row="24" Grid.Column="4"
-                    Name="DeleteAdjustment"
-                    Command="{Binding DeleteSelectedAdjustmentCommand}"
-                    Content="Delete Adjustment"
-                    Width="115"
-                    Margin="10,20,0,0"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="left"/>
+           
            
             <TextBlock Text="Selected Charge Addons" Grid.Row="26" Grid.Column="0"/>
-            <Expander Grid.Row="26" Grid.Column="0" Grid.ColumnSpan="3"
-                                           Margin="0,20,0,0">
-                <DataGrid AutoGenerateColumns="False"
-                          VerticalAlignment="Bottom"
-                          SelectedItem="{Binding SelectedChargeAdjustmentIndex}"
-                          ItemsSource="{Binding SelectedCharge.AdjustmentList}"
-                          MaxHeight="100"
-                          VerticalScrollBarVisibility="Auto" 
-                          IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Type" Binding="{Binding AdjustmentType}"/>
-                        <DataGridTextColumn Header="Reason Code" Binding="{Binding AdjustmentReasonCode}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Amount" Binding="{Binding AdjustmentAmount}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Expander>
             
             
             
-            <Button x:Name="AddPatient" Grid.Row="27" Grid.Column="4"
-                Margin="10,0,0,0"
-                     Content="Add Additional Patient" 
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom"
-                     Command="{Binding AddPatientCommand}"/>
-
-            <Button Grid.Row="29" Grid.Column="4"
-                    Command="{Binding SaveFileCommand}"
-                    Content="Create 835 File"
-                    Width="115"
-                    Margin="10,10,0,0"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="left"/>
+            
         </Grid>
     </DockPanel>
 

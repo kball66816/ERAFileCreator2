@@ -5,7 +5,6 @@ using PatientManagement.ViewModel.Services;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 
 
 namespace PatientManagement.ViewModel
@@ -14,7 +13,6 @@ namespace PatientManagement.ViewModel
     {
         public InsuranceViewModel()
         {
-            Settings = new SettingsService();
             LoadInsuranceCompany();
             Messenger.Default.Register<UpdateCalculations>(this, OnUpdateCalculation);
             Messenger.Default.Register<UpdateRepositoriesMessage>(this,OnUpdateRepositoriesMessageReceieved);
@@ -30,8 +28,6 @@ namespace PatientManagement.ViewModel
         {
             SaveInsuranceToRepository();
         }
-
-        private SettingsService Settings { get; set; }
 
         public Dictionary<string, string> InsuranceStates { get; set; }
 
@@ -65,13 +61,12 @@ namespace PatientManagement.ViewModel
                 }
             }
 
-            MessageBox.Show(insurance.CheckAmount.ToString());
         }
 
         private void LoadInsuranceCompany()
         {
             Insurance = new InsuranceCompany();
-            Insurance = Settings.PullDefaultInsurance(Insurance);
+            Insurance = SettingsService.PullDefaultInsurance(Insurance);
             PaymentTypes = Insurance.PaymentTypes;
             InsuranceStates = Insurance.Address.States;
             SaveInsuranceToRepository();
@@ -95,7 +90,7 @@ namespace PatientManagement.ViewModel
 
         private void SaveSettings()
         {
-            Settings.SetDefaultInsurance(insurance);
+            SettingsService.SetDefaultInsurance(insurance);
         }
     }
 }
