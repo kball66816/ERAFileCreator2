@@ -8,7 +8,7 @@
         Title="ERA File Creator"
         SizeToContent="WidthAndHeight">
 
-    <Grid x:Name="TopGrid">
+    <Grid x:Name="TopGrid" Background="#FF7789D8" >
         <Grid.RowDefinitions>
             <RowDefinition Height="AUto"/>
             <RowDefinition Height="Auto"/>

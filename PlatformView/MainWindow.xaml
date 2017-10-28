@@ -1,0 +1,22 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlatformView"
+        xmlns:views="clr-namespace:EraView.Views;assembly=EraView"
+     xmlns:converter="clr-namespace:Common.Common;assembly=Common.Common"
+        mc:Ignorable="d"
+    x:Class="PlatformView.MainWindow"
+        Title="MainWindow">
+    <DockPanel>
+        <views:PatientListView/>
+        <views:InsuranceCompanyView DockPanel.Dock="Top"/>
+        <views:BillingProviderView DockPanel.Dock="Top"/>
+        <views:PatientView2 DockPanel.Dock="Top"/>
+        <views:RenderingProviderView DockPanel.Dock="Top"/>
+        <views:PrimaryChargeView DockPanel.Dock="Top"/>
+        <views:PrimaryChargeAdjustmentView DockPanel.Dock="Top"/>
+        <views:PreferenceView DockPanel.Dock="Top"/>
+    </DockPanel>
+</Window>

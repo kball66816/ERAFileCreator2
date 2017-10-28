@@ -9,44 +9,38 @@
     <UserControl.DataContext>
         <viewModel:AddonAdjustmentViewModel/>
     </UserControl.DataContext>
-    <DockPanel>
-        <Grid DockPanel.Dock="Top">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBlock Name="AddonAdjustmentType" Grid.Row="0" Grid.Column="0"
-                       Margin="10,0,0,0"
-                       VerticalAlignment="Top"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="AddonAdjustmentType" Grid.Row="0" Grid.Column="0"
                        Text="Adjustment Type"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0"
-                        Margin="10,20,0,0">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
                 <ComboBox x:Name="AddonAdjustmentTypeDropdown"
-                          Width="45"
                           SelectedIndex="0"
                           ItemsSource="{Binding AddonAdjustmentType}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
-                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}">
-
-                </ComboBox>
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}" Margin="5,0,0,0" HorizontalContentAlignment="Stretch"/>
                 <ComboBox x:Name="AddonAdjustmentReasonCodeDropdown" 
-                          Width="45"
                           ItemsSource="{Binding AddonAdjustmentReasonCodes}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentReasonCodeDropdown}"
-                          SelectedIndex="34">
-
-                </ComboBox>
+                          SelectedIndex="34" Margin="5,0,0,0" HorizontalContentAlignment="Stretch"/>
                 <TextBox x:Name="AddonAdjustmentAmountInput"
-                         Text="{Binding AddonAdjustment.AdjustmentAmount,UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:F2\}}"
-                         Width="30" Height="22" VerticalAlignment="Top">
+                         Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="5,0,0,0" HorizontalContentAlignment="Stretch">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -58,13 +52,10 @@
                     </Validation.ErrorTemplate>
                 </TextBox>
             </StackPanel>
-            <Button Name="AddonAdjustmentButton" Grid.Row="0" Grid.Column="1"
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Left"
+            <Button x:Name="AddonAdjustmentButton" Grid.Column="4"
                     Content="Add Additional Adjustment"
-                    Command="{Binding AddAddonChargeAdjustmentCommand}"/>
-            <Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                    Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,0,0,0" HorizontalContentAlignment="Stretch"/>
+            <!--<Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Orientation="Horizontal">
                     <DataGrid AutoGenerateColumns="False"
                               VerticalAlignment="Bottom"
@@ -97,8 +88,8 @@
                             HorizontalAlignment="left"/>
                 </StackPanel>
                 
-            </Expander>
+            </Expander>-->
         </Grid>
-    
-    </DockPanel>
+
+    </Grid>
 </UserControl>

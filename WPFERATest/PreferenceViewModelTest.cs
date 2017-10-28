@@ -36,7 +36,7 @@ namespace WPFERATest
             //Act
             pvm.SavePreferenceCommand.Execute(true);
 
-            var actual = pvm.Settings.PatientPromptEnabled;
+            var actual = SettingsService.PatientPromptEnabled;
             var expected = false;
 
             //Assert

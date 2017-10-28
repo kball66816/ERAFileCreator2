@@ -10,135 +10,101 @@
     <UserControl.DataContext>
         <viewModel:PatientViewModel/>
     </UserControl.DataContext>
-    <Grid>
+    <Grid Margin="5,5,5,0">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBlock Text="Patient" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontSize="16" TextDecorations="Underline"
-                   Margin="10,0,0,0"/>
-        <CheckBox Grid.Row="1" Grid.Column="0"
-                  VerticalAlignment="Top"
-                  Margin="10,10,0,0"
-                  IsChecked="{Binding SelectedPatient.UsePlatformId}"
-                  Content="Use Platform ID?" />
-        <CheckBox Name="IncludeSubscriberInput" Grid.Row="1"
-                  Grid.Column="1"
-                  Margin="10,10,0,0"
-                  IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
-                  Content="Include Subscriber?"/>
-        <TextBlock Name="PatientFirstNameTag" Grid.Row="2" Grid.Column="0"
-                   Text="Patient's First Name*"
-                   Height="20"
-                   Margin="10,0,0,0"
-                   VerticalAlignment="Top"/>
-        <TextBox Name="PatientFirstNameInput" Grid.Row="2" Grid.Column="0"
-                 Width="115"
-                 Margin="10,20,0,0"
-                 HorizontalAlignment="Left">
-            <Validation.ErrorTemplate>
-                <ControlTemplate>
-                    <DockPanel >
-                        <Border BorderBrush="Red" BorderThickness="2">
-                            <AdornedElementPlaceholder/>
-                        </Border>
-                    </DockPanel>
-                </ControlTemplate>
-            </Validation.ErrorTemplate>
-            <Binding Path="SelectedPatient.FirstName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                <Binding.ValidationRules>
-                    <common:StringValidationRule ValidationStep="RawProposedValue"/>
-                </Binding.ValidationRules>
-            </Binding>
-        </TextBox>
-        <TextBlock Name="PatientLastNameTag" Grid.Row="2" Grid.Column="1"
-                   VerticalAlignment="Top"
-                   Margin="10,0,0,0"
-                   Text="Patients's Last Name*"/>
-        <TextBox Name="PatientLastNameInput" Grid.Row="2" Grid.Column="1"
-                 Margin="10,20,0,0"
-                 Width="115"
-                 HorizontalAlignment="Left">
-            <Validation.ErrorTemplate>
-                <ControlTemplate>
-                    <DockPanel >
-                        <Border BorderBrush="Red" BorderThickness="2">
-                            <AdornedElementPlaceholder/>
-                        </Border>
-                    </DockPanel>
-                </ControlTemplate>
-            </Validation.ErrorTemplate>
-            <Binding Path="SelectedPatient.LastName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                <Binding.ValidationRules>
-                    <common:StringValidationRule ValidationStep="RawProposedValue"/>
-                </Binding.ValidationRules>
-            </Binding>
-        </TextBox>
-
-
-        <TextBlock Name="SubscriberFirstNameTag" Grid.Row="14" Grid.Column="0"
-                   Margin="10,0,0,0"
-                   VerticalAlignment="Top"
-                   Text="Subscriber's First Name*"/>
-        <TextBox Name="SubscriberFirstNameInput" Grid.Row="14" Grid.Column="0"
-                 Text="{Binding SelectedPatient.Subscriber.FirstName}"
-                 Width="115"
-                 Margin="10,20,0,0"
-                 HorizontalAlignment="Left"
-                 IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"/>
-        <TextBlock Name="SubscriberLastNameTag" Grid.Row="14" Grid.Column="1"
-                   VerticalAlignment="Top"
-                   Margin="10,0,0,0"
-                   Text="Subscriber's Last Name*"/>
-        <TextBox x:Name="SubscriberLastNameInput"
-                 Text="{Binding SelectedPatient.Subscriber.LastName}" Grid.Row="14" Grid.Column="1"
-                 Margin="10,20,0,0"
-                 IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
-                 Width="115"
-                 HorizontalAlignment="Left"/>
-        <TextBlock Name="SubscriberMemberIdTag" Grid.Row="14" Grid.Column="2"
-                   Margin="10,0,0,0"
-                   VerticalAlignment="Top"
-                   Text="Subscriber's Member ID*"/>
-        <TextBox Name="SubscriberMemberIdnput" Grid.Row="14" Grid.Column="2"
-                 Margin="10,20,0,0"
-                 Text="{Binding SelectedPatient.Subscriber.MemberId}"
-                 IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
-                 Width="115"
-                 HorizontalAlignment="Left"/>
-
-        <Button x:Name="AddPatient" Grid.Row="3" Grid.Column="3"
-                Margin="10,0,0,0"
-                Content="Add Additional Patient" 
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                Command="{Binding AddPatientCommand}"/>
-
-        <Button Grid.Row="4" Grid.Column="3"
+        <StackPanel Grid.ColumnSpan="4" Orientation="Vertical">
+            <TextBlock Text="Patient" FontSize="16" TextDecorations="Underline"/>
+            <CheckBox
+                IsChecked="{Binding SelectedPatient.UsePlatformId}"
+                Content="Use Platform ID?"/>
+            <CheckBox x:Name="IncludeSubscriberInput"
+                IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
+                Content="Include Subscriber?"/>
+            <Button x:Name="AddPatient"
+                Margin="0,0,0,1.32"
+                Content="Add Additional Patient"
+                Command="{Binding AddPatientCommand}" d:LayoutOverrides="Height" Visibility="Collapsed"/>
+            <Button
                 Command="{Binding SaveFileCommand}"
                 Content="Create 835 File"
                 Width="115"
-                Margin="10,10,0,0"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="left"/>
+                Margin="0,0,0,10"
+                d:LayoutOverrides="Height"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="PatientFirstNameTag"
+                    Text="Patient's First Name*" Margin="5,0,0,0"/>
+                <TextBox x:Name="PatientFirstNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <DockPanel >
+                                <Border BorderBrush="Red" BorderThickness="2">
+                                    <AdornedElementPlaceholder/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                    <Binding Path="SelectedPatient.FirstName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+
+
+                <TextBlock x:Name="SubscriberFirstNameTag"
+                    Margin="5,0,0,0"
+                    Text="Subscriber's First Name*"/>
+                <TextBox x:Name="SubscriberFirstNameInput"
+                    Text="{Binding SelectedPatient.Subscriber.FirstName}"
+                    IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical"  Grid.Column="1">
+                <TextBlock x:Name="PatientLastNameTag"
+                    Text="Patients's Last Name*" Margin="5,0,0,0"/>
+                <TextBox x:Name="PatientLastNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <DockPanel >
+                                <Border BorderBrush="Red" BorderThickness="2">
+                                    <AdornedElementPlaceholder/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                    <Binding Path="SelectedPatient.LastName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
+                <TextBlock x:Name="SubscriberLastNameTag"
+                    Text="Subscriber's Last Name*" Margin="5,0,0,0"/>
+                <TextBox x:Name="SubscriberLastNameInput"
+                    Text="{Binding SelectedPatient.Subscriber.LastName}"
+                    IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Grid.Column="2">
+                <TextBlock Text="PlaceHolder For Subscriber" Margin="5,0,0,0" Visibility="Hidden"/>
+                <TextBox Text="PlaceHolder For Subscriber" Margin="5,0,0,5" Visibility="Hidden"/>
+                <TextBlock x:Name="SubscriberMemberIdTag"
+                    Text="Subscriber's Member ID*" Margin="5,0,0,0"/>
+                <TextBox x:Name="SubscriberMemberIdnput"
+                    Text="{Binding SelectedPatient.Subscriber.MemberId}"
+                    IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,5"/>
+            </StackPanel>
+
+        </Grid>
     </Grid>
 </UserControl>
