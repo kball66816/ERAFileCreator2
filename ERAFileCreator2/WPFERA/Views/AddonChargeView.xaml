@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Vertical">
             <TextBlock x:Name="AddonProcedureCodeTag"
-                Text="Addon Procedure Code" Margin="5,0,0,0"/>
+                Text="Addon Code" Margin="5,0,0,0"/>
             <TextBox x:Name="AddonProcedureCodeInput"
                 Text="{Binding SelectedAddonCharge.ProcedureCode,
                 UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0"/>

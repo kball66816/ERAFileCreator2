@@ -8,32 +8,16 @@
         Title="ERA File Creator"
         SizeToContent="WidthAndHeight">
 
-    <Grid x:Name="TopGrid" Background="#FF7789D8" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="AUto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <views:PatientListView Grid.Row="0" Grid.Column="0"/>
-        <views:InsuranceCompanyView Grid.Row="0" Grid.Column="1"/>
-        <views:BillingProviderView Grid.Row="1" Grid.Column="1"/>
-        <views:PatientView2 Grid.Row="2" Grid.Column="1"/>
-        <views:RenderingProviderView Grid.Row="3" Grid.Column="1"></views:RenderingProviderView>
-        <views:PrimaryChargeView Grid.Row="4" Grid.Column="1"/>
-        <views:PrimaryChargeAdjustmentView Grid.Row="6" Grid.Column="1"/>
-        <views:AddonChargeView Grid.Row="7" Grid.Column="1"></views:AddonChargeView>
-        <views:AddonAdjustmentView Grid.Row="8" Grid.Column="1"/>
-        <views:PreferenceView Grid.Row="9" Grid.Column="1"/>
-    </Grid>
+    <DockPanel x:Name="TopGrid" Background="#FF7789D8" >
+        <views:PatientListView DockPanel.Dock="Left"/>
+        <views:InsuranceCompanyView DockPanel.Dock="Top"/>
+        <views:BillingProviderView DockPanel.Dock="Top"/>
+        <views:PatientView2 DockPanel.Dock="Top"/>
+        <views:RenderingProviderView DockPanel.Dock="Top"/>
+        <views:PrimaryChargeView DockPanel.Dock="Top"/>
+        <views:PrimaryChargeAdjustmentView DockPanel.Dock="Top"/>
+        <views:AddonChargeView DockPanel.Dock="Top"/>
+        <views:AddonAdjustmentView DockPanel.Dock="Top"/>
+        <views:PreferenceView DockPanel.Dock="Top"/>
+    </DockPanel>
 </Window>
