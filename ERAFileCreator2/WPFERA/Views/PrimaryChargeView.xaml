@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:EraView.Views"
              xmlns:common="clr-namespace:Common.Common;assembly=Common.Common"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              mc:Ignorable="d">
@@ -17,6 +16,9 @@
         </Grid.RowDefinitions>
         <StackPanel>
             <TextBlock Text="Patient Encounters" FontSize="16" TextDecorations="Underline" Margin="5,0,0,5"/>
+            <CheckBox
+                IsChecked="{Binding SelectedCharge.FormatClassicBillId}"
+                Content="Use Classic ID" Margin="5,0,0,5" HorizontalContentAlignment="Stretch"/>
         </StackPanel>
         <Grid  Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -164,23 +166,29 @@
             </StackPanel>
 
             <StackPanel Grid.Column="4">
-                <StackPanel.DataContext>
-                    <viewModel:PreferenceViewModel/>
-                </StackPanel.DataContext>
-                <StackPanel Orientation="Vertical" Margin="0">
-                    <TextBlock Text="PlaceHolder" Margin="5,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" Visibility="Hidden"/>
-                    <TextBox Margin="5,0,0,10" Visibility="Hidden">
-                    </TextBox>
+                <StackPanel>
+                    <StackPanel.DataContext>
+                        <viewModel:PreferenceViewModel/>
+                    </StackPanel.DataContext>
+                    <StackPanel Orientation="Vertical" Margin="0">
+                        <TextBlock Text="PlaceHolder" Margin="5,0,0,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" Visibility="Hidden"/>
+                        <TextBox Margin="5,0,0,10" Visibility="Hidden">
+                        </TextBox>
+                    </StackPanel>
+                    <CheckBox Content="Use Current Code as Default"
+                              IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
+                              Command="{Binding SavePreferenceCommand}" Margin="5,0,0,0"/>
                 </StackPanel>
-                <CheckBox Content="Use Current Code as Default"
-                IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
-                    Command="{Binding SavePreferenceCommand}" Margin="5,0,0,0"/>
-                <Button
-                    x:Name="AddChargeToPatient"
-                    Command="{Binding AddChargeToPatientCommand}"
-                    Content="Add Charge" Margin="5,0,0,0"/>
+                <StackPanel>
+                    <Button
+                        x:Name="AddChargeToPatient"
+                        Command="{Binding AddChargeToPatientCommand}"
+                        Content="Add Charge" Margin="5,0,0,0"/>
 
+                </StackPanel>
             </StackPanel>
+            
+
         </Grid>
         <!--<Expander  Grid.Row="3" Grid.Column="0" Margin="5,0,0,0"
                    Grid.ColumnSpan="3">

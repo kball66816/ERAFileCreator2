@@ -17,22 +17,11 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.ColumnSpan="4" Orientation="Vertical">
             <TextBlock Text="Patient" FontSize="16" TextDecorations="Underline"/>
-            <CheckBox
-                IsChecked="{Binding SelectedPatient.UsePlatformId}"
-                Content="Use Platform ID?"/>
             <CheckBox x:Name="IncludeSubscriberInput"
                 IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
                 Content="Include Subscriber?"/>
-            <Button x:Name="AddPatient"
-                Margin="0,0,0,1.32"
-                Content="Add Additional Patient"
-                Command="{Binding AddPatientCommand}" d:LayoutOverrides="Height" Visibility="Collapsed"/>
-            <Button
-                Command="{Binding SaveFileCommand}"
-                Content="Create 835 File"
-                Width="115"
-                Margin="0,0,0,10"
-                d:LayoutOverrides="Height"/>
+            
+           
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -61,7 +50,6 @@
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
-
 
                 <TextBlock x:Name="SubscriberFirstNameTag"
                     Margin="5,0,0,0"
@@ -104,7 +92,14 @@
                     Text="{Binding SelectedPatient.Subscriber.MemberId}"
                     IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,5"/>
             </StackPanel>
-
+            <StackPanel Grid.Column="4">
+                <TextBlock Text="Place Holder" Margin="5,0,0,0" Visibility="Hidden"/>
+                <TextBox Margin="5,0,0,5" Visibility="Hidden"/>
+                <TextBlock Text="PlaceHolder" Margin="0,0,5,0" Visibility="Hidden"/>
+                <Button x:Name="AddPatient"
+                        Content="Add Additional Patient"
+                        Command="{Binding AddPatientCommand}" Margin="5,0,0,0"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

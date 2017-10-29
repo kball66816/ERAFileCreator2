@@ -13,6 +13,8 @@ namespace EDI835.Segments
             SegmentIdentifier = "CLP";
 
             if (charge == null) return;
+
+
             ClaimSubmittersIdentifier = charge.BillId;
             ClaimStatusCode = "1";
             TotalClaimChargeAmount = patient.Charges.Sum(c=>c.ChargeCost);

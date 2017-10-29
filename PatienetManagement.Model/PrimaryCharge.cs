@@ -19,6 +19,7 @@ namespace PatientManagement.Model
 
         public PrimaryCharge(PrimaryCharge charge)
         {
+            FormatClassicBillId = charge.formatClassicBillId;
             BillId = charge.BillId;
             Copay = charge.Copay;
             ProcedureCode = charge.ProcedureCode;
@@ -53,6 +54,19 @@ namespace PatientManagement.Model
 
         public ObservableCollection<AddonCharge> AddonChargeList { get; set; }
 
+
+        public bool FormatClassicBillId
+        {
+            get { return formatClassicBillId; }
+            set
+            {
+                if (formatClassicBillId == value) return;
+                formatClassicBillId = value;
+                RaisePropertyChanged("FormatClassicBillId");
+            }
+        }
+
+
         private string billId;
 
         public string BillId
@@ -69,6 +83,7 @@ namespace PatientManagement.Model
         }
         private decimal copay;
         private DateTime dateOfService;
+        private bool formatClassicBillId;
 
 
         public decimal Copay

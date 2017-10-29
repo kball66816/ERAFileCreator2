@@ -1,5 +1,4 @@
-﻿using Common.Common;
-using EFC.BL;
+﻿using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
@@ -19,6 +18,12 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
             Messenger.Default.Register<PrimaryCharge>(this, OnPrimaryChargeReceived, "Patient");
             Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
+            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileMessage,"SaveFile");
+        }
+
+        private void OnSaveFileMessage(SaveFileMessage obj)
+        {
+                SaveSettings();
         }
 
         private void OnProviderReceived(Provider provider)
@@ -129,7 +134,6 @@ namespace PatientManagement.ViewModel
             return SelectedPatient;
         }
 
-
         private void CloneSelectedPatient()
         {
             SelectedPatient = patientRepository.GetSelectedPatient(selectedPatient.Id).CopyPatient();
@@ -141,7 +145,6 @@ namespace PatientManagement.ViewModel
             return !string.IsNullOrEmpty(SelectedPatient.FirstName)
                 && !string.IsNullOrEmpty(selectedPatient.LastName);
         }
-
 
         public Adjustment SelectedChargeAdjustmentIndex { get; set; }
 
@@ -158,9 +161,6 @@ namespace PatientManagement.ViewModel
             }
         }
 
-
-        public ICommand SaveFileCommand { get; private set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
@@ -171,29 +171,16 @@ namespace PatientManagement.ViewModel
         private void LoadCommands()
         {
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
-            SaveFileCommand = new Command(Save, CanSave);
+
         }
 
         public ICommand AddChargeToPatientCommand { get; set; }
 
-        private static bool CanSave(object obj)
-        {
-            return true;
-        }
 
         private void SaveSettings()
         {
             Messenger.Default.Send(new SettingsSavedMessage(), "UpdateSettings");
             SettingsService.SetDefaultPatient(selectedPatient);
-        }
-
-        private void Save(object obj)
-        {
-            Messenger.Default.Send(new UpdateRepositoriesMessage());
-            SaveSettings();
-            var edi = new UpdatedEdi();
-            var save = new SaveToFile();
-            save.SaveFile(edi.Create835File());
         }
     }
 }

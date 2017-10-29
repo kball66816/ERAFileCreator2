@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PatientManagement.Model
+namespace PatientManagement.ViewModel.Services
 {
-    interface IBillIdFormatter
+    public class SaveFileMessage
     {
-        string FormattedBillId();
     }
 }

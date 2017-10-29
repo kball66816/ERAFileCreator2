@@ -18,6 +18,7 @@
         <views:PrimaryChargeAdjustmentView DockPanel.Dock="Top"/>
         <views:AddonChargeView DockPanel.Dock="Top"/>
         <views:AddonAdjustmentView DockPanel.Dock="Top"/>
+        <views:SaveFileView DockPanel.Dock="Top"/>
         <views:PreferenceView DockPanel.Dock="Top"/>
     </DockPanel>
 </Window>

@@ -88,7 +88,6 @@ namespace PatientManagement.ViewModel
         }
 
 
-
         private bool CanAddChargeToPatient(object obj)
         {
             bool b = false;

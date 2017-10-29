@@ -94,6 +94,9 @@
     <Compile Include="Views\RenderingProviderView.xaml.cs">
       <DependentUpon>RenderingProviderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SaveFileView.xaml.cs">
+      <DependentUpon>SaveFileView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SinglePageView.xaml.cs">
       <DependentUpon>SinglePageView.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\RenderingProviderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SaveFileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
