@@ -15,7 +15,7 @@
             ItemsSource="{Binding Patients}"
             SelectedItem="{Binding Patient, Mode=TwoWay}"
             MinWidth="100"
-            Background="#FF7789D8" BorderBrush="#FF7789D8" HorizontalContentAlignment="Stretch">
+            Background="#FF7789D8" BorderBrush="#FF7789D8" HorizontalContentAlignment="Stretch" TabIndex="61">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

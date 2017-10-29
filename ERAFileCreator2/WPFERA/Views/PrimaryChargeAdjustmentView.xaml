@@ -9,7 +9,7 @@
     <UserControl.DataContext>
         <viewModel:PrimaryAdjustmentViewModel/>
     </UserControl.DataContext>
-    <Grid Margin="5,5,5,0">
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -31,15 +31,15 @@
                     SelectedValuePath="Value"
                     SelectedValue="{Binding SelectedAdjustment.AdjustmentType}"
                     SelectedIndex="0"
-                    ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentTypeDropdown}" Margin="5,0,0,0"/>
+                    ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentTypeDropdown}" Margin="5,0,0,0" TabIndex="44"/>
                 <ComboBox x:Name="AdjustmentReasonCodeDropdown"
                     ItemsSource="{Binding PrimaryAdjustmentReasonCodes}"
                     DisplayMemberPath="Value"
                     SelectedValuePath="Value"
                     SelectedValue="{Binding SelectedAdjustment.AdjustmentReasonCode}"
-                          ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}" SelectedIndex="34" Margin="5,0,0,0"/>
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}" SelectedIndex="34" Margin="5,0,0,0" TabIndex="45"/>
                 <TextBox x:Name="PrimaryAdjustmentAmountInput"
-                    Text="{Binding SelectedAdjustment.AdjustmentAmount, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0">
+                    Text="{Binding SelectedAdjustment.AdjustmentAmount, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" TabIndex="46">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -53,7 +53,7 @@
             </StackPanel>
             <Button x:Name="AddAdjustmentButton" Grid.Column="1"
                 Command="{Binding AddChargeAdjustmentCommand}"
-                Content="Add Additional Adjustment" Margin="5,0,0,0" HorizontalContentAlignment="Stretch"/>
+                Content="Add Additional Adjustment" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="47"/>
         </Grid>
         <!--<Expander Grid.Row="1" Grid.Column="0" 
                   Grid.ColumnSpan="2" Margin="0,0,0,0">

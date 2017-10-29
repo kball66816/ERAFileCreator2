@@ -9,7 +9,7 @@
     <UserControl.DataContext>
         <viewModel:SaveFileViewModel/>
     </UserControl.DataContext>
-    <Grid>
+    <Grid Margin="5,5,5,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -22,6 +22,6 @@
             Content="Create 835 File"
             Width="115"
             Margin="5,0,0,0"
-            d:LayoutOverrides="Height"/>
+            d:LayoutOverrides="Height" TabIndex="60" HorizontalContentAlignment="Stretch"/>
     </Grid>
 </UserControl>

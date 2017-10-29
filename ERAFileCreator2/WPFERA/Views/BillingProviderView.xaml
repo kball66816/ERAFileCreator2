@@ -9,7 +9,7 @@
     <UserControl.DataContext>
         <viewModel:BillingProviderViewModel/>
     </UserControl.DataContext>
-    <Grid Margin="5,5,5,0">
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
@@ -22,7 +22,7 @@
                 <CheckBox Content="Use Individual Provider"
                 IsChecked="{Binding BillingProvider.IsIndividual}"
                 Command="{Binding UpdateRenderingProviderCommand}"
-                x:Name="IsIndividualBillingTag" Margin="5,0,0,5"/>
+                x:Name="IsIndividualBillingTag" Margin="5,0,0,5" TabIndex="10"/>
             </StackPanel>
 
         </StackPanel>
@@ -39,7 +39,7 @@
                     <TextBlock x:Name="BillingProviderNameTag"
                             Text="Billing Provider's Name*" Margin="5,0,0,0"/>
                     <TextBox x:Name="BillingProviderNameInput"
-                            IsEnabled="{Binding IsChecked, Converter={StaticResource NotConverter}, ElementName=IsIndividualBillingTag}" Margin="5,0,0,5" HorizontalContentAlignment="Stretch">
+                            IsEnabled="{Binding IsChecked, Converter={StaticResource NotConverter}, ElementName=IsIndividualBillingTag}" Margin="5,0,0,5" HorizontalContentAlignment="Stretch" TabIndex="11">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel >
@@ -59,7 +59,7 @@
                 <StackPanel Orientation="Vertical">
                     <TextBlock x:Name="BillingProviderLineOneTag"
                             Text="Street Line One*" Margin="5,0,0,0" />
-                    <TextBox x:Name="ProviderAddressLineOneInput" Margin="5,0,0,0" HorizontalContentAlignment="Stretch">
+                    <TextBox x:Name="ProviderAddressLineOneInput" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="15">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel >
@@ -81,7 +81,7 @@
                 <TextBlock x:Name="BillingProviderFirstNameTag"                                                      
                         Text="Provider's First Name" Margin="5,0,0,0"/>
                 <TextBox x:Name="BillingProviderFirstNameInput"
-                        IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag}" Margin="5,0,0,5" HorizontalContentAlignment="Stretch">
+                        IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag}" Margin="5,0,0,5" HorizontalContentAlignment="Stretch" TabIndex="12">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -100,7 +100,7 @@
                 <StackPanel Orientation="Vertical" Height="37.92">
                     <TextBlock x:Name="BillingProviderAddressTwoTag"
                             Text="Street Line Two" VerticalAlignment="Top" Margin="5,0,0,0"/>
-                    <TextBox x:Name="BillingProviderAddressTwoInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,0">
+                    <TextBox x:Name="BillingProviderAddressTwoInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="16">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel >
@@ -122,7 +122,7 @@
                 <TextBlock x:Name="BillingProviderLastNameTag"                                                                                                     
                         Text="Provider's Last Name" Margin="5,0,0,0"/>
                 <TextBox x:Name="BillingProviderLastNameInput"
-                        IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag, Mode=TwoWay}" Margin="5,0,0,5" HorizontalContentAlignment="Stretch">
+                        IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag, Mode=TwoWay}" Margin="5,0,0,5" HorizontalContentAlignment="Stretch" TabIndex="13">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -141,7 +141,7 @@
                 <StackPanel Orientation="Vertical">
                     <TextBlock x:Name="BillingProviderCityTag"
                             Text="City" VerticalAlignment="Top" Margin="5,0,0,0"/>
-                    <TextBox x:Name="BillingProviderCityInput" Margin="5,0,0,0" HorizontalContentAlignment="Stretch">
+                    <TextBox x:Name="BillingProviderCityInput" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="17">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel >
@@ -163,7 +163,7 @@
                 <TextBlock x:Name="BillingProviderNpiTag"
                         Text="Provider's NPI*" Margin="5,0,0,0"/>
                 <TextBox x:Name="BillingProviderNpiInput"
-                        MaxLength="10" Margin="5,0,0,5" HorizontalContentAlignment="Stretch">
+                        MaxLength="10" Margin="5,0,0,5" HorizontalContentAlignment="Stretch" TabIndex="14">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -186,7 +186,7 @@
                             ItemsSource="{Binding ProviderStates}"
                             SelectedValuePath="Value"
                             DisplayMemberPath="Key"
-                            SelectedValue="{Binding BillingProvider.Address.State}" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" />
+                            SelectedValue="{Binding BillingProvider.Address.State}" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="18" />
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="4">
@@ -198,7 +198,7 @@
                     <TextBlock x:Name="BillingProviderZipCodeTag"
                             Text="Zip Code" Margin="5,0,0,0"/>
                     <TextBox x:Name="BillingProviderZipCodeInput"
-                            MaxLength="9" Margin="5,0,0,0" HorizontalContentAlignment="Stretch">
+                            MaxLength="9" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="19">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel >

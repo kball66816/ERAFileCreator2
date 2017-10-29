@@ -10,7 +10,7 @@
     <UserControl.DataContext>
         <viewModel:PatientViewModel/>
     </UserControl.DataContext>
-    <Grid Margin="5,5,5,0">
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition />
@@ -19,7 +19,7 @@
             <TextBlock Text="Patient" FontSize="16" TextDecorations="Underline"/>
             <CheckBox x:Name="IncludeSubscriberInput"
                 IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
-                Content="Include Subscriber?"/>
+                Content="Include Subscriber?" TabIndex="20"/>
             
            
         </StackPanel>
@@ -34,7 +34,7 @@
             <StackPanel Orientation="Vertical">
                 <TextBlock x:Name="PatientFirstNameTag"
                     Text="Patient's First Name*" Margin="5,0,0,0"/>
-                <TextBox x:Name="PatientFirstNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5">
+                <TextBox x:Name="PatientFirstNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5" TabIndex="21">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -56,12 +56,12 @@
                     Text="Subscriber's First Name*"/>
                 <TextBox x:Name="SubscriberFirstNameInput"
                     Text="{Binding SelectedPatient.Subscriber.FirstName}"
-                    IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,0"/>
+                    IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="23"/>
             </StackPanel>
             <StackPanel Orientation="Vertical"  Grid.Column="1">
                 <TextBlock x:Name="PatientLastNameTag"
                     Text="Patients's Last Name*" Margin="5,0,0,0"/>
-                <TextBox x:Name="PatientLastNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5">
+                <TextBox x:Name="PatientLastNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5" TabIndex="22">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -81,7 +81,7 @@
                     Text="Subscriber's Last Name*" Margin="5,0,0,0"/>
                 <TextBox x:Name="SubscriberLastNameInput"
                     Text="{Binding SelectedPatient.Subscriber.LastName}"
-                    IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,0"/>
+                    IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="24"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="2">
                 <TextBlock Text="PlaceHolder For Subscriber" Margin="5,0,0,0" Visibility="Hidden"/>
@@ -90,7 +90,7 @@
                     Text="Subscriber's Member ID*" Margin="5,0,0,0"/>
                 <TextBox x:Name="SubscriberMemberIdnput"
                     Text="{Binding SelectedPatient.Subscriber.MemberId}"
-                    IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,5"/>
+                    IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}" HorizontalContentAlignment="Stretch" Margin="5,0,0,5" TabIndex="25"/>
             </StackPanel>
             <StackPanel Grid.Column="4">
                 <TextBlock Text="Place Holder" Margin="5,0,0,0" Visibility="Hidden"/>
@@ -98,7 +98,7 @@
                 <TextBlock Text="PlaceHolder" Margin="0,0,5,0" Visibility="Hidden"/>
                 <Button x:Name="AddPatient"
                         Content="Add Additional Patient"
-                        Command="{Binding AddPatientCommand}" Margin="5,0,0,0"/>
+                        Command="{Binding AddPatientCommand}" Margin="5,0,0,0" TabIndex="26"/>
             </StackPanel>
         </Grid>
     </Grid>

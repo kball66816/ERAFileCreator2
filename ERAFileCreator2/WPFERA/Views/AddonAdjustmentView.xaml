@@ -9,13 +9,13 @@
     <UserControl.DataContext>
         <viewModel:AddonAdjustmentViewModel/>
     </UserControl.DataContext>
-    <Grid>
+    <Grid Margin="5,5,5,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock x:Name="AddonAdjustmentType" Grid.Row="0" Grid.Column="0"
-                       Text="Adjustment Type"/>
+                       Text="Adjustment Type" Margin="5,0,0,5"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -31,16 +31,16 @@
                           ItemsSource="{Binding AddonAdjustmentType}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
-                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}" Margin="5,0,0,0" HorizontalContentAlignment="Stretch"/>
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="56"/>
                 <ComboBox x:Name="AddonAdjustmentReasonCodeDropdown" 
                           ItemsSource="{Binding AddonAdjustmentReasonCodes}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentReasonCodeDropdown}"
-                          SelectedIndex="34" Margin="5,0,0,0" HorizontalContentAlignment="Stretch"/>
+                          SelectedIndex="34" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="57"/>
                 <TextBox x:Name="AddonAdjustmentAmountInput"
                          Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="5,0,0,0" HorizontalContentAlignment="Stretch">
+                         Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="58">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -54,7 +54,7 @@
             </StackPanel>
             <Button x:Name="AddonAdjustmentButton" Grid.Column="4"
                     Content="Add Additional Adjustment"
-                    Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,0,0,0" HorizontalContentAlignment="Stretch"/>
+                    Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="59"/>
             <!--<Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Orientation="Horizontal">
                     <DataGrid AutoGenerateColumns="False"
