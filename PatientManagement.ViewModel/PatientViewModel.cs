@@ -178,7 +178,6 @@ namespace PatientManagement.ViewModel
 
         }
 
-        public ICommand AddChargeToPatientCommand { get; set; }
 
 
         private void SaveSettings()

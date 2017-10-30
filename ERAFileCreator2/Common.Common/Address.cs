@@ -23,12 +23,9 @@ namespace Common.Common
             get {return state;}
             set
             {
-                if(value!=state)
-                {
-                    state = value;
-                    RaisePropertyChanged("State");
-                }
-                
+                if (value == state) return;
+                state = value;
+                RaisePropertyChanged("State");
             }
         }
 
