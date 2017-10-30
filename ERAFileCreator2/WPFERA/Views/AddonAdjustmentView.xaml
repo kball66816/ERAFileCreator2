@@ -53,8 +53,8 @@
                 </TextBox>
             </StackPanel>
             <Button x:Name="AddonAdjustmentButton" Grid.Column="4"
-                    Content="Add Additional Adjustment"
-                    Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="59"/>
+                    Content="Add Adjustment"
+                    Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,0,0,0" HorizontalContentAlignment="Center" TabIndex="59"/>
             <!--<Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Orientation="Horizontal">
                     <DataGrid AutoGenerateColumns="False"

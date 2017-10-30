@@ -20,7 +20,7 @@ namespace EFC.BLTests
 
             var npiValidator = new NpivalidationRule();
             npiValidator.ParseNpi(provider.Npi);
-            var actual = npiValidator.InvalidNPI;
+            var actual = npiValidator.InvalidNpi;
 
             Assert.AreEqual(false, actual);
         }

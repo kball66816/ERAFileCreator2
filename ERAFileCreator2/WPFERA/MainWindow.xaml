@@ -6,7 +6,7 @@
         x:Class="EraView.MainWindow"
         mc:Ignorable="d"
         Title="ERA File Creator"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight" HorizontalContentAlignment="Stretch">
 
     <DockPanel x:Name="TopGrid" Background="#FF7789D8" >
         <views:PatientListView DockPanel.Dock="Left"/>
@@ -17,18 +17,14 @@
         <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
         <views:PatientView2 DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
-
         <views:RenderingProviderView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
-
         <views:PrimaryChargeView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-
         <views:PrimaryChargeAdjustmentView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <views:AddonChargeView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <views:AddonAdjustmentView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <views:SaveFileView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
-
         <views:PreferenceView DockPanel.Dock="Bottom"/>
     </DockPanel>
 </Window>

@@ -142,8 +142,12 @@ namespace PatientManagement.ViewModel
 
         private bool CanAddPatient(object obj)
         {
-            return !string.IsNullOrEmpty(SelectedPatient.FirstName)
-                && !string.IsNullOrEmpty(selectedPatient.LastName);
+            bool canAdd = selectedPatient.Charges.Count > 1 &&
+            !string.IsNullOrEmpty(SelectedPatient.FirstName) &&
+            !string.IsNullOrEmpty(selectedPatient.LastName);
+
+            return canAdd;
+
         }
 
         public Adjustment SelectedChargeAdjustmentIndex { get; set; }

@@ -3,7 +3,8 @@
 namespace Common.Common
 {
     /// <summary>
-    /// Tostring conversion for datepicker passed to datetime
+    ///Since we cannot be 100% certain how we will receive the DateTime this will allow us to cast the DateTime
+    /// As needed
     /// </summary>
     public static class DateConversion
     {

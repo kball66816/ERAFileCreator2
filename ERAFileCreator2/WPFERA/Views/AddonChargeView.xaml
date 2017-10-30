@@ -9,64 +9,75 @@
     <UserControl.DataContext>
         <viewModel:AddonChargeViewModel/>
     </UserControl.DataContext>
-    <Grid Margin="5,5,5,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Vertical">
-            <TextBlock x:Name="AddonProcedureCodeTag"
-                Text="Addon Code" Margin="5,0,0,0"/>
-            <TextBox x:Name="AddonProcedureCodeInput"
-                Text="{Binding SelectedAddonCharge.ProcedureCode,
-                UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" TabIndex="48"/>
+    <Grid Margin="5" >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Addon Codes" Padding="5" TextDecorations="Underline" FontSize="16"/>
         </StackPanel>
-        <StackPanel Grid.Column="1" Orientation="Vertical" d:LayoutOverrides="Height">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
             <StackPanel Orientation="Vertical">
-                <TextBlock x:Name="AddonModifiersTag"
-                    Text="Modifiers" Margin="5,0,0,0"/>
+                <TextBlock x:Name="AddonProcedureCodeTag"
+                Text="Procedure Code" Margin="5,0,0,0" Padding="5,5,5,0"/>
+                <TextBox x:Name="AddonProcedureCodeInput"
+                Text="{Binding SelectedAddonCharge.ProcedureCode,
+                UpdateSourceTrigger=PropertyChanged}" Margin="5,0" TabIndex="48"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Grid.Column="1" Orientation="Vertical" d:LayoutOverrides="Height">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock x:Name="AddonModifiersTag"
+                    Text="Modifiers" Margin="5,0,0,0" Padding="5,5,5,0"/>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="AddonModifierOneInput"
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="AddonModifierOneInput"
                         Text="{Binding SelectedAddonCharge.Modifier.ModifierOne}"                                                                
-                        MaxLength="2" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" MinWidth="20" TabIndex="49"/>
-                    <TextBox x:Name="AddonModifierTwoInput"
+                        MaxLength="2" HorizontalContentAlignment="Stretch" Margin="5,0" MinWidth="20" TabIndex="49"/>
+                        <TextBox x:Name="AddonModifierTwoInput"
                         Text="{Binding SelectedAddonCharge.Modifier.ModifierTwo}"
                         MaxLength="2"
-                        Margin="5,0,0,0" HorizontalContentAlignment="Stretch" MinWidth="20" TabIndex="50"/>
-                    <TextBox x:Name="AddonModifierThreeInput"
+                        Margin="5,0" HorizontalContentAlignment="Stretch" MinWidth="20" TabIndex="50"/>
+                        <TextBox x:Name="AddonModifierThreeInput"
                         Text="{Binding SelectedAddonCharge.Modifier.ModifierThree}"
                         MaxLength="2"
-                        Margin="5,0,0,0" HorizontalContentAlignment="Stretch" MinWidth="20" TabIndex="51"/>
-                    <TextBox x:Name="AddonModifierFourInput"
+                        Margin="5,0" HorizontalContentAlignment="Stretch" MinWidth="20" TabIndex="51"/>
+                        <TextBox x:Name="AddonModifierFourInput"
                         Text="{Binding SelectedAddonCharge.Modifier.ModifierFour}"
                         MaxLength="2"
-                        Margin="5,0,0,0" HorizontalContentAlignment="Stretch" MinWidth="20" TabIndex="52"/>
+                        Margin="5,0" HorizontalContentAlignment="Stretch" MinWidth="20" TabIndex="52"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </StackPanel>
-        <StackPanel Grid.Column="2" Orientation="Vertical">
-            <TextBlock x:Name="AddonPaidAmountTag"
-                Text="Addon Paid Amount" Margin="5,0,0,0"/>
-            <TextBox x:Name="AddonPaidAmountInput"
-                Text="{Binding SelectedAddonCharge.PaymentAmount, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="53"/>
-        </StackPanel>
-        <StackPanel Grid.Column="3" Orientation="Vertical">
-            <TextBlock x:Name="AddonChargesAmountTag"
-                Text="Addon Charge Amount" Margin="5,0,0,0"/>
-            <TextBox x:Name="AddonChargesAmountInput"
-                Text="{Binding SelectedAddonCharge.ChargeCost, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="54"/>
-        </StackPanel>
-        <StackPanel Grid.Column="4" Orientation="Vertical">
-            <TextBlock Margin="5,0,0,0" Visibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Disabled"></TextBlock>
-            <Button x:Name="AddAddonChargesButton"
-                Content="Add Additional Addons"
-                Command="{Binding AddAddonCommand}" Margin="5,0,0,0" TabIndex="55"/>
-        </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Vertical">
+                <TextBlock x:Name="AddonPaidAmountTag"
+                Text="Paid Amount" Margin="5,0,0,0" Padding="5,5,5,0"/>
+                <TextBox x:Name="AddonPaidAmountInput"
+                Text="{Binding SelectedAddonCharge.PaymentAmount, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53"/>
+            </StackPanel>
+            <StackPanel Grid.Column="3" Orientation="Vertical">
+                <TextBlock x:Name="AddonChargesAmountTag"
+                Text="Charge Amount" Margin="5,0,0,0" Padding="5,5,5,0"/>
+                <TextBox x:Name="AddonChargesAmountInput"
+                Text="{Binding SelectedAddonCharge.ChargeCost, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54"/>
+            </StackPanel>
+            <StackPanel Grid.Column="4" Orientation="Vertical">
+                <TextBlock  Text="Addon Code Button Placeholder" Margin="5,5,5,0" Visibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Disabled"></TextBlock>
+                <Button x:Name="AddAddonChargesButton"
+                Content="Add Addon"
+                Command="{Binding AddAddonCommand}" Margin="5,0" TabIndex="55" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
+  
 
 </UserControl>
