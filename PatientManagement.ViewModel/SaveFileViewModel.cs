@@ -1,6 +1,5 @@
 ﻿using Common.Common;
 using EFC.BL;
-using EFC.BL.Utility;
 using PatientManagement.ViewModel.Services;
 using System.Windows.Input;
 
@@ -14,7 +13,6 @@ namespace PatientManagement.ViewModel
         }
         private static void Save(object obj)
         {
-            FormatBillId.BillIdFormatter();
             SendMessages();
             var edi = new UpdatedEdi();
             var save = new SaveToFile();
