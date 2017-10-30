@@ -45,18 +45,6 @@ namespace PatientManagement.ViewModel.Services
         #endregion
 
         /// <summary>
-        /// Registers a recipient for a type of message T. The action parameter will be executed
-        /// when a corresponding message is sent.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="recipient"></param>
-        /// <param name="action"></param>
-        public void Register<T>(object recipient, Action<T> action)
-        {
-            Register(recipient, action, null);
-        }
-
-        /// <summary>
         /// Registers a recipient for a type of message T and a matching context. The action parameter will be executed
         /// when a corresponding message is sent.
         /// </summary>
@@ -64,7 +52,7 @@ namespace PatientManagement.ViewModel.Services
         /// <param name="recipient"></param>
         /// <param name="action"></param>
         /// <param name="context"></param>
-        public void Register<T>(object recipient, Action<T> action, object context)
+        public void Register<T>(object recipient, Action<T> action, object context = null)
         {
             var key = new MessengerKey(recipient, context);
             Dictionary.TryAdd(key, action);
@@ -146,8 +134,8 @@ namespace PatientManagement.ViewModel.Services
 
         protected class MessengerKey
         {
-            public object Recipient { get; private set; }
-            public object Context { get; private set; }
+            public object Recipient { get; }
+            public object Context { get; }
 
             /// <summary>
             /// Initializes a new instance of the MessengerKey class.
