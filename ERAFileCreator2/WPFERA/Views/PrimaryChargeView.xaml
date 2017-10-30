@@ -73,7 +73,7 @@
                     <TextBlock x:Name="PrimaryModifiersTag"
                         Text="Modifiers" Margin="5,2,5,0"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" DataContext="{Binding SelectedCharge.Modifier}">
                     <TextBox x:Name="PrimaryModifierOneInput"
                             Text="{Binding ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             MaxLength="2" Margin="5,0" HorizontalContentAlignment="Stretch" TabIndex="36" MinWidth="20"/>
