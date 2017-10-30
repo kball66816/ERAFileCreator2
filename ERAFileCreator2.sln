@@ -3,15 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERAFileCreator", "ERAFileCreator2\ERAFileCreator.csproj", "{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFC.BL", "ERAFileCreator2\EFC.BL\EFC.BL.csproj", "{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Common", "ERAFileCreator2\Common.Common\Common.Common.csproj", "{B4E23EFB-5228-40C5-9455-904CA873A7E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EraView", "ERAFileCreator2\WPFERA\EraView.csproj", "{00BB8A7E-46D3-4326-B966-A41231929748}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EraFileCreatorTests", "EraFileCreatorTests", "{A0FEC32E-9EAB-4782-961B-86CF90222DA2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.Model", "PatienetManagement.Model\PatientManagement.Model.csproj", "{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}"
 EndProject
@@ -21,18 +17,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edi835", "Edi835\Edi835.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.ViewModel", "PatientManagement.ViewModel\PatientManagement.ViewModel.csproj", "{CF866762-41EC-448B-B713-97948E9B23F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.ViewModelTests", "PatientManagement.ViewModelTests\PatientManagement.ViewModelTests.csproj", "{241F8E94-E34D-48BB-9203-2D07B11A2271}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04C24C40-7B0D-4934-B9F8-6841DFCE18C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,15 +51,8 @@ Global
 		{CF866762-41EC-448B-B713-97948E9B23F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF866762-41EC-448B-B713-97948E9B23F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF866762-41EC-448B-B713-97948E9B23F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{241F8E94-E34D-48BB-9203-2D07B11A2271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{241F8E94-E34D-48BB-9203-2D07B11A2271}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{241F8E94-E34D-48BB-9203-2D07B11A2271}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{241F8E94-E34D-48BB-9203-2D07B11A2271}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{241F8E94-E34D-48BB-9203-2D07B11A2271} = {A0FEC32E-9EAB-4782-961B-86CF90222DA2}
 	EndGlobalSection
 EndGlobal
