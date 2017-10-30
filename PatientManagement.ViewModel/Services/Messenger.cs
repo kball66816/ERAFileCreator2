@@ -6,7 +6,10 @@ using System.Linq;
 namespace PatientManagement.ViewModel.Services
 {
     /// <summary>
-    /// The source was acquired from Stack Overflow: https://stackoverflow.com/questions/40639789/wpf-mvvm-communication-with-messenger-post-message-load-of-vm
+    /// The source was acquired from Stack Overflow: 
+    /// From This Question: https://stackoverflow.com/questions/23798425/wpf-mvvm-communication-between-view-model/23909882#23909882
+    /// From This Answer: https://stackoverflow.com/a/23909882
+    /// From This User: https://stackoverflow.com/users/3683189/dalstroem
     /// </summary>
     public class Messenger
     {
