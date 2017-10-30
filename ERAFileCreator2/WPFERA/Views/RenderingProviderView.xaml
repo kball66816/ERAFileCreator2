@@ -28,27 +28,24 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical">
                 <TextBlock x:Name="RenderingProviderFirstNameTag"
-                    Text="Provider's First Name*" Margin="5,0,0,0"/>
+                    Text="Provider's First Name*" Margin="5,5,5,0"/>
                 <TextBox x:Name="RenderingProviderFirstNameInput"
                     Text="{Binding RenderingProvider.FirstName}"
-                    IsEnabled="{Binding IsChecked, Converter={StaticResource NotConverter}, 
-                    ElementName=IsAlsoRendering}" Margin="5,0,0,0" TabIndex="27"/>
+                 Margin="5,0" TabIndex="27"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <TextBlock x:Name="RenderingProviderLastNameTag"
-                    Text="Provider's Last Name*" Margin="5,0,0,0"/>
+                    Text="Provider's Last Name*" Margin="5,5,5,0"/>
                 <TextBox x:Name="RenderingProviderLastNameInput"
-                    Text="{Binding RenderingProvider.LastName}"
-                    IsEnabled="{Binding IsChecked, Converter={StaticResource NotConverter}, ElementName=IsAlsoRendering}" Margin="5,0,0,0" TabIndex="28"/>
+                    Text="{Binding RenderingProvider.LastName}" Margin="5,0"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="2">
                 <TextBlock x:Name="RenderingProviderNpiTag"
-                    Text="Provider's NPI*" Margin="5,0,0,0"/>
+                    Text="Provider's NPI*" Margin="5,5,5,0"/>
                 <TextBox x:Name="RenderingProviderNpiInput"
                     Text="{Binding RenderingProvider.Npi}"
-                    MaxLength="10" 
-                    IsEnabled="{Binding IsChecked, Converter={StaticResource NotConverter}, ElementName=IsAlsoRendering}" Margin="5,0,0,0" TabIndex="29"/>
-            </StackPanel>
+                    MaxLength="10" Margin="5,0"/>
+                </StackPanel>
         </Grid>
     </Grid>
 </UserControl>
