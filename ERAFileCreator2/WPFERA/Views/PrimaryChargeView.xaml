@@ -16,9 +16,6 @@
         </Grid.RowDefinitions>
         <StackPanel>
             <TextBlock Text="Patient Encounters" FontSize="16" TextDecorations="Underline" Margin="5,0,0,5" Padding="5"/>
-            <CheckBox
-                IsChecked="{Binding SelectedCharge.FormatClassicBillId}"
-                Content="Use Classic ID" Margin="5" HorizontalContentAlignment="Stretch" TabIndex="30" Padding="0"/>
         </StackPanel>
         <Grid  Grid.Row="1">
             <Grid.ColumnDefinitions>
