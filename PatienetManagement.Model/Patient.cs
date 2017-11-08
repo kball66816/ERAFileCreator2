@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using PatientManagement.Model.Interfaces;
 
 namespace PatientManagement.Model
 {
-    public class Patient : Person
+    public class Patient : IPerson, INotifyPropertyChanged
     {
         private ObservableCollection<PrimaryCharge> charges;
 
@@ -16,6 +19,70 @@ namespace PatientManagement.Model
             Id = Guid.NewGuid();
         }
 
+        private string firstName;
+
+        public string FirstName
+        {
+            get { return firstName; }
+            set
+            {
+                if (value != firstName)
+                {
+                    firstName = value;
+                    RaisePropertyChanged("FirstName");
+                    RaisePropertyChanged("Name");
+                    RaisePropertyChanged("FullName");
+                }
+
+            }
+        }
+
+        private string lastName;
+
+        public string LastName
+        {
+            get { return lastName; }
+            set
+            {
+                if (value != lastName)
+                {
+                    lastName = value;
+                    RaisePropertyChanged("LastName");
+                    RaisePropertyChanged("Name");
+                    RaisePropertyChanged("FullName");
+                }
+
+            }
+        }
+
+        private string fullName;
+
+        public string FullName
+        {
+            get
+            {
+                string fullName = FirstName;
+
+                if (!string.IsNullOrEmpty(LastName))
+                {
+                    fullName = fullName += " " + LastName;
+                }
+                return fullName;
+            }
+
+            set
+            {
+                if (value != fullName)
+                {
+                    fullName = value;
+                    RaisePropertyChanged("FullName");
+                }
+            }
+        }
+
+        public string Suffix { get; set; }
+        public string Prefix { get; set; }
+        public string MiddleInitial { get; set; }
         public ObservableCollection<PrimaryCharge> Charges
         {
             get { return charges; }
@@ -30,68 +97,18 @@ namespace PatientManagement.Model
         public string MemberId { get; set; }
 
         public Guid Id { get; set; }
-     
-        
 
-        //public string FormattedBillId
-        //{
-        //    get
-        //    {
-        //        if (billId != null)
-        //        {
-        //            return FormatBillId(billId);
-        //        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        //        else
-        //        {
-        //            return string.Empty;
-        //        }
-        //    }
+        public void RaisePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
-        //}
-
-        //private bool usePlatformId;
-
-        //public bool UsePlatformId
-        //{
-        //    get { return usePlatformId; }
-        //    set
-        //    {
-        //        if (value != usePlatformId)
-        //        {
-        //            usePlatformId = value;
-        //            RaisePropertyChanged("UsePlatformId");
-        //            RaisePropertyChanged("FormattedBillId");
-        //        }
-        //    }
-
-        //}
-
-        //private string FormatBillId(string unformattedBillId)
-        //{
-        //    string formatBillId = string.Empty;
-        //    if (UsePlatformId == false)
-
-        //    {
-        //        formatBillId = "1" + unformattedBillId.PadLeft(10, '0') + ClassicIdConcatination();
-
-        //    }
-        //    else if (UsePlatformId == true)
-        //    {
-        //        formatBillId = unformattedBillId;
-
-        //    }
-        //    return formatBillId;
-        //}
-
-        //private string ClassicIdConcatination()
-        //{
-        //    var substringofPatientFirstName = FirstName.Length > 3 ? FirstName.Substring(0, 3) : FirstName;
-
-        //    var substringofPatientLastName = LastName.Length > 3 ? LastName.Substring(0, 3) : LastName;
-
-        //    return substringofPatientLastName.ToUpper() + substringofPatientFirstName.ToUpper();
-        //}
+       
 
         public bool IncludeSubscriber { get; set; }
 

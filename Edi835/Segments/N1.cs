@@ -22,7 +22,7 @@ namespace EDI835.Segments
             SegmentIdentifier = "N1";
             EntityIdCode = "PE";
             Provider = billingProvider;
-            Name = billingProvider.FullName;
+            Name = billingProvider.BusinessName;
             IdCodeQualifier = "XX";
             IdCode = billingProvider.Npi;
         }

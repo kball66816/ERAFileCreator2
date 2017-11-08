@@ -53,7 +53,7 @@ namespace PatientManagement.Model
 
                 if (!string.IsNullOrEmpty(LastName))
                 {
-                    fullName = fullName += " " + LastName;
+                    fullName = fullName + (" " + LastName);
                 }
                 return fullName;
             }
@@ -74,9 +74,10 @@ namespace PatientManagement.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged!=null)
+            if (PropertyChanged != null)
             {
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }

@@ -37,7 +37,7 @@
             <StackPanel Orientation="Vertical" Grid.Column="0">
                 <StackPanel Orientation="Vertical">
                     <TextBlock x:Name="BillingProviderNameTag"
-                            Text="Provider's Name*" Margin="5,5,5,0"/>
+                            Text="Business Name*" Margin="5,5,5,0"/>
                     <TextBox x:Name="BillingProviderNameInput"
                             IsEnabled="{Binding IsChecked, Converter={StaticResource NotConverter}, ElementName=IsIndividualBillingTag}" Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="11">
                         <Validation.ErrorTemplate>
@@ -49,7 +49,7 @@
                                 </DockPanel>
                             </ControlTemplate>
                         </Validation.ErrorTemplate>
-                        <Binding Path="BillingProvider.FullName" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="BillingProvider.BusinessName" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <common:StringValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>

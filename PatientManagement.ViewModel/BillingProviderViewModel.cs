@@ -22,9 +22,14 @@ namespace PatientManagement.ViewModel
 
         private void UpdateRenderingProvider(object obj)
         {
+            DetermineBusinessName();
             Messenger.Default.Send(BillingProvider, "BillingProvider");
         }
 
+        private void DetermineBusinessName()
+        {
+            BillingProvider.BusinessName = BillingProvider.IsIndividual ? BillingProvider.FullName : BillingProvider.BusinessName;
+        }
 
         private bool CanUpdateRenderingProvider(object obj)
         {
