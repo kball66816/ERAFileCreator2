@@ -9,7 +9,7 @@
     <UserControl.DataContext>
         <viewModel:AddonAdjustmentViewModel/>
     </UserControl.DataContext>
-    <Grid Margin="5,5,5,0">
+    <Grid Margin="5,5,5,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -54,7 +54,7 @@
             </StackPanel>
             <Button x:Name="AddonAdjustmentButton" Grid.Column="4"
                     Content="Add Adjustment"
-                    Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,0,0,0" HorizontalContentAlignment="Center" TabIndex="59"/>
+                    Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,5,5,0" HorizontalContentAlignment="Center" TabIndex="59"/>
             <!--<Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Orientation="Horizontal">
                     <DataGrid AutoGenerateColumns="False"

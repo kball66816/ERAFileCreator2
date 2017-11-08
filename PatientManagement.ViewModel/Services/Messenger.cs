@@ -65,10 +65,6 @@ namespace PatientManagement.ViewModel.Services
         {
         }
 
-
-
-       
-
         /// <summary>
         /// Unregisters a messenger recipient completely. After this method is executed, the recipient will
         /// no longer receive any messages.

@@ -164,11 +164,8 @@
 
             <StackPanel Grid.Column="4">
                 <StackPanel>
-                    <StackPanel.DataContext>
-                        <viewModel:PreferenceViewModel/>
-                    </StackPanel.DataContext>
                     <StackPanel Orientation="Vertical" Margin="0">
-                        <TextBlock Text="Primary Procedure PlaceHolder" Margin="5,5,5,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" Visibility="Hidden"/>
+                        <TextBlock Text="{Binding TextConfirmed}"  Margin="5,5,5,0"/>
                         <TextBox Margin="5,0,5,5" Visibility="Hidden">
                         </TextBox>
                     </StackPanel>

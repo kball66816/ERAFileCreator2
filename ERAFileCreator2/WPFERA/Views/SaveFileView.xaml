@@ -21,7 +21,7 @@
             Command="{Binding SaveFileCommand}"
             Content="Create 835 File"
             Width="115"
-            Margin="5,0,0,0"
-            d:LayoutOverrides="Height" TabIndex="60" HorizontalContentAlignment="Stretch"/>
+            Margin="5"
+            d:LayoutOverrides="Height" TabIndex="60" HorizontalContentAlignment="Center"/>
     </Grid>
 </UserControl>

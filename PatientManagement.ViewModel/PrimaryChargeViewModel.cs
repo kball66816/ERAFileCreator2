@@ -5,6 +5,7 @@ using PatientManagement.ViewModel.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Timers;
 using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
@@ -74,11 +75,15 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("SelectedCharge");
             SendAdjustmentsList();
         }
-
+     
         private void AddChargeToPatientV2(object obj)
         {
             Messenger.Default.Send(SelectedCharge, "Patient");
             ReturnNewCharge();
+            StartTimerForTextConfirmation();
+            RaisePropertyChanged("TextConfirmed");
+
+
 
             Messenger.Default.Send(new UpdateCalculations());
             RaisePropertyChanged("SelectedCharge");
@@ -86,6 +91,28 @@ namespace PatientManagement.ViewModel
             SendAdjustmentsList();
             SendAddonChargeList();
         }
+
+        readonly Timer timer = new Timer { Interval = 5000 };
+
+        private void StartTimerForTextConfirmation()
+        {
+            var confirm = new ConfirmationService();
+
+
+            timer.Elapsed += OnTimeElapsed;
+            timer.Start();
+
+            TextConfirmed = confirm.ChargeAddedTextConfirmation();
+        }
+
+        private void OnTimeElapsed(object source, System.Timers.ElapsedEventArgs e)
+        {
+            timer.Stop();
+            TextConfirmed = string.Empty;
+            RaisePropertyChanged("TextConfirmed");
+
+        }
+        public string TextConfirmed { get; set; }
 
 
         private bool CanAddChargeToPatient(object obj)
