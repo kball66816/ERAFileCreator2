@@ -47,7 +47,6 @@
     <Compile Include="AdjustmentRepository.cs" />
     <Compile Include="BillingProviderRepository.cs" />
     <Compile Include="InsuranceRepository.cs" />
-    <Compile Include="ElectronicDataInterchange.cs" />
     <Compile Include="PatientRepository.cs" />
     <Compile Include="PrimaryChargeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -52,7 +52,9 @@ namespace PatientManagement.ViewModel
         {
             if (billingProvider.IsIndividual)
             {
-                RenderingProvider = billingProvider;
+                RenderingProvider.FirstName = billingProvider.FirstName;
+                RenderingProvider.LastName = billingProvider.LastName;
+                RenderingProvider.Npi = billingProvider.Npi;
             }
 
             else if (billingProvider.IsAlsoRendering == false)
