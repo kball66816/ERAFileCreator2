@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EraView.Views"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
+             xmlns:common="clr-namespace:Common.Common;assembly=Common.Common"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:RenderingProviderViewModel/>
@@ -43,8 +44,22 @@
                 <TextBlock x:Name="RenderingProviderNpiTag"
                     Text="Provider's NPI*" Margin="5,5,5,0"/>
                 <TextBox x:Name="RenderingProviderNpiInput"
-                    Text="{Binding RenderingProvider.Npi}"
-                    MaxLength="10" Margin="5,0"/>
+                         MaxLength="10" Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="14">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <DockPanel >
+                                <Border BorderBrush="Red" BorderThickness="2">
+                                    <AdornedElementPlaceholder/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                    <Binding Path="RenderingProvider.Npi" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <common:NpivalidationRule ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
                 </StackPanel>
         </Grid>
     </Grid>

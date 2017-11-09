@@ -169,9 +169,14 @@
                         <TextBox Margin="5,0,5,5" Visibility="Hidden">
                         </TextBox>
                     </StackPanel>
-                    <CheckBox Content="Reuse Code"
-                              IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
-                              Command="{Binding SavePreferenceCommand}" Margin="5,5,5,0" TabIndex="42"/>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel.DataContext>
+                            <viewModel:PreferenceViewModel/>
+                        </StackPanel.DataContext>
+                        <CheckBox Content="Reuse Code"
+                            IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
+                            Command="{Binding SavePreferenceCommand}" Margin="5,5,5,0" TabIndex="42"/>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel>
                     <Button
