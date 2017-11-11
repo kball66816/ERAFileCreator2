@@ -54,11 +54,6 @@ namespace PatientManagement.ViewModel
             {
                 RenderingProvider = billingProvider;
             }
-
-            else if (billingProvider.IsAlsoRendering == false)
-            {
-                return;
-            }
         }
 
         private Provider renderingProvider;

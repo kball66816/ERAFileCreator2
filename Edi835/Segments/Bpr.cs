@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using Common.Common;
+using Common.Common.Converters;
+using Common.Common.Extensions;
 using Edi835.Segments;
 using PatientManagement.Model;
 
@@ -28,7 +30,7 @@ namespace EDI835.Segments
             ReceivingDfiNumber = "GAPFILL"; //bpr13
             ReceivingAccountNumberQualifier = "DA"; //bpr14
             ReceivingAccountNumber = "0";//bpr15
-            Date = insurance.CheckDate.ConvertedDate();
+            Date = insurance.CheckDate.DateToYearFirstShortString();
            
 
         }
@@ -128,7 +130,7 @@ namespace EDI835.Segments
             //buildBpr.Append("0" + "*"); //BPR015 Receiver or Provider Account Number
 
             //var dateConversion = new DateConversion();
-            //buildBpr.Append(dateConversion.ConvertedDate(insurance.CheckDate)); //BPR016 Check Issue/Effective date
+            //buildBpr.Append(dateConversion.DateToYearFirstShortString(insurance.CheckDate)); //BPR016 Check Issue/Effective date
             //buildBpr.Append("~");
 
             return buildBpr.ToString();

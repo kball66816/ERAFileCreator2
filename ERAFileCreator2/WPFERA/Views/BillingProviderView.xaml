@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:common="clr-namespace:Common.Common;assembly=Common.Common"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
+             xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:BillingProviderViewModel/>
@@ -51,7 +52,7 @@
                         </Validation.ErrorTemplate>
                         <Binding Path="BillingProvider.FullName" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                                <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox>
@@ -71,7 +72,7 @@
                         </Validation.ErrorTemplate>
                         <Binding Path="BillingProvider.Address.StreetOne" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                                <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox>
@@ -93,7 +94,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="BillingProvider.FirstName" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -112,7 +113,7 @@
                         </Validation.ErrorTemplate>
                         <Binding Path="BillingProvider.Address.StreetTwo" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                                <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox>
@@ -134,7 +135,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="BillingProvider.LastName" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -153,7 +154,7 @@
                         </Validation.ErrorTemplate>
                         <Binding Path="BillingProvider.Address.City" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                                <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox>
@@ -175,7 +176,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="BillingProvider.Npi" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <common:NpivalidationRule ValidationStep="RawProposedValue"/>
+                            <validators:NpivalidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -210,7 +211,7 @@
                         </Validation.ErrorTemplate>
                         <Binding Path="BillingProvider.Address.ZipCode" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <common:ZipCodeValidationRule ValidationStep="RawProposedValue"/>
+                                <validators:ZipCodeValidationRule ValidationStep="RawProposedValue"/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox>

@@ -1,5 +1,7 @@
 ﻿using Common.Common;
 using System.Text;
+using Common.Common.Converters;
+using Common.Common.Extensions;
 using PatientManagement.Model;
 
 namespace EFC.BL.EDI_Segments
@@ -27,7 +29,7 @@ namespace EFC.BL.EDI_Segments
             buildBpr.Append("GAPFILL" + "*");
             buildBpr.Append("DA" + "*"); //BPR013 Account Number Qualifier
             buildBpr.Append("0" + "*"); //BPR015 Receiver or Provider Account Number
-            buildBpr.Append(insurance.CheckDate.ConvertedDate()); //BPR016 Check Issue/Effective date
+            buildBpr.Append(insurance.CheckDate.DateToYearFirstShortString()); //BPR016 Check Issue/Effective date
             buildBpr.Append("~");
 
             return buildBpr.ToString();

@@ -2,6 +2,8 @@
 using PatientManagement.Model;
 using System;
 using System.Text;
+using Common.Common.Converters;
+using Common.Common.Extensions;
 using Edi835.Segments;
 
 namespace EDI835.Segments
@@ -11,7 +13,7 @@ namespace EDI835.Segments
         public Dtm()
         {
             SegmentIdentifier = "DTM";
-            Date = DateTime.Today.ConvertedDate();
+            Date = DateTime.Today.DateToYearFirstShortString();
             DateTimeQualifier = "405";
         }
 
@@ -27,7 +29,7 @@ namespace EDI835.Segments
             Charge = charge;
             SegmentIdentifier = "DTM";
             DateTimeQualifier = "472";
-            Date = charge.DateOfService.ConvertedDate();
+            Date = charge.DateOfService.DateToYearFirstShortString();
         }
 
         private PrimaryCharge Charge { get; set; }
@@ -59,13 +61,13 @@ namespace EDI835.Segments
         private void ServiceStartDateDetails()
         {
             DateTimeQualifier = "232";
-            Date = Charge.DateOfService.ConvertedDate();
+            Date = Charge.DateOfService.DateToYearFirstShortString();
         }
 
         private void ServiceExpirationDateDetails()
         {
             DateTimeQualifier = "233";
-            Date = Charge.DateOfService.ConvertedDate();
+            Date = Charge.DateOfService.DateToYearFirstShortString();
         }
 
 
@@ -86,7 +88,7 @@ namespace EDI835.Segments
         private void ClaimReceivedDateDetails()
         {
             DateTimeQualifier = "050";
-            Date = Charge.DateOfService.ConvertedDate();
+            Date = Charge.DateOfService.DateToYearFirstShortString();
         }
 
         private void AttachClaimReceivedDateDetails()

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:EraView.Views"
              xmlns:common="clr-namespace:Common.Common;assembly=Common.Common"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
+             xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:PatientViewModel/>
@@ -46,7 +47,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="SelectedPatient.FirstName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                         <Binding.ValidationRules>
-                            <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -73,7 +74,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="SelectedPatient.LastName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                         <Binding.ValidationRules>
-                            <common:StringValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>

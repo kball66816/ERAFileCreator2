@@ -36,7 +36,6 @@ namespace PatientManagement.ViewModel
             }
         }
 
-
         private Adjustment selectedAdjustment;
 
         public Adjustment SelectedAdjustment

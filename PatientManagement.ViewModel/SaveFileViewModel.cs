@@ -16,13 +16,13 @@ namespace PatientManagement.ViewModel
             SendMessages();
             var edi = new UpdatedEdi();
             var save = new SaveToFile();
-            save.SaveFile(edi.Create835File());
+            save.SaveTextFile(edi.Create835File());
         }
 
         private static void SendMessages()
         {
             Messenger.Default.Send(new UpdateRepositoriesMessage());
-            Messenger.Default.Send(new SaveFileMessage(), "SaveFile");
+            Messenger.Default.Send(new SaveFileMessage(), "SaveTextFile");
         }
 
         public ICommand SaveFileCommand { get; set; }
