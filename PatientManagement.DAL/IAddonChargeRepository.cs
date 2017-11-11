@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PatientManagement.Model;
 
 namespace PatientManagement.DAL
@@ -19,7 +15,5 @@ namespace PatientManagement.DAL
         ObservableCollection<AddonCharge> GetAllCharges();
 
         AddonCharge GetSelectedCharge(Guid id);
-
-        IAdjustmentRepository AdjustmentRepository { get; set; }
     }
 }

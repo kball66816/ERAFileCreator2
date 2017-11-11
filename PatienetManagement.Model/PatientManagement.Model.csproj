@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="AddonCharge.cs" />
     <Compile Include="Adjustment.cs" />
-    <Compile Include="IPrimaryChargeRepository.cs" />
     <Compile Include="PrimaryCharge.cs" />
     <Compile Include="InsuranceCompany.cs" />
     <Compile Include="Modifier.cs" />
