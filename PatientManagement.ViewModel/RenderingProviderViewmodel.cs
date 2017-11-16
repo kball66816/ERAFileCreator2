@@ -56,11 +56,6 @@ namespace PatientManagement.ViewModel
                 RenderingProvider.LastName = billingProvider.LastName;
                 RenderingProvider.Npi = billingProvider.Npi;
             }
-
-            else if (billingProvider.IsAlsoRendering == false)
-            {
-                return;
-            }
         }
 
         private Provider renderingProvider;

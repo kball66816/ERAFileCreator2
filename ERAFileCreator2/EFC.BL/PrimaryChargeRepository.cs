@@ -1,7 +1,6 @@
 ﻿using PatientManagement.DAL;
 using PatientManagement.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -13,12 +12,11 @@ namespace EFC.BL
         {
             charges = patient.Charges;
         }
-        private ObservableCollection<PrimaryCharge> charges;
 
+        private ObservableCollection<PrimaryCharge> charges;
 
         public void Add(PrimaryCharge charge)
         {
-            AdjustmentRepository = new AdjustmentRepository(charge);
             charges.Add(charge);
         }
 
@@ -41,8 +39,5 @@ namespace EFC.BL
         {
             return charges.FirstOrDefault(c=>c.Id == id);
         }
-
-
-        public IAdjustmentRepository AdjustmentRepository { get; set; }
     }
 }

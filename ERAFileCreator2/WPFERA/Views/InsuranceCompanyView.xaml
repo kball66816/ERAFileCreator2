@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:EraView.Views"
              xmlns:validation="clr-namespace:Common.Common;assembly=Common.Common"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
+             xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:InsuranceViewModel/>
@@ -51,7 +52,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="Insurance.Name" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
-                            <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -69,7 +70,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="Insurance.Address.StreetOne" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
-                            <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -97,7 +98,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="Insurance.Address.StreetTwo" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -117,7 +118,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="Insurance.TaxId" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
-                            <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -135,7 +136,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="Insurance.Address.City" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
-                            <validation:StringValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:StringValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -175,7 +176,7 @@
                     </Validation.ErrorTemplate>
                     <Binding Path="Insurance.Address.ZipCode" UpdateSourceTrigger="LostFocus">
                         <Binding.ValidationRules>
-                            <validation:ZipCodeValidationRule ValidationStep="RawProposedValue"/>
+                            <validators:ZipCodeValidationRule ValidationStep="RawProposedValue"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>

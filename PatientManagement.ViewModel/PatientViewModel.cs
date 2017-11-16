@@ -2,7 +2,6 @@
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -18,7 +17,7 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
             Messenger.Default.Register<PrimaryCharge>(this, OnPrimaryChargeReceived, "Patient");
             Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
-            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileMessage,"SaveFile");
+            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileMessage,"SaveTextFile");
         }
 
         private void OnSaveFileMessage(SaveFileMessage obj)
@@ -118,7 +117,7 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        private Patient PromptTypeOfNewPatient()
+        private void PromptTypeOfNewPatient()
         {
             var dialogPrompt = new DialogService(selectedPatient);
 
@@ -131,7 +130,6 @@ namespace PatientManagement.ViewModel
             {
                 SelectedPatient = new Patient();
             }
-            return SelectedPatient;
         }
 
         private void CloneSelectedPatient()
@@ -147,22 +145,6 @@ namespace PatientManagement.ViewModel
             !string.IsNullOrEmpty(selectedPatient.LastName);
 
             return canAdd;
-
-        }
-
-        public Adjustment SelectedChargeAdjustmentIndex { get; set; }
-
-        private ObservableCollection<Adjustment> adjustments;
-
-        public ObservableCollection<Adjustment> Adjustments
-        {
-            get { return adjustments; }
-            set
-            {
-                if (value == adjustments) return;
-                adjustments = value;
-                RaisePropertyChanged("Adjustments");
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -175,10 +157,7 @@ namespace PatientManagement.ViewModel
         private void LoadCommands()
         {
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
-
         }
-
-
 
         private void SaveSettings()
         {

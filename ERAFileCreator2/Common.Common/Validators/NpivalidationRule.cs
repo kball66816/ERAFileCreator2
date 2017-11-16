@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
 
-namespace Common.Common
+namespace Common.Common.Validators
 {
     public class NpivalidationRule:ValidationRule
     {

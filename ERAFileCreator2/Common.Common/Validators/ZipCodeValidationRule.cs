@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace Common.Common
+namespace Common.Common.Validators
 {
     public class ZipCodeValidationRule : ValidationRule
     {
