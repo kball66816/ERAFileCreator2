@@ -6,7 +6,7 @@
         x:Class="EraView.MainWindow"
         mc:Ignorable="d"
         Title="ERA File Creator"
-        SizeToContent="WidthAndHeight" HorizontalContentAlignment="Stretch">
+        HorizontalContentAlignment="Stretch" Width="1000" Height="1000">
 
     <DockPanel x:Name="TopGrid" Background="#FF7789D8" >
         <views:PatientListView DockPanel.Dock="Left"/>

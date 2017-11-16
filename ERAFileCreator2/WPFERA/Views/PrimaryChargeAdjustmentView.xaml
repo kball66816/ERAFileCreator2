@@ -24,22 +24,27 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
                 <ComboBox x:Name="AdjustmentTypeDropdown"
                     ItemsSource="{Binding PrimaryAdjustmentType}"
                     DisplayMemberPath="Value"
                     SelectedValuePath="Value"
                     SelectedValue="{Binding SelectedAdjustment.AdjustmentType}"
                     SelectedIndex="0"
-                    ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentTypeDropdown}" Margin="5,5,5,0" TabIndex="44"/>
+                    ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentTypeDropdown}" Margin="5,5,5,0" TabIndex="44" HorizontalContentAlignment="Stretch"/>
                 <ComboBox x:Name="AdjustmentReasonCodeDropdown"
                     ItemsSource="{Binding PrimaryAdjustmentReasonCodes}"
                     DisplayMemberPath="Value"
                     SelectedValuePath="Value"
                     SelectedValue="{Binding SelectedAdjustment.AdjustmentReasonCode}"
-                          ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}" SelectedIndex="34" Margin="5,5,5,0" TabIndex="45"/>
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}" SelectedIndex="34" Margin="5,5,5,0" TabIndex="45" Grid.Column="1" HorizontalContentAlignment="Stretch"/>
                 <TextBox x:Name="PrimaryAdjustmentAmountInput"
-                    Text="{Binding SelectedAdjustment.AdjustmentAmount, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,0" TabIndex="46">
+                    Text="{Binding SelectedAdjustment.AdjustmentAmount, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,0" TabIndex="46" Grid.Column="2" HorizontalContentAlignment="Stretch">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -50,7 +55,7 @@
                         </ControlTemplate>
                     </Validation.ErrorTemplate>
                 </TextBox>
-            </StackPanel>
+            </Grid>
             <Button x:Name="AddAdjustmentButton" Grid.Column="1"
                 Command="{Binding AddChargeAdjustmentCommand}"
                 Content="Add Adjustment" Margin="5,5,5,0" HorizontalContentAlignment="Center" TabIndex="47" VerticalContentAlignment="Center"/>

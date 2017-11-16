@@ -34,7 +34,7 @@
                         Text="Date Of Service*"/>
                     <DatePicker x:Name="DateofServiceInput"
                         Margin="5,0,5,5"
-                        SelectedDate="{Binding SelectedCharge.DateOfService}" TabIndex="31"/>
+                        SelectedDate="{Binding SelectedCharge.DateOfService}" TabIndex="31" MinWidth="102"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <TextBlock x:Name="PrimaryProcedureCodeTag"
@@ -69,24 +69,29 @@
                         ToolTip="{Binding SelectedItem.Value, ElementName=PlaceOfServiceComboBox, Mode=OneWay}" Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="32"/>
 
                 </StackPanel>
-                <StackPanel Margin="5,0,0,0" Orientation="Vertical">
-                    <TextBlock x:Name="PrimaryModifiersTag"
-                        Text="Modifiers" Margin="5,2,5,0"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" DataContext="{Binding SelectedCharge.Modifier}">
+                <TextBlock x:Name="PrimaryModifiersTag"
+                        Text="Modifiers" Margin="5,0,5,0"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <TextBox x:Name="PrimaryModifierOneInput"
                             Text="{Binding ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            MaxLength="2" Margin="5,0" HorizontalContentAlignment="Stretch" TabIndex="36" MinWidth="20"/>
+                            MaxLength="2" Margin="5,0" MinWidth="20"/>
                     <TextBox x:Name="PrimaryModifierTwoInput"
                             Text="{Binding ModifierTwo}"
-                            MaxLength="2" Margin="5,0" HorizontalContentAlignment="Stretch" TabIndex="37" MinWidth="20"/>
+                            MaxLength="2" TabIndex="37" MinWidth="20" Grid.Column="1" Margin="5,0"/>
                     <TextBox x:Name="PrimaryModifierThreeInput"
                             Text="{Binding ModifierThree}"
-                            MaxLength="2" Margin="5,0" HorizontalContentAlignment="Stretch" TabIndex="38" MinWidth="20" />
+                            MaxLength="2" TabIndex="38" MinWidth="20" Grid.Column="2" Margin="5,0" />
                     <TextBox x:Name="PrimaryModifierFourInput"
                             Text="{Binding ModifierFour}"
-                            MaxLength="2" Margin="5,0" HorizontalContentAlignment="Stretch" TabIndex="39" MinWidth="20"/>
-                </StackPanel>
+                            MaxLength="2" TabIndex="39" MinWidth="20" Grid.Column="3" Margin="5,0"/>
+                </Grid>
+
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="2">
                 <StackPanel>
@@ -186,7 +191,7 @@
 
                 </StackPanel>
             </StackPanel>
-            
+
 
         </Grid>
         <!--<Expander  Grid.Row="3" Grid.Column="0" Margin="5,0,0,0"
