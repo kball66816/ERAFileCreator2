@@ -72,7 +72,7 @@
                 </StackPanel>
                 <TextBlock x:Name="PrimaryModifiersTag"
                         Text="Modifiers" Margin="5,0,5,0"/>
-                <Grid>
+                <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -80,16 +80,16 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="PrimaryModifierOneInput"
-                            Text="{Binding ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding SelectedCharge.Modifier.ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             MaxLength="2" Margin="5,0" MinWidth="20"/>
                     <TextBox x:Name="PrimaryModifierTwoInput"
-                            Text="{Binding ModifierTwo}"
+                            Text="{Binding SelectedCharge.Modifier.ModifierTwo}"
                             MaxLength="2" TabIndex="37" MinWidth="20" Grid.Column="1" Margin="5,0"/>
                     <TextBox x:Name="PrimaryModifierThreeInput"
-                            Text="{Binding ModifierThree}"
+                            Text="{Binding SelectedCharge.Modifier.ModifierThree}"
                             MaxLength="2" TabIndex="38" MinWidth="20" Grid.Column="2" Margin="5,0" />
                     <TextBox x:Name="PrimaryModifierFourInput"
-                            Text="{Binding ModifierFour}"
+                            Text="{Binding SelectedCharge.Modifier.ModifierFour}"
                             MaxLength="2" TabIndex="39" MinWidth="20" Grid.Column="3" Margin="5,0"/>
                 </Grid>
 
