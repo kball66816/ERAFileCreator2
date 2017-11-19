@@ -164,7 +164,7 @@
                 <TextBlock x:Name="BillingProviderNpiTag"
                         Text="NPI*" Margin="5,5,5,0"/>
                 <TextBox x:Name="BillingProviderNpiInput"
-                        MaxLength="10" Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="14">
+                        MaxLength="10" Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="14" PreviewTextInput="BillingProviderNpiInput_PreviewTextInput">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -199,11 +199,11 @@
                     <TextBlock x:Name="BillingProviderZipCodeTag"
                             Text="Zip Code" Margin="5,5,5,0"/>
                     <TextBox x:Name="BillingProviderZipCodeInput"
-                            MaxLength="9" Margin="5,0" HorizontalContentAlignment="Stretch" TabIndex="19">
+                            MaxLength="9" Margin="5,0" HorizontalContentAlignment="Stretch" TabIndex="19" PreviewTextInput="BillingProviderZipCodeInput_PreviewTextInput">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel >
-                                    <Border BorderBrush="Red" BorderThickness="2">
+                                    <Border BorderBrush="Red" BorderThickness="1">
                                         <AdornedElementPlaceholder/>
                                     </Border>
                                 </DockPanel>

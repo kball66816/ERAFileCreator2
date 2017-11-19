@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using EraView.Utility;
 
 namespace EraView.Views
 {
@@ -14,23 +15,14 @@ namespace EraView.Views
             InitializeComponent();
         }
 
-        private void RestrictTextToNumericOnly(TextCompositionEventArgs e)
-        {
 
-            if (!(int.TryParse(e.Text, out int result)))
-            {
-                e.Handled = true;
-            }
-        }
 
         private void InsuranceZipCodeInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            RestrictTextToNumericOnly(e);
+            InputRestrictions.RestrictTextToNumericOnly(e);
         }
 
-        private void EditCharge_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
+       
+
     }
 }
