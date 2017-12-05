@@ -30,6 +30,7 @@ namespace PatientManagement.ViewModel
         private void LoadCommands()
         {
             SaveFileCommand = new Command(Save, CanSave);
+
         }
 
         private static bool CanSave(object obj)
