@@ -17,6 +17,13 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<UpdateCalculations>(this, OnUpdateCalculation);
             Messenger.Default.Register<UpdateRepositoriesMessage>(this,OnUpdateRepositoriesMessageReceieved);
             Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved,"UpdateSettings");
+            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileReceived,"SaveTextFile");
+        }
+
+        private void OnSaveFileReceived(SaveFileMessage obj)
+        {
+            SaveSettings();
+            LoadInsuranceCompany();
         }
 
         private void OnSettingsSaved(SettingsSavedMessage obj)
@@ -70,6 +77,7 @@ namespace PatientManagement.ViewModel
             PaymentTypes = Insurance.PaymentTypes;
             InsuranceStates = Insurance.Address.States;
             SaveInsuranceToRepository();
+            RaisePropertyChanged("Insurance");
         }
 
         public Dictionary<string, string> PaymentTypes { get; set; }

@@ -37,17 +37,17 @@
                 <TextBlock x:Name="RenderingProviderLastNameTag"
                     Text="Provider's Last Name*" Margin="5,5,5,0"/>
                 <TextBox x:Name="RenderingProviderLastNameInput"
-                    Text="{Binding RenderingProvider.LastName}" Margin="5,0"/>
+                    Text="{Binding RenderingProvider.LastName}" Margin="5,0" TabIndex="28"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="2">
                 <TextBlock x:Name="RenderingProviderNpiTag"
                     Text="Provider's NPI*" Margin="5,5,5,0"/>
                 <TextBox x:Name="RenderingProviderNpiInput"
-                         MaxLength="10" Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="14">
+                         MaxLength="10" Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="29" PreviewTextInput="RenderingProviderNpiInput_PreviewTextInput">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
-                                <Border BorderBrush="Red" BorderThickness="2">
+                                <Border BorderBrush="Red" BorderThickness="1">
                                     <AdornedElementPlaceholder/>
                                 </Border>
                             </DockPanel>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EraView.Utility;
 
 namespace EraView.Views
 {
@@ -23,6 +24,16 @@ namespace EraView.Views
         public BillingProviderView()
         {
             InitializeComponent();
+        }
+
+        private void BillingProviderZipCodeInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToNumericOnly(e);
+        }
+
+        private void BillingProviderNpiInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToNumericOnly(e);
         }
     }
 }

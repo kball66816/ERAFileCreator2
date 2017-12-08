@@ -4,18 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Background="#FF7789D8" BorderBrush="#FF7789D8">
     <UserControl.DataContext>
         <viewModel:PatientListViewModel/>
     </UserControl.DataContext>
     <StackPanel>
-        <TextBlock DockPanel.Dock="top"
-                   Text="Patients"></TextBlock>
-        <ListBox 
+        <StackPanel Orientation="Vertical">
+            <TextBlock DockPanel.Dock="top"
+                       Text="Patients:"/>
+            <TextBlock Text="{Binding Patients.Count}"/>
+        </StackPanel>
+        <ListBox Background="#FF7789D8" BorderBrush="#FF7789D8"
             ItemsSource="{Binding Patients}"
             SelectedItem="{Binding Patient, Mode=TwoWay}"
             MinWidth="100"
-            Background="#FF7789D8" BorderBrush="#FF7789D8" HorizontalContentAlignment="Stretch" TabIndex="61">
+            HorizontalContentAlignment="Stretch" TabIndex="61">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

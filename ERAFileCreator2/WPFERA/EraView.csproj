@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utility\InputRestrictions.cs" />
     <Compile Include="Utility\NotConverter.cs" />
     <Compile Include="Views\AddonAdjustmentView.xaml.cs">
       <DependentUpon>AddonAdjustmentView.xaml</DependentUpon>
@@ -78,9 +79,6 @@
     </Compile>
     <Compile Include="Views\PatientView.xaml.cs">
       <DependentUpon>PatientView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PatientView2.xaml.cs">
-      <DependentUpon>PatientView2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PreferenceView.xaml.cs">
       <DependentUpon>PreferenceView.xaml</DependentUpon>
@@ -133,10 +131,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PatientView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PatientView2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

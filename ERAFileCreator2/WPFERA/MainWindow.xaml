@@ -15,7 +15,7 @@
         <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
         <views:BillingProviderView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
-        <views:PatientView2 DockPanel.Dock="Top" Background="#FFD0E8FF"/>
+        <views:PatientView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
         <views:RenderingProviderView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>

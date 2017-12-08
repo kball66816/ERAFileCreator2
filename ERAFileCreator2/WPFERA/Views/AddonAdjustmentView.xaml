@@ -49,7 +49,7 @@
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
-                                <Border BorderBrush="Red" BorderThickness="2">
+                                <Border BorderBrush="Red" BorderThickness="1">
                                     <AdornedElementPlaceholder/>
                                 </Border>
                             </DockPanel>

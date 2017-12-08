@@ -44,7 +44,7 @@
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
-                                <Border BorderBrush="Red" BorderThickness="2">
+                                <Border BorderBrush="Red" BorderThickness="1">
                                     <AdornedElementPlaceholder/>
                                 </Border>
                             </DockPanel>
@@ -58,7 +58,7 @@
                 </TextBox>
                 <TextBlock x:Name="InsuranceAddressLineOneTag"
                     Text="Street Line One*" Margin="5,5,5,0"/>
-                <TextBox x:Name="InsuranceStreetLineOneInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="4">
+                <TextBox x:Name="InsuranceStreetLineOneInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="1">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
@@ -77,7 +77,7 @@
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="PaymentTypeTag"
-                    Text="Payment Type"
+                    Text="Payment Type*"
                     Margin="5,5,5,0"/>
                 <ComboBox x:Name="PaymentTypeDropdown"
                     SelectedValuePath="Value"
@@ -110,7 +110,7 @@
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
-                                <Border BorderBrush="Red" BorderThickness="2">
+                                <Border BorderBrush="Red" BorderThickness="1">
                                     <AdornedElementPlaceholder/>
                                 </Border>
                             </DockPanel>
@@ -123,7 +123,7 @@
                     </Binding>
                 </TextBox>
                 <TextBlock x:Name="InsuranceCityTag"
-                    Text="City" Margin="5,5,5,0"/>
+                    Text="City*" Margin="5,5,5,0"/>
                 <TextBox x:Name="InsuranceCityInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="6">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
@@ -148,7 +148,7 @@
                     IsEnabled="False"
                     Text="{Binding Insurance.CheckAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch" Margin="5,0,5,5"/>
                 <TextBlock x:Name="InsuranceStateTag"
-                    Text="State" Margin="5,5,5,0"/>
+                    Text="State*" Margin="5,5,5,0"/>
                 <ComboBox x:Name="InsuranceAddressStateInput"
                     ItemsSource="{Binding InsuranceStates}"
                     SelectedValuePath="Value"
@@ -162,9 +162,9 @@
                 <DatePicker x:Name="CheckDateInput"
                     SelectedDate="{Binding Insurance.CheckDate}" Margin="5,0,5,5" TabIndex="3"/>
                 <TextBlock x:Name="InsuranceZipCodeTag"
-                    Text="Zip Code" Margin="5,0"/>
+                    Text="Zip Code*" Margin="5,0"/>
                 <TextBox x:Name="InsuranceZipCodeInput"
-                    MaxLength="9" Margin="5,0,0,0" TabIndex="8">
+                    MaxLength="9" Margin="5,0,0,0" TabIndex="8" PreviewTextInput="InsuranceZipCodeInput_PreviewTextInput">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
