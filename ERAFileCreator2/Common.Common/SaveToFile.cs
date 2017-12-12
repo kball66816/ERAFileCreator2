@@ -2,23 +2,48 @@
 using System.IO;
 using System.Windows.Forms;
 
+
 namespace Common.Common
 {
-    public class SaveToFile
+    public static class SaveToFile
     {
-        public void SaveTextFile(string file)
+        public static void SaveTextFiletoSelectedDirectory(this string file)
         {
             using (var saveFile = new SaveFileDialog())
             {
-                saveFile.Filter = "Text Files| *.txt";
-                saveFile.DefaultExt = "txt";
-                saveFile.FileName = DateTime.Now.ToString("yyyy_MM_dd_hmmssff");
+                SetTextFileFiltersForSaving(saveFile);
                 if (saveFile.ShowDialog() == DialogResult.OK)
                 {
                     File.WriteAllText(saveFile.FileName, file);
                 }
             }
         }
+
+        /// <summary>
+        /// Due to restrictions in read/write privilage this is the default folder
+        /// for saving batch files to.
+        /// </summary>
+        /// <param name="file"></param>
+        public static void SaveFiletoADefaultDirectory(this string file)
+        {
+            using (var saveFile = new SaveFileDialog())
+            {
+                const string directory = @"C:\Users\Public\Documents\835 Batch\";
+                SetTextFileFiltersForSaving(saveFile);
+                Directory.CreateDirectory(directory);
+                var path = $"{directory}{saveFile.FileName}.{saveFile.DefaultExt}";
+                File.WriteAllText(path, file);
+
+            }
+        }
+
+        private static void SetTextFileFiltersForSaving(SaveFileDialog saveFile)
+        {
+            saveFile.Filter = "Text Files| *.txt";
+            saveFile.DefaultExt = "txt";
+            saveFile.FileName = DateTime.Now.ToString("yyyy_MM_dd_hmmssff");
+        }
+
     }
 }
 

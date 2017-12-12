@@ -81,7 +81,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="PrimaryModifierOneInput"
                             Text="{Binding SelectedCharge.Modifier.ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            MaxLength="2" Margin="5,0" MinWidth="20" TabIndex="36"/>
+                            MaxLength="2" Margin="5,0" MinWidth="20"  TabIndex="36"/>
                     <TextBox x:Name="PrimaryModifierTwoInput"
                             Text="{Binding SelectedCharge.Modifier.ModifierTwo}"
                             MaxLength="2" TabIndex="37" MinWidth="20" Grid.Column="1" Margin="5,0"/>
