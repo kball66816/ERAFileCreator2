@@ -17,7 +17,7 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<UpdateCalculations>(this, OnUpdateCalculation);
             Messenger.Default.Register<UpdateRepositoriesMessage>(this,OnUpdateRepositoriesMessageReceieved);
             Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved,"UpdateSettings");
-            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileReceived,"SaveTextFile");
+            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileReceived,"SaveTextFiletoSelectedDirectory");
         }
 
         private void OnSaveFileReceived(SaveFileMessage obj)

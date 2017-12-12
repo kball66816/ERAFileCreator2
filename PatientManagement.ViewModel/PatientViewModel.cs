@@ -17,7 +17,7 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
             Messenger.Default.Register<PrimaryCharge>(this, OnPrimaryChargeReceived, "Patient");
             Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
-            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileMessage,"SaveTextFile");
+            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileMessage,"SaveTextFiletoSelectedDirectory");
         }
 
         private void OnSaveFileMessage(SaveFileMessage obj)
