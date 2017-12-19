@@ -11,7 +11,6 @@ namespace EDI835.Segments
     {
         public Bpr(InsuranceCompany insurance)
         {
-            Insurance = insurance;
             SegmentIdentifier = "BPR"; //bpr 1
             TransactionHandlingCode = "I"; // bpr 2
             MonetaryAmount = insurance.CheckAmount;
@@ -31,11 +30,8 @@ namespace EDI835.Segments
             ReceivingAccountNumberQualifier = "DA"; //bpr14
             ReceivingAccountNumber = "0";//bpr15
             Date = insurance.CheckDate.DateToYearFirstShortString();
-           
-
         }
 
-        private InsuranceCompany Insurance { get; set; }
         private string TransactionHandlingCode { get; set; }
         private decimal MonetaryAmount { get; set; }
         private string CreditOrDebtFlag { get; set; }

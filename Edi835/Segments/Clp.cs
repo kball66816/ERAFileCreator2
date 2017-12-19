@@ -55,10 +55,11 @@ namespace EDI835.Segments
             buildClp.Append(TotalClaimChargeAmount);
             buildClp.Append(DataElementTerminator);
             buildClp.Append(TotalClaimPaymentAmount);
+            buildClp.Append(DataElementTerminator);
 
             if (PatientResponsibility > 0)
             {
-                buildClp.Append(DataElementTerminator);
+
                 buildClp.Append(PatientResponsibility);
               
             }

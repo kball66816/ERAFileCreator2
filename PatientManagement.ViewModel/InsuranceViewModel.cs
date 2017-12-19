@@ -1,4 +1,5 @@
-﻿using EFC.BL;
+﻿using System;
+using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
@@ -23,7 +24,9 @@ namespace PatientManagement.ViewModel
         private void OnSaveFileReceived(SaveFileMessage obj)
         {
             SaveSettings();
-            LoadInsuranceCompany();
+            insurance = new InsuranceCompany(insurance);
+            RaisePropertyChanged("Insurance");
+            SaveInsuranceToRepository();
         }
 
         private void OnSettingsSaved(SettingsSavedMessage obj)
@@ -53,12 +56,17 @@ namespace PatientManagement.ViewModel
 
         private void OnUpdateCalculation(UpdateCalculations obj)
         {
-            IPatientRepository patients = new PatientRepository();
-            decimal addonsPaidAmount = 0;       
+            CalculateCheckAmount();
+        }
 
+        private void CalculateCheckAmount()
+        {
+            IPatientRepository patients = new PatientRepository();
+            decimal addonsPaidAmount = 0;
+            decimal chargesPaidAmount = 0;
             foreach (var patient in patients.GetAllPatients())
             {
-                var chargesPaidAmount = patient.Charges.Sum(c => c.PaymentAmount);
+                 chargesPaidAmount += patient.Charges.Sum(c => c.PaymentAmount);
 
                 foreach (var charge in patient.Charges)
                 {
@@ -67,7 +75,6 @@ namespace PatientManagement.ViewModel
                     RaisePropertyChanged("CheckAmount");
                 }
             }
-
         }
 
         private void LoadInsuranceCompany()
