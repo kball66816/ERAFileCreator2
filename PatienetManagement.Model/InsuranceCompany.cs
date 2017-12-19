@@ -20,6 +20,24 @@ namespace PatientManagement.Model
             CheckNumber = DateTime.Now.ToString("yyyyMMddhhmmssff");
         }
 
+        public InsuranceCompany(InsuranceCompany insurance)
+        {
+            Name = insurance.Name;
+            TaxId = insurance.TaxId;
+            CheckDate = insurance.CheckDate;
+            PaymentType = insurance.PaymentType;
+            Address = new Address
+            {
+                StreetOne = insurance.Address.StreetOne,
+                StreetTwo = insurance.Address.StreetTwo,
+                City = insurance.Address.City,
+                State = insurance.Address.State,
+                ZipCode = insurance.Address.ZipCode,
+            };
+            CheckAmount = insurance.CheckAmount;
+            CheckDate = DateTime.Today;
+            CheckNumber = DateTime.Now.ToString("yyyyMMddhhmmssff");
+        }
         private string name;
 
         public string Name
