@@ -58,7 +58,7 @@
                 </TextBox>
                 <TextBlock x:Name="InsuranceAddressLineOneTag"
                     Text="Street Line One*" Margin="5,5,5,0"/>
-                <TextBox x:Name="InsuranceStreetLineOneInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="1">
+                <TextBox x:Name="InsuranceStreetLineOneInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="4">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
