@@ -19,30 +19,32 @@ namespace PatientManagement.ViewModel
             SelectedCharge = new PrimaryCharge();
             PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
             Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
-            Messenger.Default.Register<Adjustment>(this, OnAdjustmentReceived, "PrimaryChargeAdjustment");
-            Messenger.Default.Register<AddonCharge>(this, OnAddonChargeReceived, "AddonCharge");
-            Messenger.Default.Register<ObservableCollection<PrimaryCharge>>(this, OnChargeCollectionReceived, "UpdateChargesList");
             Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived,"PatientIdSent");
             AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
-            DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
-            EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
+            //DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
+            //EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
         }
 
         private void OnInitializationCompleteMessage(InitializationCompleteMessage obj)
         {
             ChargeRepository = new PrimaryChargeRepository();
+            SendChargeId();
         }
-
 
         private IPrimaryChargeRepository ChargeRepository { get; set; }
 
-        private Guid currentAssociatedPatientIdGuid;
+        private Guid currentAssociatedPatientGuid;
 
         private void OnPatientIdReceived(SendGuidService sent)
         {
             SelectedCharge.PatientId = sent.Id;
-            currentAssociatedPatientIdGuid = sent.Id;
+            currentAssociatedPatientGuid = sent.Id;
             ChargeRepository.Add(SelectedCharge);
+        }
+
+        private void SendChargeId()
+        {
+            Messenger.Default.Send(new SendGuidService(SelectedCharge.Id), "ChargeIdSent");
         }
 
         private void AddNewCharge(object obj)
@@ -50,33 +52,9 @@ namespace PatientManagement.ViewModel
             StartTimerForTextConfirmation();
             RaisePropertyChanged("TextConfirmed");
             ReturnNewCharge();
-            SelectedCharge.PatientId = currentAssociatedPatientIdGuid;
+            SelectedCharge.PatientId = currentAssociatedPatientGuid;
             ChargeRepository.Add(selectedCharge);
         }
-        private void SendAddonChargeList()
-        {
-            Messenger.Default.Send(SelectedCharge.AddonChargeList, "AddonList");
-        }
-
-        private void SendAdjustmentsList()
-        {
-            Messenger.Default.Send(SelectedCharge.AdjustmentList, "PrimaryChargeAdjustments");
-        }
-
-        private void OnAddonChargeReceived(AddonCharge charge)
-        {
-            IAddonChargeRepository acr = new AddonChargeRepository(SelectedCharge);
-            acr.Add(charge);
-            RaisePropertyChanged("SelectedCharge");
-            SendAddonChargeList();
-        }
-
-        private void OnChargeCollectionReceived(ObservableCollection<PrimaryCharge> chargesList)
-        {
-            Charges = chargesList;
-            RaisePropertyChanged("Charges");
-        }
-
 
         public ICommand AddChargeToPatientCommand { get; set; }
 
@@ -93,30 +71,9 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        public PrimaryCharge SelectedListChargeIndex { get; set; }
+        //public PrimaryCharge SelectedListChargeIndex { get; set; }
 
         public Dictionary<string, string> PlacesOfService { get; set; }
-
-        private void OnAdjustmentReceived(Adjustment adjustment)
-        {
-            IAdjustmentRepository ar = new AdjustmentRepository(SelectedCharge);
-            ar.Add(adjustment);
-            RaisePropertyChanged("SelectedCharge");
-            SendAdjustmentsList();
-        }
-     
-        private void AddChargeToPatientV2(object obj)
-        {
-            Messenger.Default.Send(SelectedCharge, "Patient");
-            ReturnNewCharge();
-           
-
-            Messenger.Default.Send(new UpdateCalculations());
-            RaisePropertyChanged("SelectedCharge");
-            RaisePropertyChanged("Charges");
-            SendAdjustmentsList();
-            SendAddonChargeList();
-        }
 
         readonly Timer timer = new Timer { Interval = 5000 };
 
@@ -124,78 +81,71 @@ namespace PatientManagement.ViewModel
         {
             var confirm = new ConfirmationService();
 
-
             timer.Elapsed += OnTimeElapsed;
             timer.Start();
 
             TextConfirmed = confirm.ChargeAddedTextConfirmation();
         }
 
-        private void OnTimeElapsed(object source, System.Timers.ElapsedEventArgs e)
+        private void OnTimeElapsed(object source, ElapsedEventArgs e)
         {
             timer.Stop();
             TextConfirmed = string.Empty;
             RaisePropertyChanged("TextConfirmed");
-
         }
-        public string TextConfirmed { get; set; }
 
+        public string TextConfirmed { get; set; }
 
         private bool CanAddChargeToPatient(object obj)
         {
-            bool b = false;
-            if (!editModeEnabled)
-            {
-                b = SelectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
-
-            }
-
-            return b;
-        }
-        private void DeleteSelectedCharge(object obj)
-        {
-            if (SelectedListChargeIndex == null) return;
-            var index = Charges.IndexOf(SelectedListChargeIndex);
-            if (index <= -1) return;
-            Charges.RemoveAt(index);
-            RaisePropertyChanged("Charges");
-            if (editModeEnabled)
-            {
-;
-                editModeEnabled = false;
-            }
-            ReturnNewCharge();
-            SendAddonChargeList();
-            SendAdjustmentsList();
-        }
-        public ICommand EditSelectedChargeCommand { get; private set; }
-
-        private bool editModeEnabled;
-
-        private void EditSelectedCharge(object obj)
-        {
-            if (!editModeEnabled)
-            {
-                SelectedCharge = SelectedListChargeIndex;
-                RaisePropertyChanged("SelectedCharge");
-                editModeEnabled = true;
-            }
-            else
-            {
-                ReturnNewCharge();
-                editModeEnabled = false;
-            }
-
-            SendAddonChargeList();
-            SendAdjustmentsList();
+            return selectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
+            //bool b = false;
+            //if (!editModeEnabled)
+            //{
+            //    b = SelectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
+            //}
+            //return b;
         }
 
-        private bool CanEditOrDeleteSelectedCharge(object obj)
-        {
-            bool b = !string.IsNullOrEmpty(SelectedListChargeIndex?.ProcedureCode);
+        //private void DeleteSelectedCharge(object obj)
+        //{
+        //    if (SelectedListChargeIndex == null) return;
+        //    var index = Charges.IndexOf(SelectedListChargeIndex);
+        //    if (index <= -1) return;
+        //    Charges.RemoveAt(index);
+        //    RaisePropertyChanged("Charges");
+        //    if (editModeEnabled)
+        //    {
+        //        editModeEnabled = false;
+        //    }
+        //    ReturnNewCharge();
+        //}
 
-            return b;
-        }
+        //public ICommand EditSelectedChargeCommand { get; private set; }
+
+        //private bool editModeEnabled;
+
+        //private void EditSelectedCharge(object obj)
+        //{
+        //    if (!editModeEnabled)
+        //    {
+        //        SelectedCharge = SelectedListChargeIndex;
+        //        RaisePropertyChanged("SelectedCharge");
+        //        editModeEnabled = true;
+        //    }
+        //    else
+        //    {
+        //        ReturnNewCharge();
+        //        editModeEnabled = false;
+        //    }
+        //}
+
+        //private bool CanEditOrDeleteSelectedCharge(object obj)
+        //{
+        //    bool b = !string.IsNullOrEmpty(SelectedListChargeIndex?.ProcedureCode);
+
+        //    return b;
+        //}
 
         private ObservableCollection<PrimaryCharge> charges;
 
@@ -211,7 +161,7 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        public ICommand DeleteSelectedChargeCommand { get; private set; }
+        //public ICommand DeleteSelectedChargeCommand { get; private set; }
 
         private void ReturnNewCharge()
         {
