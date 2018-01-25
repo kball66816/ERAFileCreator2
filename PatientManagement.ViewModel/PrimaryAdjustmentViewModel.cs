@@ -1,10 +1,12 @@
-﻿using PatientManagement.Model;
+﻿using System;
+using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using Common.Common.Services;
+using EFC.BL;
+using PatientManagement.DAL;
 
 namespace PatientManagement.ViewModel
 {
@@ -15,28 +17,28 @@ namespace PatientManagement.ViewModel
             SelectedAdjustment = new Adjustment();
             PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
             PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
-            AddChargeAdjustmentCommand = new Command(AddAdjustmentToCharge, CanAddAdjustment);
-            Messenger.Default.Register<ObservableCollection<Adjustment>>(this, OnAdjustmentReceived, "PrimaryChargeAdjustments");
+            AddChargeAdjustmentCommand = new Command(AddAdjustmentCommand, CanAddAdjustment);
+            Messenger.Default.Register<SendGuidService>(this,OnChargeIdReceived);
+            adjustmentRepository = new AdjustmentRepository();
         }
 
-        private void OnAdjustmentReceived(ObservableCollection<Adjustment> adjustmentList)
+        private readonly IAdjustmentRepository adjustmentRepository;
+
+        private Guid currentChargeGuid;
+
+        private void OnChargeIdReceived(SendGuidService sent)
         {
-            Adjustments = adjustmentList;
+            SelectedAdjustment.ChargeId = sent.Id;
+            currentChargeGuid = sent.Id;
+            adjustmentRepository.Add(SelectedAdjustment);
         }
 
-        private ObservableCollection<Adjustment> adjustments;
-
-        public ObservableCollection<Adjustment> Adjustments
+        private void AddAdjustmentCommand(object obj)
         {
-            get { return adjustments; }
-            set
-            {
-                if (adjustments == value) return;
-                adjustments = value;
-                RaisePropertyChanged("Adjustments");
-            }
+            SelectedAdjustment = new Adjustment();
+            SelectedAdjustment.ChargeId = currentChargeGuid;
+            adjustmentRepository.Add(SelectedAdjustment);
         }
-
         private Adjustment selectedAdjustment;
 
         public Adjustment SelectedAdjustment
@@ -61,12 +63,6 @@ namespace PatientManagement.ViewModel
                    SelectedAdjustment.AdjustmentAmount > 0;
         }
 
-        private void AddAdjustmentToCharge(object obj)
-        {
-            Messenger.Default.Send(selectedAdjustment,"PrimaryChargeAdjustment");
-            SelectedAdjustment = new Adjustment();
-            RaisePropertyChanged("SelectedAdjustment");
-        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)

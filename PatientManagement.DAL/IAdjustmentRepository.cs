@@ -1,5 +1,6 @@
 ﻿using PatientManagement.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace PatientManagement.DAL
@@ -12,7 +13,7 @@ namespace PatientManagement.DAL
 
         Adjustment UpdateAdjustment(Adjustment adjustment);
 
-        ObservableCollection<Adjustment> GetAllAdjustments();
+        List<Adjustment> GetAllAdjustments();
 
         Adjustment GetSelectedAdjustment(Guid id);
     }

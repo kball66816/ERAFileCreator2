@@ -11,17 +11,8 @@ namespace EFC.BL
 {
    public class AdjustmentRepository : IAdjustmentRepository
     {
-        public AdjustmentRepository(Charge charge)
-        {
-            Adjustments = charge.AdjustmentList;
 
-        }
-        public AdjustmentRepository(PrimaryCharge charge)
-        {
-            Adjustments = charge.AdjustmentList;
-        }
-
-        private ObservableCollection<Adjustment> Adjustments;
+        private static  List<Adjustment> Adjustments;
 
         public void Add(Adjustment adjustment)
         {
@@ -38,7 +29,7 @@ namespace EFC.BL
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<Adjustment> GetAllAdjustments()
+        public List<Adjustment> GetAllAdjustments()
         {
             return Adjustments;
         }

@@ -3,9 +3,7 @@ using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Net.Configuration;
 using System.Windows.Input;
 using Common.Common.Services;
 
@@ -16,12 +14,8 @@ namespace PatientManagement.ViewModel
         public AddonChargeViewModel()
         {
             SelectedAddonCharge = new AddonCharge();
-            AddAddonCommand = new Command(AddAddonToCharge, CanAddAddon);
+            AddAddonCommand = new Command(AddAddon, CanAddAddon);
             Messenger.Default.Register<SendGuidService>(this, OnChargeIdReceived, "ChargeIdSent");
-            Messenger.Default.Register<Adjustment>(this, OnAddonAdjustmentReceieved, "AddonChargeAdjustment");
-            Messenger.Default.Register<ObservableCollection<AddonCharge>>(this, OnChargeCollectionReceived, "AddonList");
-            DeleteSelectedAddonCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
-            EditSelectedAddonCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
             ChargeRepository = new AddonChargeRepository();
         }
 
@@ -62,62 +56,6 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Send(SelectedAddonCharge.AdjustmentList, "AddonAdjustmentList");
         }
 
-        private void EditSelectedCharge(object obj)
-        {
-
-            if (!editModeEnabled)
-            {
-                SelectedAddonCharge = SelectedAddonChargeIndex;
-                RaisePropertyChanged("SelectedCharge");
-                editModeEnabled = true;
-            }
-            else
-            {
-                GetNewAddonDependentOnUserPromptPreference();
-                editModeEnabled = false;
-            }
-            SendAdjustmentList();
-        }
-
-        private bool CanEditOrDeleteSelectedCharge(object obj)
-        {
-            bool canEditOrDelete = (!string.IsNullOrEmpty(SelectedAddonChargeIndex?.ProcedureCode));
-            return canEditOrDelete;
-
-
-        }
-
-        private void DeleteSelectedCharge(object obj)
-        {
-            if (SelectedAddonChargeIndex == null) return;
-            var index = Charges.IndexOf(SelectedAddonChargeIndex);
-            if (index <= -1) return;
-            Charges.RemoveAt(index);
-            RaisePropertyChanged("Charges");
-            if (!editModeEnabled) return;
-            editModeEnabled = false;
-            SendAdjustmentList();
-        }
-
-        private ObservableCollection<AddonCharge> charges;
-
-        public ObservableCollection<AddonCharge> Charges
-
-        {
-            get { return charges; }
-            set
-            {
-                if (value == charges) return;
-                charges = value;
-                RaisePropertyChanged("Charges");
-            }
-        }
-        private void OnChargeCollectionReceived(ObservableCollection<AddonCharge> chargesList)
-        {
-            Charges = chargesList;
-            RaisePropertyChanged("Charges");
-        }
-
         public ICommand AddAddonCommand { get; private set; }
 
         private AddonCharge selectedAddonCharge;
@@ -131,24 +69,6 @@ namespace PatientManagement.ViewModel
                 selectedAddonCharge = value;
                 RaisePropertyChanged("Addon");
             }
-        }
-
-
-        private void AddAddonToCharge(object obj)
-        {
-            Messenger.Default.Send(SelectedAddonCharge, "AddonCharge");
-
-            if (SettingsService.ReuseSameAddonEnabled)
-            {
-                GetNewAddonDependentOnUserPromptPreference();
-            }
-            else
-            {
-                SelectedAddonCharge = new AddonCharge();
-            }
-
-            SendAdjustmentList();
-
         }
 
         private bool SupressAddonDialog = false;
@@ -181,7 +101,7 @@ namespace PatientManagement.ViewModel
             }
         }
 
-        private AddonCharge PromptTypeOfNewAddon()
+        private void PromptTypeOfNewAddon()
         {
             var dialogPrompt = new DialogService(SelectedAddonCharge);
 
@@ -195,17 +115,8 @@ namespace PatientManagement.ViewModel
                 SelectedAddonCharge = new AddonCharge();
 
             }
-            return SelectedAddonCharge;
 
-        }
-
-        private void OnAddonAdjustmentReceieved(Adjustment adjustment)
-        {
-            IAdjustmentRepository ar = new AdjustmentRepository(selectedAddonCharge);
-            ar.Add(adjustment);
-            RaisePropertyChanged("SelectedAddonCharge");
-            SendAdjustmentList();
-
+            return;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

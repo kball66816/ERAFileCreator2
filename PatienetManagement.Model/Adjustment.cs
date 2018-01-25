@@ -341,6 +341,8 @@ namespace PatientManagement.Model
             }
         }
 
+        public Guid ChargeId { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {
