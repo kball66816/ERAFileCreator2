@@ -1,4 +1,5 @@
-﻿using EFC.BL;
+﻿using System;
+using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Timers;
 using System.Windows.Input;
+using Common.Common.Services;
 
 namespace PatientManagement.ViewModel
 {
@@ -16,14 +18,41 @@ namespace PatientManagement.ViewModel
         {
             SelectedCharge = new PrimaryCharge();
             PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
+            Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
             Messenger.Default.Register<Adjustment>(this, OnAdjustmentReceived, "PrimaryChargeAdjustment");
             Messenger.Default.Register<AddonCharge>(this, OnAddonChargeReceived, "AddonCharge");
             Messenger.Default.Register<ObservableCollection<PrimaryCharge>>(this, OnChargeCollectionReceived, "UpdateChargesList");
-            AddChargeToPatientCommand = new Command(AddChargeToPatientV2, CanAddChargeToPatient);
+            Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived,"PatientIdSent");
+            AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
             DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
             EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
         }
 
+        private void OnInitializationCompleteMessage(InitializationCompleteMessage obj)
+        {
+            ChargeRepository = new PrimaryChargeRepository();
+        }
+
+
+        private IPrimaryChargeRepository ChargeRepository { get; set; }
+
+        private Guid currentAssociatedPatientIdGuid;
+
+        private void OnPatientIdReceived(SendGuidService sent)
+        {
+            SelectedCharge.PatientId = sent.Id;
+            currentAssociatedPatientIdGuid = sent.Id;
+            ChargeRepository.Add(SelectedCharge);
+        }
+
+        private void AddNewCharge(object obj)
+        {
+            StartTimerForTextConfirmation();
+            RaisePropertyChanged("TextConfirmed");
+            ReturnNewCharge();
+            SelectedCharge.PatientId = currentAssociatedPatientIdGuid;
+            ChargeRepository.Add(selectedCharge);
+        }
         private void SendAddonChargeList()
         {
             Messenger.Default.Send(SelectedCharge.AddonChargeList, "AddonList");
@@ -80,10 +109,7 @@ namespace PatientManagement.ViewModel
         {
             Messenger.Default.Send(SelectedCharge, "Patient");
             ReturnNewCharge();
-            StartTimerForTextConfirmation();
-            RaisePropertyChanged("TextConfirmed");
-
-
+           
 
             Messenger.Default.Send(new UpdateCalculations());
             RaisePropertyChanged("SelectedCharge");

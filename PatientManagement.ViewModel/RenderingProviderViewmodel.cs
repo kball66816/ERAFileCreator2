@@ -1,6 +1,7 @@
 ﻿using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 using System.ComponentModel;
+using Common.Common.Services;
 
 namespace PatientManagement.ViewModel
 {

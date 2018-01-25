@@ -84,6 +84,7 @@ namespace PatientManagement.Model
         private decimal copay;
         private DateTime dateOfService;
         private bool formatClassicBillId;
+        private Guid patientId;
 
 
         public decimal Copay
@@ -146,6 +147,10 @@ namespace PatientManagement.Model
             }
         }
 
-
+        public Guid PatientId
+        {
+            get { return patientId; }
+            set { patientId = value; }
+        }
     }
 }

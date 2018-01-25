@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PatientManagement.ViewModel.Services
+namespace Common.Common.Services
 {
     /// <summary>
     /// The source was acquired from Stack Overflow: 

@@ -6,6 +6,7 @@ using PatientManagement.ViewModel.Services;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Common.Common.Services;
 
 
 namespace PatientManagement.ViewModel

@@ -3,6 +3,7 @@ using PatientManagement.DAL;
 using PatientManagement.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Common.Common.Services;
 using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel

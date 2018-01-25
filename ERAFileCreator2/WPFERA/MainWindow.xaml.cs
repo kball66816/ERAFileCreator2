@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Threading;
+using Common.Common.Services;
+using PatientManagement.ViewModel;
+using PatientManagement.ViewModel.Services;
 
 namespace EraView
 {
@@ -11,7 +16,13 @@ namespace EraView
         public MainWindow()
         {
             InitializeComponent();
-         
+            Dispatcher.BeginInvoke(DispatcherPriority.Loaded, 
+                new Action(() =>
+                {
+                    Messenger.Default.Send(new InitializationCompleteMessage());
+                    
+                }));
+
         }
     }
 }

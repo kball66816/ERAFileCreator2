@@ -4,6 +4,7 @@ using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 using System.ComponentModel;
 using System.Windows.Input;
+using Common.Common.Services;
 
 namespace PatientManagement.ViewModel
 {
@@ -12,14 +13,19 @@ namespace PatientManagement.ViewModel
         public PatientViewModel()
         {
             LoadInitialPatient();
-            patientRepository.Add(SelectedPatient);
-            LoadCommands();
+            Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationComplete);
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
             Messenger.Default.Register<PrimaryCharge>(this, OnPrimaryChargeReceived, "Patient");
             Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
             Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileMessage,"SaveTextFiletoSelectedDirectory");
         }
 
+        private void OnInitializationComplete(InitializationCompleteMessage message)
+        {
+
+            patientRepository.Add(SelectedPatient);
+            LoadCommands();
+        }
         private void OnSaveFileMessage(SaveFileMessage obj)
         {
                 SaveSettings();
@@ -39,8 +45,8 @@ namespace PatientManagement.ViewModel
 
         private void OnPrimaryChargeReceived(PrimaryCharge charge)
         {
-            IPrimaryChargeRepository crp = new PrimaryChargeRepository(SelectedPatient);
-            crp.Add(charge);
+            //IPrimaryChargeRepository crp = new PrimaryChargeRepository(SelectedPatient);
+            //crp.Add(charge);
             RaisePropertyChanged("SelectedPatient");
             SendPatientCharges();
         }
@@ -59,6 +65,7 @@ namespace PatientManagement.ViewModel
         {
             SelectedPatient = new Patient();
             SelectedPatient = SettingsService.PullDefaultPatient();
+            Messenger.Default.Send(new SendGuidService(SelectedPatient.Id),"PatientIdSent");
         }
 
         private IPatientRepository patientRepository = new PatientRepository();

@@ -2,6 +2,7 @@
 using EFC.BL;
 using PatientManagement.ViewModel.Services;
 using System.Windows.Input;
+using Common.Common.Services;
 
 namespace PatientManagement.ViewModel
 {
