@@ -112,12 +112,6 @@ namespace PatientManagement.Model
 
         public string CheckNumber { get; set; }
 
-        //private string FormattedPaymentType(string paymentTypeKey)
-        //{
-        //    return PaymentTypes.ContainsKey(paymentTypeKey) ? (PaymentTypes[paymentTypeKey])
-        //        : throw new ArgumentException("Value Cannot Be Null");
-        //}
-
 
         public Dictionary<string, string> PaymentTypes = new Dictionary<string, string>
         {

@@ -12,7 +12,7 @@ namespace EFC.BL
    public class AdjustmentRepository : IAdjustmentRepository
     {
 
-        private static  List<Adjustment> Adjustments;
+        private static readonly List<Adjustment> Adjustments = new List<Adjustment>();
 
         public void Add(Adjustment adjustment)
         {

@@ -15,8 +15,19 @@ namespace PatientManagement.ViewModel
         {
             SelectedAddonCharge = new AddonCharge();
             AddAddonCommand = new Command(AddAddon, CanAddAddon);
-            Messenger.Default.Register<SendGuidService>(this, OnChargeIdReceived, "ChargeIdSent");
             ChargeRepository = new AddonChargeRepository();
+            Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
+            Messenger.Default.Register<SendGuidService>(this, OnChargeIdReceived, "ChargeIdSent");
+        }
+
+        private void OnInitializationCompleteMessage(InitializationCompleteMessage sent)
+        {
+            SendChargeId();
+        }
+
+        private void SendChargeId()
+        {
+            Messenger.Default.Send(new SendGuidService(SelectedAddonCharge.Id), "AddonChargeIdSent");
         }
 
         private IAddonChargeRepository ChargeRepository { get; set; }
@@ -32,6 +43,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAddon(object obj)
         {
+            Messenger.Default.Send(new UpdateCalculations());
             if (SettingsService.ReuseSameAddonEnabled)
             {
                 GetNewAddonDependentOnUserPromptPreference();
@@ -40,22 +52,14 @@ namespace PatientManagement.ViewModel
             {
                 SelectedAddonCharge = new AddonCharge();
             }
+
+            SelectedAddonCharge.PrimaryChargeId = currentChargeGuid;
+            SendChargeId();
+            ChargeRepository.Add(SelectedAddonCharge);
             RaisePropertyChanged("SelectedAddonCharge");
             RaisePropertyChanged("CheckAmount");
         }
-        public ICommand DeleteSelectedAddonCommand { get; private set; }
-
-        public ICommand EditSelectedAddonCommand { get; private set; }
-
-        public AddonCharge SelectedAddonChargeIndex { get; set; }
-
-        private bool editModeEnabled;
-
-        private void SendAdjustmentList()
-        {
-            Messenger.Default.Send(SelectedAddonCharge.AdjustmentList, "AddonAdjustmentList");
-        }
-
+       
         public ICommand AddAddonCommand { get; private set; }
 
         private AddonCharge selectedAddonCharge;
@@ -113,7 +117,6 @@ namespace PatientManagement.ViewModel
             else
             {
                 SelectedAddonCharge = new AddonCharge();
-
             }
 
             return;
@@ -127,14 +130,8 @@ namespace PatientManagement.ViewModel
         }
 
         private bool CanAddAddon(object obj)
-        {
-            bool b = false;
-            if (!editModeEnabled)
-            {
-                b = !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode);
-
-            }
-            return b;
+        {    
+            return !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode);
         }
     }
 }

@@ -13,7 +13,11 @@ namespace EFC.BL
 
         public void Add(PrimaryCharge charge)
         {
-            Charges.Add(charge);
+            var existing = GetSelectedCharge(charge.Id);
+            if (existing == null)
+            {
+                Charges.Add(charge);
+            }
         }
 
         public void Delete(PrimaryCharge charge)

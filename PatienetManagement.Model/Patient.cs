@@ -119,6 +119,7 @@ namespace PatientManagement.Model
         public Patient CopyPatient()
         {
             var clone = (Patient)MemberwiseClone();
+            clone.Id = Guid.NewGuid();
             clone.Charges = new ObservableCollection<PrimaryCharge>();
             return clone;
         }

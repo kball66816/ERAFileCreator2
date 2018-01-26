@@ -58,24 +58,18 @@ namespace PatientManagement.ViewModel
         private void OnUpdateCalculation(UpdateCalculations obj)
         {
             CalculateCheckAmount();
+            RaisePropertyChanged("CheckAmount");
         }
 
         private void CalculateCheckAmount()
         {
-            IPatientRepository patients = new PatientRepository();
-            decimal addonsPaidAmount = 0;
-            decimal chargesPaidAmount = 0;
-            foreach (var patient in patients.GetAllPatients())
-            {
-                 chargesPaidAmount += patient.Charges.Sum(c => c.PaymentAmount);
+            IPrimaryChargeRepository pcr = new PrimaryChargeRepository();
+            decimal chargesPaidAmount = pcr.GetAllCharges().Sum(c => c.PaymentAmount);
 
-                foreach (var charge in patient.Charges)
-                {
-                    addonsPaidAmount += charge.AddonChargeList.Sum(p => p.PaymentAmount);
-                    Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
-                    RaisePropertyChanged("CheckAmount");
-                }
-            }
+            IAddonChargeRepository acr = new AddonChargeRepository();
+            decimal addonsPaidAmount = acr.GetAllCharges().Sum(a => a.PaymentAmount);
+
+            Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
         }
 
         private void LoadInsuranceCompany()

@@ -6,7 +6,9 @@ using PatientManagement.ViewModel.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Timers;
+using System.Windows;
 using System.Windows.Input;
 using Common.Common.Services;
 
@@ -21,13 +23,10 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
             Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived,"PatientIdSent");
             AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
-            //DeleteSelectedChargeCommand = new Command(DeleteSelectedCharge, CanEditOrDeleteSelectedCharge);
-            //EditSelectedChargeCommand = new Command(EditSelectedCharge, CanEditOrDeleteSelectedCharge);
         }
 
         private void OnInitializationCompleteMessage(InitializationCompleteMessage obj)
         {
-            ChargeRepository = new PrimaryChargeRepository();
             SendChargeId();
         }
 
@@ -37,10 +36,13 @@ namespace PatientManagement.ViewModel
 
         private void OnPatientIdReceived(SendGuidService sent)
         {
+            ChargeRepository = new PrimaryChargeRepository();
             SelectedCharge.PatientId = sent.Id;
             currentAssociatedPatientGuid = sent.Id;
+
             ChargeRepository.Add(SelectedCharge);
         }
+
 
         private void SendChargeId()
         {
@@ -49,11 +51,13 @@ namespace PatientManagement.ViewModel
 
         private void AddNewCharge(object obj)
         {
+            Messenger.Default.Send(new UpdateCalculations());
             StartTimerForTextConfirmation();
             RaisePropertyChanged("TextConfirmed");
             ReturnNewCharge();
             SelectedCharge.PatientId = currentAssociatedPatientGuid;
             ChargeRepository.Add(selectedCharge);
+            SendChargeId();
         }
 
         public ICommand AddChargeToPatientCommand { get; set; }
@@ -99,53 +103,8 @@ namespace PatientManagement.ViewModel
         private bool CanAddChargeToPatient(object obj)
         {
             return selectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
-            //bool b = false;
-            //if (!editModeEnabled)
-            //{
-            //    b = SelectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
-            //}
-            //return b;
         }
 
-        //private void DeleteSelectedCharge(object obj)
-        //{
-        //    if (SelectedListChargeIndex == null) return;
-        //    var index = Charges.IndexOf(SelectedListChargeIndex);
-        //    if (index <= -1) return;
-        //    Charges.RemoveAt(index);
-        //    RaisePropertyChanged("Charges");
-        //    if (editModeEnabled)
-        //    {
-        //        editModeEnabled = false;
-        //    }
-        //    ReturnNewCharge();
-        //}
-
-        //public ICommand EditSelectedChargeCommand { get; private set; }
-
-        //private bool editModeEnabled;
-
-        //private void EditSelectedCharge(object obj)
-        //{
-        //    if (!editModeEnabled)
-        //    {
-        //        SelectedCharge = SelectedListChargeIndex;
-        //        RaisePropertyChanged("SelectedCharge");
-        //        editModeEnabled = true;
-        //    }
-        //    else
-        //    {
-        //        ReturnNewCharge();
-        //        editModeEnabled = false;
-        //    }
-        //}
-
-        //private bool CanEditOrDeleteSelectedCharge(object obj)
-        //{
-        //    bool b = !string.IsNullOrEmpty(SelectedListChargeIndex?.ProcedureCode);
-
-        //    return b;
-        //}
 
         private ObservableCollection<PrimaryCharge> charges;
 

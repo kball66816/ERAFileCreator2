@@ -18,7 +18,7 @@ namespace PatientManagement.ViewModel
             PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
             PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
             AddChargeAdjustmentCommand = new Command(AddAdjustmentCommand, CanAddAdjustment);
-            Messenger.Default.Register<SendGuidService>(this,OnChargeIdReceived);
+            Messenger.Default.Register<SendGuidService>(this,OnChargeIdReceived,"ChargeIdSent");
             adjustmentRepository = new AdjustmentRepository();
         }
 

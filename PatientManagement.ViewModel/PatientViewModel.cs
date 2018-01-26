@@ -15,20 +15,22 @@ namespace PatientManagement.ViewModel
             LoadInitialPatient();
             Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationComplete);
             Messenger.Default.Register<Patient>(this, OnPatientReceived);
-            Messenger.Default.Register<PrimaryCharge>(this, OnPrimaryChargeReceived, "Patient");
             Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
-            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileMessage,"SaveTextFiletoSelectedDirectory");
+            Messenger.Default.Register<SaveFileMessage>(this, OnSaveFileMessage, "SaveTextFiletoSelectedDirectory");
+            patientRepository = new PatientRepository();
+            AddPatientCommand = new Command(AddPatient, CanAddPatient);
         }
+
+        public IPatientRepository patientRepository;
 
         private void OnInitializationComplete(InitializationCompleteMessage message)
         {
-
             patientRepository.Add(SelectedPatient);
-            LoadCommands();
+            SendPatientId();
         }
         private void OnSaveFileMessage(SaveFileMessage obj)
         {
-                SaveSettings();
+            SaveSettings();
         }
 
         private void OnProviderReceived(Provider provider)
@@ -43,20 +45,11 @@ namespace PatientManagement.ViewModel
         }
 
 
-        private void OnPrimaryChargeReceived(PrimaryCharge charge)
-        {
-            //IPrimaryChargeRepository crp = new PrimaryChargeRepository(SelectedPatient);
-            //crp.Add(charge);
-            RaisePropertyChanged("SelectedPatient");
-            SendPatientCharges();
-        }
-
-
         private void OnPatientReceived(Patient patient)
         {
             SelectedPatient = patient;
             RaisePropertyChanged("SelectedPatient");
-            Messenger.Default.Send(selectedPatient,"GiveSelectedPatientProvider");
+            Messenger.Default.Send(selectedPatient, "GiveSelectedPatientProvider");
             SendPatientCharges();
         }
 
@@ -65,11 +58,13 @@ namespace PatientManagement.ViewModel
         {
             SelectedPatient = new Patient();
             SelectedPatient = SettingsService.PullDefaultPatient();
-            Messenger.Default.Send(new SendGuidService(SelectedPatient.Id),"PatientIdSent");
+            SendPatientId();
         }
 
-        private IPatientRepository patientRepository = new PatientRepository();
-
+        private void SendPatientId()
+        {
+            Messenger.Default.Send(new SendGuidService(SelectedPatient.Id), "PatientIdSent");
+        }
 
         private Patient selectedPatient;
 
@@ -93,10 +88,10 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Send(SelectedPatient, "AddRenderingProvider");
             ReturnNewPatient();
             patientRepository.Add(SelectedPatient);
-            SendPatientCharges();
+            SendPatientId();
             RaisePropertyChanged("CheckAmount");
         }
-        
+
         private void ReturnNewPatient()
         {
             if (SettingsService.ReuseSamePatientEnabled)
@@ -147,11 +142,9 @@ namespace PatientManagement.ViewModel
 
         private bool CanAddPatient(object obj)
         {
-            bool canAdd = selectedPatient.Charges.Count > 0 &&
-            !string.IsNullOrEmpty(SelectedPatient.FirstName) &&
-            !string.IsNullOrEmpty(selectedPatient.LastName);
-
-            return canAdd;
+            return
+                !string.IsNullOrEmpty(SelectedPatient.FirstName) &&
+             !string.IsNullOrEmpty(selectedPatient.LastName);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -159,11 +152,6 @@ namespace PatientManagement.ViewModel
         private void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void LoadCommands()
-        {
-            AddPatientCommand = new Command(AddPatient, CanAddPatient);
         }
 
         private void SaveSettings()
