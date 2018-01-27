@@ -16,7 +16,11 @@ namespace EFC.BL
 
         public void Add(Adjustment adjustment)
         {
-            Adjustments.Add(adjustment);
+            var existing = GetSelectedAdjustment(adjustment.Id);
+            if (existing == null)
+            {
+                Adjustments.Add(adjustment);
+            }
         }
 
         public void Delete(Adjustment adjustment)
@@ -37,6 +41,11 @@ namespace EFC.BL
         public Adjustment GetSelectedAdjustment(Guid id)
         {
             return Adjustments.FirstOrDefault(a => a.Id == id);
+        }
+
+        public IEnumerable<Adjustment> GetSelectedAdjustments(Guid chargeId)
+        {
+            return Adjustments.Where(a => a.ChargeId == chargeId && a.AdjustmentAmount > 0);
         }
     }
 }

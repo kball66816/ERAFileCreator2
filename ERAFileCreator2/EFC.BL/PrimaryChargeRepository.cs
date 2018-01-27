@@ -39,5 +39,10 @@ namespace EFC.BL
         {
             return Charges.FirstOrDefault(c=>c.Id == id);
         }
+
+        public IEnumerable<PrimaryCharge> GetSelectedCharges(Guid patientId)
+        {
+           return Charges.Where(c => c.PatientId == patientId && c.ChargeCost > 0);
+        }
     }
 }

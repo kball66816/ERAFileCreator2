@@ -17,6 +17,7 @@
         </Grid.RowDefinitions>
         <StackPanel>
             <TextBlock Text="Patient Encounters" FontSize="16" TextDecorations="Underline" Margin="5,0,0,5" Padding="5"/>
+            <TextBlock Text="{Binding Charges.Count,UpdateSourceTrigger=PropertyChanged}"></TextBlock>
         </StackPanel>
         <Grid  Grid.Row="1">
             <Grid.ColumnDefinitions>

@@ -23,6 +23,9 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
             Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived,"PatientIdSent");
             AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
+            ChargeRepository = new PrimaryChargeRepository();
+            Charges = new ObservableCollection<PrimaryCharge>(ChargeRepository.GetAllCharges());
+
         }
 
         private void OnInitializationCompleteMessage(InitializationCompleteMessage obj)
@@ -30,17 +33,19 @@ namespace PatientManagement.ViewModel
             SendChargeId();
         }
 
-        private IPrimaryChargeRepository ChargeRepository { get; set; }
+        public IPrimaryChargeRepository ChargeRepository { get; set; }
+
 
         private Guid currentAssociatedPatientGuid;
 
         private void OnPatientIdReceived(SendGuidService sent)
         {
-            ChargeRepository = new PrimaryChargeRepository();
+
             SelectedCharge.PatientId = sent.Id;
             currentAssociatedPatientGuid = sent.Id;
 
             ChargeRepository.Add(SelectedCharge);
+            RaisePropertyChanged("Count");
         }
 
 
@@ -58,6 +63,7 @@ namespace PatientManagement.ViewModel
             SelectedCharge.PatientId = currentAssociatedPatientGuid;
             ChargeRepository.Add(selectedCharge);
             SendChargeId();
+            RaisePropertyChanged("Charges");
         }
 
         public ICommand AddChargeToPatientCommand { get; set; }
@@ -80,6 +86,7 @@ namespace PatientManagement.ViewModel
         public Dictionary<string, string> PlacesOfService { get; set; }
 
         readonly Timer timer = new Timer { Interval = 5000 };
+        private ObservableCollection<PrimaryCharge> charges;
 
         private void StartTimerForTextConfirmation()
         {
@@ -106,17 +113,18 @@ namespace PatientManagement.ViewModel
         }
 
 
-        private ObservableCollection<PrimaryCharge> charges;
-
         public ObservableCollection<PrimaryCharge> Charges
-
         {
             get { return charges; }
             set
             {
-                if (value == charges) return;
-                charges = value;
-                RaisePropertyChanged("Charges");
+                if (value != charges)
+                {
+
+                    charges = value;
+                    RaisePropertyChanged("Charges");
+                }
+
             }
         }
 

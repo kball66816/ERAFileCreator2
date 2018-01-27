@@ -15,5 +15,7 @@ namespace PatientManagement.DAL
         List<AddonCharge> GetAllCharges();
 
         AddonCharge GetSelectedCharge(Guid id);
+
+        IEnumerable<AddonCharge> GetSelectedAddonCharges(Guid chargeId);
     }
 }

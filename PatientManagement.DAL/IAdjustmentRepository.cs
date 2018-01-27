@@ -16,5 +16,7 @@ namespace PatientManagement.DAL
         List<Adjustment> GetAllAdjustments();
 
         Adjustment GetSelectedAdjustment(Guid id);
+
+        IEnumerable<Adjustment> GetSelectedAdjustments(Guid chargeId);
     }
 }

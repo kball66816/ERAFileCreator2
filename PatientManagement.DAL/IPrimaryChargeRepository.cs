@@ -15,5 +15,7 @@ namespace PatientManagement.DAL
         List<PrimaryCharge> GetAllCharges();
 
         PrimaryCharge GetSelectedCharge(Guid id);
+
+        IEnumerable<PrimaryCharge> GetSelectedCharges(Guid patientId);
     } 
 }
