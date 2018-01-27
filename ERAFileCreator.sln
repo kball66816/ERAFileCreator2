@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFC.BL", "ERAFileCreator2\EFC.BL\EFC.BL.csproj", "{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Common", "ERAFileCreator2\Common.Common\Common.Common.csproj", "{B4E23EFB-5228-40C5-9455-904CA873A7E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EraView", "ERAFileCreator2\WPFERA\EraView.csproj", "{00BB8A7E-46D3-4326-B966-A41231929748}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFC.View", "ERAFileCreator2\WPFERA\EFC.View.csproj", "{00BB8A7E-46D3-4326-B966-A41231929748}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.Model", "PatienetManagement.Model\PatientManagement.Model.csproj", "{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}"
 EndProject
@@ -65,5 +65,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{49D702B5-3B6C-43B1-BE9F-55D32F12B80C} = {60A58664-EA39-4D06-8ADD-E4CAD462CC4A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A1DA79E-1478-4B9F-9190-05B9E99056E3}
 	EndGlobalSection
 EndGlobal

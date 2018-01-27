@@ -88,7 +88,7 @@ namespace PatientManagement.Model
             get { return checkDate; }
             set
             {
-                if(value!=checkDate)
+                if (value != checkDate)
                 {
                     checkDate = value;
                     RaisePropertyChanged("CheckDate");
@@ -115,10 +115,11 @@ namespace PatientManagement.Model
 
         public Dictionary<string, string> PaymentTypes = new Dictionary<string, string>
         {
-            {"Check", "CHK" },
             {"EFT","ACH" },
+            {"Financial Institution Option","BPO" },
+            {"Check", "CHK" },
+            {"Wire Transfer","FWT" },
             {"Non Payment", "NON" }
-
         };
 
 
