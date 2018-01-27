@@ -29,7 +29,6 @@ namespace PatientManagement.ViewModel
                     preference = value;
                     RaisePropertyChanged("Preference");
                 }
-
             }
         }
 

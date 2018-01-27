@@ -14,14 +14,13 @@ namespace PatientManagement.ViewModel
         {
             LoadInitialPatient();
             Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationComplete);
-            Messenger.Default.Register<Patient>(this, OnPatientReceived);
             Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
             Messenger.Default.Register<SaveFileMessage>(this, OnSaveFileMessage, "SaveTextFiletoSelectedDirectory");
             patientRepository = new PatientRepository();
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
         }
 
-        public IPatientRepository patientRepository;
+        private readonly IPatientRepository patientRepository;
 
         private void OnInitializationComplete(InitializationCompleteMessage message)
         {
@@ -43,16 +42,6 @@ namespace PatientManagement.ViewModel
         {
             Messenger.Default.Send(selectedPatient.Charges, "UpdateChargesList");
         }
-
-
-        private void OnPatientReceived(Patient patient)
-        {
-            SelectedPatient = patient;
-            RaisePropertyChanged("SelectedPatient");
-            Messenger.Default.Send(selectedPatient, "GiveSelectedPatientProvider");
-            SendPatientCharges();
-        }
-
 
         private void LoadInitialPatient()
         {
@@ -77,7 +66,6 @@ namespace PatientManagement.ViewModel
                 selectedPatient = value;
                 RaisePropertyChanged("SelectedPatient");
                 SendPatientCharges();
-
             }
         }
 
@@ -89,6 +77,7 @@ namespace PatientManagement.ViewModel
             ReturnNewPatient();
             patientRepository.Add(SelectedPatient);
             SendPatientId();
+            Messenger.Default.Send(new UpdateCalculations());
             RaisePropertyChanged("CheckAmount");
         }
 

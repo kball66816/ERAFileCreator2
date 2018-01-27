@@ -22,12 +22,17 @@ namespace PatientManagement.ViewModel
             adjustmentRepository = new AdjustmentRepository();
         }
 
+        private bool initializationComplete;
         private readonly IAdjustmentRepository adjustmentRepository;
 
         private Guid currentChargeGuid;
 
         private void OnChargeIdReceived(SendGuidService sent)
         {
+            if (initializationComplete)
+            {
+                SelectedAdjustment = new Adjustment();
+            }
             SelectedAdjustment.ChargeId = sent.Id;
             currentChargeGuid = sent.Id;
             adjustmentRepository.Add(SelectedAdjustment);

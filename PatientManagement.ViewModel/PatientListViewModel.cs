@@ -13,10 +13,9 @@ namespace PatientManagement.ViewModel
         public PatientListViewModel()
         {
             Patients = patientRepository.GetAllPatients();
-
         }
 
-        private IPatientRepository patientRepository = new PatientRepository();
+        private readonly IPatientRepository patientRepository = new PatientRepository();
 
         private ObservableCollection<Patient> patients;
 

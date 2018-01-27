@@ -20,6 +20,7 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<UpdateRepositoriesMessage>(this,OnUpdateRepositoriesMessageReceieved);
             Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved,"UpdateSettings");
             Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileReceived,"SaveTextFiletoSelectedDirectory");
+            insurance.CheckAmount = CalculateCheckAmount();
         }
 
         private void OnSaveFileReceived(SaveFileMessage obj)
@@ -61,7 +62,7 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("CheckAmount");
         }
 
-        private void CalculateCheckAmount()
+        private decimal CalculateCheckAmount()
         {
             IPrimaryChargeRepository pcr = new PrimaryChargeRepository();
             decimal chargesPaidAmount = pcr.GetAllCharges().Sum(c => c.PaymentAmount);
@@ -69,7 +70,7 @@ namespace PatientManagement.ViewModel
             IAddonChargeRepository acr = new AddonChargeRepository();
             decimal addonsPaidAmount = acr.GetAllCharges().Sum(a => a.PaymentAmount);
 
-            Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
+            return Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
         }
 
         private void LoadInsuranceCompany()

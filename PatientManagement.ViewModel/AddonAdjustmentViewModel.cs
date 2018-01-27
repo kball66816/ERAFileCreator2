@@ -28,6 +28,7 @@ namespace PatientManagement.ViewModel
 
         private void OnAddonIdReceived(SendGuidService sent)
         {
+            AddonAdjustment = new Adjustment();
             AddonAdjustment.ChargeId = sent.Id;
             currentAddonId = sent.Id;
             adjustmentRepository.Add(AddonAdjustment);

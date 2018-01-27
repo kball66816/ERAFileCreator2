@@ -20,6 +20,7 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<SendGuidService>(this, OnChargeIdReceived, "ChargeIdSent");
         }
 
+        private bool initializationComplete;
         private void OnInitializationCompleteMessage(InitializationCompleteMessage sent)
         {
             SendChargeId();
@@ -36,9 +37,15 @@ namespace PatientManagement.ViewModel
 
         private void OnChargeIdReceived(SendGuidService sent)
         {
+            if (initializationComplete)
+            {
+                SelectedAddonCharge = new AddonCharge();
+            }
             SelectedAddonCharge.PrimaryChargeId = sent.Id;
             currentChargeGuid = sent.Id;
             ChargeRepository.Add(SelectedAddonCharge);
+            RaisePropertyChanged("SelectedAddonCharge");
+            initializationComplete = true;
         }
 
         private void AddAddon(object obj)
