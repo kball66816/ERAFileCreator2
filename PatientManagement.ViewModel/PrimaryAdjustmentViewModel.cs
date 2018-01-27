@@ -33,6 +33,8 @@ namespace PatientManagement.ViewModel
             {
                 SelectedAdjustment = new Adjustment();
             }
+
+            initializationComplete = true;
             SelectedAdjustment.ChargeId = sent.Id;
             currentChargeGuid = sent.Id;
             adjustmentRepository.Add(SelectedAdjustment);
@@ -40,8 +42,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAdjustmentCommand(object obj)
         {
-            SelectedAdjustment = new Adjustment();
-            SelectedAdjustment.ChargeId = currentChargeGuid;
+            SelectedAdjustment = new Adjustment {ChargeId = currentChargeGuid};
             adjustmentRepository.Add(SelectedAdjustment);
         }
         private Adjustment selectedAdjustment;

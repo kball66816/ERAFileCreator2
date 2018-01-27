@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using EraView.Utility;
 
 namespace EraView.Views
 {
@@ -23,6 +24,11 @@ namespace EraView.Views
         public PrimaryChargeAdjustmentView()
         {
             InitializeComponent();
+        }
+
+        private void PrimaryAdjustmentAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToDecimalOnly(e);
         }
     }
 }

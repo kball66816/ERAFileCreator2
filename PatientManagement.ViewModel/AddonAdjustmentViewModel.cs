@@ -28,16 +28,14 @@ namespace PatientManagement.ViewModel
 
         private void OnAddonIdReceived(SendGuidService sent)
         {
-            AddonAdjustment = new Adjustment();
-            AddonAdjustment.ChargeId = sent.Id;
+            AddonAdjustment = new Adjustment {ChargeId = sent.Id};
             currentAddonId = sent.Id;
             adjustmentRepository.Add(AddonAdjustment);
         }
 
         private void AddAdjustment(object obj)
         {
-            AddonAdjustment = new Adjustment();
-            AddonAdjustment.ChargeId = currentAddonId;
+            AddonAdjustment = new Adjustment {ChargeId = currentAddonId};
             adjustmentRepository.Add(AddonAdjustment);
         }
 

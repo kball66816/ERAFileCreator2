@@ -44,7 +44,7 @@
                     SelectedValue="{Binding SelectedAdjustment.AdjustmentReasonCode}"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}" SelectedIndex="34" Margin="5,5,5,0" TabIndex="45" Grid.Column="1" HorizontalContentAlignment="Stretch"/>
                 <TextBox x:Name="PrimaryAdjustmentAmountInput"
-                    Text="{Binding SelectedAdjustment.AdjustmentAmount, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,0" TabIndex="46" Grid.Column="2" HorizontalContentAlignment="Stretch">
+                    Text="{Binding SelectedAdjustment.AdjustmentAmount, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" Margin="5,5,5,0" TabIndex="46" Grid.Column="2" HorizontalContentAlignment="Stretch" PreviewTextInput="PrimaryAdjustmentAmountInput_PreviewTextInput">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >

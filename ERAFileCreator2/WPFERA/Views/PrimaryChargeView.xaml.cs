@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using EraView.Utility;
 
 namespace EraView.Views
 {
@@ -25,17 +14,19 @@ namespace EraView.Views
             InitializeComponent();
         }
 
-        //private void EditCharge_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (EditCharge.Content.ToString() == "Edit Charge")
-        //    {
-        //        EditCharge.Content = "Disable Charge Edit Mode";
-        //    }
+        private void PrimaryChargesAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToDecimalOnly(e);
+        }
 
-        //    else if (EditCharge.Content.ToString() == "Disable Charge Edit Mode")
-        //    {
-        //        EditCharge.Content = "Edit Charge";
-        //    }
-        //}
+        private void PrimaryPaidAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToDecimalOnly(e);
+        }
+
+        private void PatientCopayInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToDecimalOnly(e);
+        }
     }
 }

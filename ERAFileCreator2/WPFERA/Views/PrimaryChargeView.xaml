@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:common="clr-namespace:Common.Common;assembly=Common.Common"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
@@ -119,7 +118,7 @@
                     <TextBlock x:Name="PrimaryPaidAmountTag"
                         Text="Paid Amount*" Margin="5,5,5,0"/>
                     <TextBox x:Name="PrimaryPaidAmountInput"
-                        Text="{Binding SelectedCharge.PaymentAmount, StringFormat=\{0:F2\}}" Margin="5,0" TabIndex="40">
+                        Text="{Binding SelectedCharge.PaymentAmount, StringFormat=\{0:F2\}}" Margin="5,0" TabIndex="40" PreviewTextInput="PrimaryPaidAmountInput_PreviewTextInput">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel >
@@ -137,7 +136,7 @@
                     <TextBlock x:Name="PatientCopayTag"
                         Text="Copay*" Margin="5,5,5,0"/>
                     <TextBox x:Name="PatientCopayInput"
-                        Text="{Binding SelectedCharge.Copay, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34">
+                        Text="{Binding SelectedCharge.Copay, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34" PreviewTextInput="PatientCopayInput_PreviewTextInput">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel >
@@ -153,7 +152,7 @@
                     <TextBlock x:Name ="PrimaryChargesAmountTag"
                                Text="Charge Amount" Margin="5,5,5,0"/>
                     <TextBox x:Name="PrimaryChargesAmountInput"
-                        Text="{Binding SelectedCharge.ChargeCost, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" TabIndex="41">
+                        Text="{Binding SelectedCharge.ChargeCost, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" Margin="5,0" TabIndex="41" PreviewTextInput="PrimaryChargesAmountInput_PreviewTextInput">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel >

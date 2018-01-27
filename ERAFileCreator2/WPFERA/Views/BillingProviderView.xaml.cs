@@ -16,12 +16,12 @@ namespace EraView.Views
 
         private void BillingProviderZipCodeInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToNumericOnly(e);
+            InputRestrictions.RestrictTextToIntegerOnly(e);
         }
 
         private void BillingProviderNpiInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToNumericOnly(e);
+            InputRestrictions.RestrictTextToIntegerOnly(e);
         }
     }
 }

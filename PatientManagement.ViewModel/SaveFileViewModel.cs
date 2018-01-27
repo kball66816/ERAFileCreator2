@@ -53,7 +53,7 @@ namespace PatientManagement.ViewModel
 
         private void Calculate(object obj)
         {
-         Messenger.Default.Send(new UpdateCalculations());   
+            Messenger.Default.Send(new UpdateCalculations());   
         }
 
         private bool CanCalculate(object obj)

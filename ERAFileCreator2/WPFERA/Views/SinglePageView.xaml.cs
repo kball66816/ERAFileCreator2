@@ -19,7 +19,7 @@ namespace EraView.Views
 
         private void InsuranceZipCodeInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToNumericOnly(e);
+            InputRestrictions.RestrictTextToIntegerOnly(e);
         }
 
        

@@ -45,7 +45,7 @@
                           SelectedIndex="34" Margin="5,0,0,0" TabIndex="57" Grid.Column="1"/>
                 <TextBox x:Name="AddonAdjustmentAmountInput"
                          Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="5,0,0,0" TabIndex="58" Grid.Column="2">
+                         Margin="5,0,0,0" TabIndex="58" Grid.Column="2" PreviewTextInput="AddonAdjustmentAmountInput_PreviewTextInput">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel >
