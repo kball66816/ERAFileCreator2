@@ -21,7 +21,7 @@
           Command="{Binding CalculateCommand}"
                 Content="Calculate Check Amount"
                 TabIndex="60"
-                Margin="5">
+                Margin="5" ToolTip="Displays the most up to date calculation based on current values in fields plus previous amounts">
         </Button>
         <Button Grid.Column="3"
             Command="{Binding SaveFileCommand}"
