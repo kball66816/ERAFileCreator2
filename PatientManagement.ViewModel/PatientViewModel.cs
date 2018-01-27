@@ -77,7 +77,6 @@ namespace PatientManagement.ViewModel
             ReturnNewPatient();
             patientRepository.Add(SelectedPatient);
             SendPatientId();
-            Messenger.Default.Send(new UpdateCalculations());
             RaisePropertyChanged("CheckAmount");
         }
 

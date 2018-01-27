@@ -50,7 +50,6 @@ namespace PatientManagement.ViewModel
 
         private void AddAddon(object obj)
         {
-            Messenger.Default.Send(new UpdateCalculations());
             if (SettingsService.ReuseSameAddonEnabled)
             {
                 GetNewAddonDependentOnUserPromptPreference();
@@ -65,6 +64,7 @@ namespace PatientManagement.ViewModel
             ChargeRepository.Add(SelectedAddonCharge);
             RaisePropertyChanged("SelectedAddonCharge");
             RaisePropertyChanged("CheckAmount");
+
         }
        
         public ICommand AddAddonCommand { get; private set; }

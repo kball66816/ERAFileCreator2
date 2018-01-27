@@ -56,7 +56,6 @@ namespace PatientManagement.ViewModel
 
         private void AddNewCharge(object obj)
         {
-            Messenger.Default.Send(new UpdateCalculations());
             StartTimerForTextConfirmation();
             RaisePropertyChanged("TextConfirmed");
             ReturnNewCharge();
@@ -64,6 +63,7 @@ namespace PatientManagement.ViewModel
             chargeRepository.Add(selectedCharge);
             SendChargeId();
             RaisePropertyChanged("Charges");
+
         }
 
         public ICommand AddChargeToPatientCommand { get; set; }

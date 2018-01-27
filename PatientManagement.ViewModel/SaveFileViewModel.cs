@@ -12,6 +12,7 @@ namespace PatientManagement.ViewModel
         {
             LoadCommands();
         }
+
         private static void Save(object obj)
         {
             SendMessages();
@@ -29,6 +30,7 @@ namespace PatientManagement.ViewModel
             }
             
         }
+
         private static void SendMessages()
         {
             Messenger.Default.Send(new UpdateRepositoriesMessage());
@@ -39,11 +41,24 @@ namespace PatientManagement.ViewModel
 
         public ICommand SaveBatchOfFiles { get; set; }
 
+        public ICommand CalculateCommand { get; set; }
+
         private void LoadCommands()
         {
             SaveFileCommand = new Command(Save, CanSave);
             SaveBatchOfFiles = new Command(Save50Files, CanSave);
+            CalculateCommand = new Command(Calculate, CanCalculate);
+        }
 
+
+        private void Calculate(object obj)
+        {
+         Messenger.Default.Send(new UpdateCalculations());   
+        }
+
+        private bool CanCalculate(object obj)
+        {
+            return true;
         }
 
         private static bool CanSave(object obj)
