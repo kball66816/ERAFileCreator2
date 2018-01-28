@@ -1,12 +1,9 @@
-﻿using Common.Common;
-using PatientManagement.Model;
-using System;
+﻿using System;
 using System.Text;
-using Common.Common.Converters;
 using Common.Common.Extensions;
-using Edi835.Segments;
+using PatientManagement.Model;
 
-namespace EDI835.Segments
+namespace Edi835.Segments
 {
     public class Dtm : SegmentBase
     {

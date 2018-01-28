@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:validation="clr-namespace:Common.Common;assembly=Common.Common"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
-             x:Class="EraView.Views.SinglePageView"
+             x:Class="EraFileCreator.Views.SinglePageView"
              mc:Ignorable="d" Background="#FFD0E8FF">
     <UserControl.DataContext>
         <viewModel:PatientViewModel/>
