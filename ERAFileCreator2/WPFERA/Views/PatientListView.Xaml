@@ -1,29 +1,29 @@
 ﻿<UserControl x:Class="EraFileCreator.Views.PatientListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              mc:Ignorable="d"
              Background="#FF7789D8" BorderBrush="#FF7789D8">
     <UserControl.DataContext>
-        <viewModel:PatientListViewModel/>
+        <viewModel:PatientListViewModel />
     </UserControl.DataContext>
     <StackPanel>
         <StackPanel Orientation="Vertical">
             <TextBlock DockPanel.Dock="top"
-                       Text="Patients:"/>
-            <TextBlock Text="{Binding Patients.Count}"/>
+                       Text="Patients:" />
+            <TextBlock Text="{Binding Patients.Count}" />
         </StackPanel>
         <ListBox Background="#FF7789D8" BorderBrush="#FF7789D8"
-            ItemsSource="{Binding Patients}"
-            SelectedItem="{Binding Patient, Mode=TwoWay}"
-            MinWidth="100"
-            HorizontalContentAlignment="Stretch" TabIndex="61">
+                 ItemsSource="{Binding Patients}"
+                 SelectedItem="{Binding Patient, Mode=TwoWay}"
+                 MinWidth="100"
+                 HorizontalContentAlignment="Stretch" TabIndex="61">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding FullName}"/>
+                        <TextBlock Text="{Binding FullName}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

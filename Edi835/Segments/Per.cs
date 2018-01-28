@@ -2,9 +2,8 @@
 
 namespace Edi835.Segments
 {
-    public class Per:SegmentBase
+    public class Per : SegmentBase
     {
-
         public Per()
         {
             SegmentIdentifier = "PER";
@@ -14,29 +13,27 @@ namespace Edi835.Segments
             CommunicationNumber = "8888888888";
         }
 
-        private string ContactFunctionCode { get; set; }
-        private string Name { get; set; }
-        private string CommunicationNumberQualifier { get; set; }
-        private string CommunicationNumber { get; set; }
+        private string ContactFunctionCode { get; }
+        private string Name { get; }
+        private string CommunicationNumberQualifier { get; }
+        private string CommunicationNumber { get; }
 
         public string BuildPer()
         {
             var buildPer = new StringBuilder();
 
             buildPer.Append(SegmentIdentifier)
-                    .Append(DataElementTerminator)
-                    .Append(ContactFunctionCode)
-                    .Append(DataElementTerminator)
-                    .Append(Name)
-                    .Append(DataElementTerminator)
-                    .Append(CommunicationNumberQualifier)
-                    .Append(DataElementTerminator)
-                    .Append(CommunicationNumber)
-                    .Append(SegmentTerminator);
+                .Append(DataElementTerminator)
+                .Append(ContactFunctionCode)
+                .Append(DataElementTerminator)
+                .Append(Name)
+                .Append(DataElementTerminator)
+                .Append(CommunicationNumberQualifier)
+                .Append(DataElementTerminator)
+                .Append(CommunicationNumber)
+                .Append(SegmentTerminator);
 
             return buildPer.ToString();
         }
     }
-
-
 }

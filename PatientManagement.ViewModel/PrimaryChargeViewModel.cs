@@ -1,46 +1,66 @@
 ﻿using System;
-using EFC.BL;
-using PatientManagement.DAL;
-using PatientManagement.Model;
-using PatientManagement.ViewModel.Services;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Timers;
 using System.Windows.Input;
 using Common.Common.Services;
+using EFC.BL;
+using PatientManagement.DAL;
+using PatientManagement.Model;
+using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
     public class PrimaryChargeViewModel : INotifyPropertyChanged
     {
+        private readonly IPrimaryChargeRepository chargeRepository;
+
+        private readonly Timer timer = new Timer {Interval = 5000};
+
+
+        private Guid currentAssociatedPatientGuid;
+
+        private bool initializationComplete;
+
+        private PrimaryCharge selectedCharge;
+
         public PrimaryChargeViewModel()
         {
             SelectedCharge = new PrimaryCharge();
             PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
             Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
-            Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived,"PatientIdSent");
+            Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived, "PatientIdSent");
             AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
             chargeRepository = new PrimaryChargeRepository();
         }
 
-        private bool initializationComplete;
+        public ICommand AddChargeToPatientCommand { get; set; }
+
+        public PrimaryCharge SelectedCharge
+        {
+            get => selectedCharge;
+            set
+            {
+                if (value == selectedCharge) return;
+                selectedCharge = value;
+                RaisePropertyChanged("SelectedCharge");
+            }
+        }
+
+        public Dictionary<string, string> PlacesOfService { get; set; }
+
+        public string TextConfirmed { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnInitializationCompleteMessage(InitializationCompleteMessage obj)
         {
             SendChargeId();
         }
 
-        private readonly IPrimaryChargeRepository chargeRepository;
-
-
-        private Guid currentAssociatedPatientGuid;
-
         private void OnPatientIdReceived(SendGuidService sent)
         {
-            if (initializationComplete)
-            {
-                ReturnNewCharge();
-            }
+            if (initializationComplete) ReturnNewCharge();
             initializationComplete = true;
             SelectedCharge.PatientId = sent.Id;
             currentAssociatedPatientGuid = sent.Id;
@@ -63,27 +83,7 @@ namespace PatientManagement.ViewModel
             chargeRepository.Add(selectedCharge);
             SendChargeId();
             RaisePropertyChanged("Charges");
-
         }
-
-        public ICommand AddChargeToPatientCommand { get; set; }
-
-        private PrimaryCharge selectedCharge;
-
-        public PrimaryCharge SelectedCharge
-        {
-            get { return selectedCharge; }
-            set
-            {
-                if (value == selectedCharge) return;
-                selectedCharge = value;
-                RaisePropertyChanged("SelectedCharge");
-            }
-        }
-
-        public Dictionary<string, string> PlacesOfService { get; set; }
-
-        readonly Timer timer = new Timer { Interval = 5000 };
 
         private void StartTimerForTextConfirmation()
         {
@@ -102,8 +102,6 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("TextConfirmed");
         }
 
-        public string TextConfirmed { get; set; }
-
         private bool CanAddChargeToPatient(object obj)
         {
             return selectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
@@ -116,8 +114,6 @@ namespace PatientManagement.ViewModel
                 : new PrimaryCharge();
             RaisePropertyChanged("SelectedCharge");
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
         {

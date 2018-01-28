@@ -2,7 +2,6 @@
 using System.IO;
 using System.Windows.Forms;
 
-
 namespace Common.Common
 {
     public static class SaveToFile
@@ -12,10 +11,7 @@ namespace Common.Common
             using (var saveFile = new SaveFileDialog())
             {
                 SetTextFileFiltersForSaving(saveFile);
-                if (saveFile.ShowDialog() == DialogResult.OK)
-                {
-                    File.WriteAllText(saveFile.FileName, file);
-                }
+                if (saveFile.ShowDialog() == DialogResult.OK) File.WriteAllText(saveFile.FileName, file);
             }
         }
 
@@ -24,15 +20,14 @@ namespace Common.Common
             using (var saveFile = new SaveFileDialog())
             {
                 const string directory = @"\835 Batch\";
-                string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                var filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 {
-                    Directory.CreateDirectory(filePath+directory);
+                    Directory.CreateDirectory(filePath + directory);
                 }
                 SetTextFileFiltersForSaving(saveFile);
                 Directory.CreateDirectory(filePath);
                 var path = $"{filePath}{directory}{saveFile.FileName}.{saveFile.DefaultExt}";
                 File.WriteAllText(path, file);
-
             }
         }
 
@@ -44,7 +39,5 @@ namespace Common.Common
             saveFile.DefaultExt = "txt";
             saveFile.FileName = DateTime.Now.ToString("yyyy_MM_dd_hmmssff");
         }
-
     }
 }
-

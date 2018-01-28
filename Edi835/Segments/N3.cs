@@ -13,6 +13,7 @@ namespace Edi835.Segments
             AddressLineOne = insurance.Address.StreetOne;
             AddressLineTwo = insurance.Address.StreetTwo;
         }
+
         public N3(Provider billingProvider)
         {
             SegmentIdentifier = "N3";
@@ -21,10 +22,10 @@ namespace Edi835.Segments
             AddressLineTwo = Provider.Address.StreetTwo;
         }
 
-        private Provider Provider { get; set; }
-        private InsuranceCompany Insurance { get; set; }
-        private string AddressLineOne { get; set; }
-        private string AddressLineTwo { get; set; }
+        private Provider Provider { get; }
+        private InsuranceCompany Insurance { get; }
+        private string AddressLineOne { get; }
+        private string AddressLineTwo { get; }
 
 
         public string BuildN3()
@@ -35,13 +36,11 @@ namespace Edi835.Segments
                 .Append(DataElementTerminator)
                 .Append(AddressLineOne);
 
-                if(!string.IsNullOrEmpty(AddressLineTwo))
-            {
+            if (!string.IsNullOrEmpty(AddressLineTwo))
                 buildN3.Append(DataElementTerminator)
-                .Append(AddressLineTwo);
-            }
+                    .Append(AddressLineTwo);
 
-                buildN3.Append(SegmentTerminator);
+            buildN3.Append(SegmentTerminator);
 
             return buildN3.ToString();
         }

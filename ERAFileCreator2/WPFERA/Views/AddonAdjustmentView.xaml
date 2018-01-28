@@ -1,13 +1,13 @@
 ﻿<UserControl x:Class="EraFileCreator.Views.AddonAdjustmentView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:EraFileCreator.Views"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModel:AddonAdjustmentViewModel/>
+        <viewModel:AddonAdjustmentViewModel />
     </UserControl.DataContext>
     <Grid Margin="5,5,5,5">
         <Grid.RowDefinitions>
@@ -15,42 +15,44 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock x:Name="AddonAdjustmentType" Grid.Row="0" Grid.Column="0"
-                       Text="Adjustment Type" Margin="5,0,0,5"/>
+                   Text="Adjustment Type" Margin="5,0,0,5" />
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="AddonAdjustmentTypeDropdown"
                           SelectedIndex="0"
                           ItemsSource="{Binding AddonAdjustmentType}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
-                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}" Margin="5,0,0,0" TabIndex="56"/>
-                <ComboBox x:Name="AddonAdjustmentReasonCodeDropdown" 
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}"
+                          Margin="5,0,0,0" TabIndex="56" />
+                <ComboBox x:Name="AddonAdjustmentReasonCodeDropdown"
                           ItemsSource="{Binding AddonAdjustmentReasonCodes}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentReasonCodeDropdown}"
-                          SelectedIndex="34" Margin="5,0,0,0" TabIndex="57" Grid.Column="1"/>
+                          SelectedIndex="34" Margin="5,0,0,0" TabIndex="57" Grid.Column="1" />
                 <TextBox x:Name="AddonAdjustmentAmountInput"
                          Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="5,0,0,0" TabIndex="58" Grid.Column="2" PreviewTextInput="AddonAdjustmentAmountInput_PreviewTextInput">
+                         Margin="5,0,0,0" TabIndex="58" Grid.Column="2"
+                         PreviewTextInput="AddonAdjustmentAmountInput_PreviewTextInput">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
-                            <DockPanel >
+                            <DockPanel>
                                 <Border BorderBrush="Red" BorderThickness="1">
-                                    <AdornedElementPlaceholder/>
+                                    <AdornedElementPlaceholder />
                                 </Border>
                             </DockPanel>
                         </ControlTemplate>
@@ -59,7 +61,8 @@
             </Grid>
             <Button x:Name="AddonAdjustmentButton" Grid.Column="4"
                     Content="Add Adjustment"
-                    Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,5,5,0" HorizontalContentAlignment="Center" TabIndex="59"/>
+                    Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,5,5,0"
+                    HorizontalContentAlignment="Center" TabIndex="59" />
             <!--<Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackPanel Orientation="Horizontal">
                     <DataGrid AutoGenerateColumns="False"

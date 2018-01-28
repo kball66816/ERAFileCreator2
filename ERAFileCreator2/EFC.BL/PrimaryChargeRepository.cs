@@ -1,23 +1,19 @@
-﻿using PatientManagement.DAL;
-using PatientManagement.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PatientManagement.DAL;
+using PatientManagement.Model;
 
 namespace EFC.BL
 {
-    public class PrimaryChargeRepository:IPrimaryChargeRepository
+    public class PrimaryChargeRepository : IPrimaryChargeRepository
     {
-
         private static readonly List<PrimaryCharge> Charges = new List<PrimaryCharge>();
 
         public void Add(PrimaryCharge charge)
         {
             var existing = GetSelectedCharge(charge.Id);
-            if (existing == null)
-            {
-                Charges.Add(charge);
-            }
+            if (existing == null) Charges.Add(charge);
         }
 
         public void Delete(PrimaryCharge charge)
@@ -37,12 +33,12 @@ namespace EFC.BL
 
         public PrimaryCharge GetSelectedCharge(Guid id)
         {
-            return Charges.FirstOrDefault(c=>c.Id == id);
+            return Charges.FirstOrDefault(c => c.Id == id);
         }
 
         public IEnumerable<PrimaryCharge> GetSelectedCharges(Guid patientId)
         {
-           return Charges.Where(c => c.PatientId == patientId && c.ChargeCost > 0);
+            return Charges.Where(c => c.PatientId == patientId && c.ChargeCost > 0);
         }
     }
 }

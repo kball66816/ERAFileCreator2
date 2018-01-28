@@ -7,8 +7,8 @@ namespace PatientManagement.Model
     {
         public Modifier()
         {
-
         }
+
         public Modifier(Modifier Modifier)
         {
             ModifierOne = Modifier.ModifierOne;
@@ -16,6 +16,7 @@ namespace PatientManagement.Model
             ModifierThree = Modifier.ModifierThree;
             ModifierFour = Modifier.ModifierFour;
         }
+
         public string ModifierOne { get; set; }
         public string ModifierTwo { get; set; }
         public string ModifierThree { get; set; }

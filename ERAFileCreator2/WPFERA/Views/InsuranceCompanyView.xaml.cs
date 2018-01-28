@@ -1,11 +1,11 @@
-﻿using EraView.Utility;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
+using EraFileCreator.Utility;
 
-namespace EraView.Views
+namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for InsuranceCompanyView.xaml
+    ///     Interaction logic for InsuranceCompanyView.xaml
     /// </summary>
     public partial class InsuranceCompanyView : UserControl
     {

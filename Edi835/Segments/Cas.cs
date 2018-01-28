@@ -3,7 +3,7 @@ using PatientManagement.Model;
 
 namespace Edi835.Segments
 {
-    public class Cas:SegmentBase
+    public class Cas : SegmentBase
     {
         public Cas(PrimaryCharge charge)
         {
@@ -23,15 +23,14 @@ namespace Edi835.Segments
             MonetaryAmount = adjustment.AdjustmentAmount;
         }
 
-        private string ClaimAdjustmentGroupCode { get; set; }
-        private string ClaimAdjustmentReasonCode { get; set; }
-        private decimal MonetaryAmount { get; set; }
-        private PrimaryCharge Charge { get; set; }
-        private Adjustment Adjustment { get; set; }
+        private string ClaimAdjustmentGroupCode { get; }
+        private string ClaimAdjustmentReasonCode { get; }
+        private decimal MonetaryAmount { get; }
+        private PrimaryCharge Charge { get; }
+        private Adjustment Adjustment { get; }
 
         public string BuildCas()
         {
-
             var buildCas = new StringBuilder();
             {
                 buildCas.Append(SegmentIdentifier);

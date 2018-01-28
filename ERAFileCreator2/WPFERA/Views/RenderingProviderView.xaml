@@ -1,13 +1,13 @@
 ﻿<UserControl x:Class="EraFileCreator.Views.RenderingProviderView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModel:RenderingProviderViewModel/>
+        <viewModel:RenderingProviderViewModel />
     </UserControl.DataContext>
 
     <Grid Margin="5">
@@ -16,50 +16,51 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="Patient's Rendering Provider" FontSize="16" TextDecorations="Underline" Margin="5,0,0,5"/>
+            <TextBlock Text="Patient's Rendering Provider" FontSize="16" TextDecorations="Underline" Margin="5,0,0,5" />
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical">
                 <TextBlock x:Name="RenderingProviderFirstNameTag"
-                    Text="Provider's First Name*" Margin="5,5,5,0"/>
+                           Text="Provider's First Name*" Margin="5,5,5,0" />
                 <TextBox x:Name="RenderingProviderFirstNameInput"
-                    Text="{Binding RenderingProvider.FirstName}"
-                 Margin="5,0" TabIndex="27"/>
+                         Text="{Binding RenderingProvider.FirstName}"
+                         Margin="5,0" TabIndex="27" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <TextBlock x:Name="RenderingProviderLastNameTag"
-                    Text="Provider's Last Name*" Margin="5,5,5,0"/>
+                           Text="Provider's Last Name*" Margin="5,5,5,0" />
                 <TextBox x:Name="RenderingProviderLastNameInput"
-                    Text="{Binding RenderingProvider.LastName}" Margin="5,0" TabIndex="28"/>
+                         Text="{Binding RenderingProvider.LastName}" Margin="5,0" TabIndex="28" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="2">
                 <TextBlock x:Name="RenderingProviderNpiTag"
-                    Text="Provider's NPI*" Margin="5,5,5,0"/>
+                           Text="Provider's NPI*" Margin="5,5,5,0" />
                 <TextBox x:Name="RenderingProviderNpiInput"
-                         MaxLength="10" Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="29" PreviewTextInput="RenderingProviderNpiInput_PreviewTextInput">
+                         MaxLength="10" Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="29"
+                         PreviewTextInput="RenderingProviderNpiInput_PreviewTextInput">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
-                            <DockPanel >
+                            <DockPanel>
                                 <Border BorderBrush="Red" BorderThickness="1">
-                                    <AdornedElementPlaceholder/>
+                                    <AdornedElementPlaceholder />
                                 </Border>
                             </DockPanel>
                         </ControlTemplate>
                     </Validation.ErrorTemplate>
                     <Binding Path="RenderingProvider.Npi" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validators:NpivalidationRule ValidationStep="RawProposedValue"/>
+                            <validators:NpivalidationRule ValidationStep="RawProposedValue" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
-                </StackPanel>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

@@ -7,6 +7,8 @@ namespace Edi835.Segments
 {
     public class Dtm : SegmentBase
     {
+        private StringBuilder buildDtm;
+
         public Dtm()
         {
             SegmentIdentifier = "DTM";
@@ -29,10 +31,9 @@ namespace Edi835.Segments
             Date = charge.DateOfService.DateToYearFirstShortString();
         }
 
-        private PrimaryCharge Charge { get; set; }
+        private PrimaryCharge Charge { get; }
         private string DateTimeQualifier { get; set; }
         private string Date { get; set; }
-        private StringBuilder buildDtm;
 
 
         public string BuildDtm()
@@ -70,7 +71,6 @@ namespace Edi835.Segments
 
         private void AttachServiceExpirationDate()
         {
-
             ServiceExpirationDateDetails();
             buildDtm.Append(SegmentIdentifier)
                 .Append(DataElementTerminator)
@@ -78,7 +78,6 @@ namespace Edi835.Segments
                 .Append(DataElementTerminator)
                 .Append(Date)
                 .Append(SegmentTerminator);
-
         }
 
 
@@ -90,7 +89,6 @@ namespace Edi835.Segments
 
         private void AttachClaimReceivedDateDetails()
         {
-
             ClaimReceivedDateDetails();
             buildDtm.Append(SegmentIdentifier)
                 .Append(DataElementTerminator)
@@ -98,10 +96,6 @@ namespace Edi835.Segments
                 .Append(DataElementTerminator)
                 .Append(Date)
                 .Append(SegmentTerminator);
-
         }
-
-
-
     }
 }

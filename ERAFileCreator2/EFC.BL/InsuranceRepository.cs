@@ -3,9 +3,9 @@ using PatientManagement.Model;
 
 namespace EFC.BL
 {
-    public class InsuranceRepository:IInsurance
-     {
-         private static InsuranceCompany _insurance;
+    public class InsuranceRepository : IInsurance
+    {
+        private static InsuranceCompany _insurance;
 
 
         public void AddInsurance(InsuranceCompany insuranceCompany)

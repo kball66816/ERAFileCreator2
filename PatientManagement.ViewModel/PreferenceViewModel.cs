@@ -1,12 +1,16 @@
-﻿using PatientManagement.Model;
-using PatientManagement.ViewModel.Services;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Input;
+using PatientManagement.Model;
+using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
     public class PreferenceViewModel : INotifyPropertyChanged
     {
+        private Preference preference;
+
+        public SettingsService Settings;
+
         public PreferenceViewModel()
         {
             Preference = new Preference();
@@ -15,13 +19,9 @@ namespace PatientManagement.ViewModel
             LoadCommands();
         }
 
-        public SettingsService Settings;
-
-        private Preference preference;
-
         public Preference Preference
         {
-            get { return preference; }
+            get => preference;
             set
             {
                 if (value != preference)
@@ -34,6 +34,8 @@ namespace PatientManagement.ViewModel
 
         public ICommand SavePreferenceCommand { get; set; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private void SavePreference(object obj)
         {
             SettingsService.SetDefaultPreferences(Preference);
@@ -43,8 +45,6 @@ namespace PatientManagement.ViewModel
         {
             SavePreferenceCommand = new Command(SavePreference);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
         {

@@ -2,7 +2,7 @@
 
 namespace Edi835.Segments
 {
-    public class Isa:SegmentBase
+    public class Isa : SegmentBase
     {
         public Isa()
         {
@@ -23,25 +23,24 @@ namespace Edi835.Segments
             AcknowledgementRequested = "0";
             UsageIndicator = "P";
             ComponentElementSeperator = ":";
-
         }
 
-        private string AuthorizationInfoQualifier { get; set; }
-        private string AuthorizationInformation { get; set; }
-        private string SecurityInfoQualifier { get; set; }
-        private string SecurityInformation { get; set; }
-        private string InterchangeIdQualifierSender { get; set; }
-        private string InterchangeSenderId { get; set; }
-        private string InterchangeIdQualifierReceiver { get; set; }
-        private string InterchangeReceiverId { get; set; }
-        private string InterchangeDate { get; set; }
-        private string InterchangeTime { get; set; }
-        private string ReptitionSeperator { get; set; }
-        private string InterchangeControlVersionNumber { get; set; }
-        private string InterchangeControlNumber { get; set; }
-        private string AcknowledgementRequested { get; set; }
-        private string UsageIndicator { get; set; }
-        private string ComponentElementSeperator { get; set; }
+        private string AuthorizationInfoQualifier { get; }
+        private string AuthorizationInformation { get; }
+        private string SecurityInfoQualifier { get; }
+        private string SecurityInformation { get; }
+        private string InterchangeIdQualifierSender { get; }
+        private string InterchangeSenderId { get; }
+        private string InterchangeIdQualifierReceiver { get; }
+        private string InterchangeReceiverId { get; }
+        private string InterchangeDate { get; }
+        private string InterchangeTime { get; }
+        private string ReptitionSeperator { get; }
+        private string InterchangeControlVersionNumber { get; }
+        private string InterchangeControlNumber { get; }
+        private string AcknowledgementRequested { get; }
+        private string UsageIndicator { get; }
+        private string ComponentElementSeperator { get; }
 
 
         public string BuildIsa()
@@ -86,5 +85,4 @@ namespace Edi835.Segments
             return buildIsa.ToString();
         }
     }
-
 }

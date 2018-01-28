@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -10,10 +9,19 @@ namespace PatientManagement.Model
     [Serializable]
     public abstract class Charge : INotifyPropertyChanged
     {
+        private ObservableCollection<Adjustment> adjustmentList;
+
+
+        private decimal chargeCost;
+
+        private decimal paymentAmount;
+
+
+        private string procedureCode;
 
         public ObservableCollection<Adjustment> AdjustmentList
         {
-            get { return adjustmentList; }
+            get => adjustmentList;
             set
             {
                 if (value != adjustmentList)
@@ -26,36 +34,24 @@ namespace PatientManagement.Model
 
         public Modifier Modifier { get; set; }
 
-        public Guid Id { get;  set; }
-
-
-     
-
-        private decimal chargeCost;
+        public Guid Id { get; set; }
 
         public decimal ChargeCost
         {
-            get { return chargeCost; }
+            get => chargeCost;
             set
             {
                 if (value != chargeCost)
                 {
                     chargeCost = value;
                     RaisePropertyChanged("ChargeCost");
-                    
                 }
             }
         }
 
-
-        private string procedureCode;
-        private ObservableCollection<Adjustment> adjustmentList;
-
-        private decimal paymentAmount;
-
         public decimal PaymentAmount
         {
-            get { return paymentAmount; }
+            get => paymentAmount;
             set
             {
                 if (value != paymentAmount)
@@ -65,13 +61,12 @@ namespace PatientManagement.Model
                     RaisePropertyChanged("CheckAmount");
                     RaisePropertyChanged("AllowedAmount");
                 }
-
             }
         }
 
         public string ProcedureCode
         {
-            get { return procedureCode; }
+            get => procedureCode;
             set
             {
                 if (value != procedureCode)
@@ -83,33 +78,26 @@ namespace PatientManagement.Model
         }
 
 
-        public abstract decimal AllowedAmount { get;}
+        public abstract decimal AllowedAmount { get; }
 
-        public string CountAdjustments
-        {
-            get { return AdjustmentList.Count.ToString(); }
-        }
+        public string CountAdjustments => AdjustmentList.Count.ToString();
+
+        [field: NonSerialized] public event PropertyChangedEventHandler PropertyChanged;
 
 
         public object Clone()
         {
-            MemoryStream m = new MemoryStream();
-            BinaryFormatter b = new BinaryFormatter();
+            var m = new MemoryStream();
+            var b = new BinaryFormatter();
             b.Serialize(m, this);
             m.Position = 0;
 
-            return (Charge)b.Deserialize(m);
+            return (Charge) b.Deserialize(m);
         }
-
-        [field:NonSerialized]
-    public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

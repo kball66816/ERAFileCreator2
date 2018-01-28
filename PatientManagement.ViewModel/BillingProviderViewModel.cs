@@ -1,25 +1,44 @@
-﻿using EFC.BL;
-using PatientManagement.DAL;
-using PatientManagement.Model;
-using PatientManagement.ViewModel.Services;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using Common.Common.Services;
+using EFC.BL;
+using PatientManagement.DAL;
+using PatientManagement.Model;
+using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
     public class BillingProviderViewModel : INotifyPropertyChanged
     {
+        private Provider billingProvider;
+
         public BillingProviderViewModel()
         {
             LoadBillingProvider();
             SaveProviderToRepository();
             Messenger.Default.Register<UpdateRepositoriesMessage>(this, OnUpdateRepositoriesMessage);
-            Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSavedMessage,"UpdateSettings");
+            Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSavedMessage, "UpdateSettings");
             UpdateRenderingProviderCommand = new Command(UpdateRenderingProvider, CanUpdateRenderingProvider);
             UpdateRenderingProvider(null);
         }
+
+        public ICommand UpdateRenderingProviderCommand { get; }
+
+        public Provider BillingProvider
+        {
+            get => billingProvider;
+            set
+            {
+                if (value == billingProvider) return;
+                billingProvider = value;
+                RaisePropertyChanged("BillingProvider");
+            }
+        }
+
+        public Dictionary<string, string> ProviderStates { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void UpdateRenderingProvider(object obj)
         {
@@ -29,15 +48,14 @@ namespace PatientManagement.ViewModel
 
         private void DetermineBusinessName()
         {
-            BillingProvider.BusinessName = BillingProvider.IsIndividual ? BillingProvider.FullName : BillingProvider.BusinessName;
+            BillingProvider.BusinessName =
+                BillingProvider.IsIndividual ? BillingProvider.FullName : BillingProvider.BusinessName;
         }
 
         private bool CanUpdateRenderingProvider(object obj)
         {
             return true;
         }
-
-        public ICommand UpdateRenderingProviderCommand { get; private set; }
 
         private void OnSettingsSavedMessage(SettingsSavedMessage obj)
         {
@@ -49,20 +67,6 @@ namespace PatientManagement.ViewModel
             SaveProviderToRepository();
         }
 
-        private Provider billingProvider;
-
-        public Provider BillingProvider
-        {
-            get { return billingProvider; }
-            set
-            {
-                if (value == billingProvider) return;
-                billingProvider = value;
-                RaisePropertyChanged("BillingProvider");
-            }
-        }
-        public Dictionary<string, string> ProviderStates { get; set; }
-
 
         private void LoadBillingProvider()
         {
@@ -70,8 +74,6 @@ namespace PatientManagement.ViewModel
             BillingProvider = SettingsService.PullDefaultBillingProvider(BillingProvider);
             ProviderStates = BillingProvider.Address.States;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
         {
@@ -104,5 +106,4 @@ namespace PatientManagement.ViewModel
         //        return;
         //    }
     }
-
 }

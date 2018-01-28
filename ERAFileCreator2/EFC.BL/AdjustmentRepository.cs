@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 
 namespace EFC.BL
 {
-   public class AdjustmentRepository : IAdjustmentRepository
+    public class AdjustmentRepository : IAdjustmentRepository
     {
-
         private static readonly List<Adjustment> Adjustments = new List<Adjustment>();
 
         public void Add(Adjustment adjustment)
         {
             var existing = GetSelectedAdjustment(adjustment.Id);
-            if (existing == null)
-            {
-                Adjustments.Add(adjustment);
-            }
+            if (existing == null) Adjustments.Add(adjustment);
         }
 
         public void Delete(Adjustment adjustment)

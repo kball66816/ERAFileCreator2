@@ -8,7 +8,7 @@ namespace PatientManagement.ViewModel.Services
 
         public SendGuidService(Guid id)
         {
-            this.Id = id;
+            Id = id;
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for PreferenceView.xaml
+    ///     Interaction logic for PreferenceView.xaml
     /// </summary>
     public partial class PreferenceView : UserControl
     {

@@ -1,11 +1,11 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using EraView.Utility;
+using EraFileCreator.Utility;
 
-namespace EraView.Views
+namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for AddonAdjustmentView.xaml
+    ///     Interaction logic for AddonAdjustmentView.xaml
     /// </summary>
     public partial class AddonAdjustmentView : UserControl
     {

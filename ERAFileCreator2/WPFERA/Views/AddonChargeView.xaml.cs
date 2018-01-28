@@ -1,11 +1,11 @@
-﻿using EraView.Utility;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
+using EraFileCreator.Utility;
 
-namespace EraView.Views
+namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for AddonChargeView.xaml
+    ///     Interaction logic for AddonChargeView.xaml
     /// </summary>
     public partial class AddonChargeView : UserControl
     {
@@ -22,7 +22,6 @@ namespace EraView.Views
         private void AddonPaidAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             InputRestrictions.RestrictTextToDecimalOnly(e);
-
         }
     }
 }

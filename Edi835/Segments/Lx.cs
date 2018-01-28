@@ -2,7 +2,7 @@
 
 namespace Edi835.Segments
 {
-    public class Lx:SegmentBase
+    public class Lx : SegmentBase
     {
         public Lx()
         {
@@ -11,7 +11,7 @@ namespace Edi835.Segments
             ClaimSequenceNumber = "1";
         }
 
-        private string ClaimSequenceNumber { get; set; }
+        private string ClaimSequenceNumber { get; }
 
         public string BuildLx()
         {

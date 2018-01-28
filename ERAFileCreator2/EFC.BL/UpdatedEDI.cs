@@ -2,14 +2,26 @@
 using System.Linq;
 using System.Text;
 using Edi835.Segments;
-using PatientManagement.Model;
 using PatientManagement.DAL;
-
+using PatientManagement.Model;
 
 namespace EFC.BL
 {
     public class UpdatedEdi
     {
+        private readonly Provider billingProvider;
+
+        private readonly InsuranceCompany insurance;
+
+        private readonly List<Patient> patients;
+
+        private readonly IAddonChargeRepository addonChargeRepository;
+
+        private readonly IAdjustmentRepository adjustmentRepository;
+
+        private readonly IPrimaryChargeRepository chargeRepository;
+
+        private int segmentCount = 6;
 
         public UpdatedEdi()
         {
@@ -28,20 +40,6 @@ namespace EFC.BL
 
             adjustmentRepository = new AdjustmentRepository();
         }
-
-        private IPrimaryChargeRepository chargeRepository;
-
-        private IAddonChargeRepository addonChargeRepository;
-
-        private IAdjustmentRepository adjustmentRepository;
-
-        private int segmentCount = 6;
-
-        private readonly InsuranceCompany insurance;
-
-        private readonly Provider billingProvider;
-
-        private readonly List<Patient> patients;
 
 
         public string Create835File()
@@ -117,13 +115,14 @@ namespace EFC.BL
                 var billingProviderRef = new Ref(billingProvider);
                 edi.Append(billingProviderRef.BuildRef());
             }
+
             segmentCount++;
 
             var lx = new Lx();
             edi.Append(lx.BuildLx());
             segmentCount++;
 
-            foreach (Patient patient in patients)
+            foreach (var patient in patients)
             {
                 var encounters = chargeRepository.GetSelectedCharges(patient.Id).ToList();
 
@@ -146,11 +145,12 @@ namespace EFC.BL
                 edi.Append(renderingNm1.BuildNm1());
                 segmentCount++;
 
-                var startDtm = new Dtm(patient, chargeRepository.GetAllCharges().FirstOrDefault(c => c.PatientId == patient.Id));
+                var startDtm = new Dtm(patient,
+                    chargeRepository.GetAllCharges().FirstOrDefault(c => c.PatientId == patient.Id));
                 edi.Append(startDtm.BuildDtm());
                 segmentCount++;
 
-                int chargeCount = 0;
+                var chargeCount = 0;
 
                 foreach (var charge in encounters)
                 {
@@ -169,7 +169,7 @@ namespace EFC.BL
 
                     if (chargeAdjustments != null)
                     {
-                        foreach (Adjustment adjustment in chargeAdjustments)
+                        foreach (var adjustment in chargeAdjustments)
                         {
                             var cas = new Cas(adjustment);
                             edi.Append(cas.BuildCas());
@@ -182,6 +182,7 @@ namespace EFC.BL
                     {
                         edi.Append(copayCas.BuildCas());
                     }
+
                     segmentCount++;
 
                     var chargeRef = new Ref(charge, chargeCount);
@@ -193,14 +194,14 @@ namespace EFC.BL
                     segmentCount++;
 
                     var addons = addonChargeRepository.GetSelectedAddonCharges(charge.Id);
-                    foreach (AddonCharge addonCharge in addons)
+                    foreach (var addonCharge in addons)
                     {
                         var addonsvc = new Svc(addonCharge);
                         edi.Append(addonsvc.BuildSvc());
                         segmentCount++;
 
                         var addonAdjustments = adjustmentRepository.GetSelectedAdjustments(addonCharge.Id);
-                        foreach (Adjustment adjustment in addonAdjustments)
+                        foreach (var adjustment in addonAdjustments)
                         {
                             var cas = new Cas(adjustment);
                             edi.Append(cas.BuildCas());
@@ -209,7 +210,6 @@ namespace EFC.BL
                             var addonAmt = new Amt(addonCharge);
                             edi.Append(addonAmt.BuildAmt());
                             segmentCount++;
-
                         }
                     }
                 }

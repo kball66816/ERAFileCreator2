@@ -1,145 +1,140 @@
 ﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:validation="clr-namespace:Common.Common;assembly=Common.Common"
-             xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
-             x:Class="EraFileCreator.Views.SinglePageView"
-             mc:Ignorable="d" Background="#FFD0E8FF">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:validation="clr-namespace:Common.Common;assembly=Common.Common"
+    xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
+    x:Class="EraFileCreator.Views.SinglePageView"
+    mc:Ignorable="d" Background="#FFD0E8FF">
     <UserControl.DataContext>
-        <viewModel:PatientViewModel/>
+        <viewModel:PatientViewModel />
     </UserControl.DataContext>
 
 
     <DockPanel>
-        <Menu DockPanel.Dock="Top" 
+        <Menu DockPanel.Dock="Top"
               Background="#FF7789D8">
             <MenuItem Header="File"
                       Height="Auto">
                 <MenuItem x:Name="SaveAs"
                           Header="Save As"
-                          Command="{Binding SaveFileCommand}"/>
-                <MenuItem Header="Close"/>
+                          Command="{Binding SaveFileCommand}" />
+                <MenuItem Header="Close" />
             </MenuItem>
         </Menu>
-        <StatusBar DockPanel.Dock="Bottom"    
-                x:Name="StatusBar"
-                Background="#FFF0F0F0">
+        <StatusBar DockPanel.Dock="Bottom"
+                   x:Name="StatusBar"
+                   Background="#FFF0F0F0">
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         x:Name="PatientCountTag"
-                               Text="Patient Count: "/>
+                        Text="Patient Count: " />
                     <TextBlock
                         x:Name="PatientCounter"
-                               Margin="0,0,0,0"
-                               Text="{Binding PatientCount}"/>
+                        Margin="0,0,0,0"
+                        Text="{Binding PatientCount}" />
                 </StackPanel>
             </StatusBarItem>
-            <StatusBarItem>
-
-            </StatusBarItem>
+            <StatusBarItem />
             <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         Text="Check Number: "
-                               Margin="0,0,0,0"
-                               HorizontalAlignment="Right"/>
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Right" />
                     <TextBlock
                         Name="CheckNumber"
-                               Text="{Binding InsuranceCompany.CheckNumber}"/>
+                        Text="{Binding InsuranceCompany.CheckNumber}" />
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
-                        x:Name="CheckAmountStatus" 
-                        Text="Check Amount: $"/>
+                        x:Name="CheckAmountStatus"
+                        Text="Check Amount: $" />
                     <TextBlock
-                        x:Name="PaidAmountCounter" 
-                        Text="{Binding InsuranceCompany.CheckAmount, UpdateSourceTrigger=PropertyChanged}"/>
+                        x:Name="PaidAmountCounter"
+                        Text="{Binding InsuranceCompany.CheckAmount, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
             </Grid.RowDefinitions>
-            
-            <Rectangle Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5"
-                   Margin="0,5,0,0"
-                   Width="auto"
-                   Height="2"
-                   Fill="Gray" VerticalAlignment="Center"/>
-            
-            <Rectangle Grid.Row="9" Margin="0,5,0,0" Grid.Column="0" Grid.ColumnSpan="5"
-                   Width="auto"
-                   Height="2"
-                   Fill="Gray" 
-                   VerticalAlignment="Center"/>
-            
-            <Rectangle Grid.Row="15" Margin="0,5,0,0" Grid.Column="0" Grid.ColumnSpan="5"
-                   Width="auto"
-                   Height="2"
-                   Fill="Gray" VerticalAlignment="Center"/>
-            <TextBlock Text="Selected Patient Encounters" Grid.Row="22" Grid.Column="0"
-                       VerticalAlignment="Top"/>
 
+            <Rectangle Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5"
+                       Margin="0,5,0,0"
+                       Width="auto"
+                       Height="2"
+                       Fill="Gray" VerticalAlignment="Center" />
+
+            <Rectangle Grid.Row="9" Margin="0,5,0,0" Grid.Column="0" Grid.ColumnSpan="5"
+                       Width="auto"
+                       Height="2"
+                       Fill="Gray"
+                       VerticalAlignment="Center" />
+
+            <Rectangle Grid.Row="15" Margin="0,5,0,0" Grid.Column="0" Grid.ColumnSpan="5"
+                       Width="auto"
+                       Height="2"
+                       Fill="Gray" VerticalAlignment="Center" />
+            <TextBlock Text="Selected Patient Encounters" Grid.Row="22" Grid.Column="0"
+                       VerticalAlignment="Top" />
 
 
             <TextBlock Text="Selected Charge Adjustments"
-                       VerticalAlignment="Top" Grid.Row="24" Grid.Column="0"/>
-            
+                       VerticalAlignment="Top" Grid.Row="24" Grid.Column="0" />
+
             <Button Name="AddAdjustmentButton" Grid.Row="23" Grid.Column="1"
-                Margin="10,0,0,0"
-                            Command="{Binding AddChargeAdjustmentCommand}"
+                    Margin="10,0,0,0"
+                    Command="{Binding AddChargeAdjustmentCommand}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
-                            Content="Add Additional Adjustment"/>
-           
-           
-            <TextBlock Text="Selected Charge Addons" Grid.Row="26" Grid.Column="0"/>
-            
-            
-            
-            
+                    Content="Add Additional Adjustment" />
+
+
+            <TextBlock Text="Selected Charge Addons" Grid.Row="26" Grid.Column="0" />
+
+
         </Grid>
     </DockPanel>
 

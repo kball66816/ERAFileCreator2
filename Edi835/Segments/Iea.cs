@@ -2,7 +2,7 @@
 
 namespace Edi835.Segments
 {
-    public class Iea:SegmentBase
+    public class Iea : SegmentBase
     {
         public Iea()
         {
@@ -11,8 +11,8 @@ namespace Edi835.Segments
             InterchangeControlNumber = "201541257";
         }
 
-        private string NumberOfFunctionalGroups { get; set; }
-        private string InterchangeControlNumber { get; set; }
+        private string NumberOfFunctionalGroups { get; }
+        private string InterchangeControlNumber { get; }
 
         public string BuildIea()
         {

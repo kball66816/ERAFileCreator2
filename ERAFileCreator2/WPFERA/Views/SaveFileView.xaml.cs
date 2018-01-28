@@ -3,7 +3,7 @@
 namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for SaveFileView.xaml
+    ///     Interaction logic for SaveFileView.xaml
     /// </summary>
     public partial class SaveFileView : UserControl
     {

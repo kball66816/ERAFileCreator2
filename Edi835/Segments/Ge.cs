@@ -11,6 +11,9 @@ namespace Edi835.Segments
             GroupControlNumber = "201541257";
         }
 
+        private string TransactionSetQuantity { get; }
+        private string GroupControlNumber { get; }
+
 
         public string BuildGe()
         {
@@ -24,8 +27,5 @@ namespace Edi835.Segments
 
             return buildGe.ToString();
         }
-
-        private string TransactionSetQuantity { get; set; }
-        private string GroupControlNumber { get; set; }
     }
 }

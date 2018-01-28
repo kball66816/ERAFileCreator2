@@ -3,7 +3,7 @@
 namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for PatientView.xaml
+    ///     Interaction logic for PatientView.xaml
     /// </summary>
     public partial class PatientView : UserControl
     {

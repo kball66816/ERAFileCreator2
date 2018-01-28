@@ -17,14 +17,14 @@ namespace Edi835.Segments
             IndustryIdentifierCode = "005010X221A1";
         }
 
-        private string FunctionalIdentifierCode { get; set; }
-        private string ApplicationSendersCode { get; set; }
-        private string ApplicationReceiversCode { get; set; }
-        private string Date { get; set; }
-        private string Time { get; set; }
-        private string GroupControlNumber { get; set; }
-        private string ResponsibleAgencyCode { get; set; }
-        private string IndustryIdentifierCode { get; set; }
+        private string FunctionalIdentifierCode { get; }
+        private string ApplicationSendersCode { get; }
+        private string ApplicationReceiversCode { get; }
+        private string Date { get; }
+        private string Time { get; }
+        private string GroupControlNumber { get; }
+        private string ResponsibleAgencyCode { get; }
+        private string IndustryIdentifierCode { get; }
 
         public string BuildGs()
         {
@@ -50,9 +50,6 @@ namespace Edi835.Segments
                 .Append(SegmentTerminator);
 
             return buildGs.ToString();
-
         }
-
-
     }
 }

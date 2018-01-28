@@ -1,8 +1,8 @@
-﻿using Common.Common;
+﻿using System.Windows.Input;
+using Common.Common;
+using Common.Common.Services;
 using EFC.BL;
 using PatientManagement.ViewModel.Services;
-using System.Windows.Input;
-using Common.Common.Services;
 
 namespace PatientManagement.ViewModel
 {
@@ -12,6 +12,12 @@ namespace PatientManagement.ViewModel
         {
             LoadCommands();
         }
+
+        public ICommand SaveFileCommand { get; set; }
+
+        public ICommand SaveBatchOfFiles { get; set; }
+
+        public ICommand CalculateCommand { get; set; }
 
         private static void Save(object obj)
         {
@@ -24,27 +30,19 @@ namespace PatientManagement.ViewModel
         private static void Save50Files(object obj)
         {
             SendCalculateRequest();
-            for (int i = 0; i < 50; i++)
+            for (var i = 0; i < 50; i++)
             {
                 SendMessages();
                 var edi = new UpdatedEdi();
                 edi.Create835File().SaveFiletoADefaultDirectory();
             }
-            
         }
 
         private static void SendMessages()
         {
             Messenger.Default.Send(new UpdateRepositoriesMessage());
             Messenger.Default.Send(new SaveFileMessage(), "SaveTextFiletoSelectedDirectory");
-
         }
-
-        public ICommand SaveFileCommand { get; set; }
-
-        public ICommand SaveBatchOfFiles { get; set; }
-
-        public ICommand CalculateCommand { get; set; }
 
         private void LoadCommands()
         {
@@ -56,7 +54,7 @@ namespace PatientManagement.ViewModel
 
         private void Calculate(object obj)
         {
-            SendCalculateRequest            ();
+            SendCalculateRequest();
         }
 
         private static void SendCalculateRequest()

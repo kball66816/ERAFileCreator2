@@ -7,6 +7,12 @@ namespace PatientManagement.Model
     [Serializable]
     public class PrimaryCharge : Charge
     {
+        private string billId;
+        private decimal copay;
+        private DateTime dateOfService;
+        private bool formatClassicBillId;
+        private Guid patientId;
+
         public PrimaryCharge()
         {
             Id = Guid.NewGuid();
@@ -39,16 +45,14 @@ namespace PatientManagement.Model
 
         public DateTime DateOfService
         {
-            get { return dateOfService; }
+            get => dateOfService;
             set
             {
-                if(value!=dateOfService)
+                if (value != dateOfService)
                 {
                     dateOfService = value;
                     RaisePropertyChanged("DateOfService");
-
                 }
-
             }
         }
 
@@ -57,7 +61,7 @@ namespace PatientManagement.Model
 
         public bool FormatClassicBillId
         {
-            get { return formatClassicBillId; }
+            get => formatClassicBillId;
             set
             {
                 if (formatClassicBillId == value) return;
@@ -66,12 +70,9 @@ namespace PatientManagement.Model
             }
         }
 
-
-        private string billId;
-
         public string BillId
         {
-            get { return billId; }
+            get => billId;
             set
             {
                 if (value != billId)
@@ -81,15 +82,11 @@ namespace PatientManagement.Model
                 }
             }
         }
-        private decimal copay;
-        private DateTime dateOfService;
-        private bool formatClassicBillId;
-        private Guid patientId;
 
 
         public decimal Copay
         {
-            get { return copay; }
+            get => copay;
             set
             {
                 if (value != copay)
@@ -98,23 +95,16 @@ namespace PatientManagement.Model
                     RaisePropertyChanged("Copay");
                     RaisePropertyChanged("AllowedAmount");
                 }
-
             }
         }
 
-        public override decimal AllowedAmount
-        {
-            get
-            {
-                return PaymentAmount+Copay;
-            }
-        }
+        public override decimal AllowedAmount => PaymentAmount + Copay;
 
         private decimal TotalCostofAddonCharge
         {
             get
             {
-                decimal totalCostOfAddon = AddonChargeList.Sum(addon => addon.ChargeCost);
+                var totalCostOfAddon = AddonChargeList.Sum(addon => addon.ChargeCost);
                 return totalCostOfAddon;
             }
         }
@@ -123,17 +113,17 @@ namespace PatientManagement.Model
         {
             get
             {
-                decimal totalChargesPaid = AddonChargeList.Sum(addon => addon.PaymentAmount);
+                var totalChargesPaid = AddonChargeList.Sum(addon => addon.PaymentAmount);
                 return totalChargesPaid;
             }
         }
 
-        
+
         public decimal SumOfChargePaid
         {
             get
             {
-                decimal total = PaymentAmount+ TotalAddonChargesPaid;
+                var total = PaymentAmount + TotalAddonChargesPaid;
                 return total;
             }
         }
@@ -142,15 +132,15 @@ namespace PatientManagement.Model
         {
             get
             {
-                decimal totalCost = ChargeCost+TotalCostofAddonCharge;
+                var totalCost = ChargeCost + TotalCostofAddonCharge;
                 return totalCost;
             }
         }
 
         public Guid PatientId
         {
-            get { return patientId; }
-            set { patientId = value; }
+            get => patientId;
+            set => patientId = value;
         }
     }
 }

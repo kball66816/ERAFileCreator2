@@ -5,7 +5,7 @@ using EraFileCreator.Utility;
 namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for BillingProviderView.xaml
+    ///     Interaction logic for BillingProviderView.xaml
     /// </summary>
     public partial class BillingProviderView : UserControl
     {

@@ -48,12 +48,12 @@ namespace Common.CommonTests
         public void DecimalTruncateChargesWithExtraDigit()
         {
             //Arrange
-            string textBoxExample = "14.999";
-            decimal.TryParse(textBoxExample, out decimal value);
-            decimal actual = value.Truncated(2);
+            var textBoxExample = "14.999";
+            decimal.TryParse(textBoxExample, out var value);
+            var actual = value.Truncated(2);
 
             //Act
-            decimal expected = 14.99m;
+            var expected = 14.99m;
 
             //Assert
             Assert.AreEqual(expected, actual);
@@ -63,13 +63,13 @@ namespace Common.CommonTests
         public void DecimalTruncateChargesWithNoDecimal()
         {
             //Arrange
-            string textBoxExample = "14";
-            decimal.TryParse(textBoxExample, out decimal value);
-            decimal cost = value;
+            var textBoxExample = "14";
+            decimal.TryParse(textBoxExample, out var value);
+            var cost = value;
 
             //Act
-            decimal expected = 14.00m;
-            decimal actual = cost.Truncated(2);
+            var expected = 14.00m;
+            var actual = cost.Truncated(2);
 
             //Assert
             Assert.AreEqual(expected, actual);
@@ -79,13 +79,13 @@ namespace Common.CommonTests
         public void DecimalTruncateChargesWithNoTextValue()
         {
             //Arrange
-            string textBoxExample = "";
-            decimal.TryParse(textBoxExample, out decimal value);
-            decimal cost = value;
+            var textBoxExample = "";
+            decimal.TryParse(textBoxExample, out var value);
+            var cost = value;
 
             //Act
-            decimal expected = 0.00m;
-            decimal actual = cost.Truncated(2);
+            var expected = 0.00m;
+            var actual = cost.Truncated(2);
 
             //Assert
             Assert.AreEqual(expected, actual);

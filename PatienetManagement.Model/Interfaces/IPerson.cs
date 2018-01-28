@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PatientManagement.Model.Interfaces
+﻿namespace PatientManagement.Model.Interfaces
 {
-    interface IPerson
+    internal interface IPerson
     {
         string FirstName { get; set; }
 
@@ -17,6 +11,5 @@ namespace PatientManagement.Model.Interfaces
         string Prefix { get; set; }
 
         string Suffix { get; set; }
-
     }
 }

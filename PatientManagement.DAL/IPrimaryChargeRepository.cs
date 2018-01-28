@@ -1,6 +1,6 @@
-﻿using PatientManagement.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using PatientManagement.Model;
 
 namespace PatientManagement.DAL
 {
@@ -17,5 +17,5 @@ namespace PatientManagement.DAL
         PrimaryCharge GetSelectedCharge(Guid id);
 
         IEnumerable<PrimaryCharge> GetSelectedCharges(Guid patientId);
-    } 
+    }
 }
