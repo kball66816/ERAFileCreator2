@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using PatientManagement.Model.Interfaces;
 
@@ -9,6 +8,12 @@ namespace PatientManagement.Model
     public class Patient : IPerson, INotifyPropertyChanged
     {
         private ObservableCollection<PrimaryCharge> charges;
+
+        private string firstName;
+
+        private string fullName;
+
+        private string lastName;
 
         public Patient()
         {
@@ -19,54 +24,13 @@ namespace PatientManagement.Model
             Id = Guid.NewGuid();
         }
 
-        private string firstName;
-
-        public string FirstName
-        {
-            get { return firstName; }
-            set
-            {
-                if (value != firstName)
-                {
-                    firstName = value;
-                    RaisePropertyChanged("FirstName");
-                    RaisePropertyChanged("Name");
-                    RaisePropertyChanged("FullName");
-                }
-
-            }
-        }
-
-        private string lastName;
-
-        public string LastName
-        {
-            get { return lastName; }
-            set
-            {
-                if (value != lastName)
-                {
-                    lastName = value;
-                    RaisePropertyChanged("LastName");
-                    RaisePropertyChanged("Name");
-                    RaisePropertyChanged("FullName");
-                }
-
-            }
-        }
-
-        private string fullName;
-
         public string FullName
         {
             get
             {
-                string fullName = FirstName;
+                var fullName = FirstName;
 
-                if (!string.IsNullOrEmpty(LastName))
-                {
-                    fullName = fullName += " " + LastName;
-                }
+                if (!string.IsNullOrEmpty(LastName)) fullName = fullName += " " + LastName;
                 return fullName;
             }
 
@@ -80,12 +44,9 @@ namespace PatientManagement.Model
             }
         }
 
-        public string Suffix { get; set; }
-        public string Prefix { get; set; }
-        public string MiddleInitial { get; set; }
         public ObservableCollection<PrimaryCharge> Charges
         {
-            get { return charges; }
+            get => charges;
             set
             {
                 if (value == charges) return;
@@ -98,17 +59,6 @@ namespace PatientManagement.Model
 
         public Guid Id { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-       
 
         public bool IncludeSubscriber { get; set; }
 
@@ -116,9 +66,51 @@ namespace PatientManagement.Model
 
         public Provider RenderingProvider { get; set; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string FirstName
+        {
+            get => firstName;
+            set
+            {
+                if (value != firstName)
+                {
+                    firstName = value;
+                    RaisePropertyChanged("FirstName");
+                    RaisePropertyChanged("Name");
+                    RaisePropertyChanged("FullName");
+                }
+            }
+        }
+
+        public string LastName
+        {
+            get => lastName;
+            set
+            {
+                if (value != lastName)
+                {
+                    lastName = value;
+                    RaisePropertyChanged("LastName");
+                    RaisePropertyChanged("Name");
+                    RaisePropertyChanged("FullName");
+                }
+            }
+        }
+
+        public string Suffix { get; set; }
+        public string Prefix { get; set; }
+        public string MiddleInitial { get; set; }
+
+        public void RaisePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public Patient CopyPatient()
         {
-            var clone = (Patient)MemberwiseClone();
+            var clone = (Patient) MemberwiseClone();
+            clone.Id = Guid.NewGuid();
             clone.Charges = new ObservableCollection<PrimaryCharge>();
             return clone;
         }

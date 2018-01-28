@@ -4,16 +4,24 @@ namespace PatientManagement.Model
 {
     public class Preference : INotifyPropertyChanged
     {
+        private bool enableAddonReusePrompt;
+        private bool enablePatientReusePrompt;
+
+        private bool reloadLastPatientFromLastSession;
+
+        private bool reuseAddon;
+
+        private bool reuseLastChargeForNextPatient;
 
         private bool reusePatient;
 
         public bool ReusePatient
         {
-            get { return reusePatient; }
+            get => reusePatient;
             set
             {
                 if (value != reusePatient)
-                {  
+                {
                     reusePatient = value;
                     RaisePropertyChanged("ReusePatient");
                     UpdatePatientPromptStatus();
@@ -21,25 +29,9 @@ namespace PatientManagement.Model
             }
         }
 
-        private void UpdatePatientPromptStatus()
-        {
-            if(ReusePatient)
-            {
-                EnablePatientReusePrompt = true;
-            }
-
-            else if (ReusePatient == false)
-            {
-                EnablePatientReusePrompt = false;
-            }
-
-            RaisePropertyChanged("EnablePatientReusePrompt");
-        }
-        private bool enablePatientReusePrompt;
-
         public bool EnablePatientReusePrompt
         {
-            get { return enablePatientReusePrompt; }
+            get => enablePatientReusePrompt;
             set
             {
                 if (value != enablePatientReusePrompt)
@@ -50,26 +42,9 @@ namespace PatientManagement.Model
             }
         }
 
-        private void UpdateAddonPromptStatus()
-        {
-            if (ReuseAddon)
-            {
-                EnableAddonReusePrompt = true;
-            }
-
-            else if (ReuseAddon == false)
-            {
-                EnableAddonReusePrompt = false;
-            }
-
-            RaisePropertyChanged("EnableAddonReusePrompt");
-        }
-
-        private bool reuseAddon;
-
         public bool ReuseAddon
         {
-            get { return reuseAddon; }
+            get => reuseAddon;
             set
             {
                 if (value != reuseAddon)
@@ -81,11 +56,9 @@ namespace PatientManagement.Model
             }
         }
 
-        private bool enableAddonReusePrompt;
-
         public bool EnableAddonReusePrompt
         {
-            get { return enableAddonReusePrompt; }
+            get => enableAddonReusePrompt;
             set
             {
                 if (value != enableAddonReusePrompt)
@@ -96,11 +69,9 @@ namespace PatientManagement.Model
             }
         }
 
-        private bool reloadLastPatientFromLastSession;
-
         public bool ReloadLastPatientFromLastSession
         {
-            get { return reloadLastPatientFromLastSession; }
+            get => reloadLastPatientFromLastSession;
             set
             {
                 if (value != reloadLastPatientFromLastSession)
@@ -111,31 +82,47 @@ namespace PatientManagement.Model
             }
         }
 
-        private bool reuseLastChargeForNextPatient;
-
         public bool ReuseLastChargeForNextPatient
         {
-            get { return reuseLastChargeForNextPatient; }
+            get => reuseLastChargeForNextPatient;
             set
             {
-                if(value!=ReuseLastChargeForNextPatient)
+                if (value != ReuseLastChargeForNextPatient)
                 {
                     reuseLastChargeForNextPatient = value;
                     RaisePropertyChanged("ReuseLastChargeForNextPatient");
                 }
-              
             }
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private void UpdatePatientPromptStatus()
+        {
+            if (ReusePatient)
+                EnablePatientReusePrompt = true;
+
+            else if (ReusePatient == false)
+                EnablePatientReusePrompt = false;
+
+            RaisePropertyChanged("EnablePatientReusePrompt");
+        }
+
+        private void UpdateAddonPromptStatus()
+        {
+            if (ReuseAddon)
+                EnableAddonReusePrompt = true;
+
+            else if (ReuseAddon == false)
+                EnableAddonReusePrompt = false;
+
+            RaisePropertyChanged("EnableAddonReusePrompt");
+        }
+
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

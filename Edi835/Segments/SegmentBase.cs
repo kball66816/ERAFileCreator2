@@ -2,9 +2,9 @@
 {
     public abstract class SegmentBase
     {
-        protected string SegmentIdentifier { get; set; }
-        protected string DataElementTerminator = "*";
         protected string ComponentIdentifier = ":";
+        protected string DataElementTerminator = "*";
         protected string SegmentTerminator = "~";
+        protected string SegmentIdentifier { get; set; }
     }
 }

@@ -1,34 +1,38 @@
 ﻿<UserControl x:Class="EraFileCreator.Views.SaveFileView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:EraFileCreator.Views"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModel:SaveFileViewModel/>
+        <viewModel:SaveFileViewModel />
     </UserControl.DataContext>
     <Grid Margin="5,5,5,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
+        <Button Grid.Column="2"
+                Command="{Binding CalculateCommand}"
+                Content="Calculate Check Amount"
+                TabIndex="60"
+                Margin="5"
+                ToolTip="Displays the most up to date calculation based on current values in fields plus previous amounts" />
         <Button Grid.Column="3"
-            Command="{Binding SaveFileCommand}"
-            Content="Create 835 File"
-            Width="115"
-            Margin="5"
-            TabIndex="60" HorizontalContentAlignment="Center"/>
+                Command="{Binding SaveFileCommand}"
+                Content="Create 835 File"
+                Margin="5"
+                TabIndex="61" HorizontalContentAlignment="Center" />
         <Button Grid.Column="4"
                 Command="{Binding SaveBatchOfFiles}"
                 Content="Create 50 835 Files"
-                Width="115"
                 Margin="5"
-                TabIndex="60" HorizontalContentAlignment="Center" ToolTip="Creates 50 835 files using the data currently saved. These default to the public users folder."/>
+                TabIndex="62" HorizontalContentAlignment="Center"
+                ToolTip="Creates 50 835 files using the data currently saved. These default to the public users folder." />
     </Grid>
 </UserControl>

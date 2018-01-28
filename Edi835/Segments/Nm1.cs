@@ -3,7 +3,7 @@ using PatientManagement.Model;
 
 namespace Edi835.Segments
 {
-   public class Nm1 : SegmentBase
+    public class Nm1 : SegmentBase
     {
         public Nm1(Patient patient)
         {
@@ -17,7 +17,6 @@ namespace Edi835.Segments
             Prefix = patient.Prefix;
             IdCodeQualifier = "MI";
             IdCode = patient.MemberId;
-
         }
 
         public Nm1(Provider renderingProvider)
@@ -47,35 +46,35 @@ namespace Edi835.Segments
             IdCode = subscriber.MemberId;
         }
 
-        private string EntityIdCode { get; set; }
-        private string EntityTypeQualifier { get; set; }
-        private string LastNameOrOrganizationName { get; set; }
-        private string FirstName { get; set; }
-        private string MiddleName { get; set; }
-        private string Suffix { get; set; }
-        private string Prefix { get; set; }
-        private string IdCodeQualifier { get; set; }
-        private string IdCode { get; set; }
+        private string EntityIdCode { get; }
+        private string EntityTypeQualifier { get; }
+        private string LastNameOrOrganizationName { get; }
+        private string FirstName { get; }
+        private string MiddleName { get; }
+        private string Suffix { get; }
+        private string Prefix { get; }
+        private string IdCodeQualifier { get; }
+        private string IdCode { get; }
 
         public string BuildNm1()
         {
             var buildNm1 = new StringBuilder();
 
             buildNm1.Append(SegmentIdentifier)
-                    .Append(DataElementTerminator)
-                    .Append(EntityTypeQualifier)
-                    .Append(DataElementTerminator)
-                    .Append(EntityIdCode)
-                    .Append(DataElementTerminator)
-                    .Append(LastNameOrOrganizationName)
-                    .Append(DataElementTerminator)
-                    .Append(FirstName)
-                    .Append(DataElementTerminator)
-                    .Append(MiddleName)
-                    .Append(DataElementTerminator)
-                    .Append(Prefix)
-                    .Append(DataElementTerminator)
-                    .Append(Suffix);
+                .Append(DataElementTerminator)
+                .Append(EntityTypeQualifier)
+                .Append(DataElementTerminator)
+                .Append(EntityIdCode)
+                .Append(DataElementTerminator)
+                .Append(LastNameOrOrganizationName)
+                .Append(DataElementTerminator)
+                .Append(FirstName)
+                .Append(DataElementTerminator)
+                .Append(MiddleName)
+                .Append(DataElementTerminator)
+                .Append(Prefix)
+                .Append(DataElementTerminator)
+                .Append(Suffix);
             AppendIfIdCodeOrQualifierExists(buildNm1);
             buildNm1.Append(SegmentTerminator);
             return buildNm1.ToString();
@@ -83,13 +82,11 @@ namespace Edi835.Segments
 
         private void AppendIfIdCodeOrQualifierExists(StringBuilder buildNm1)
         {
-            if (!string.IsNullOrEmpty(IdCodeQualifier) || (string.IsNullOrEmpty(IdCode)))
-            {
+            if (!string.IsNullOrEmpty(IdCodeQualifier) || string.IsNullOrEmpty(IdCode))
                 buildNm1.Append(DataElementTerminator)
                     .Append(IdCodeQualifier)
                     .Append(DataElementTerminator)
                     .Append(IdCode);
-            }
         }
     }
 }

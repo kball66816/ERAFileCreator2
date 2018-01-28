@@ -3,7 +3,7 @@ using PatientManagement.Model;
 
 namespace Edi835.Segments
 {
-    public class Trn:SegmentBase
+    public class Trn : SegmentBase
     {
         public Trn(InsuranceCompany insurance)
         {
@@ -14,25 +14,25 @@ namespace Edi835.Segments
             OriginatingCompanySupplementalCode = "13551";
         }
 
-        private string TraceTypeCode { get; set; }
-        private string ReferenceIdentification { get; set; }
-        private string OriginatingCompanyIdentifier { get; set; }
-        private string OriginatingCompanySupplementalCode { get; set; }
+        private string TraceTypeCode { get; }
+        private string ReferenceIdentification { get; }
+        private string OriginatingCompanyIdentifier { get; }
+        private string OriginatingCompanySupplementalCode { get; }
 
         public string BuildTrn()
         {
             var trn = new StringBuilder();
 
             trn.Append(SegmentIdentifier)
-               .Append(DataElementTerminator)
-               .Append(TraceTypeCode)
-               .Append(DataElementTerminator)
-               .Append(ReferenceIdentification)
-               .Append(DataElementTerminator)
-               .Append(OriginatingCompanyIdentifier)
-               .Append(DataElementTerminator)
-               .Append(OriginatingCompanySupplementalCode)
-               .Append(SegmentTerminator);
+                .Append(DataElementTerminator)
+                .Append(TraceTypeCode)
+                .Append(DataElementTerminator)
+                .Append(ReferenceIdentification)
+                .Append(DataElementTerminator)
+                .Append(OriginatingCompanyIdentifier)
+                .Append(DataElementTerminator)
+                .Append(OriginatingCompanySupplementalCode)
+                .Append(SegmentTerminator);
 
             return trn.ToString();
         }

@@ -5,7 +5,7 @@ using EraFileCreator.Utility;
 namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for RenderingProviderView.xaml
+    ///     Interaction logic for RenderingProviderView.xaml
     /// </summary>
     public partial class RenderingProviderView : UserControl
     {
@@ -16,7 +16,7 @@ namespace EraFileCreator.Views
 
         private void RenderingProviderNpiInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToNumericOnly(e);
+            InputRestrictions.RestrictTextToIntegerOnly(e);
         }
     }
 }

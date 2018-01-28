@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using PatientManagement.Model;
 
 namespace PatientManagement.DAL
@@ -12,8 +12,10 @@ namespace PatientManagement.DAL
 
         AddonCharge UpdateCharge(AddonCharge charge);
 
-        ObservableCollection<AddonCharge> GetAllCharges();
+        List<AddonCharge> GetAllCharges();
 
         AddonCharge GetSelectedCharge(Guid id);
+
+        IEnumerable<AddonCharge> GetSelectedAddonCharges(Guid chargeId);
     }
 }

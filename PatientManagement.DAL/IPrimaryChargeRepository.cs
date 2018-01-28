@@ -1,6 +1,6 @@
-﻿using PatientManagement.Model;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using PatientManagement.Model;
 
 namespace PatientManagement.DAL
 {
@@ -12,8 +12,10 @@ namespace PatientManagement.DAL
 
         PrimaryCharge UpdateCharge(PrimaryCharge charge);
 
-        ObservableCollection<PrimaryCharge> GetAllCharges();
+        List<PrimaryCharge> GetAllCharges();
 
         PrimaryCharge GetSelectedCharge(Guid id);
-    } 
+
+        IEnumerable<PrimaryCharge> GetSelectedCharges(Guid patientId);
+    }
 }

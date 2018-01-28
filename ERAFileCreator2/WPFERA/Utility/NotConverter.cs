@@ -4,16 +4,16 @@ using System.Windows.Data;
 
 namespace EraFileCreator.Utility
 {
-    class NotConverter:IValueConverter
+    internal class NotConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            return !(bool) value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            return !(bool) value;
         }
     }
 }

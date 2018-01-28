@@ -1,46 +1,37 @@
-﻿using PatientManagement.Model;
-using PatientManagement.ViewModel.Services;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using Common.Common.Services;
+using EFC.BL;
+using PatientManagement.DAL;
+using PatientManagement.Model;
+using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
-    public class PrimaryAdjustmentViewModel:INotifyPropertyChanged
+    public class PrimaryAdjustmentViewModel : INotifyPropertyChanged
     {
+        private readonly IAdjustmentRepository adjustmentRepository;
+
+        private Guid currentChargeGuid;
+
+        private bool initializationComplete;
+        private Adjustment selectedAdjustment;
+
         public PrimaryAdjustmentViewModel()
         {
             SelectedAdjustment = new Adjustment();
             PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
             PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
-            AddChargeAdjustmentCommand = new Command(AddAdjustmentToCharge, CanAddAdjustment);
-            Messenger.Default.Register<ObservableCollection<Adjustment>>(this, OnAdjustmentReceived, "PrimaryChargeAdjustments");
+            AddChargeAdjustmentCommand = new Command(AddAdjustmentCommand, CanAddAdjustment);
+            Messenger.Default.Register<SendGuidService>(this, OnChargeIdReceived, "ChargeIdSent");
+            adjustmentRepository = new AdjustmentRepository();
         }
-
-        private void OnAdjustmentReceived(ObservableCollection<Adjustment> adjustmentList)
-        {
-            Adjustments = adjustmentList;
-        }
-
-        private ObservableCollection<Adjustment> adjustments;
-
-        public ObservableCollection<Adjustment> Adjustments
-        {
-            get { return adjustments; }
-            set
-            {
-                if (adjustments == value) return;
-                adjustments = value;
-                RaisePropertyChanged("Adjustments");
-            }
-        }
-
-        private Adjustment selectedAdjustment;
 
         public Adjustment SelectedAdjustment
         {
-            get { return selectedAdjustment; }
+            get => selectedAdjustment;
             set
             {
                 if (value == selectedAdjustment) return;
@@ -48,25 +39,36 @@ namespace PatientManagement.ViewModel
                 RaisePropertyChanged("SelectedAdjustment");
             }
         }
+
         public Dictionary<string, string> PrimaryAdjustmentType { get; set; }
 
         public Dictionary<string, string> PrimaryAdjustmentReasonCodes { get; set; }
 
-        public ICommand AddChargeAdjustmentCommand { get; private set; }
+        public ICommand AddChargeAdjustmentCommand { get; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnChargeIdReceived(SendGuidService sent)
+        {
+            if (initializationComplete) SelectedAdjustment = new Adjustment();
+
+            initializationComplete = true;
+            SelectedAdjustment.ChargeId = sent.Id;
+            currentChargeGuid = sent.Id;
+            adjustmentRepository.Add(SelectedAdjustment);
+        }
+
+        private void AddAdjustmentCommand(object obj)
+        {
+            SelectedAdjustment = new Adjustment {ChargeId = currentChargeGuid};
+            adjustmentRepository.Add(SelectedAdjustment);
+        }
 
         private bool CanAddAdjustment(object obj)
         {
             return !string.IsNullOrEmpty(SelectedAdjustment.AdjustmentReasonCode) &&
                    SelectedAdjustment.AdjustmentAmount > 0;
         }
-
-        private void AddAdjustmentToCharge(object obj)
-        {
-            Messenger.Default.Send(selectedAdjustment,"PrimaryChargeAdjustment");
-            SelectedAdjustment = new Adjustment();
-            RaisePropertyChanged("SelectedAdjustment");
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
         {

@@ -5,7 +5,7 @@ using EraFileCreator.Utility;
 namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for BillingProviderView.xaml
+    ///     Interaction logic for BillingProviderView.xaml
     /// </summary>
     public partial class BillingProviderView : UserControl
     {
@@ -16,12 +16,12 @@ namespace EraFileCreator.Views
 
         private void BillingProviderZipCodeInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToNumericOnly(e);
+            InputRestrictions.RestrictTextToIntegerOnly(e);
         }
 
         private void BillingProviderNpiInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToNumericOnly(e);
+            InputRestrictions.RestrictTextToIntegerOnly(e);
         }
     }
 }

@@ -3,7 +3,7 @@ using PatientManagement.Model;
 
 namespace Edi835.Segments
 {
-    public class N4:SegmentBase
+    public class N4 : SegmentBase
     {
         public N4(InsuranceCompany insurance)
         {
@@ -21,9 +21,9 @@ namespace Edi835.Segments
             ZipCode = billingProvider.Address.ZipCode;
         }
 
-        private string City { get; set; }
-        private string State { get; set; }
-        private string ZipCode { get; set; }
+        private string City { get; }
+        private string State { get; }
+        private string ZipCode { get; }
 
         public string BuildN4()
         {

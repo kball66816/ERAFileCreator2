@@ -3,9 +3,8 @@ using PatientManagement.Model;
 
 namespace Edi835.Segments
 {
-    public class N1:SegmentBase
+    public class N1 : SegmentBase
     {
-
         public N1(InsuranceCompany insurance)
         {
             SegmentIdentifier = "N1";
@@ -26,12 +25,12 @@ namespace Edi835.Segments
             IdCode = billingProvider.Npi;
         }
 
-        private InsuranceCompany Insurance { get; set; }
-        private Provider Provider { get; set; }
-        private string EntityIdCode { get; set; }
-        private string Name { get; set; }
-        private string IdCodeQualifier { get; set; }
-        private string IdCode { get; set; }
+        private InsuranceCompany Insurance { get; }
+        private Provider Provider { get; }
+        private string EntityIdCode { get; }
+        private string Name { get; }
+        private string IdCodeQualifier { get; }
+        private string IdCode { get; }
 
         public string BuildN1()
         {
@@ -49,7 +48,6 @@ namespace Edi835.Segments
                 .Append(SegmentTerminator);
 
             return buildN1.ToString();
-
         }
     }
 }

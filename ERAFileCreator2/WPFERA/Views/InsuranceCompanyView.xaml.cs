@@ -5,7 +5,7 @@ using EraFileCreator.Utility;
 namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for InsuranceCompanyView.xaml
+    ///     Interaction logic for InsuranceCompanyView.xaml
     /// </summary>
     public partial class InsuranceCompanyView : UserControl
     {
@@ -16,7 +16,7 @@ namespace EraFileCreator.Views
 
         private void InsuranceZipCodeInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToNumericOnly(e);
+            InputRestrictions.RestrictTextToIntegerOnly(e);
         }
     }
 }

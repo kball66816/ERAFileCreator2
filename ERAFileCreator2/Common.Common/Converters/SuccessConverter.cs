@@ -4,25 +4,20 @@ using System.Windows.Data;
 
 namespace Common.Common.Converters
 {
-    class SuccessConverter : IValueConverter
+    internal class SuccessConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool param = bool.Parse(parameter.ToString());
+            var param = bool.Parse(parameter.ToString());
             if (value == null)
-            {
                 return false;
-            }
-            else
-            {
-                return !((bool)value ^ param);
-            }
+            return !((bool) value ^ param);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool param = bool.Parse(parameter.ToString());
-            return !((bool)value ^ param);
+            var param = bool.Parse(parameter.ToString());
+            return !((bool) value ^ param);
         }
     }
 }

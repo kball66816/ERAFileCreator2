@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace PatientManagement.Model
 {
     [Serializable]
-    public class AddonCharge:Charge, ICloneable
+    public class AddonCharge : Charge, ICloneable
     {
+        private Guid primaryChargeId;
+
         public AddonCharge()
         {
             Id = Guid.NewGuid();
@@ -22,11 +23,14 @@ namespace PatientManagement.Model
             ChargeCost = addon.ChargeCost;
             PaymentAmount = addon.PaymentAmount;
             ProcedureCode = addon.ProcedureCode;
-
         }
-        public override decimal AllowedAmount
+
+        public override decimal AllowedAmount => PaymentAmount;
+
+        public Guid PrimaryChargeId
         {
-            get { return PaymentAmount; }
+            get => primaryChargeId;
+            set => primaryChargeId = value;
         }
     }
 }

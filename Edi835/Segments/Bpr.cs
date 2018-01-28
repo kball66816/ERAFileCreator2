@@ -20,31 +20,31 @@ namespace Edi835.Segments
             SenderDfiIdNumber = "043000096"; //bpr8
             SenderAccountNumberQualifier = "DA"; //bpr9
             SenderAccountNumber = "0"; //bpr10
-            OriginatingCompanyId = "5135511997";//bpr11
+            OriginatingCompanyId = "5135511997"; //bpr11
             OriginatingCompanyCode = string.Empty;
             ReceivingDfiIdNumberQualifier = "01"; //bpr12
             ReceivingDfiNumber = "GAPFILL"; //bpr13
             ReceivingAccountNumberQualifier = "DA"; //bpr14
-            ReceivingAccountNumber = "0";//bpr15
+            ReceivingAccountNumber = "0"; //bpr15
             Date = insurance.CheckDate.DateToYearFirstShortString();
         }
 
-        private string TransactionHandlingCode { get; set; }
-        private decimal MonetaryAmount { get; set; }
-        private string CreditOrDebtFlag { get; set; }
-        private string PaymentMethodCode { get; set; }
-        private string PaymentFormatCode { get; set; }
-        private string SenderDfiIdNumberQualifier { get; set; }
-        private string SenderDfiIdNumber { get; set; }
-        private string SenderAccountNumberQualifier { get; set; }
-        private string SenderAccountNumber { get; set; }
-        private string OriginatingCompanyId { get; set; }
-        private string OriginatingCompanyCode { get; set; }
-        private string ReceivingDfiIdNumberQualifier { get; set; }
-        private string ReceivingDfiNumber { get; set; }
-        private string ReceivingAccountNumberQualifier { get; set; }
-        private string ReceivingAccountNumber { get; set; }
-        private string Date { get; set; }
+        private string TransactionHandlingCode { get; }
+        private decimal MonetaryAmount { get; }
+        private string CreditOrDebtFlag { get; }
+        private string PaymentMethodCode { get; }
+        private string PaymentFormatCode { get; }
+        private string SenderDfiIdNumberQualifier { get; }
+        private string SenderDfiIdNumber { get; }
+        private string SenderAccountNumberQualifier { get; }
+        private string SenderAccountNumber { get; }
+        private string OriginatingCompanyId { get; }
+        private string OriginatingCompanyCode { get; }
+        private string ReceivingDfiIdNumberQualifier { get; }
+        private string ReceivingDfiNumber { get; }
+        private string ReceivingAccountNumberQualifier { get; }
+        private string ReceivingAccountNumber { get; }
+        private string Date { get; }
 
         public string BuildBpr()
         {
@@ -65,7 +65,7 @@ namespace Edi835.Segments
             buildBpr.Append(PaymentFormatCode);
             buildBpr.Append(DataElementTerminator);
 
-            if(SenderDfiIdNumberQualifier !=null || SenderDfiIdNumber!=null)
+            if (SenderDfiIdNumberQualifier != null || SenderDfiIdNumber != null)
             {
                 buildBpr.Append(SenderDfiIdNumberQualifier);
                 buildBpr.Append(DataElementTerminator);
@@ -73,8 +73,8 @@ namespace Edi835.Segments
                 buildBpr.Append(DataElementTerminator);
             }
 
-           
-            if (SenderAccountNumberQualifier !=null||SenderDfiIdNumber!=null)
+
+            if (SenderAccountNumberQualifier != null || SenderDfiIdNumber != null)
             {
                 buildBpr.Append(SenderAccountNumberQualifier);
                 buildBpr.Append(DataElementTerminator);
@@ -87,7 +87,7 @@ namespace Edi835.Segments
             buildBpr.Append(OriginatingCompanyCode);
             buildBpr.Append(DataElementTerminator);
 
-            if(!string.IsNullOrEmpty(ReceivingDfiIdNumberQualifier) ||!string.IsNullOrEmpty(ReceivingDfiNumber))
+            if (!string.IsNullOrEmpty(ReceivingDfiIdNumberQualifier) || !string.IsNullOrEmpty(ReceivingDfiNumber))
             {
                 buildBpr.Append(ReceivingDfiIdNumberQualifier);
                 buildBpr.Append(DataElementTerminator);
@@ -95,13 +95,14 @@ namespace Edi835.Segments
                 buildBpr.Append(DataElementTerminator);
             }
 
-            if(!string.IsNullOrEmpty(ReceivingAccountNumberQualifier)||!string.IsNullOrEmpty(ReceivingAccountNumber))
+            if (!string.IsNullOrEmpty(ReceivingAccountNumberQualifier) || !string.IsNullOrEmpty(ReceivingAccountNumber))
             {
                 buildBpr.Append(ReceivingAccountNumberQualifier);
                 buildBpr.Append(DataElementTerminator);
                 buildBpr.Append(ReceivingAccountNumber);
                 buildBpr.Append(DataElementTerminator);
             }
+
             buildBpr.Append(Date);
             buildBpr.Append(SegmentTerminator);
 
@@ -127,7 +128,6 @@ namespace Edi835.Segments
             //buildBpr.Append("~");
 
             return buildBpr.ToString();
-
         }
     }
 }

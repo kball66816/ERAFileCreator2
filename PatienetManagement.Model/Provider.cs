@@ -5,10 +5,20 @@ using PatientManagement.Model.Interfaces;
 namespace PatientManagement.Model
 {
     /// <summary>
-    /// Base properties of a provider
+    ///     Base properties of a provider
     /// </summary>
     public class Provider : IPerson, INotifyPropertyChanged
     {
+        private string businessName;
+
+        private string firstName;
+
+        private string fullName;
+
+        private string lastName;
+
+        private string npi;
+
         public Provider(Provider provider)
         {
             Address = provider.Address;
@@ -18,32 +28,14 @@ namespace PatientManagement.Model
             MiddleInitial = provider.MiddleInitial;
         }
 
-        private string firstName;
-
-        public string FirstName
+        public Provider()
         {
-            get { return firstName; }
-            set
-            {
-                if (value != firstName)
-                {
-                    firstName = value;
-                    RaisePropertyChanged("FirstName");
-                    RaisePropertyChanged("Name");
-                    RaisePropertyChanged("FullName");
-                }
-
-            }
+            Address = new Address();
         }
-
-        private string businessName;
 
         public string BusinessName
         {
-            get
-            {
-                return businessName;
-            }
+            get => businessName;
             set
             {
                 businessName = value;
@@ -51,38 +43,14 @@ namespace PatientManagement.Model
             }
         }
 
-        private string lastName;
-
-        public string LastName
-        {
-            get { return lastName; }
-            set
-            {
-                if (value != lastName)
-                {
-                    lastName = value;
-                    RaisePropertyChanged("LastName");
-                    RaisePropertyChanged("Name");
-                    RaisePropertyChanged("FullName");
-                }
-
-            }
-        }
-
-        private string fullName;
-
         public string FullName
         {
             get
             {
-                string fullName = FirstName;
+                var fullName = FirstName;
 
-                if (!string.IsNullOrEmpty(LastName))
-                {
-                    fullName = fullName += " " + LastName;
-                }
+                if (!string.IsNullOrEmpty(LastName)) fullName = fullName += " " + LastName;
                 return fullName;
-
             }
 
             set
@@ -95,24 +63,13 @@ namespace PatientManagement.Model
             }
         }
 
-        public string Suffix { get; set; }
-        public string Prefix { get; set; }
-        public string MiddleInitial { get; set; }
-
-        public Provider()
-        {
-            Address = new Address();
-        }
-
         public Address Address { get; set; }
 
         public bool IsAlsoRendering { get; set; }
 
-        private string npi;
-
         public string Npi
         {
-            get { return npi; }
+            get => npi;
             set
             {
                 if (value != npi)
@@ -127,13 +84,44 @@ namespace PatientManagement.Model
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public string FirstName
+        {
+            get => firstName;
+            set
+            {
+                if (value != firstName)
+                {
+                    firstName = value;
+                    RaisePropertyChanged("FirstName");
+                    RaisePropertyChanged("Name");
+                    RaisePropertyChanged("FullName");
+                }
+            }
+        }
+
+        public string LastName
+        {
+            get => lastName;
+            set
+            {
+                if (value != lastName)
+                {
+                    lastName = value;
+                    RaisePropertyChanged("LastName");
+                    RaisePropertyChanged("Name");
+                    RaisePropertyChanged("FullName");
+                }
+            }
+        }
+
+        public string Suffix { get; set; }
+        public string Prefix { get; set; }
+        public string MiddleInitial { get; set; }
+
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

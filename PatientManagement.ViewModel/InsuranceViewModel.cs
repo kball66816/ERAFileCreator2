@@ -1,25 +1,44 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using Common.Common.Services;
 using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-
 
 namespace PatientManagement.ViewModel
 {
-    public class InsuranceViewModel: INotifyPropertyChanged
+    public class InsuranceViewModel : INotifyPropertyChanged
     {
+        private InsuranceCompany insurance;
+
         public InsuranceViewModel()
         {
             LoadInsuranceCompany();
             Messenger.Default.Register<UpdateCalculations>(this, OnUpdateCalculation);
-            Messenger.Default.Register<UpdateRepositoriesMessage>(this,OnUpdateRepositoriesMessageReceieved);
-            Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved,"UpdateSettings");
-            Messenger.Default.Register<SaveFileMessage>(this,OnSaveFileReceived,"SaveTextFiletoSelectedDirectory");
+            Messenger.Default.Register<UpdateRepositoriesMessage>(this, OnUpdateRepositoriesMessageReceieved);
+            Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved, "UpdateSettings");
+            Messenger.Default.Register<SaveFileMessage>(this, OnSaveFileReceived, "SaveTextFiletoSelectedDirectory");
+            insurance.CheckAmount = CalculateCheckAmount();
         }
+
+        public Dictionary<string, string> InsuranceStates { get; set; }
+
+        public InsuranceCompany Insurance
+        {
+            get => insurance;
+            set
+            {
+                if (value == insurance) return;
+                insurance = value;
+                RaisePropertyChanged("Insurance");
+            }
+        }
+
+        public Dictionary<string, string> PaymentTypes { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnSaveFileReceived(SaveFileMessage obj)
         {
@@ -39,42 +58,21 @@ namespace PatientManagement.ViewModel
             SaveInsuranceToRepository();
         }
 
-        public Dictionary<string, string> InsuranceStates { get; set; }
-
-        private InsuranceCompany insurance;
-
-        public InsuranceCompany Insurance
-        {
-            get { return insurance; }
-            set
-            {
-                if (value == insurance) return;
-                insurance = value;
-                RaisePropertyChanged("Insurance");
-            }
-        }
-
         private void OnUpdateCalculation(UpdateCalculations obj)
         {
             CalculateCheckAmount();
+            RaisePropertyChanged("CheckAmount");
         }
 
-        private void CalculateCheckAmount()
+        private decimal CalculateCheckAmount()
         {
-            IPatientRepository patients = new PatientRepository();
-            decimal addonsPaidAmount = 0;
-            decimal chargesPaidAmount = 0;
-            foreach (var patient in patients.GetAllPatients())
-            {
-                 chargesPaidAmount += patient.Charges.Sum(c => c.PaymentAmount);
+            IPrimaryChargeRepository pcr = new PrimaryChargeRepository();
+            var chargesPaidAmount = pcr.GetAllCharges().Sum(c => c.PaymentAmount);
 
-                foreach (var charge in patient.Charges)
-                {
-                    addonsPaidAmount += charge.AddonChargeList.Sum(p => p.PaymentAmount);
-                    Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
-                    RaisePropertyChanged("CheckAmount");
-                }
-            }
+            IAddonChargeRepository acr = new AddonChargeRepository();
+            var addonsPaidAmount = acr.GetAllCharges().Sum(a => a.PaymentAmount);
+
+            return Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
         }
 
         private void LoadInsuranceCompany()
@@ -87,16 +85,12 @@ namespace PatientManagement.ViewModel
             RaisePropertyChanged("Insurance");
         }
 
-        public Dictionary<string, string> PaymentTypes { get; set; }
-
 
         private void SaveInsuranceToRepository()
         {
             IInsurance saveInsurance = new InsuranceRepository();
             saveInsurance.AddInsurance(insurance);
         }
-
-       public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
         {

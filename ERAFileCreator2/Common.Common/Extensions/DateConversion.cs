@@ -3,8 +3,8 @@
 namespace Common.Common.Extensions
 {
     /// <summary>
-    ///Since we cannot be 100% certain how we will receive the DateTime this will allow us to cast the DateTime
-    /// As needed to specified formats
+    ///     Since we cannot be 100% certain how we will receive the DateTime this will allow us to cast the DateTime
+    ///     As needed to specified formats
     /// </summary>
     public static class DateConversion
     {

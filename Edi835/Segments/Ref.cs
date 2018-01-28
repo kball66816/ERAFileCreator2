@@ -3,9 +3,8 @@ using PatientManagement.Model;
 
 namespace Edi835.Segments
 {
-   public class Ref:SegmentBase
+    public class Ref : SegmentBase
     {
-
         public Ref(Provider billingProvider)
         {
             SegmentIdentifier = "REF";
@@ -19,6 +18,7 @@ namespace Edi835.Segments
             ReferenceIdQualifier = "TJ";
             ReferenceIdentification = "123456789";
         }
+
         public Ref(InsuranceCompany insurance)
         {
             SegmentIdentifier = "REF";
@@ -30,10 +30,11 @@ namespace Edi835.Segments
         {
             SegmentIdentifier = "REF";
             ReferenceIdQualifier = "6R";
-            ReferenceIdentification = charge.BillId +"-"+ chargeCount;
+            ReferenceIdentification = charge.BillId + "-" + chargeCount;
         }
-        private string ReferenceIdQualifier { get; set; }
-        private string ReferenceIdentification { get; set; }
+
+        private string ReferenceIdQualifier { get; }
+        private string ReferenceIdentification { get; }
 
 
         public string BuildRef()
@@ -41,11 +42,11 @@ namespace Edi835.Segments
             var buildRef = new StringBuilder();
 
             buildRef.Append(SegmentIdentifier)
-                    .Append(DataElementTerminator)
-                    .Append(ReferenceIdQualifier)
-                    .Append(DataElementTerminator)
-                    .Append(ReferenceIdentification)
-                    .Append(SegmentTerminator);
+                .Append(DataElementTerminator)
+                .Append(ReferenceIdQualifier)
+                .Append(DataElementTerminator)
+                .Append(ReferenceIdentification)
+                .Append(SegmentTerminator);
 
             return buildRef.ToString();
         }

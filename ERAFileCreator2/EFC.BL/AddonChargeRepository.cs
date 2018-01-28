@@ -1,31 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PatientManagement.Model;
 using PatientManagement.DAL;
+using PatientManagement.Model;
 
 namespace EFC.BL
 {
-   public class AddonChargeRepository:IAddonChargeRepository
+    public class AddonChargeRepository : IAddonChargeRepository
     {
-        public AddonChargeRepository(PrimaryCharge charge)
-        {
-            addonCharges = charge.AddonChargeList;
-        }
-
-        private ObservableCollection<AddonCharge> addonCharges;
+        private static readonly List<AddonCharge> AddonCharges = new List<AddonCharge>();
 
         public void Add(AddonCharge charge)
         {
-            addonCharges.Add(charge);
+            var existing = GetSelectedCharge(charge.Id);
+            if (existing == null) AddonCharges.Add(charge);
         }
 
         public void Delete(AddonCharge charge)
         {
-            addonCharges.Remove(charge);
+            AddonCharges.Remove(charge);
         }
 
         public AddonCharge UpdateCharge(AddonCharge charge)
@@ -33,16 +26,19 @@ namespace EFC.BL
             throw new NotImplementedException();
         }
 
-        public ObservableCollection<AddonCharge> GetAllCharges()
+        public List<AddonCharge> GetAllCharges()
         {
-            return addonCharges;
+            return AddonCharges;
         }
 
         public AddonCharge GetSelectedCharge(Guid id)
         {
-            return addonCharges.FirstOrDefault(c=>c.Id == id);
+            return AddonCharges.FirstOrDefault(c => c.Id == id);
         }
 
-        public IAdjustmentRepository AdjustmentRepository { get; set; }
+        public IEnumerable<AddonCharge> GetSelectedAddonCharges(Guid chargeId)
+        {
+            return AddonCharges.Where(c => c.Id == chargeId && c.PaymentAmount > 0);
+        }
     }
 }

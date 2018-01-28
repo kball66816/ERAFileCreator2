@@ -1,6 +1,6 @@
 ﻿namespace PatientManagement.ViewModel.Services
 {
-    internal class UpdateCalculations
+    public class InitializationCompleteMessage
     {
     }
 }

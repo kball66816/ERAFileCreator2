@@ -8,12 +8,24 @@ namespace PatientManagement.Model
 {
     public class InsuranceCompany : INotifyPropertyChanged
     {
+        private decimal checkAmount;
+
+        private DateTime checkDate;
+
+
+        public Dictionary<string, string> PaymentTypes = new Dictionary<string, string>
+        {
+            {"EFT", "ACH"},
+            {"Financial Institution Option", "BPO"},
+            {"Check", "CHK"},
+            {"Wire Transfer", "FWT"},
+            {"Non Payment", "NON"}
+        };
+
+
         public InsuranceCompany()
         {
-            if (PaymentType == null)
-            {
-                PaymentType = "CHK";
-            }
+            if (PaymentType == null) PaymentType = "CHK";
             Address = new Address();
 
             CheckDate = DateTime.Today;
@@ -32,60 +44,33 @@ namespace PatientManagement.Model
                 StreetTwo = insurance.Address.StreetTwo,
                 City = insurance.Address.City,
                 State = insurance.Address.State,
-                ZipCode = insurance.Address.ZipCode,
+                ZipCode = insurance.Address.ZipCode
             };
             CheckAmount = insurance.CheckAmount;
             CheckDate = DateTime.Today;
             CheckNumber = DateTime.Now.ToString("yyyyMMddhhmmssff");
         }
-        private string name;
 
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                name = value;
-            }
-        }
+        public string Name { get; set; }
 
-
-        private string taxId;
-
-        public string TaxId
-        {
-            get { return taxId; }
-            set
-            {
-                taxId = value;
-
-            }
-        }
-
-        private decimal checkAmount;
+        public string TaxId { get; set; }
 
         public decimal CheckAmount
         {
-            get
-            {
-                return checkAmount;
-            }
+            get => checkAmount;
             set
             {
                 if (value != checkAmount)
                 {
                     checkAmount = value.Truncated(2);
                     RaisePropertyChanged("CheckAmount");
-
                 }
             }
         }
 
-        private DateTime checkDate;
-
         public DateTime CheckDate
         {
-            get { return checkDate; }
+            get => checkDate;
             set
             {
                 if (value != checkDate)
@@ -93,51 +78,21 @@ namespace PatientManagement.Model
                     checkDate = value;
                     RaisePropertyChanged("CheckDate");
                 }
-
             }
         }
 
         public Address Address { get; set; }
 
-        private string paymentType;
-
-        public string PaymentType
-        {
-            get { return paymentType; }
-            set
-            {
-                paymentType = value;
-            }
-        }
+        public string PaymentType { get; set; }
 
         public string CheckNumber { get; set; }
 
-        //private string FormattedPaymentType(string paymentTypeKey)
-        //{
-        //    return PaymentTypes.ContainsKey(paymentTypeKey) ? (PaymentTypes[paymentTypeKey])
-        //        : throw new ArgumentException("Value Cannot Be Null");
-        //}
-
-
-        public Dictionary<string, string> PaymentTypes = new Dictionary<string, string>
-        {
-            {"EFT","ACH" },
-            {"Financial Institution Option","BPO" },
-            {"Check", "CHK" },
-            {"Wire Transfer","FWT" },
-            {"Non Payment", "NON" }
-        };
-
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Common.Common.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace Common.CommonTests
 {
     [TestClass]
@@ -26,6 +27,7 @@ namespace Common.CommonTests
 
             Assert.AreEqual(expected, actual);
         }
+
         [TestMethod]
         public void DateTimeLongConversion()
         {

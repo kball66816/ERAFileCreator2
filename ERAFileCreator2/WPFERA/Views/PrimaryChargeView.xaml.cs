@@ -1,9 +1,11 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
+using EraFileCreator.Utility;
 
 namespace EraFileCreator.Views
 {
     /// <summary>
-    /// Interaction logic for PrimaryChargeView.xaml
+    ///     Interaction logic for PrimaryChargeView.xaml
     /// </summary>
     public partial class PrimaryChargeView : UserControl
     {
@@ -12,17 +14,19 @@ namespace EraFileCreator.Views
             InitializeComponent();
         }
 
-        //private void EditCharge_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (EditCharge.Content.ToString() == "Edit Charge")
-        //    {
-        //        EditCharge.Content = "Disable Charge Edit Mode";
-        //    }
+        private void PrimaryChargesAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToDecimalOnly(e);
+        }
 
-        //    else if (EditCharge.Content.ToString() == "Disable Charge Edit Mode")
-        //    {
-        //        EditCharge.Content = "Edit Charge";
-        //    }
-        //}
+        private void PrimaryPaidAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToDecimalOnly(e);
+        }
+
+        private void PatientCopayInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToDecimalOnly(e);
+        }
     }
 }

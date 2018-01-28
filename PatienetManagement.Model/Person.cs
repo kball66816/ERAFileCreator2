@@ -3,33 +3,34 @@
 namespace PatientManagement.Model
 {
     /// <summary>
-    /// Base Properties of a person
+    ///     Base Properties of a person
     /// </summary>
-    public abstract class Person:INotifyPropertyChanged
+    public abstract class Person : INotifyPropertyChanged
     {
         private string firstName;
 
+        private string fullName;
+
+        private string lastName;
+
         public string FirstName
         {
-            get { return firstName; }
+            get => firstName;
             set
             {
-                if(value !=firstName)
+                if (value != firstName)
                 {
                     firstName = value;
                     RaisePropertyChanged("FirstName");
                     RaisePropertyChanged("Name");
                     RaisePropertyChanged("FullName");
                 }
-              
             }
         }
 
-        private string lastName;
-
         public string LastName
         {
-            get { return lastName; }
+            get => lastName;
             set
             {
                 if (value != lastName)
@@ -39,22 +40,16 @@ namespace PatientManagement.Model
                     RaisePropertyChanged("Name");
                     RaisePropertyChanged("FullName");
                 }
-
             }
         }
-
-        private string fullName;
 
         public string FullName
         {
             get
             {
-                string fullName = FirstName;
+                var fullName = FirstName;
 
-                if (!string.IsNullOrEmpty(LastName))
-                {
-                    fullName = fullName + (" " + LastName);
-                }
+                if (!string.IsNullOrEmpty(LastName)) fullName = fullName + " " + LastName;
                 return fullName;
             }
 
@@ -77,10 +72,7 @@ namespace PatientManagement.Model
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -1,94 +1,62 @@
-﻿using PatientManagement.Model;
-using PatientManagement.ViewModel.Services;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using Common.Common.Services;
+using EFC.BL;
+using PatientManagement.DAL;
+using PatientManagement.Model;
+using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
-    public class AddonAdjustmentViewModel:INotifyPropertyChanged
+    public class AddonAdjustmentViewModel : INotifyPropertyChanged
     {
+        private readonly IAdjustmentRepository adjustmentRepository;
+
+        private Adjustment addonAdjustment;
+        private Guid currentAddonId;
+
         public AddonAdjustmentViewModel()
         {
             AddonAdjustment = new Adjustment();
             AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
             AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
-            AddAddonChargeAdjustmentCommand = new Command(AddAddonAdjustment, CanAddAddonAdjustment);
-            EditSelectedAdjustmentCommand = new Command(EditSelectedAdjustment, CanEditOrDeleteSelectedAdjustment);
-            DeleteSelectedAdjustmentCommand = new Command(DeleteSelectedAdjustment, CanEditOrDeleteSelectedAdjustment);
-            Messenger.Default.Register<ObservableCollection<Adjustment>>(this, OnAdjustmentCollectionReceived,"AddonAdjustmentList");
+            Messenger.Default.Register<SendGuidService>(this, OnAddonIdReceived);
+            AddAddonChargeAdjustmentCommand = new Command(AddAdjustment, CanAddAddonAdjustment);
+            adjustmentRepository = new AdjustmentRepository();
         }
 
-        
+        public ICommand AddAddonChargeAdjustmentCommand { get; }
 
-
-        private void OnAdjustmentCollectionReceived(ObservableCollection<Adjustment> adjustmentList)
+        public Adjustment AddonAdjustment
         {
-            Adjustments = adjustmentList;
-            RaisePropertyChanged("Adjustments");
-        }
-
-
-        public Adjustment SelectedAddonAdjustmentIndex { get; set; }
-
-        private ObservableCollection<Adjustment> adjustments;
-
-        public ObservableCollection<Adjustment> Adjustments
-        {
-            get { return adjustments; }
+            get => addonAdjustment;
             set
             {
-                if (adjustments == value) return;
-                adjustments = value;
-                RaisePropertyChanged("Adjustments");
-            }
-        }
-        public ICommand DeleteSelectedAdjustmentCommand { get; set; }
-
-        private void DeleteSelectedAdjustment(object obj)
-        {
-            if (SelectedAddonAdjustmentIndex == null) return;
-            var index = Adjustments.IndexOf(SelectedAddonAdjustmentIndex);
-            if (index <= -1) return;
-            Adjustments.RemoveAt(index);
-            RaisePropertyChanged("Adjustments");
-            if (!editModeEnabled) return;
-            editModeEnabled = false;
-        }
-        public ICommand EditSelectedAdjustmentCommand { get; set; }
-
-        private bool CanEditOrDeleteSelectedAdjustment(object obj)
-        {
-            bool canEditOrDelete = (!string.IsNullOrEmpty(SelectedAddonAdjustmentIndex?.AdjustmentType));
-            return canEditOrDelete;
-        }
-
-        private bool editModeEnabled;
-        private void EditSelectedAdjustment(object obj)
-        {
-            if (!editModeEnabled)
-            {
-                AddonAdjustment = SelectedAddonAdjustmentIndex;
-                RaisePropertyChanged("AddonAdjustment");
-                editModeEnabled = true;
-            }
-
-            else
-            {
-                addonAdjustment = new Adjustment();
+                if (value == addonAdjustment) return;
+                addonAdjustment = value;
                 RaisePropertyChanged("AddonAdjustment");
             }
         }
 
-        public ICommand AddAddonChargeAdjustmentCommand { get; private set; }
+        public Dictionary<string, string> AddonAdjustmentType { get; set; }
 
-        private void AddAddonAdjustment(object obj)
+        public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnAddonIdReceived(SendGuidService sent)
         {
-            Messenger.Default.Send(AddonAdjustment, "AddonCharge");
-            AddonAdjustment = new Adjustment();
-            RaisePropertyChanged("SelectedAdjustment");
+            AddonAdjustment = new Adjustment {ChargeId = sent.Id};
+            currentAddonId = sent.Id;
+            adjustmentRepository.Add(AddonAdjustment);
+        }
 
+        private void AddAdjustment(object obj)
+        {
+            AddonAdjustment = new Adjustment {ChargeId = currentAddonId};
+            adjustmentRepository.Add(AddonAdjustment);
         }
 
         private bool CanAddAddonAdjustment(object obj)
@@ -96,25 +64,6 @@ namespace PatientManagement.ViewModel
             return !string.IsNullOrEmpty(addonAdjustment.AdjustmentReasonCode) &&
                    !string.IsNullOrEmpty(addonAdjustment.AdjustmentType);
         }
-
-        private Adjustment addonAdjustment;
-
-        public Adjustment AddonAdjustment
-        {
-            get { return addonAdjustment; }
-            set
-            {
-                if (value == addonAdjustment) return;
-                addonAdjustment = value;
-                RaisePropertyChanged("AddonAdjustment");
-            }
-        }    
-
-        public Dictionary<string, string> AddonAdjustmentType { get; set; }
-
-        public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
         {

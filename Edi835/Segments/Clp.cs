@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using PatientManagement.Model;
 
@@ -6,40 +7,39 @@ namespace Edi835.Segments
 {
     public class Clp : SegmentBase
     {
-        public Clp(Patient patient)
+        public Clp(IEnumerable<PrimaryCharge> encounters)
         {
-            PrimaryCharge charge = patient.Charges.FirstOrDefault();
             SegmentIdentifier = "CLP";
 
-            if (charge == null) return;
+            if (encounters == null) return;
 
-
-            ClaimSubmittersIdentifier = charge.BillId;
+            encounters = encounters.ToList();
+            ClaimSubmittersIdentifier = encounters.FirstOrDefault()?.BillId;
             ClaimStatusCode = "1";
-            TotalClaimChargeAmount = patient.Charges.Sum(c=>c.ChargeCost);
-            TotalClaimPaymentAmount = patient.Charges.Sum(c=>c.SumOfChargePaid);
-            PatientResponsibility = charge.Copay;
+            TotalClaimChargeAmount = encounters.Sum(c => c.ChargeCost);
+            TotalClaimPaymentAmount = encounters.Sum(c => c.SumOfChargePaid);
+            PatientResponsibility = encounters.Sum(c => c.Copay);
             ClaimFilingIndicatorCode = "12";
             PayerClaimControlNumber = "EMC5841338";
-            FacilityTypeCode = charge.PlaceOfService.ServiceLocation;
+            FacilityTypeCode = encounters.FirstOrDefault()?.PlaceOfService.ServiceLocation;
             ClaimFrequencyCode = string.Empty;
             DrgCode = string.Empty;
             DrgWeight = 0;
             Dischargefractionpercentage = 0;
         }
 
-        private string ClaimSubmittersIdentifier { get; set; }
-        private string ClaimStatusCode { get; set; }
-        private decimal TotalClaimChargeAmount { get; set; }
-        private decimal TotalClaimPaymentAmount { get; set; }
-        private decimal PatientResponsibility { get; set; }
-        private string ClaimFilingIndicatorCode { get; set; }
-        private string PayerClaimControlNumber { get; set; }
-        private string FacilityTypeCode { get; set; }
-        private string ClaimFrequencyCode { get; set; }
-        private string DrgCode { get; set; }
-        private int DrgWeight { get; set; }
-        private int Dischargefractionpercentage { get; set; }
+        private string ClaimSubmittersIdentifier { get; }
+        private string ClaimStatusCode { get; }
+        private decimal TotalClaimChargeAmount { get; }
+        private decimal TotalClaimPaymentAmount { get; }
+        private decimal PatientResponsibility { get; }
+        private string ClaimFilingIndicatorCode { get; }
+        private string PayerClaimControlNumber { get; }
+        private string FacilityTypeCode { get; }
+        private string ClaimFrequencyCode { get; }
+        private string DrgCode { get; }
+        private int DrgWeight { get; }
+        private int Dischargefractionpercentage { get; }
 
         public string BuildClp()
         {
@@ -56,12 +56,7 @@ namespace Edi835.Segments
             buildClp.Append(TotalClaimPaymentAmount);
             buildClp.Append(DataElementTerminator);
 
-            if (PatientResponsibility > 0)
-            {
-
-                buildClp.Append(PatientResponsibility);
-              
-            }
+            if (PatientResponsibility > 0) buildClp.Append(PatientResponsibility);
             buildClp.Append(DataElementTerminator);
             buildClp.Append(ClaimFilingIndicatorCode);
             buildClp.Append(DataElementTerminator);
@@ -87,7 +82,7 @@ namespace Edi835.Segments
                 buildClp.Append(DrgWeight);
             }
 
-            if(Dischargefractionpercentage >0)
+            if (Dischargefractionpercentage > 0)
             {
                 buildClp.Append(DataElementTerminator);
                 buildClp.Append(Dischargefractionpercentage);

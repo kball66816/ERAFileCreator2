@@ -1,27 +1,28 @@
-﻿using EFC.BL;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Common.Common.Services;
+using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
-   public class PatientListViewModel:INotifyPropertyChanged
+    public class PatientListViewModel : INotifyPropertyChanged
     {
-        public PatientListViewModel()
-        {
-            Patients = patientRepository.GetAllPatients();
+        private readonly IPatientRepository patientRepository = new PatientRepository();
 
-        }
-
-        private IPatientRepository patientRepository = new PatientRepository();
+        private Patient patient;
 
         private ObservableCollection<Patient> patients;
 
+        public PatientListViewModel()
+        {
+            Patients = patientRepository.GetAllPatients();
+        }
+
         public ObservableCollection<Patient> Patients
         {
-            get { return patients; }
+            get => patients;
             private set
             {
                 if (value != patients)
@@ -29,21 +30,18 @@ namespace PatientManagement.ViewModel
                     patients = value;
                     RaisePropertyChanged("Patients");
                 }
-
             }
         }
 
-        private Patient patient;
-
         public Patient Patient
         {
-            get { return patient; }
+            get => patient;
             set
             {
                 if (value == patient) return;
                 patient = value;
                 RaisePropertyChanged("Patient");
-                Messenger.Default.Send<Patient>(Patient);
+                Messenger.Default.Send(Patient);
             }
         }
 

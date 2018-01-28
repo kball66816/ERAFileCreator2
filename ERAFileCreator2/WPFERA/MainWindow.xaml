@@ -8,23 +8,23 @@
         Title="ERA File Creator"
         HorizontalContentAlignment="Stretch" Width="1000" Height="1000">
 
-    <DockPanel x:Name="TopGrid" Background="#FF7789D8" >
-        <views:PatientListView DockPanel.Dock="Left"/>
-        <Rectangle DockPanel.Dock="Left" Fill="Gray" Width="2"/>
-        <views:InsuranceCompanyView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
-        <views:BillingProviderView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
-        <views:PatientView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
-        <views:RenderingProviderView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
-        <views:PrimaryChargeView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-        <views:PrimaryChargeAdjustmentView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-        <views:AddonChargeView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-        <views:AddonAdjustmentView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-        <views:SaveFileView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
-        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2"/>
-        <views:PreferenceView DockPanel.Dock="Bottom"/>
+    <DockPanel x:Name="TopGrid" Background="#FF7789D8">
+        <views:PatientListView DockPanel.Dock="Left" />
+        <Rectangle DockPanel.Dock="Left" Fill="Gray" Width="2" />
+        <views:InsuranceCompanyView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2" />
+        <views:BillingProviderView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2" />
+        <views:PatientView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2" />
+        <views:RenderingProviderView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2" />
+        <views:PrimaryChargeView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <views:PrimaryChargeAdjustmentView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <views:AddonChargeView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <views:AddonAdjustmentView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <views:SaveFileView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2" />
+        <views:PreferenceView DockPanel.Dock="Bottom" />
     </DockPanel>
 </Window>

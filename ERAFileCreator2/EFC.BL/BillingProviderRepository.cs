@@ -3,7 +3,7 @@ using PatientManagement.Model;
 
 namespace EFC.BL
 {
-    public class BillingProviderRepository:IProvider
+    public class BillingProviderRepository : IProvider
     {
         private static Provider _billingProvider;
 

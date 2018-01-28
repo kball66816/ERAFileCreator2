@@ -11,9 +11,12 @@ namespace Edi835.Segments
             AmountQualifier = "B6";
             AllowedAmount = charge.AllowedAmount;
         }
+
+        private string AmountQualifier { get; }
+        private decimal AllowedAmount { get; }
+
         public string BuildAmt()
         {
-
             var buildAmt = new StringBuilder();
 
             buildAmt.Append(SegmentIdentifier);
@@ -24,8 +27,5 @@ namespace Edi835.Segments
             buildAmt.Append(SegmentTerminator);
             return buildAmt.ToString();
         }
-
-        private string AmountQualifier { get; set; }
-        private decimal AllowedAmount { get; set; }
     }
 }
