@@ -26,11 +26,12 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://raw.githubusercontent.com/kball66816/ERAFileCreator2/Release/Publish/</InstallUrl>
+    <InstallUrl>https://raw.githubusercontent.com/kball66816/ERAFileCreator2/Master/Publish/</InstallUrl>
     <MinimumRequiredVersion>1.0.0.1</MinimumRequiredVersion>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
