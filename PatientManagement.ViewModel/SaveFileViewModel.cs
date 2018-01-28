@@ -15,6 +15,7 @@ namespace PatientManagement.ViewModel
 
         private static void Save(object obj)
         {
+            SendCalculateRequest();
             SendMessages();
             var edi = new UpdatedEdi();
             edi.Create835File().SaveTextFiletoSelectedDirectory();
@@ -22,6 +23,7 @@ namespace PatientManagement.ViewModel
 
         private static void Save50Files(object obj)
         {
+            SendCalculateRequest();
             for (int i = 0; i < 50; i++)
             {
                 SendMessages();
@@ -35,6 +37,7 @@ namespace PatientManagement.ViewModel
         {
             Messenger.Default.Send(new UpdateRepositoriesMessage());
             Messenger.Default.Send(new SaveFileMessage(), "SaveTextFiletoSelectedDirectory");
+
         }
 
         public ICommand SaveFileCommand { get; set; }
@@ -53,7 +56,12 @@ namespace PatientManagement.ViewModel
 
         private void Calculate(object obj)
         {
-            Messenger.Default.Send(new UpdateCalculations());   
+            SendCalculateRequest            ();
+        }
+
+        private static void SendCalculateRequest()
+        {
+            Messenger.Default.Send(new UpdateCalculations());
         }
 
         private bool CanCalculate(object obj)
