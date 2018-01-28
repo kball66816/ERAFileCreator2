@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EDI835.Segments;
+using Edi835.Segments;
 using PatientManagement.Model;
 using PatientManagement.DAL;
 

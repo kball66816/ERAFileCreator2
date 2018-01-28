@@ -1,8 +1,7 @@
 ﻿using System.Text;
-using Edi835.Segments;
 using PatientManagement.Model;
 
-namespace EDI835.Segments
+namespace Edi835.Segments
 {
     public class Amt : SegmentBase
     {

@@ -1,9 +1,9 @@
-﻿<Application x:Class="EraView.App"
+﻿<Application x:Class="EraFileCreator.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:utility="clr-namespace:EraView.Utility"
+             xmlns:utility="clr-namespace:EraFileCreator.Utility"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <utility:NotConverter x:Key="NotConverter"/>
+        <utility:NotConverter x:Key="NotConverter" />
     </Application.Resources>
 </Application>

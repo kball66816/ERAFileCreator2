@@ -5,7 +5,7 @@ using Common.Common.Services;
 using PatientManagement.ViewModel;
 using PatientManagement.ViewModel.Services;
 
-namespace EraView
+namespace EraFileCreator
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
