@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace EraView.Utility
+namespace EraFileCreator.Utility
 {
     class NotConverter:IValueConverter
     {

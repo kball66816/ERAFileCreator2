@@ -1,9 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
-using EraView.Utility;
+using EraFileCreator.Utility;
 
-namespace EraView.Views
+namespace EraFileCreator.Views
 {
     /// <summary>
     /// Interaction logic for TestView.xaml

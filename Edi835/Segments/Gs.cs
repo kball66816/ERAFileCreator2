@@ -1,7 +1,6 @@
 ﻿using System.Text;
-using Edi835.Segments;
 
-namespace EDI835.Segments
+namespace Edi835.Segments
 {
     public class Gs : SegmentBase
     {

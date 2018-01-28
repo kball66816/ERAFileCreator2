@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace EraView
+namespace EraFileCreator
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
