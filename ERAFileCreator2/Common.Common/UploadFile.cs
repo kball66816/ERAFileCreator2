@@ -24,7 +24,7 @@ namespace Common.Common
                 {
                     using (var streamReader = new StreamReader(file.OpenFile()))
                     {
-                        UploadedFileAsStringContent = streamReader.ReadLine();
+                        UploadedFileAsStringContent = streamReader.ReadToEnd();
                     }
                 }
 

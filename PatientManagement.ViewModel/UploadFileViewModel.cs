@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using PatientManagement.ViewModel.Services;
 using Common.Common;
@@ -13,21 +14,29 @@ namespace PatientManagement.ViewModel
     {
         public UploadFileViewModel()
         {
-            UploadFileCommand = new Command(GetUploadFile,CanUploadFile);
+            UploadFileCommand = new Command(GetUploadFile, CanUploadFile);
         }
 
-        private ICommand UploadFileCommand { get; set; }
+        public static string UploadedFile { get; private set; }
 
-        private static void GetUploadFile(object obj)
+        public ICommand UploadFileCommand { get; set; }
+
+        private void GetUploadFile(object obj)
         {
+            UploadedFile = string.Empty;
             UploadFile.TextFileUpload();
+
+            UploadedFile = UploadFile.UploadedFileAsStringContent;
+            if (!UploadedFile.Contains("ISA"))
+            {
+                MessageBox.Show("Wrong FileType Please upload a different file");
+                UploadedFile = string.Empty;
+            }
         }
 
         private bool CanUploadFile(object obj)
         {
-            bool canUpload = obj != null;
-
-            return canUpload;
+            return true;
         }
     }
 }

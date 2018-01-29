@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="EraFileCreator.Views.UploadView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
+             mc:Ignorable="d" >
+    <Grid Margin="5,5,5,0">
+        <Grid.DataContext>
+            <viewModel:UploadFileViewModel/>
+            </Grid.DataContext>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="4"
+                Command="{Binding UploadFileCommand}"
+                Content="Upload File"
+                TabIndex="63"
+                Margin="5"/>
+    </Grid>
+</UserControl>

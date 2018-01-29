@@ -24,6 +24,7 @@
         <views:AddonChargeView DockPanel.Dock="Top" Background="#FFD0E8FF" />
         <views:AddonAdjustmentView DockPanel.Dock="Top" Background="#FFD0E8FF" />
         <views:SaveFileView DockPanel.Dock="Top" Background="#FFD0E8FF" />
+        <views:UploadView DockPanel.Dock="Top" Background="#FFD0E8FF"/>
         <Rectangle DockPanel.Dock="Top" Fill="Gray" Height="2" />
         <views:PreferenceView DockPanel.Dock="Bottom" />
     </DockPanel>
