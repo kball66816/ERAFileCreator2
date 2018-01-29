@@ -6,9 +6,9 @@ namespace Common.Common
 {
     public static class UploadFile
     {
-        public static string Contents { get; private set; }
+        public static string UploadedFileAsStringContent { get; private set; }
 
-        public static void SelectFileForUpload()
+        public static void TextFileUpload()
         {
             var file = new OpenFileDialog
             {
@@ -24,7 +24,7 @@ namespace Common.Common
                 {
                     using (var streamReader = new StreamReader(file.OpenFile()))
                     {
-                        Contents = streamReader.ReadLine();
+                        UploadedFileAsStringContent = streamReader.ReadLine();
                     }
                 }
 
@@ -34,9 +34,6 @@ namespace Common.Common
                     throw;
                 }
             }
-
-
-
         }
     }
 }
