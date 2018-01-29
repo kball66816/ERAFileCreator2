@@ -75,6 +75,7 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UploadFileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ERAFileCreator2\Common.Common\Common.Common.csproj">
