@@ -1,4 +1,4 @@
-﻿namespace Edi835.Segments
+﻿namespace Edi835._835Segments
 {
     public abstract class SegmentBase
     {

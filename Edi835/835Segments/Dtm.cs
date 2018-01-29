@@ -3,7 +3,7 @@ using System.Text;
 using Common.Common.Extensions;
 using PatientManagement.Model;
 
-namespace Edi835.Segments
+namespace Edi835._835Segments
 {
     public class Dtm : SegmentBase
     {

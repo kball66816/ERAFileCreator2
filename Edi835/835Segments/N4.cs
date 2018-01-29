@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using PatientManagement.Model;
 
-namespace Edi835.Segments
+namespace Edi835._835Segments
 {
     public class N4 : SegmentBase
     {

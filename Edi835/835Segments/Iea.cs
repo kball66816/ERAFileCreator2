@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Edi835.Segments
+namespace Edi835._835Segments
 {
     public class Iea : SegmentBase
     {
