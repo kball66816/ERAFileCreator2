@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
+using Common.Common.Extensions;
 
 namespace Common.Common
 {
@@ -24,7 +26,13 @@ namespace Common.Common
                 {
                     using (var streamReader = new StreamReader(file.OpenFile()))
                     {
-                        UploadedFileAsStringContent = streamReader.ReadToEnd();
+                        var sb = new StringBuilder();
+                        while (!streamReader.EndOfStream)
+                        {
+                            sb.Append(streamReader.ReadLine()?.TrimStart());
+                        }
+
+                        UploadedFileAsStringContent = sb.ToString();
                     }
                 }
 

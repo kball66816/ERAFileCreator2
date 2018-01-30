@@ -46,6 +46,7 @@
     <Compile Include="AddonChargeRepository.cs" />
     <Compile Include="AdjustmentRepository.cs" />
     <Compile Include="BillingProviderRepository.cs" />
+    <Compile Include="EdiParse.cs" />
     <Compile Include="InsuranceRepository.cs" />
     <Compile Include="PatientRepository.cs" />
     <Compile Include="PrimaryChargeRepository.cs" />
