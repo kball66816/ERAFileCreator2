@@ -9,31 +9,31 @@ namespace EFC.BL
 {
     public class PatientRepository : IPatientRepository, INotifyPropertyChanged
     {
-        private static readonly ObservableCollection<Patient> patientList = new ObservableCollection<Patient>();
+        private static readonly ObservableCollection<Patient> PatientList = new ObservableCollection<Patient>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
 
         public void Add(Patient patient)
         {
-            patientList.Add(patient);
+            PatientList.Add(patient);
             RaisePropertyChanged("patientList");
         }
 
         public void Delete(Patient patient)
         {
-            patientList.Remove(patient);
+            PatientList.Remove(patient);
             RaisePropertyChanged("patientList");
         }
 
         public ObservableCollection<Patient> GetAllPatients()
         {
-            return patientList;
+            return PatientList;
         }
 
         public Patient GetSelectedPatient(Guid id)
         {
-            return patientList.FirstOrDefault(p => p.Id == id);
+            return PatientList.FirstOrDefault(p => p.Id == id);
         }
 
         private void RaisePropertyChanged(string propertyName)

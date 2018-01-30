@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Common.Common;
+using Common.Common.Services;
+using EFC.BL;
+using PatientManagement.ViewModel.Services;
 using System.Windows.Forms;
 using System.Windows.Input;
-using PatientManagement.ViewModel.Services;
-using Common.Common;
-using EFC.BL;
 
 namespace PatientManagement.ViewModel
 {
@@ -17,39 +13,57 @@ namespace PatientManagement.ViewModel
         public UploadFileViewModel()
         {
             UploadFileCommand = new Command(GetUploadFile, CanUploadFile);
+            ResumeManualActionCommand = new Command(ResumeManualAction, CanResumeManualAction);
         }
 
-        public static string UploadedFile { get; private set; }
+        private static string UploadedFile { get; set; }
+
+        public ICommand ResumeManualActionCommand { get; set; }
 
         public ICommand UploadFileCommand { get; set; }
 
-        private void GetUploadFile(object obj)
+        private static bool IsFileUploaded { get; set; }
+
+        private static void ResumeManualAction(object obj)
+        {
+            IsFileUploaded = false;
+            Messenger.Default.Send(new ResumeManualActionMessage(IsFileUploaded),"Disable");
+        }
+
+        private static void GetUploadFile(object obj)
         {
             UploadedFile = string.Empty;
             UploadFile.TextFileUpload();
 
             UploadedFile = UploadFile.UploadedFileAsStringContent;
-            if (!UploadedFile.Contains("ISA"))
-            {
-                MessageBox.Show("Wrong FileType Please upload a different file");
-                UploadedFile = string.Empty;
-            }
-            else
+            if (UploadedFile.Contains("ISA"))
             {
                 ParseFile();
             }
+            else
+            {
+                MessageBox.Show("Wrong File Type Please upload a different file");
+                UploadedFile = string.Empty;
+            }
         }
 
-        private void ParseFile()
+        private static void ParseFile()
         {
-            var delimited = new char[] {'~'};
+            var delimited = new[] {'~'};
             var loops = UploadedFile.Split(delimited);
             foreach (var loop in loops)
             {
                 loop.Parse837Loop();
             }
+            IsFileUploaded = true;
+            Messenger.Default.Send(new ResumeManualActionMessage(IsFileUploaded),"Disable");
         }
-        private bool CanUploadFile(object obj)
+
+        private static bool CanResumeManualAction(object obj)
+        {
+            return IsFileUploaded;
+        }
+        private static bool CanUploadFile(object obj)
         {
             return true;
         }

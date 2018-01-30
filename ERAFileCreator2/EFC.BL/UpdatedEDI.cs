@@ -29,7 +29,9 @@ namespace EFC.BL
             insurance = insuranceCompany.GetInsurance();
 
             IPatientRepository patientList = new PatientRepository();
-            patients = patientList.GetAllPatients().ToList();
+            patients = patientList.GetAllPatients()
+                .Where(p => !string.IsNullOrEmpty(p.FirstName) 
+                            || !string.IsNullOrEmpty(p.LastName)).ToList();
 
             IProvider provider = new BillingProviderRepository();
             billingProvider = provider.GetBillingProvider();

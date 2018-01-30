@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
-using Common.Common.Services;
+﻿using Common.Common.Services;
 using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
 {
@@ -20,8 +20,23 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationComplete);
             Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
             Messenger.Default.Register<SaveFileMessage>(this, OnSaveFileMessage, "SaveTextFiletoSelectedDirectory");
+            Messenger.Default.Register<UploadCompleteMessage>(this, OnUploadComplete, "UploadCompleted");
+            Messenger.Default.Register<ResumeManualActionMessage>(this, OnResumeManualActionMessage, "Disable");
             patientRepository = new PatientRepository();
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
+        }
+
+        private bool isAddPatientEnabled;
+
+        private void OnResumeManualActionMessage(ResumeManualActionMessage resume)
+        {
+            isAddPatientEnabled = resume.IsEnabled;
+        }
+
+        private void OnUploadComplete(UploadCompleteMessage obj)
+        {
+            LoadInitialPatient();
+            patientRepository.Add(SelectedPatient);
         }
 
         public Patient SelectedPatient
@@ -121,9 +136,14 @@ namespace PatientManagement.ViewModel
 
         private bool CanAddPatient(object obj)
         {
-            return
-                !string.IsNullOrEmpty(SelectedPatient.FirstName) &&
-                !string.IsNullOrEmpty(selectedPatient.LastName);
+            bool b = false;
+            if (isAddPatientEnabled)
+            {
+                b = !string.IsNullOrEmpty(SelectedPatient.FirstName) &&
+                    !string.IsNullOrEmpty(selectedPatient.LastName);
+            }
+
+            return b;
         }
 
         private void RaisePropertyChanged(string propertyName)

@@ -58,6 +58,7 @@ namespace PatientManagement.Model
 
         public ObservableCollection<AddonCharge> AddonChargeList { get; set; }
 
+        public string ReferenceId { get; set; }
 
         public bool FormatClassicBillId
         {

@@ -17,7 +17,7 @@ namespace PatientManagement.ViewModel
         {
             LoadInsuranceCompany();
             Messenger.Default.Register<UpdateCalculations>(this, OnUpdateCalculation);
-            Messenger.Default.Register<UpdateRepositoriesMessage>(this, OnUpdateRepositoriesMessageReceieved);
+            Messenger.Default.Register<UpdateRepositoriesMessage>(this, OnUpdateRepositoriesMessageReceieved,"UpdateRepositories");
             Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved, "UpdateSettings");
             Messenger.Default.Register<SaveFileMessage>(this, OnSaveFileReceived, "SaveTextFiletoSelectedDirectory");
             insurance.CheckAmount = CalculateCheckAmount();

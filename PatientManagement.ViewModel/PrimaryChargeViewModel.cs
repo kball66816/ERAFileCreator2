@@ -13,6 +13,17 @@ namespace PatientManagement.ViewModel
 {
     public class PrimaryChargeViewModel : INotifyPropertyChanged
     {
+        public PrimaryChargeViewModel()
+        {
+            SelectedCharge = new PrimaryCharge();
+            PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
+            Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
+            Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived, "PatientIdSent");
+            AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
+            chargeRepository = new PrimaryChargeRepository();
+        }
+
+
         private readonly IPrimaryChargeRepository chargeRepository;
 
         private readonly Timer timer = new Timer {Interval = 5000};
@@ -24,15 +35,6 @@ namespace PatientManagement.ViewModel
 
         private PrimaryCharge selectedCharge;
 
-        public PrimaryChargeViewModel()
-        {
-            SelectedCharge = new PrimaryCharge();
-            PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
-            Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
-            Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived, "PatientIdSent");
-            AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
-            chargeRepository = new PrimaryChargeRepository();
-        }
 
         public ICommand AddChargeToPatientCommand { get; set; }
 

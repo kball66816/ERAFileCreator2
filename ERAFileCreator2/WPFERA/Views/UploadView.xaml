@@ -16,10 +16,16 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="4"
+        <Button Grid.Column="3"
                 Command="{Binding UploadFileCommand}"
                 Content="Upload File"
                 TabIndex="63"
+                Margin="5"/>
+        <Button Grid.Column="4"
+                Command="{Binding ResumeManualActionCommand}"
+                Content="Add Patients Manually"
+                TabIndex="64"
+                ToolTip="Press this button if you want to add additional patients on top of the uploaded patients"
                 Margin="5"/>
     </Grid>
 </UserControl>

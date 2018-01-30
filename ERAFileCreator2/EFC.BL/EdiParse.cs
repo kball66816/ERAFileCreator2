@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Globalization;
 using PatientManagement.DAL;
 using PatientManagement.Model;
+using System.Linq;
+using System.Text;
 
 namespace EFC.BL
 {
@@ -14,9 +12,10 @@ namespace EFC.BL
         private static readonly char[] SegmentDelimiter = new char[] { '*', ':' };
         private static bool _isClaimDetail;
         private static readonly StringBuilder Sb = new StringBuilder();
-        private static bool _isClm;
         private static PrimaryCharge Charge { get; set; }
         private static Patient Patient { get; set; }
+        private static readonly IPrimaryChargeRepository ChargeRepository = new PrimaryChargeRepository();
+        private static readonly IPatientRepository PatientRepository = new PatientRepository();
         public static void Parse837Loop(this string loop)
         {
             ParsePatientDetails(loop);
@@ -34,17 +33,15 @@ namespace EFC.BL
                 Patient.LastName = patientDetails[3];
                 Patient.FirstName = patientDetails[4];
                 Patient.MemberId = patientDetails[9];
-                IPatientRepository patientRepository = new PatientRepository();
-                if (string.IsNullOrEmpty(patientRepository.GetAllPatients().First().FirstName))
+                if (string.IsNullOrEmpty(PatientRepository.GetAllPatients().LastOrDefault()?.FirstName))
                 {
-                    patientRepository.GetAllPatients().RemoveAt(0);
+                    PatientRepository.Delete(PatientRepository.GetAllPatients().LastOrDefault());
                 }
 
-                patientRepository.Add(Patient);
+                PatientRepository.Add(Patient);
             }
             if (loop.StartsWith("CLM"))
             {
-                _isClm = true;
                 Charge.PatientId = Patient.Id;
                 var segments = loop.Split(SegmentDelimiter);
                 {
@@ -52,62 +49,77 @@ namespace EFC.BL
                     Charge.PlaceOfService.ServiceLocation = segments[5];
                 }
             }
-            if (loop.StartsWith("SV1") && _isClm)
+            if (loop.StartsWith("SV1"))
             {
                 var segments = loop.Split(SegmentDelimiter);
                 {
                     Charge.ProcedureCode = segments[2];
 
-                        if (segments.Length == 13)
-                        {
-                            Charge.Modifier.ModifierOne = segments[3];
-                            Charge.Modifier.ModifierTwo = segments[4];
-                            Charge.Modifier.ModifierThree = segments[5];
-                            Charge.Modifier.ModifierFour = segments[6];
+                    if (segments.Length == 13)
+                    {
+                        Charge.Modifier.ModifierOne = segments[3];
+                        Charge.Modifier.ModifierTwo = segments[4];
+                        Charge.Modifier.ModifierThree = segments[5];
+                        Charge.Modifier.ModifierFour = segments[6];
 
-                            decimal.TryParse(segments[7], out decimal result);
-                            {
-                                Charge.ChargeCost = result;
-                                Charge.PaymentAmount = result;
-                            }
-                        }
-                        else if (segments.Length == 12)
+                        decimal.TryParse(segments[7], out decimal result);
                         {
-                            Charge.Modifier.ModifierOne = segments[3];
-                            Charge.Modifier.ModifierTwo = segments[4];
-                            Charge.Modifier.ModifierThree = segments[5];
-                            decimal.TryParse(segments[6], out decimal result);
-                            {
-                                Charge.ChargeCost = result;
-                                Charge.PaymentAmount = result;
-                            }
+                            Charge.ChargeCost = result;
+                            Charge.PaymentAmount = result;
                         }
-
-                        else if (segments.Length == 11)
+                    }
+                    else if (segments.Length == 12)
+                    {
+                        Charge.Modifier.ModifierOne = segments[3];
+                        Charge.Modifier.ModifierTwo = segments[4];
+                        Charge.Modifier.ModifierThree = segments[5];
+                        decimal.TryParse(segments[6], out decimal result);
                         {
-                            Charge.Modifier.ModifierOne = segments[3];
-                            Charge.Modifier.ModifierTwo = segments[4];
-                            decimal.TryParse(segments[5], out decimal result);
-                            {
-                                Charge.ChargeCost = result;
-                                Charge.PaymentAmount = result;
-                            }
+                            Charge.ChargeCost = result;
+                            Charge.PaymentAmount = result;
                         }
+                    }
 
-                        else if (segments.Length == 10)
+                    else if (segments.Length == 11)
+                    {
+                        Charge.Modifier.ModifierOne = segments[3];
+                        Charge.Modifier.ModifierTwo = segments[4];
+                        decimal.TryParse(segments[5], out decimal result);
                         {
-                            Charge.Modifier.ModifierOne = segments[3];
-                            decimal.TryParse(segments[4], out decimal result);
-                            {
-                                Charge.ChargeCost = result;
-                                Charge.PaymentAmount = result;
-                            }
+                            Charge.ChargeCost = result;
+                            Charge.PaymentAmount = result;
                         }
+                    }
 
-                        IPrimaryChargeRepository chargeRepository = new PrimaryChargeRepository();
-                        chargeRepository.Add(Charge);
-                    Charge = new PrimaryCharge();
+                    else if (segments.Length == 10)
+                    {
+                        Charge.Modifier.ModifierOne = segments[3];
+                        decimal.TryParse(segments[4], out decimal result);
+                        {
+                            Charge.ChargeCost = result;
+                            Charge.PaymentAmount = result;
+                        }
+                    }
+                } 
+            }
+
+            if (loop.StartsWith("DTP"))
+            {
+                var segments = loop.Split(SegmentDelimiter);
+                {
+                    var date = DateTime.ParseExact(segments[3], "yyyyMMdd", CultureInfo.InvariantCulture);
+                    Charge.DateOfService = date;
                 }
+            }
+
+            if (loop.StartsWith("REF*6R"))
+            {
+                var segments = loop.Split(SegmentDelimiter);
+                {
+                    Charge.ReferenceId = segments[2];
+                }
+                ChargeRepository.Add(Charge);
+                Charge = new PrimaryCharge();
             }
         }
 
