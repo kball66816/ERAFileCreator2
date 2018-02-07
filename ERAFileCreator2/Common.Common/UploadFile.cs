@@ -35,8 +35,8 @@ namespace Common.Common
                     Console.WriteLine(e);
                     throw;
                 }
-
             }
+
         }
 
         private static void BuildFileToSTring(StreamReader streamReader)

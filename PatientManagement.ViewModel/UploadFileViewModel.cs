@@ -34,16 +34,28 @@ namespace PatientManagement.ViewModel
         {
             UploadedFile = string.Empty;
             UploadFile.TextFileUpload();
+            AssignStringIfUploadedStringIsNotNull();
+            ConfirmStringContent();
+        }
 
-            UploadedFile = UploadFile.UploadedFileAsStringContent;
+        private static void ConfirmStringContent()
+        {
             if (UploadedFile.Contains("ISA"))
             {
                 ParseFile();
             }
             else
             {
-                MessageBox.Show("Wrong File Type Please upload a different file");
+                MessageBox.Show("No File was selected or File was not 837. Please try again");
                 UploadedFile = string.Empty;
+            }
+        }
+
+        private static void AssignStringIfUploadedStringIsNotNull()
+        {
+            if (UploadFile.UploadedFileAsStringContent != null)
+            {
+                UploadedFile = UploadFile.UploadedFileAsStringContent;
             }
         }
 
