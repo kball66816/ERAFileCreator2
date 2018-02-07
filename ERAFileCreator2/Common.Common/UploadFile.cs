@@ -26,13 +26,7 @@ namespace Common.Common
                 {
                     using (var streamReader = new StreamReader(file.OpenFile()))
                     {
-                        var sb = new StringBuilder();
-                        while (!streamReader.EndOfStream)
-                        {
-                            sb.Append(streamReader.ReadLine()?.TrimStart());
-                        }
-
-                        UploadedFileAsStringContent = sb.ToString();
+                        BuildFileToSTring(streamReader);
                     }
                 }
 
@@ -41,7 +35,19 @@ namespace Common.Common
                     Console.WriteLine(e);
                     throw;
                 }
+
             }
+        }
+
+        private static void BuildFileToSTring(StreamReader streamReader)
+        {
+            var sb = new StringBuilder();
+            while (!streamReader.EndOfStream)
+            {
+                sb.Append(streamReader.ReadLine()?.TrimStart());
+            }
+
+            UploadedFileAsStringContent = sb.ToString();
         }
     }
 }

@@ -59,7 +59,7 @@
     <Compile Include="Services\ResumeManualActionMessage.cs" />
     <Compile Include="Services\SendGuidService.cs" />
     <Compile Include="Services\ConfirmationService.cs" />
-    <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="PatientViewModel.cs" />
     <Compile Include="PreferenceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

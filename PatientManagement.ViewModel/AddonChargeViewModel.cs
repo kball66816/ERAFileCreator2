@@ -101,7 +101,7 @@ namespace PatientManagement.ViewModel
 
         private void PromptTypeOfNewAddon()
         {
-            var dialogPrompt = new DialogService(SelectedAddonCharge);
+            var dialogPrompt = new MessageBoxService(SelectedAddonCharge);
 
             if (dialogPrompt.ShowDialog())
                 CloneLastAddon();

@@ -24,6 +24,7 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<ResumeManualActionMessage>(this, OnResumeManualActionMessage, "Disable");
             patientRepository = new PatientRepository();
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
+            isAddPatientEnabled = true;
         }
 
         private bool isAddPatientEnabled;
@@ -119,7 +120,7 @@ namespace PatientManagement.ViewModel
 
         private void PromptTypeOfNewPatient()
         {
-            var dialogPrompt = new DialogService(selectedPatient);
+            var dialogPrompt = new MessageBoxService(selectedPatient);
 
             if (dialogPrompt.ShowDialog())
                 CloneSelectedPatient();
