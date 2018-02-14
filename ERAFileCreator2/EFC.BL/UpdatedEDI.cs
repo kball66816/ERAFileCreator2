@@ -27,20 +27,19 @@ namespace EFC.BL
         {
             IInsurance insuranceCompany = new InsuranceRepository();
             insurance = insuranceCompany.GetInsurance();
-
-            IPatientRepository patientList = new PatientRepository();
-            patients = patientList.GetAllPatients()
-                .Where(p => !string.IsNullOrEmpty(p.FirstName) 
-                            || !string.IsNullOrEmpty(p.LastName)).ToList();
-
-            IProvider provider = new BillingProviderRepository();
-            billingProvider = provider.GetBillingProvider();
-
             chargeRepository = new PrimaryChargeRepository();
 
             addonChargeRepository = new AddonChargeRepository();
 
             adjustmentRepository = new AdjustmentRepository();
+            IPatientRepository patientList = new PatientRepository();
+            patients = patientList.GetAllPatients()
+                .Where(p => !string.IsNullOrEmpty(p.FirstName)
+                            || !string.IsNullOrEmpty(p.LastName)).ToList();
+            IProvider provider = new BillingProviderRepository();
+            billingProvider = provider.GetBillingProvider();
+
+
         }
 
 
@@ -127,7 +126,7 @@ namespace EFC.BL
             foreach (var patient in patients)
             {
                 var encounters = chargeRepository.GetSelectedCharges(patient.Id).ToList();
-
+                if (encounters.Count == 0) continue;
                 var clp = new Clp(encounters);
                 edi.Append(clp.BuildClp());
                 segmentCount++;

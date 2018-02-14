@@ -20,7 +20,6 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationComplete);
             Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
             Messenger.Default.Register<SaveFileMessage>(this, OnSaveFileMessage, "SaveTextFiletoSelectedDirectory");
-            Messenger.Default.Register<UploadCompleteMessage>(this, OnUploadComplete, "UploadCompleted");
             Messenger.Default.Register<ResumeManualActionMessage>(this, OnResumeManualActionMessage, "Disable");
             patientRepository = new PatientRepository();
             AddPatientCommand = new Command(AddPatient, CanAddPatient);
@@ -32,12 +31,11 @@ namespace PatientManagement.ViewModel
         private void OnResumeManualActionMessage(ResumeManualActionMessage resume)
         {
             isAddPatientEnabled = resume.IsEnabled;
-        }
-
-        private void OnUploadComplete(UploadCompleteMessage obj)
-        {
-            LoadInitialPatient();
-            patientRepository.Add(SelectedPatient);
+            if (isAddPatientEnabled)
+            {
+                LoadInitialPatient();
+                patientRepository.Add(SelectedPatient);
+            }
         }
 
         public Patient SelectedPatient
