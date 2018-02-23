@@ -52,7 +52,7 @@ namespace PatientManagement.ViewModel
 
         private static void AssignStringIfUploadedStringIsNotNull()
         {
-            if (UploadFile.UploadedFileAsStringContent != null)
+            if (!string.IsNullOrEmpty(UploadFile.UploadedFileAsStringContent) )
             {
                 UploadedFile = UploadFile.UploadedFileAsStringContent;
             }

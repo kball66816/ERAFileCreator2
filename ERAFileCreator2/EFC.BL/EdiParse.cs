@@ -9,13 +9,14 @@ namespace EFC.BL
 {
     public static class EdiParse
     {
-        private static readonly char[] SegmentDelimiter = new char[] { '*', ':' };
-        private static bool _isClaimDetail;
+        private static readonly char[] SegmentDelimiter = { '*', ':' };
         private static readonly StringBuilder Sb = new StringBuilder();
         private static PrimaryCharge Charge { get; set; }
         private static Patient Patient { get; set; }
         private static readonly IPrimaryChargeRepository ChargeRepository = new PrimaryChargeRepository();
         private static readonly IPatientRepository PatientRepository = new PatientRepository();
+        private static readonly PrimaryCharge LastCharge = ChargeRepository.GetAllCharges().LastOrDefault();
+
         public static void Parse837Loop(this string loop)
         {
             ParsePatientDetails(loop);
@@ -27,80 +28,27 @@ namespace EFC.BL
         {
             if (loop.StartsWith("NM1*IL"))
             {
-                Patient = new Patient();
-                Charge = new PrimaryCharge();
                 var patientDetails = loop.Split(SegmentDelimiter);
-                Patient.LastName = patientDetails[3];
-                Patient.FirstName = patientDetails[4];
-                Patient.MemberId = patientDetails[9];
-                if (string.IsNullOrEmpty(PatientRepository.GetAllPatients().LastOrDefault()?.FirstName))
-                {
-                    PatientRepository.Delete(PatientRepository.GetAllPatients().LastOrDefault());
-                }
-
+                IdentifyPatient(patientDetails);
+                DeleteEmptyLastPatient();
                 PatientRepository.Add(Patient);
             }
+
             if (loop.StartsWith("CLM"))
             {
-                Charge.PatientId = Patient.Id;
+                AddNewChargeToList();
                 var segments = loop.Split(SegmentDelimiter);
                 {
-                    Charge.BillId = segments[1];
-                    Charge.PlaceOfService.ServiceLocation = segments[5];
+                    CheckIfCurrentChargeShouldBeGroupedWithLastEncounter(segments);
+                    IdentifyCharge(segments);
                 }
             }
             if (loop.StartsWith("SV1"))
             {
                 var segments = loop.Split(SegmentDelimiter);
                 {
-                    Charge.ProcedureCode = segments[2];
-
-                    if (segments.Length == 13)
-                    {
-                        Charge.Modifier.ModifierOne = segments[3];
-                        Charge.Modifier.ModifierTwo = segments[4];
-                        Charge.Modifier.ModifierThree = segments[5];
-                        Charge.Modifier.ModifierFour = segments[6];
-
-                        decimal.TryParse(segments[7], out decimal result);
-                        {
-                            Charge.ChargeCost = result;
-                            Charge.PaymentAmount = result;
-                        }
-                    }
-                    else if (segments.Length == 12)
-                    {
-                        Charge.Modifier.ModifierOne = segments[3];
-                        Charge.Modifier.ModifierTwo = segments[4];
-                        Charge.Modifier.ModifierThree = segments[5];
-                        decimal.TryParse(segments[6], out decimal result);
-                        {
-                            Charge.ChargeCost = result;
-                            Charge.PaymentAmount = result;
-                        }
-                    }
-
-                    else if (segments.Length == 11)
-                    {
-                        Charge.Modifier.ModifierOne = segments[3];
-                        Charge.Modifier.ModifierTwo = segments[4];
-                        decimal.TryParse(segments[5], out decimal result);
-                        {
-                            Charge.ChargeCost = result;
-                            Charge.PaymentAmount = result;
-                        }
-                    }
-
-                    else if (segments.Length == 10)
-                    {
-                        Charge.Modifier.ModifierOne = segments[3];
-                        decimal.TryParse(segments[4], out decimal result);
-                        {
-                            Charge.ChargeCost = result;
-                            Charge.PaymentAmount = result;
-                        }
-                    }
-                } 
+                    MatchServiceDetailsBasedOnModifiers(segments);
+                }
             }
 
             if (loop.StartsWith("DTP"))
@@ -118,14 +66,108 @@ namespace EFC.BL
                 {
                     Charge.ReferenceId = segments[2];
                 }
-                ChargeRepository.Add(Charge);
-                Charge = new PrimaryCharge();
             }
+        }
+
+        private static void MatchServiceDetailsBasedOnModifiers(string[] segments)
+        {
+            Charge.ProcedureCode = segments[2];
+            switch (segments.Length)
+            {
+                case 13:
+                {
+                    Charge.Modifier.ModifierOne = segments[3];
+                    Charge.Modifier.ModifierTwo = segments[4];
+                    Charge.Modifier.ModifierThree = segments[5];
+                    Charge.Modifier.ModifierFour = segments[6];
+
+                    decimal.TryParse(segments[7], out var result);
+                    {
+                        Charge.ChargeCost = result;
+                        Charge.PaymentAmount = result;
+                    }
+                    break;
+                }
+                case 12:
+                {
+                    Charge.Modifier.ModifierOne = segments[3];
+                    Charge.Modifier.ModifierTwo = segments[4];
+                    Charge.Modifier.ModifierThree = segments[5];
+                    decimal.TryParse(segments[6], out var result);
+                    {
+                        Charge.ChargeCost = result;
+                        Charge.PaymentAmount = result;
+                    }
+                    break;
+                }
+                case 11:
+                {
+                    Charge.Modifier.ModifierOne = segments[3];
+                    Charge.Modifier.ModifierTwo = segments[4];
+                    decimal.TryParse(segments[5], out var result);
+                    {
+                        Charge.ChargeCost = result;
+                        Charge.PaymentAmount = result;
+                    }
+                    break;
+                }
+                case 10:
+                {
+                    Charge.Modifier.ModifierOne = segments[3];
+                    decimal.TryParse(segments[4], out var result);
+                    {
+                        Charge.ChargeCost = result;
+                        Charge.PaymentAmount = result;
+                    }
+                    break;
+                }
+            }
+        }
+
+        private static void CheckIfCurrentChargeShouldBeGroupedWithLastEncounter(string[] segments)
+        {
+            if (segments[1] != LastCharge.BillId)
+            {
+                var clone = PatientRepository.GetSelectedPatient(Patient.Id).CopyPatient();
+                Patient = clone;
+                PatientRepository.Add(Patient);
+            }
+        }
+
+        private static void IdentifyCharge(string[] segments)
+        {
+            Charge.PatientId = Patient.Id;
+            Charge.BillId = segments[1];
+            Charge.PlaceOfService.ServiceLocation = segments[5];
+        }
+
+        private static void AddNewChargeToList()
+        {
+            Charge = new PrimaryCharge();
+            ChargeRepository.Add(Charge);
+        }
+
+        private static void DeleteEmptyLastPatient()
+        {
+            if (string.IsNullOrEmpty(PatientRepository.GetAllPatients().LastOrDefault()?.FirstName))
+            {
+                PatientRepository.Delete(PatientRepository.GetAllPatients().LastOrDefault());
+            }
+        }
+
+        private static void IdentifyPatient(string[] patientDetails)
+        {
+            Patient = new Patient
+            {
+                LastName = patientDetails[3],
+                FirstName = patientDetails[4],
+                MemberId = patientDetails[9]
+            };
         }
 
         private static void AppendNm1EnvelopInformation(string loop)
         {
-            if (_isClaimDetail && !loop.StartsWith("NM1*IL"))
+            if (!loop.StartsWith("NM1*IL"))
             {
                 Sb.Append(loop);
             }
@@ -136,7 +178,6 @@ namespace EFC.BL
             if (loop.StartsWith("IEA"))
             {
                 Sb.Clear();
-                _isClaimDetail = false;
             }
         }
     }

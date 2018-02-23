@@ -36,7 +36,10 @@ namespace Common.Common
                     throw;
                 }
             }
-
+            else
+            {
+                UploadedFileAsStringContent = string.Empty;
+            }
         }
 
         private static void BuildFileToSTring(StreamReader streamReader)
