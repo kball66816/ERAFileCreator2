@@ -2,6 +2,7 @@
 using Common.Common;
 using Common.Common.Services;
 using EFC.BL;
+using PatientManagement.ViewModel.Service.Messaging;
 using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
