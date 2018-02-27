@@ -46,6 +46,7 @@
     <Compile Include="Extensions\DateConversion.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Converters\NotConverter.cs" />
+    <Compile Include="Services\InitializationCompleteMessage.cs" />
     <Compile Include="Services\Messenger.cs" />
     <Compile Include="UploadFile.cs" />
     <Compile Include="Validators\NpivalidationRule.cs" />

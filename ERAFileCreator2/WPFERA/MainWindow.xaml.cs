@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Threading;
 using Common.Common.Services;
-using PatientManagement.ViewModel.Services;
 
 namespace EraFileCreator
 {

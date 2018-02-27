@@ -1,6 +1,6 @@
 ﻿using PatientManagement.Model;
 
-namespace PatientManagement.ViewModel.Services
+namespace PatientManagement.ViewModel.Service.Messaging
 {
     internal class SendAddonAdjustmentMessage
     {

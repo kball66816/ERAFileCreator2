@@ -1,4 +1,4 @@
-﻿namespace PatientManagement.ViewModel.Services
+﻿namespace Common.Common.Services
 {
     public class InitializationCompleteMessage
     {

@@ -5,6 +5,7 @@ using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 using System.ComponentModel;
 using System.Windows.Input;
+using PatientManagement.ViewModel.Service.Messaging;
 
 namespace PatientManagement.ViewModel
 {

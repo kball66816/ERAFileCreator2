@@ -14,16 +14,21 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Vertical">
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
             <TextBlock
-                       Text="Patients:" />
-            <TextBlock Text="{Binding Patients.Count}" />
+                       Text="Patients: "
+                Margin="5,5,0,5"/>
+            <TextBlock Text="{Binding Patients.Count}" 
+                       Margin="5,5,5,5"/>
         </StackPanel>
-        <ListBox Grid.Row="1" Background="#FF7789D8" BorderBrush="#FF7789D8"
+        <ListBox Grid.Row="1" Background="#FF7789D8"
+                 BorderBrush="#FF7789D8"
                  ItemsSource="{Binding Patients}"
                  SelectedItem="{Binding Patient, Mode=TwoWay}"
                  MinWidth="100"
-                 HorizontalContentAlignment="Stretch" TabIndex="61">
+                 HorizontalContentAlignment="Stretch" 
+                 TabIndex="61"
+                 Margin="5,5,5,5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

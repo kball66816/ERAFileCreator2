@@ -4,6 +4,7 @@ using EFC.BL;
 using PatientManagement.ViewModel.Services;
 using System.Windows.Forms;
 using System.Windows.Input;
+using PatientManagement.ViewModel.Service.Messaging;
 
 namespace PatientManagement.ViewModel
 {

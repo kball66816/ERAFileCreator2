@@ -1,4 +1,4 @@
-﻿namespace PatientManagement.ViewModel.Services
+﻿namespace PatientManagement.ViewModel.Service.Messaging
 {
     internal class UpdateRepositoriesMessage
     {
