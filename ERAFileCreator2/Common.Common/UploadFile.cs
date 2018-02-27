@@ -15,8 +15,8 @@ namespace Common.Common
             var file = new OpenFileDialog
             {
                 InitialDirectory = "C:\\",
-                Filter = "txt files (*.txt)|*.txt|837 files(*.837)|*.837|All files(*.*)|*.*",
-                FilterIndex = 1,
+                Filter = "txt files (*.txt)|*.txt|837 files(*.837)|*.837|edi files (*.edi)|*.edi|All files(*.*)|*.*",
+                FilterIndex = 3,
                 RestoreDirectory = true
             };
 
