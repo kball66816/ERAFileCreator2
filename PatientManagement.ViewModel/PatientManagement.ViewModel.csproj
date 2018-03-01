@@ -73,6 +73,7 @@
     <Compile Include="Service.Messaging\UpdateCalculations.cs" />
     <Compile Include="Service.Messaging\UpdateRepositoriesMessage.cs" />
     <Compile Include="Service.Messaging\UploadCompleteMessage.cs" />
+    <Compile Include="Services\StarterService.cs" />
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
       <AutoGen>True</AutoGen>

@@ -28,7 +28,7 @@ namespace PatientManagement.ViewModel.Services
             return new AddonCharge(addonCharge);
         }
 
-        public static void Add(this AddonCharge addon)
+        public static void AddToRepository(this AddonCharge addon)
         {
             ChargeRepository.Add(addon);
         }

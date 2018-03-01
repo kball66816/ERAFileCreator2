@@ -11,10 +11,7 @@ namespace PatientManagement.ViewModel
     {
         private Guid currentChargeGuid;
 
-        private bool initializationComplete;
-
         private AddonCharge selectedAddonCharge;
-
 
         public AddonChargeViewModel()
         {
@@ -51,7 +48,7 @@ namespace PatientManagement.ViewModel
 
         private void OnChargeIdReceived(SendGuidService sent)
         {
-            if (initializationComplete)
+            if (StarterService.InitializationComplete)
             {
                 SelectedAddonCharge = AddonChargeService.GetNewAddonCharge();
             }
@@ -59,7 +56,6 @@ namespace PatientManagement.ViewModel
             SelectedAddonCharge.AssociateChargeId(sent.Id);
             currentChargeGuid = sent.Id;
             RaisePropertyChanged("SelectedAddonCharge");
-            initializationComplete = true;
         }
 
         private void AddAddon(object obj)
@@ -77,7 +73,7 @@ namespace PatientManagement.ViewModel
 
             SelectedAddonCharge.PrimaryChargeId = currentChargeGuid;
             SendChargeId();
-            SelectedAddonCharge.Add();
+            SelectedAddonCharge.AddToRepository();
             RaisePropertyChanged("SelectedAddonCharge");
             RaisePropertyChanged("CheckAmount");
         }
@@ -89,7 +85,7 @@ namespace PatientManagement.ViewModel
                 PromptTypeOfNewAddon();
             }
 
-            else if (!SettingsService.AddonPromptEnabled)
+            else
             {
                 SelectedAddonCharge.Clone();
             }
