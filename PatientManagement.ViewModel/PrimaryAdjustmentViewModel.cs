@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using Common.Common.Services;
-using EFC.BL;
-using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 
@@ -12,21 +10,19 @@ namespace PatientManagement.ViewModel
 {
     public class PrimaryAdjustmentViewModel : INotifyPropertyChanged
     {
-        private readonly IAdjustmentRepository adjustmentRepository;
-
         private Guid currentChargeGuid;
 
         private bool initializationComplete;
+
         private Adjustment selectedAdjustment;
 
         public PrimaryAdjustmentViewModel()
         {
-            SelectedAdjustment = new Adjustment();
+            SelectedAdjustment = AdjustmentService.GetNewAdjustment();
             PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
             PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
             AddChargeAdjustmentCommand = new Command(AddAdjustmentCommand, CanAddAdjustment);
             Messenger.Default.Register<SendGuidService>(this, OnChargeIdReceived, "ChargeIdSent");
-            adjustmentRepository = new AdjustmentRepository();
         }
 
         public Adjustment SelectedAdjustment
@@ -50,18 +46,21 @@ namespace PatientManagement.ViewModel
 
         private void OnChargeIdReceived(SendGuidService sent)
         {
-            if (initializationComplete) SelectedAdjustment = new Adjustment();
-
+            if (initializationComplete)
+            {
+                SelectedAdjustment = AdjustmentService.GetNewAdjustment();
+            }
             initializationComplete = true;
-            SelectedAdjustment.ChargeId = sent.Id;
+            AdjustmentService.AssociateChargeId(SelectedAdjustment, sent.Id);
             currentChargeGuid = sent.Id;
-            adjustmentRepository.Add(SelectedAdjustment);
+            AdjustmentService.Add(SelectedAdjustment);
         }
 
         private void AddAdjustmentCommand(object obj)
         {
-            SelectedAdjustment = new Adjustment {ChargeId = currentChargeGuid};
-            adjustmentRepository.Add(SelectedAdjustment);
+            SelectedAdjustment = AdjustmentService.GetNewAdjustment();
+            AdjustmentService.AssociateChargeId(SelectedAdjustment, currentChargeGuid);
+            AdjustmentService.Add(SelectedAdjustment);
         }
 
         private bool CanAddAdjustment(object obj)

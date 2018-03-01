@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Common.Common.Services;
 using PatientManagement.Model;
+using PatientManagement.ViewModel.Service.Messaging;
 using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel

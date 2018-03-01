@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using Common.Common.Services;
-using EFC.BL;
-using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 
@@ -12,19 +10,18 @@ namespace PatientManagement.ViewModel
 {
     public class AddonAdjustmentViewModel : INotifyPropertyChanged
     {
-        private readonly IAdjustmentRepository adjustmentRepository;
 
         private Adjustment addonAdjustment;
         private Guid currentAddonId;
 
         public AddonAdjustmentViewModel()
         {
-            AddonAdjustment = new Adjustment();
+            AddonAdjustment = AdjustmentService.GetNewAdjustment();
             AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
             AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
             Messenger.Default.Register<SendGuidService>(this, OnAddonIdReceived);
             AddAddonChargeAdjustmentCommand = new Command(AddAdjustment, CanAddAddonAdjustment);
-            adjustmentRepository = new AdjustmentRepository();
+
         }
 
         public ICommand AddAddonChargeAdjustmentCommand { get; }
@@ -48,21 +45,23 @@ namespace PatientManagement.ViewModel
 
         private void OnAddonIdReceived(SendGuidService sent)
         {
-            AddonAdjustment = new Adjustment {ChargeId = sent.Id};
+            AddonAdjustment = AdjustmentService.GetNewAdjustment();
+            AdjustmentService.AssociateChargeId(AddonAdjustment, sent.Id);
             currentAddonId = sent.Id;
-            adjustmentRepository.Add(AddonAdjustment);
+            AdjustmentService.Add(AddonAdjustment);
         }
 
         private void AddAdjustment(object obj)
         {
-            AddonAdjustment = new Adjustment {ChargeId = currentAddonId};
-            adjustmentRepository.Add(AddonAdjustment);
+            AddonAdjustment = AdjustmentService.GetNewAdjustment();
+            AdjustmentService.AssociateChargeId(AddonAdjustment, currentAddonId);
+            AdjustmentService.Add(AddonAdjustment);
         }
 
         private bool CanAddAddonAdjustment(object obj)
         {
-            return !string.IsNullOrEmpty(addonAdjustment.AdjustmentReasonCode) &&
-                   !string.IsNullOrEmpty(addonAdjustment.AdjustmentType);
+            return !string.IsNullOrEmpty(AddonAdjustment.AdjustmentReasonCode) &&
+                   AddonAdjustment.AdjustmentAmount > 0;
         }
 
         private void RaisePropertyChanged(string propertyName)

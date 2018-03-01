@@ -56,6 +56,7 @@
     <Compile Include="RenderingProviderViewModel.cs" />
     <Compile Include="SaveFileViewModel.cs" />
     <Compile Include="Service.Messaging\ResumeManualActionMessage.cs" />
+    <Compile Include="Services\AdjustmentService.cs" />
     <Compile Include="Services\SendGuidService.cs" />
     <Compile Include="Services\ConfirmationService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />

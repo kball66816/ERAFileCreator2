@@ -16,10 +16,10 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <TextBlock
-                       Text="Patients: "
+                       Text="Patients:"
                 Margin="5,5,0,5"/>
             <TextBlock Text="{Binding Patients.Count}" 
-                       Margin="5,5,5,5"/>
+                       Margin="0,5,5,5"/>
         </StackPanel>
         <ListBox Grid.Row="1" Background="#FF7789D8"
                  BorderBrush="#FF7789D8"
