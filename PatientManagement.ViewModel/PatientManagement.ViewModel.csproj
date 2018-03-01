@@ -58,6 +58,7 @@
     <Compile Include="Service.Messaging\ResumeManualActionMessage.cs" />
     <Compile Include="Services\AdjustmentService.cs" />
     <Compile Include="Services\AddonChargeService.cs" />
+    <Compile Include="Services\ChargeService.cs" />
     <Compile Include="Services\SendGuidService.cs" />
     <Compile Include="Services\ConfirmationService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />

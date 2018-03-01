@@ -410,12 +410,12 @@ namespace PatientManagement.ViewModel {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ReuseChargeForNextPatient {
+        public bool ReuseCharge {
             get {
-                return ((bool)(this["ReuseChargeForNextPatient"]));
+                return ((bool)(this["ReuseCharge"]));
             }
             set {
-                this["ReuseChargeForNextPatient"] = value;
+                this["ReuseCharge"] = value;
             }
         }
     }

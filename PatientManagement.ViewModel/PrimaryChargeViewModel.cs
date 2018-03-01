@@ -15,26 +15,17 @@ namespace PatientManagement.ViewModel
     {
         public PrimaryChargeViewModel()
         {
-            SelectedCharge = new PrimaryCharge();
+            SelectedCharge = ChargeService.GetNewCharge();
             PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
             Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
             Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived, "PatientIdSent");
             AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
-            chargeRepository = new PrimaryChargeRepository();
         }
-
-
-        private readonly IPrimaryChargeRepository chargeRepository;
-
-        private readonly Timer timer = new Timer {Interval = 5000};
 
 
         private Guid currentAssociatedPatientGuid;
 
-        private bool initializationComplete;
-
         private PrimaryCharge selectedCharge;
-
 
         public ICommand AddChargeToPatientCommand { get; set; }
 
@@ -62,11 +53,14 @@ namespace PatientManagement.ViewModel
 
         private void OnPatientIdReceived(SendGuidService sent)
         {
-            if (initializationComplete) ReturnNewCharge();
-            initializationComplete = true;
+            if (StarterService.InitializationComplete)
+            {
+                SelectedCharge = ChargeService.SetNewOrClonedChargeByUserSettings(SelectedCharge);
+                RaisePropertyChanged("SelectedCharge");
+            }
             SelectedCharge.PatientId = sent.Id;
             currentAssociatedPatientGuid = sent.Id;
-            chargeRepository.Add(SelectedCharge);
+            SelectedCharge.AddChargeToRepository();
             SendChargeId();
         }
 
@@ -80,26 +74,26 @@ namespace PatientManagement.ViewModel
         {
             StartTimerForTextConfirmation();
             RaisePropertyChanged("TextConfirmed");
-            ReturnNewCharge();
+            SelectedCharge = ChargeService.SetNewOrClonedChargeByUserSettings(SelectedCharge);
+            RaisePropertyChanged("SelectedCharge");
             SelectedCharge.PatientId = currentAssociatedPatientGuid;
-            chargeRepository.Add(selectedCharge);
+            SelectedCharge.AddChargeToRepository();
             SendChargeId();
-            RaisePropertyChanged("Charges");
         }
 
         private void StartTimerForTextConfirmation()
         {
             var confirm = new ConfirmationService();
 
-            timer.Elapsed += OnTimeElapsed;
-            timer.Start();
+            ChargeService.ChargeDisplayTimer.Elapsed += OnTimeElapsed;
+            ChargeService.ChargeDisplayTimer.Start();
 
             TextConfirmed = confirm.ChargeAddedTextConfirmation();
         }
 
         private void OnTimeElapsed(object source, ElapsedEventArgs e)
         {
-            timer.Stop();
+            ChargeService.ChargeDisplayTimer.Stop();
             TextConfirmed = string.Empty;
             RaisePropertyChanged("TextConfirmed");
         }
@@ -107,14 +101,6 @@ namespace PatientManagement.ViewModel
         private bool CanAddChargeToPatient(object obj)
         {
             return selectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
-        }
-
-        private void ReturnNewCharge()
-        {
-            SelectedCharge = SettingsService.ReuseChargeForNextPatient
-                ? new PrimaryCharge(SelectedCharge)
-                : new PrimaryCharge();
-            RaisePropertyChanged("SelectedCharge");
         }
 
         private void RaisePropertyChanged(string propertyName)
