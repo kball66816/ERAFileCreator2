@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Timers;
 using EFC.BL;
 using PatientManagement.DAL;
@@ -28,7 +24,7 @@ namespace PatientManagement.ViewModel.Services
             return new PrimaryCharge();
         }
 
-        public static PrimaryCharge Clone(PrimaryCharge charge)
+        private static PrimaryCharge Clone(PrimaryCharge charge)
         {
             return new PrimaryCharge(charge);
         }
@@ -40,14 +36,7 @@ namespace PatientManagement.ViewModel.Services
 
         public static PrimaryCharge SetNewOrClonedChargeByUserSettings(PrimaryCharge charge)
         {
-            if (SettingsService.ReuseCharge)
-            {
-                charge.Clone();
-            }
-            else
-            {
-                charge = GetNewCharge();
-            }
+            charge = SettingsService.ReuseCharge ? Clone(charge) : GetNewCharge();
 
             return charge;
         }

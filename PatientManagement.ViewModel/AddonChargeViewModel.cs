@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Common.Common.Services;
 using PatientManagement.Model;
@@ -22,6 +23,13 @@ namespace PatientManagement.ViewModel
         }
 
         public ICommand AddAddonCommand { get; }
+
+        public int Count
+        {
+            get => AddonChargeService.ChargeRepository
+                .GetAllCharges().Count(c => c.PrimaryChargeId == currentChargeGuid);
+        }
+
 
         public AddonCharge SelectedAddonCharge
         {
@@ -56,10 +64,14 @@ namespace PatientManagement.ViewModel
             SelectedAddonCharge.AssociateChargeId(sent.Id);
             currentChargeGuid = sent.Id;
             RaisePropertyChanged("SelectedAddonCharge");
+            RaisePropertyChanged("Count");
         }
 
         private void AddAddon(object obj)
         {
+
+            SelectedAddonCharge.AddToRepository();
+
             if (SettingsService.ReuseSameAddonEnabled)
             {
                 GetNewAddonDependentOnUserPromptPreference();
@@ -73,9 +85,9 @@ namespace PatientManagement.ViewModel
 
             SelectedAddonCharge.PrimaryChargeId = currentChargeGuid;
             SendChargeId();
-            SelectedAddonCharge.AddToRepository();
             RaisePropertyChanged("SelectedAddonCharge");
             RaisePropertyChanged("CheckAmount");
+            RaisePropertyChanged("Count");
         }
 
         private void GetNewAddonDependentOnUserPromptPreference()

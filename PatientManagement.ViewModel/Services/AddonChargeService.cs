@@ -16,7 +16,7 @@ namespace PatientManagement.ViewModel.Services
             ChargeRepository = new AddonChargeRepository();
         }
 
-        private static IAddonChargeRepository ChargeRepository { get; }
+        public static IAddonChargeRepository ChargeRepository { get; }
 
         public static AddonCharge GetNewAddonCharge()
         {

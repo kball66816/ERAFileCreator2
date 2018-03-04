@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Timers;
 using System.Windows.Input;
 using Common.Common.Services;
-using EFC.BL;
-using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 
@@ -60,10 +58,9 @@ namespace PatientManagement.ViewModel
             }
             SelectedCharge.PatientId = sent.Id;
             currentAssociatedPatientGuid = sent.Id;
-            SelectedCharge.AddChargeToRepository();
             SendChargeId();
         }
-
+        
 
         private void SendChargeId()
         {
@@ -72,12 +69,12 @@ namespace PatientManagement.ViewModel
 
         private void AddNewCharge(object obj)
         {
+            SelectedCharge.AddChargeToRepository();
             StartTimerForTextConfirmation();
             RaisePropertyChanged("TextConfirmed");
             SelectedCharge = ChargeService.SetNewOrClonedChargeByUserSettings(SelectedCharge);
             RaisePropertyChanged("SelectedCharge");
             SelectedCharge.PatientId = currentAssociatedPatientGuid;
-            SelectedCharge.AddChargeToRepository();
             SendChargeId();
         }
 
