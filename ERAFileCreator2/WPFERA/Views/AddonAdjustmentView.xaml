@@ -14,8 +14,17 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock x:Name="AddonAdjustmentType" Grid.Row="0" Grid.Column="0"
-                   Text="Adjustment Type" Margin="5,0,0,5" />
+        <StackPanel Orientation="Horizontal">
+            <TextBlock x:Name="AddonAdjustmentType" Grid.Row="0" Grid.Column="0"
+                       Text="Adjustment Type" Margin="5,0,0,5" />
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text=" ("/>
+            <TextBlock Text="{Binding AdjustmentCount}"></TextBlock>
+            <TextBlock Text=")"></TextBlock>
+        </StackPanel>
+        
+
+
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

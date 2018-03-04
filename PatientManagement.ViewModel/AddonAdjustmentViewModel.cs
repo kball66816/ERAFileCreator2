@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Common.Common.Services;
 using PatientManagement.Model;
@@ -19,9 +20,14 @@ namespace PatientManagement.ViewModel
             AddonAdjustment = AdjustmentService.GetNewAdjustment();
             AddonAdjustmentReasonCodes = AddonAdjustment.AdjustmentReasonCodes;
             AddonAdjustmentType = addonAdjustment.AdjustmentTypes;
-            Messenger.Default.Register<SendGuidService>(this, OnAddonIdReceived);
+            Messenger.Default.Register<SendGuidService>(this, OnAddonIdReceived, "AddonChargeIdSent");
             AddAddonChargeAdjustmentCommand = new Command(AddAdjustment, CanAddAddonAdjustment);
 
+        }
+
+        public int AdjustmentCount
+        {
+            get => AdjustmentService.AdjustmentRepository.GetSelectedAdjustments(currentAddonId).Count();
         }
 
         public ICommand AddAddonChargeAdjustmentCommand { get; }
@@ -48,14 +54,15 @@ namespace PatientManagement.ViewModel
             AddonAdjustment = AdjustmentService.GetNewAdjustment();
             AdjustmentService.AssociateChargeId(AddonAdjustment, sent.Id);
             currentAddonId = sent.Id;
-            AdjustmentService.Add(AddonAdjustment);
+            RaisePropertyChanged("AdjustmentCount");
         }
 
         private void AddAdjustment(object obj)
         {
+            AdjustmentService.Add(AddonAdjustment);
             AddonAdjustment = AdjustmentService.GetNewAdjustment();
             AdjustmentService.AssociateChargeId(AddonAdjustment, currentAddonId);
-            AdjustmentService.Add(AddonAdjustment);
+            RaisePropertyChanged("AdjustmentCount");
         }
 
         private bool CanAddAddonAdjustment(object obj)

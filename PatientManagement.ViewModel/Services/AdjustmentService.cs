@@ -16,7 +16,7 @@ namespace PatientManagement.ViewModel.Services
             AdjustmentRepository = new AdjustmentRepository();
         }
 
-        private static readonly IAdjustmentRepository AdjustmentRepository;
+        public static readonly IAdjustmentRepository AdjustmentRepository;
 
         public static Adjustment GetNewAdjustment()
         {
@@ -28,6 +28,7 @@ namespace PatientManagement.ViewModel.Services
             adjustment.ChargeId = chargeId;
         }
 
+        
         public static void Add(Adjustment adjustment)
         {
             AdjustmentRepository.Add(adjustment);
