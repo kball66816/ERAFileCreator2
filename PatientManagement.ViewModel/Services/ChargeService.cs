@@ -11,13 +11,9 @@ namespace PatientManagement.ViewModel.Services
         static ChargeService()
         {
             ChargeRepository = new PrimaryChargeRepository();
-            ChargeDisplayTimer = new Timer { Interval = 5000 };
         }
 
-        private static readonly IPrimaryChargeRepository ChargeRepository;
-
-        public static Timer ChargeDisplayTimer { get; }
-
+        public static readonly IPrimaryChargeRepository ChargeRepository;
 
         public static PrimaryCharge GetNewCharge()
         {

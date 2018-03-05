@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Timers;
+using System.Linq;
 using System.Windows.Input;
 using Common.Common.Services;
 using PatientManagement.Model;
@@ -20,10 +20,17 @@ namespace PatientManagement.ViewModel
             AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
         }
 
+        public int Count
+        {
+            get => ChargeService.ChargeRepository
+                .GetAllCharges().Count(c=>c.PatientId == currentAssociatedPatientGuid);
+        }
+
 
         private Guid currentAssociatedPatientGuid;
 
         private PrimaryCharge selectedCharge;
+
 
         public ICommand AddChargeToPatientCommand { get; set; }
 
@@ -59,6 +66,8 @@ namespace PatientManagement.ViewModel
             SelectedCharge.PatientId = sent.Id;
             currentAssociatedPatientGuid = sent.Id;
             SendChargeId();
+            RaisePropertyChanged("Count");
+
         }
         
 
@@ -70,30 +79,14 @@ namespace PatientManagement.ViewModel
         private void AddNewCharge(object obj)
         {
             SelectedCharge.AddChargeToRepository();
-            StartTimerForTextConfirmation();
-            RaisePropertyChanged("TextConfirmed");
             SelectedCharge = ChargeService.SetNewOrClonedChargeByUserSettings(SelectedCharge);
             RaisePropertyChanged("SelectedCharge");
             SelectedCharge.PatientId = currentAssociatedPatientGuid;
             SendChargeId();
+            RaisePropertyChanged("Count");
         }
 
-        private void StartTimerForTextConfirmation()
-        {
-            var confirm = new ConfirmationService();
 
-            ChargeService.ChargeDisplayTimer.Elapsed += OnTimeElapsed;
-            ChargeService.ChargeDisplayTimer.Start();
-
-            TextConfirmed = confirm.ChargeAddedTextConfirmation();
-        }
-
-        private void OnTimeElapsed(object source, ElapsedEventArgs e)
-        {
-            ChargeService.ChargeDisplayTimer.Stop();
-            TextConfirmed = string.Empty;
-            RaisePropertyChanged("TextConfirmed");
-        }
 
         private bool CanAddChargeToPatient(object obj)
         {
