@@ -15,7 +15,7 @@ namespace EFC.BL
         private static Patient Patient { get; set; }
         private static readonly IPrimaryChargeRepository ChargeRepository = new PrimaryChargeRepository();
         private static readonly IPatientRepository PatientRepository = new PatientRepository();
-        private static readonly PrimaryCharge LastCharge = ChargeRepository.GetAllCharges().LastOrDefault();
+        private static PrimaryCharge LastCharge = new PrimaryCharge();
 
         public static void Parse837Loop(this string loop)
         {
@@ -66,6 +66,7 @@ namespace EFC.BL
                 {
                     Charge.ReferenceId = segments[2];
                 }
+                LastCharge = new PrimaryCharge(Charge);
             }
         }
 
@@ -75,57 +76,58 @@ namespace EFC.BL
             switch (segments.Length)
             {
                 case 13:
-                {
-                    Charge.Modifier.ModifierOne = segments[3];
-                    Charge.Modifier.ModifierTwo = segments[4];
-                    Charge.Modifier.ModifierThree = segments[5];
-                    Charge.Modifier.ModifierFour = segments[6];
+                    {
+                        Charge.Modifier.ModifierOne = segments[3];
+                        Charge.Modifier.ModifierTwo = segments[4];
+                        Charge.Modifier.ModifierThree = segments[5];
+                        Charge.Modifier.ModifierFour = segments[6];
 
-                    decimal.TryParse(segments[7], out var result);
-                    {
-                        Charge.ChargeCost = result;
-                        Charge.PaymentAmount = result;
+                        decimal.TryParse(segments[7], out var result);
+                        {
+                            Charge.ChargeCost = result;
+                            Charge.PaymentAmount = result;
+                        }
+                        break;
                     }
-                    break;
-                }
                 case 12:
-                {
-                    Charge.Modifier.ModifierOne = segments[3];
-                    Charge.Modifier.ModifierTwo = segments[4];
-                    Charge.Modifier.ModifierThree = segments[5];
-                    decimal.TryParse(segments[6], out var result);
                     {
-                        Charge.ChargeCost = result;
-                        Charge.PaymentAmount = result;
+                        Charge.Modifier.ModifierOne = segments[3];
+                        Charge.Modifier.ModifierTwo = segments[4];
+                        Charge.Modifier.ModifierThree = segments[5];
+                        decimal.TryParse(segments[6], out var result);
+                        {
+                            Charge.ChargeCost = result;
+                            Charge.PaymentAmount = result;
+                        }
+                        break;
                     }
-                    break;
-                }
                 case 11:
-                {
-                    Charge.Modifier.ModifierOne = segments[3];
-                    Charge.Modifier.ModifierTwo = segments[4];
-                    decimal.TryParse(segments[5], out var result);
                     {
-                        Charge.ChargeCost = result;
-                        Charge.PaymentAmount = result;
+                        Charge.Modifier.ModifierOne = segments[3];
+                        Charge.Modifier.ModifierTwo = segments[4];
+                        decimal.TryParse(segments[5], out var result);
+                        {
+                            Charge.ChargeCost = result;
+                            Charge.PaymentAmount = result;
+                        }
+                        break;
                     }
-                    break;
-                }
                 case 10:
-                {
-                    Charge.Modifier.ModifierOne = segments[3];
-                    decimal.TryParse(segments[4], out var result);
                     {
-                        Charge.ChargeCost = result;
-                        Charge.PaymentAmount = result;
+                        Charge.Modifier.ModifierOne = segments[3];
+                        decimal.TryParse(segments[4], out var result);
+                        {
+                            Charge.ChargeCost = result;
+                            Charge.PaymentAmount = result;
+                        }
+                        break;
                     }
-                    break;
-                }
             }
         }
 
         private static void CheckIfCurrentChargeShouldBeGroupedWithLastEncounter(string[] segments)
         {
+
             if (segments[1] != LastCharge.BillId)
             {
                 var clone = PatientRepository.GetSelectedPatient(Patient.Id).CopyPatient();

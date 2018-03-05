@@ -69,6 +69,7 @@ namespace PatientManagement.ViewModel
             }
             IsFileUploaded = true;
             Messenger.Default.Send(new ResumeManualActionMessage(IsFileUploaded),"Disable");
+            Messenger.Default.Send(new UpdateCalculations());
         }
 
         private static bool CanResumeManualAction(object obj)
