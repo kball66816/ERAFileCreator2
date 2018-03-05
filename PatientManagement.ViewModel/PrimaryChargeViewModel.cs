@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Common.Common.Services;
+using PatientManagement.Model;
+using PatientManagement.ViewModel.Service.Messaging;
+using PatientManagement.ViewModel.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using Common.Common.Services;
-using PatientManagement.Model;
-using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
@@ -25,7 +26,6 @@ namespace PatientManagement.ViewModel
             get => ChargeService.ChargeRepository
                 .GetAllCharges().Count(c=>c.PatientId == currentAssociatedPatientGuid);
         }
-
 
         private Guid currentAssociatedPatientGuid;
 
@@ -70,7 +70,6 @@ namespace PatientManagement.ViewModel
 
         }
         
-
         private void SendChargeId()
         {
             Messenger.Default.Send(new SendGuidService(SelectedCharge.Id), "ChargeIdSent");
@@ -78,15 +77,14 @@ namespace PatientManagement.ViewModel
 
         private void AddNewCharge(object obj)
         {
-            SelectedCharge.AddChargeToRepository();
+            ChargeService.ChargeRepository.Add(SelectedCharge);
             SelectedCharge = ChargeService.SetNewOrClonedChargeByUserSettings(SelectedCharge);
             RaisePropertyChanged("SelectedCharge");
             SelectedCharge.PatientId = currentAssociatedPatientGuid;
             SendChargeId();
             RaisePropertyChanged("Count");
+            Messenger.Default.Send(new UpdateCalculations());
         }
-
-
 
         private bool CanAddChargeToPatient(object obj)
         {

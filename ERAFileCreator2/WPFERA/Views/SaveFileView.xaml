@@ -17,12 +17,6 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="2"
-                Command="{Binding CalculateCommand}"
-                Content="Calculate Check Amount"
-                TabIndex="60"
-                Margin="5"
-                ToolTip="Displays the most up to date calculation based on current values in fields plus previous amounts" />
         <Button Grid.Column="3"
                 Command="{Binding SaveFileCommand}"
                 Content="Create 835 File"

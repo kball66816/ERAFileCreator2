@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Common.Common.Services;
+using PatientManagement.Model;
+using PatientManagement.ViewModel.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using Common.Common.Services;
-using PatientManagement.Model;
-using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
@@ -59,7 +59,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAdjustment(object obj)
         {
-            AdjustmentService.Add(AddonAdjustment);
+            AdjustmentService.AdjustmentRepository.Add(AddonAdjustment);
             AddonAdjustment = AdjustmentService.GetNewAdjustment();
             AdjustmentService.AssociateChargeId(AddonAdjustment, currentAddonId);
             RaisePropertyChanged("AdjustmentCount");

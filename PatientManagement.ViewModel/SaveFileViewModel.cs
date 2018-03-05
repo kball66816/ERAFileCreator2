@@ -1,9 +1,9 @@
-﻿using System.Windows.Input;
-using Common.Common;
+﻿using Common.Common;
 using Common.Common.Services;
 using EFC.BL;
 using PatientManagement.ViewModel.Service.Messaging;
 using PatientManagement.ViewModel.Services;
+using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
 {
@@ -17,8 +17,6 @@ namespace PatientManagement.ViewModel
         public ICommand SaveFileCommand { get; set; }
 
         public ICommand SaveBatchOfFiles { get; set; }
-
-        public ICommand CalculateCommand { get; set; }
 
         private static void Save(object obj)
         {
@@ -49,23 +47,11 @@ namespace PatientManagement.ViewModel
         {
             SaveFileCommand = new Command(Save, CanSave);
             SaveBatchOfFiles = new Command(Save50Files, CanSave);
-            CalculateCommand = new Command(Calculate, CanCalculate);
-        }
-
-
-        private void Calculate(object obj)
-        {
-            SendCalculateRequest();
         }
 
         private static void SendCalculateRequest()
         {
             Messenger.Default.Send(new UpdateCalculations());
-        }
-
-        private bool CanCalculate(object obj)
-        {
-            return true;
         }
 
         private static bool CanSave(object obj)

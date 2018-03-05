@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using Common.Common.Services;
 using PatientManagement.Model;
+using PatientManagement.ViewModel.Service.Messaging;
 using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
@@ -69,8 +70,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAddon(object obj)
         {
-
-            SelectedAddonCharge.AddToRepository();
+            AddonChargeService.ChargeRepository.Add(SelectedAddonCharge);
 
             if (SettingsService.ReuseSameAddonEnabled)
             {
@@ -82,12 +82,12 @@ namespace PatientManagement.ViewModel
                 SelectedAddonCharge = AddonChargeService.GetNewAddonCharge();
             }
 
-
             SelectedAddonCharge.PrimaryChargeId = currentChargeGuid;
             SendChargeId();
             RaisePropertyChanged("SelectedAddonCharge");
             RaisePropertyChanged("CheckAmount");
             RaisePropertyChanged("Count");
+            Messenger.Default.Send(new UpdateCalculations());
         }
 
         private void GetNewAddonDependentOnUserPromptPreference()
@@ -118,7 +118,8 @@ namespace PatientManagement.ViewModel
 
         private bool CanAddAddon(object obj)
         {
-            return !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode);
+            return !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode)
+            && (SelectedAddonCharge.ChargeCost > 0);
         }
     }
 }

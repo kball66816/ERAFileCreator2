@@ -1,6 +1,4 @@
-﻿
-using System.Timers;
-using EFC.BL;
+﻿using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 
@@ -25,10 +23,6 @@ namespace PatientManagement.ViewModel.Services
             return new PrimaryCharge(charge);
         }
 
-        public static void AddChargeToRepository(this PrimaryCharge charge)
-        {
-            ChargeRepository.Add(charge);
-        }
 
         public static PrimaryCharge SetNewOrClonedChargeByUserSettings(PrimaryCharge charge)
         {

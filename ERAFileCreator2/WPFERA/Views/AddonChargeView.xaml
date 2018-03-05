@@ -72,7 +72,7 @@
                 <TextBlock x:Name="AddonPaidAmountTag"
                            Text="Paid Amount" Margin="5,5,5,0" />
                 <TextBox x:Name="AddonPaidAmountInput"
-                         Text="{Binding SelectedAddonCharge.PaymentAmount, StringFormat=\{0:C\}}"
+                         Text="{Binding SelectedAddonCharge.PaymentAmount, StringFormat=\{0:F2\}}"
                          HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53"
                          PreviewTextInput="AddonPaidAmountInput_PreviewTextInput" />
             </StackPanel>
@@ -80,7 +80,7 @@
                 <TextBlock x:Name="AddonChargesAmountTag"
                            Text="Charge Amount" Margin="5,5,5,0" />
                 <TextBox x:Name="AddonChargesAmountInput"
-                         Text="{Binding SelectedAddonCharge.ChargeCost, StringFormat=\{0:C\}}"
+                         Text="{Binding SelectedAddonCharge.ChargeCost, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
                          HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54"
                          PreviewTextInput="AddonChargesAmountInput_PreviewTextInput" />
             </StackPanel>

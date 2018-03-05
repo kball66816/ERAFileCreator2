@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Input;
-using Common.Common.Services;
+﻿using Common.Common.Services;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
 {
@@ -23,6 +24,12 @@ namespace PatientManagement.ViewModel
             PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
             AddChargeAdjustmentCommand = new Command(AddAdjustmentCommand, CanAddAdjustment);
             Messenger.Default.Register<SendGuidService>(this, OnChargeIdReceived, "ChargeIdSent");
+        }
+
+        public int Count
+        {
+            get => AdjustmentService.AdjustmentRepository.GetAllAdjustments()
+                .Count(a => a.ChargeId == currentChargeGuid);
         }
 
         public Adjustment SelectedAdjustment
@@ -53,14 +60,13 @@ namespace PatientManagement.ViewModel
             initializationComplete = true;
             AdjustmentService.AssociateChargeId(SelectedAdjustment, sent.Id);
             currentChargeGuid = sent.Id;
-            AdjustmentService.Add(SelectedAdjustment);
         }
 
         private void AddAdjustmentCommand(object obj)
         {
+            AdjustmentService.AdjustmentRepository.Add(SelectedAdjustment);
             SelectedAdjustment = AdjustmentService.GetNewAdjustment();
             AdjustmentService.AssociateChargeId(SelectedAdjustment, currentChargeGuid);
-            AdjustmentService.Add(SelectedAdjustment);
         }
 
         private bool CanAddAdjustment(object obj)

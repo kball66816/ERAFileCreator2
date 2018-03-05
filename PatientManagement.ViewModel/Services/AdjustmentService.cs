@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EFC.BL;
+﻿using EFC.BL;
 using PatientManagement.DAL;
 using PatientManagement.Model;
+using System;
 
 namespace PatientManagement.ViewModel.Services
 {
@@ -26,12 +22,6 @@ namespace PatientManagement.ViewModel.Services
         public static void AssociateChargeId(Adjustment adjustment, Guid chargeId)
         {
             adjustment.ChargeId = chargeId;
-        }
-
-        
-        public static void Add(Adjustment adjustment)
-        {
-            AdjustmentRepository.Add(adjustment);
         }
     }
 }
