@@ -1,7 +1,5 @@
-﻿using EFC.BL;
-using PatientManagement.DAL;
+﻿using Common.Common.Services;
 using PatientManagement.Model;
-using System;
 
 namespace PatientManagement.ViewModel.Services
 {
@@ -9,24 +7,51 @@ namespace PatientManagement.ViewModel.Services
     {
         static AddonChargeService()
         {
-            ChargeRepository = new AddonChargeRepository();
+            SettingsService = new SettingsService();
         }
-
-        public static IAddonChargeRepository ChargeRepository { get; }
 
         public static AddonCharge GetNewAddonCharge()
         {
             return new AddonCharge();
         }
 
-        public static AddonCharge Clone(this AddonCharge addonCharge)
+        private static readonly SettingsService SettingsService;
+
+        private static AddonCharge Clone(this AddonCharge addonCharge)
         {
             return new AddonCharge(addonCharge);
         }
 
-        public static void AssociateChargeId(this AddonCharge addon,Guid chargeId)
+        public static void SendAddonMessage(AddonCharge addonCharge)
         {
-            addon.PrimaryChargeId = chargeId;
+            Messenger.Default.Send(addonCharge);
+        }
+
+        public static AddonCharge GetNewAddonSettingsBased(AddonCharge addon)
+        {
+            if (SettingsService.ReuseSameAddonEnabled && SettingsService.PatientPromptEnabled)
+            {
+                var dialogPrompt = new MessageBoxService();
+
+                addon = dialogPrompt.ShowDialog() ?
+                    Clone(addon) : GetNewAddonCharge();
+            }
+
+            else if (SettingsService.ReuseSameAddonEnabled)
+            {
+                addon.Clone();
+            }
+            else
+            {
+                addon = GetNewAddonCharge();
+            }
+
+            return addon;
+        }
+
+        public static void AssociateAdjustmentToCharge(AddonCharge selectedAddonCharge, Adjustment adjustment)
+        {
+            selectedAddonCharge.Adjustments.Add(adjustment);
         }
     }
 }

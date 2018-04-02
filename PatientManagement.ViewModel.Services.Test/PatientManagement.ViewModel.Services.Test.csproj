@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{49D702B5-3B6C-43B1-BE9F-55D32F12B80C}</ProjectGuid>
+    <ProjectGuid>{6DC07EED-36E2-4993-B36C-843CB8D0131F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common.CommonTests</RootNamespace>
-    <AssemblyName>Common.CommonTests</AssemblyName>
+    <RootNamespace>PatientManagement.ViewModel.Services.Test</RootNamespace>
+    <AssemblyName>PatientManagement.ViewModel.Services.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -19,7 +19,6 @@
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,23 +44,28 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DateConversionTest.cs" />
-    <Compile Include="DecimalExtensionsTest.cs" />
-    <Compile Include="NpiValidatiorRuleTest.cs" />
+    <Compile Include="PatientServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ERAFileCreator2\Common.Common\Common.Common.csproj">
-      <Project>{b4e23efb-5228-40c5-9455-904ca873a7e5}</Project>
-      <Name>Common.Common</Name>
+    <ProjectReference Include="..\PatienetManagement.Model\PatientManagement.Model.csproj">
+      <Project>{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}</Project>
+      <Name>PatientManagement.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatientManagement.DAL\PatientManagement.DAL.csproj">
+      <Project>{642F2574-CAEC-4E41-BA46-C3AA96966FBC}</Project>
+      <Name>PatientManagement.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatientManagement.ViewModel\PatientManagement.ViewModel.csproj">
+      <Project>{cf866762-41ec-448b-b713-97948e9b23f9}</Project>
+      <Name>PatientManagement.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

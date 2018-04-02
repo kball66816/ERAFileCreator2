@@ -25,17 +25,16 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <ComboBox x:Name="AdjustmentTypeDropdown"
+                <StackPanel>
+                    <ComboBox x:Name="AdjustmentTypeDropdown"
                           ItemsSource="{Binding PrimaryAdjustmentType}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
@@ -43,7 +42,9 @@
                           SelectedIndex="0"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentTypeDropdown}" Margin="5,5,5,0"
                           TabIndex="44" HorizontalContentAlignment="Stretch" />
-                <ComboBox x:Name="AdjustmentReasonCodeDropdown"
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <ComboBox x:Name="AdjustmentReasonCodeDropdown"
                           ItemsSource="{Binding PrimaryAdjustmentReasonCodes}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
@@ -51,25 +52,31 @@
                           ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}"
                           SelectedIndex="34" Margin="5,5,5,0" TabIndex="45" Grid.Column="1"
                           HorizontalContentAlignment="Stretch" />
-                <TextBox x:Name="PrimaryAdjustmentAmountInput"
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBox x:Name="PrimaryAdjustmentAmountInput"
                          Text="{Binding SelectedAdjustment.AdjustmentAmount, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
                          Margin="5,5,5,0" TabIndex="46" Grid.Column="2" HorizontalContentAlignment="Stretch"
                          PreviewTextInput="PrimaryAdjustmentAmountInput_PreviewTextInput">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <DockPanel>
-                                <Border BorderBrush="Red" BorderThickness="2">
-                                    <AdornedElementPlaceholder />
-                                </Border>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                </TextBox>
-            </Grid>
-            <Button x:Name="AddAdjustmentButton" Grid.Column="1"
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="2">
+                                        <AdornedElementPlaceholder />
+                                    </Border>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Grid.Column="3">
+                    <Button x:Name="AddAdjustmentButton" Grid.Column="1"
                     Command="{Binding AddChargeAdjustmentCommand}"
                     Content="Add Adjustment" Margin="5,5,5,0" HorizontalContentAlignment="Center" TabIndex="47"
                     VerticalContentAlignment="Center" />
+                </StackPanel>
+            </Grid>
+            
         </Grid>
     </Grid>
 </UserControl>

@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:EraFileCreator.Views"
-             xmlns:common="clr-namespace:Common.Common;assembly=Common.Common"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
@@ -17,95 +15,154 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel Grid.ColumnSpan="4" Orientation="Vertical">
-            <TextBlock Text="Patient" FontSize="16" TextDecorations="Underline" />
+            <TextBlock Text="Patient" FontSize="16" TextDecorations="Underline" Margin="5" />
             <CheckBox x:Name="IncludeSubscriberInput"
                       IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
-                      Content="Include Subscriber?" TabIndex="20" />
-
-
+                      Content="Include Subscriber?" TabIndex="20" Margin="5" />
         </StackPanel>
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical">
-                <TextBlock x:Name="PatientFirstNameTag"
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock x:Name="PatientFirstNameTag"
                            Text="Patient's First Name*" Margin="5,0,0,0" />
-                <TextBox x:Name="PatientFirstNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5"
+                    <TextBox x:Name="PatientFirstNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5"
                          TabIndex="21">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <DockPanel>
-                                <Border BorderBrush="Red" BorderThickness="2">
-                                    <AdornedElementPlaceholder />
-                                </Border>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                    <Binding Path="SelectedPatient.FirstName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                        <Binding.ValidationRules>
-                            <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox>
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="2">
+                                        <AdornedElementPlaceholder />
+                                    </Border>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                        <Binding Path="SelectedPatient.FirstName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validators:StringValidationRule ValidationStep="RawProposedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock x:Name="PatientLastNameTag"
+                           Text="Patients's Last Name*" Margin="5,0,0,0" />
+                    <TextBox x:Name="PatientLastNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5"
+                         TabIndex="22">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="2">
+                                        <AdornedElementPlaceholder />
+                                    </Border>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                        <Binding Path="SelectedPatient.LastName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validators:StringValidationRule ValidationStep="RawProposedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox>
 
-                <TextBlock x:Name="SubscriberFirstNameTag"
+                 
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Patient Member ID" Margin="5,0,0,0"/>
+                    <TextBox Text="{Binding SelectedPatient.MemberId}"  Margin="5,0,0,5" TabIndex="23"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Visibility="{Binding IsChecked, Converter={StaticResource VisibilityDisabled}, ElementName=IncludeSubscriberInput}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Column="0">
+                    <TextBlock x:Name="SubscriberFirstNameTag"
                            Margin="5,0,0,0"
                            Text="Subscriber's First Name*" />
-                <TextBox x:Name="SubscriberFirstNameInput"
+                    <TextBox x:Name="SubscriberFirstNameInput"
                          Text="{Binding SelectedPatient.Subscriber.FirstName}"
                          IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
                          HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="23" />
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Column="1">
-                <TextBlock x:Name="PatientLastNameTag"
-                           Text="Patients's Last Name*" Margin="5,0,0,0" />
-                <TextBox x:Name="PatientLastNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,5"
-                         TabIndex="22">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <DockPanel>
-                                <Border BorderBrush="Red" BorderThickness="2">
-                                    <AdornedElementPlaceholder />
-                                </Border>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                    <Binding Path="SelectedPatient.LastName" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                        <Binding.ValidationRules>
-                            <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox>
-                <TextBlock x:Name="SubscriberLastNameTag"
+                 
+               
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock x:Name="SubscriberLastNameTag"
                            Text="Subscriber's Last Name*" Margin="5,0,0,0" />
-                <TextBox x:Name="SubscriberLastNameInput"
+                    <TextBox x:Name="SubscriberLastNameInput"
                          Text="{Binding SelectedPatient.Subscriber.LastName}"
                          IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
                          HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="24" />
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Column="2">
-                <TextBlock Text="PlaceHolder For Subscriber" Margin="5,0,0,0" Visibility="Hidden" />
-                <TextBox Text="PlaceHolder For Subscriber" Margin="5,0,0,5" Visibility="Hidden" />
-                <TextBlock x:Name="SubscriberMemberIdTag"
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock x:Name="SubscriberMemberIdTag"
                            Text="Subscriber's Member ID*" Margin="5,0,0,0" />
-                <TextBox x:Name="SubscriberMemberIdnput"
+                    <TextBox x:Name="SubscriberMemberIdnput"
                          Text="{Binding SelectedPatient.Subscriber.MemberId}"
                          IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
                          HorizontalContentAlignment="Stretch" Margin="5,0,0,5" TabIndex="25" />
-            </StackPanel>
-            <StackPanel Grid.Column="4">
-                <TextBlock Text="Place Holder" Margin="5,0,0,0" Visibility="Hidden" />
-                <TextBox Margin="5,0,0,5" Visibility="Hidden" />
-                <TextBlock Text="PlaceHolder" Margin="0,0,5,0" Visibility="Hidden" />
-                <Button x:Name="AddPatient"
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Column="0">
+                    <TextBlock x:Name="RenderingProviderFirstNameTag"
+                           Text="Provider's First Name*" Margin="5,5,5,0" />
+                    <TextBox x:Name="RenderingProviderFirstNameInput"
+                         Text="{Binding SelectedPatient.RenderingProvider.FirstName}"
+                         Margin="5,0" TabIndex="27" />
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock x:Name="RenderingProviderLastNameTag"
+                           Text="Provider's Last Name*" Margin="5,5,5,0" />
+                    <TextBox x:Name="RenderingProviderLastNameInput"
+                         Text="{Binding SelectedPatient.RenderingProvider.LastName}" Margin="5,0" TabIndex="28" />
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock x:Name="RenderingProviderNpiTag"
+                           Text="Provider's NPI*" Margin="5,5,5,0" />
+                    <TextBox x:Name="RenderingProviderNpiInput"
+                         MaxLength="10" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="29"
+                         PreviewTextInput="RenderingProviderNpiInput_PreviewTextInput">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="1">
+                                        <AdornedElementPlaceholder />
+                                    </Border>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                        <Binding Path="SelectedPatient.RenderingProvider.Npi" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validators:NpivalidationRule ValidationStep="RawProposedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Grid.Column="3">
+                    <Button x:Name="AddPatient"
                         Content="Add Additional Patient"
-                        Command="{Binding AddPatientCommand}" Margin="5,0,0,0" TabIndex="26" />
-            </StackPanel>
+                        Command="{Binding AddPatientCommand}" Margin="5,20,5,5" TabIndex="30"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

@@ -2,10 +2,8 @@
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Service.Messaging;
 using PatientManagement.ViewModel.Services;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
@@ -14,34 +12,35 @@ namespace PatientManagement.ViewModel
     {
         public PrimaryChargeViewModel()
         {
-            SelectedCharge = ChargeService.GetNewCharge();
-            PlacesOfService = selectedCharge.PlaceOfService.PlacesOfService;
-            Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
-            Messenger.Default.Register<SendGuidService>(this, OnPatientIdReceived, "PatientIdSent");
-            AddChargeToPatientCommand = new Command(AddNewCharge, CanAddChargeToPatient);
+            this.SelectedCharge = ChargeService.GetNewCharge();
+            this.PlacesOfService = this._selectedCharge.PlaceOfService.PlacesOfService;
+            Messenger.Default.Register<Adjustment>(this, this.OnAdjustmentReceived,"PrimaryAdjustment");
+            Messenger.Default.Register<AddonCharge>(this, this.OnAddonReceived);
+            this.AddChargeToPatientCommand = new Command(this.AddNewCharge, this.CanAddChargeToPatient);
         }
 
-        public int Count
+        private void OnAddonReceived(AddonCharge addon)
         {
-            get => ChargeService.ChargeRepository
-                .GetAllCharges().Count(c=>c.PatientId == currentAssociatedPatientGuid);
+            ChargeService.AssociateAddonWithCharge(this.SelectedCharge, addon);
         }
 
-        private Guid currentAssociatedPatientGuid;
+        private void OnAdjustmentReceived(Adjustment adjustment)
+        {
+            ChargeService.AssociateAdjustmentWithCharge(this.SelectedCharge, adjustment);
+        }
 
-        private PrimaryCharge selectedCharge;
-
+        private PrimaryCharge _selectedCharge;
 
         public ICommand AddChargeToPatientCommand { get; set; }
 
         public PrimaryCharge SelectedCharge
         {
-            get => selectedCharge;
+            get => this._selectedCharge;
             set
             {
-                if (value == selectedCharge) return;
-                selectedCharge = value;
-                RaisePropertyChanged("SelectedCharge");
+                if (value == this._selectedCharge) return;
+                this._selectedCharge = value;
+                this.RaisePropertyChanged("SelectedCharge");
             }
         }
 
@@ -50,50 +49,23 @@ namespace PatientManagement.ViewModel
         public string TextConfirmed { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnInitializationCompleteMessage(InitializationCompleteMessage obj)
-        {
-            SendChargeId();
-        }
-
-        private void OnPatientIdReceived(SendGuidService sent)
-        {
-            if (StarterService.InitializationComplete)
-            {
-                SelectedCharge = ChargeService.SetNewOrClonedChargeByUserSettings(SelectedCharge);
-                RaisePropertyChanged("SelectedCharge");
-            }
-            SelectedCharge.PatientId = sent.Id;
-            currentAssociatedPatientGuid = sent.Id;
-            SendChargeId();
-            RaisePropertyChanged("Count");
-
-        }
-        
-        private void SendChargeId()
-        {
-            Messenger.Default.Send(new SendGuidService(SelectedCharge.Id), "ChargeIdSent");
-        }
-
         private void AddNewCharge(object obj)
         {
-            ChargeService.ChargeRepository.Add(SelectedCharge);
-            SelectedCharge = ChargeService.SetNewOrClonedChargeByUserSettings(SelectedCharge);
-            RaisePropertyChanged("SelectedCharge");
-            SelectedCharge.PatientId = currentAssociatedPatientGuid;
-            SendChargeId();
-            RaisePropertyChanged("Count");
+            Messenger.Default.Send(this.SelectedCharge);
+            this.SelectedCharge = ChargeService.SetNewOrClonedChargeByUserSettings(this.SelectedCharge);
+            this.RaisePropertyChanged("SelectedCharge");
+            this.RaisePropertyChanged("Count");
             Messenger.Default.Send(new UpdateCalculations());
         }
 
         private bool CanAddChargeToPatient(object obj)
         {
-            return selectedCharge.ChargeCost > 0 && !string.IsNullOrEmpty(SelectedCharge.ProcedureCode);
+            return this.SelectedCharge.ChargeCost != 0 && !string.IsNullOrEmpty(this.SelectedCharge.ProcedureCode);
         }
 
         private void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

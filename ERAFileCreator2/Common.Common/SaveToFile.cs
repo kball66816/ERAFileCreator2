@@ -11,7 +11,8 @@ namespace Common.Common
             using (var saveFile = new SaveFileDialog())
             {
                 SetTextFileFiltersForSaving(saveFile);
-                if (saveFile.ShowDialog() == DialogResult.OK) File.WriteAllText(saveFile.FileName, file);
+                if (saveFile.ShowDialog() == DialogResult.OK)
+                    File.WriteAllText(saveFile.FileName, file);
             }
         }
 

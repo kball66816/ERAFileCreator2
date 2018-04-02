@@ -1,4 +1,6 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
+using EraFileCreator.Utility;
 
 namespace EraFileCreator.Views
 {
@@ -10,6 +12,11 @@ namespace EraFileCreator.Views
         public PatientView()
         {
             InitializeComponent();
+        }
+
+        private void RenderingProviderNpiInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            InputRestrictions.RestrictTextToIntegerOnly(e);
         }
     }
 }

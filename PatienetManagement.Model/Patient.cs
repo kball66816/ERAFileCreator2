@@ -112,6 +112,7 @@ namespace PatientManagement.Model
             var clone = (Patient) MemberwiseClone();
             clone.Id = Guid.NewGuid();
             clone.Charges = new ObservableCollection<PrimaryCharge>();
+            clone.RenderingProvider = new Provider(RenderingProvider);
             return clone;
         }
     }

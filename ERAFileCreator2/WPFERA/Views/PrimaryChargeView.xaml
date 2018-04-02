@@ -21,24 +21,97 @@
             <TextBlock Text=")" Margin="0,3"/>
         </StackPanel>
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" Grid.Column="0">
-                <StackPanel>
-                    <TextBlock x:Name="DateOfServiceTag"
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Column="0">
+                    <StackPanel>
+                        <TextBlock x:Name="DateOfServiceTag"
                                Margin="5,5,5,0"
                                VerticalAlignment="Top"
                                Text="Date Of Service*" />
-                    <DatePicker x:Name="DateofServiceInput"
+                        <DatePicker x:Name="DateofServiceInput"
                                 Margin="5,0,5,5"
                                 SelectedDate="{Binding SelectedCharge.DateOfService}" TabIndex="31" MinWidth="102" />
+                    </StackPanel>
                 </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock x:Name="PlaceofServiceTag"
+                               Text="Place Of Service*" Margin="5,5,5,0" />
+                        <ComboBox x:Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}"
+                              DisplayMemberPath="Key"
+                              SelectedValuePath="Key"
+                              SelectedValue="{Binding SelectedCharge.PlaceOfService.ServiceLocation}"
+                              SelectedIndex="9"
+                              ToolTip="{Binding SelectedItem.Value, ElementName=PlaceOfServiceComboBox, Mode=OneWay}"
+                              Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="32" />
+
+                    </StackPanel>
+                    
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="2">
+                    <StackPanel>
+                        <TextBlock x:Name="BillIdTag"
+                               Text="Bill ID*" Margin="5,5,5,0" />
+                        <TextBox x:Name="BillIdInput" Margin="5,0,5,5" TabIndex="33">
+                            <Validation.ErrorTemplate>
+                                <ControlTemplate>
+                                    <DockPanel>
+                                        <Border BorderBrush="Red" BorderThickness="2">
+                                            <AdornedElementPlaceholder />
+                                        </Border>
+                                    </DockPanel>
+                                </ControlTemplate>
+                            </Validation.ErrorTemplate>
+                            <Binding Path="SelectedCharge.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <validators:StringValidationRule ValidationStep="RawProposedValue" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox>
+                    </StackPanel>
+                   
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="3">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock x:Name="PatientCopayTag"
+                               Text="Copay*" Margin="5,5,5,0" />
+                        <TextBox x:Name="PatientCopayInput"
+                             Text="{Binding SelectedCharge.Copay, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
+                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34"
+                             PreviewTextInput="PatientCopayInput_PreviewTextInput">
+                            <Validation.ErrorTemplate>
+                                <ControlTemplate>
+                                    <DockPanel>
+                                        <Border BorderBrush="Red" BorderThickness="2">
+                                            <AdornedElementPlaceholder />
+                                        </Border>
+                                    </DockPanel>
+                                </ControlTemplate>
+                            </Validation.ErrorTemplate>
+                        </TextBox>
+                    </StackPanel>
+
+
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical">
                     <TextBlock x:Name="PrimaryProcedureCodeTag"
                                Text="Procedure Code*" Margin="5,0,0,0" />
@@ -60,70 +133,35 @@
                         </Binding>
                     </TextBox>
                 </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Column="1">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock x:Name="PlaceofServiceTag"
-                               Text="Place Of Service*" Margin="5,5,5,0" />
-                    <ComboBox x:Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}"
-                              DisplayMemberPath="Key"
-                              SelectedValuePath="Key"
-                              SelectedValue="{Binding SelectedCharge.PlaceOfService.ServiceLocation}"
-                              SelectedIndex="9"
-                              ToolTip="{Binding SelectedItem.Value, ElementName=PlaceOfServiceComboBox, Mode=OneWay}"
-                              Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="32" />
-
-                </StackPanel>
-                <TextBlock x:Name="PrimaryModifiersTag"
+                <StackPanel Grid.Column="1">
+                    <TextBlock x:Name="PrimaryModifiersTag"
                            Text="Modifiers" Margin="5,0,5,0" />
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="PrimaryModifierOneInput"
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="PrimaryModifierOneInput"
                              Text="{Binding SelectedCharge.Modifier.ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              MaxLength="2" Margin="5,0" MinWidth="20" TabIndex="36" />
-                    <TextBox x:Name="PrimaryModifierTwoInput"
+                        <TextBox x:Name="PrimaryModifierTwoInput"
                              Text="{Binding SelectedCharge.Modifier.ModifierTwo}"
                              MaxLength="2" TabIndex="37" MinWidth="20" Grid.Column="1" Margin="5,0" />
-                    <TextBox x:Name="PrimaryModifierThreeInput"
+                        <TextBox x:Name="PrimaryModifierThreeInput"
                              Text="{Binding SelectedCharge.Modifier.ModifierThree}"
                              MaxLength="2" TabIndex="38" MinWidth="20" Grid.Column="2" Margin="5,0" />
-                    <TextBox x:Name="PrimaryModifierFourInput"
+                        <TextBox x:Name="PrimaryModifierFourInput"
                              Text="{Binding SelectedCharge.Modifier.ModifierFour}"
                              MaxLength="2" TabIndex="39" MinWidth="20" Grid.Column="3" Margin="5,0" />
-                </Grid>
-
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Column="2">
-                <StackPanel>
-                    <TextBlock x:Name="BillIdTag"
-                               Text="Bill ID*" Margin="5,5,5,0" />
-                    <TextBox x:Name="BillIdInput" Margin="5,0,5,5" TabIndex="33">
-                        <Validation.ErrorTemplate>
-                            <ControlTemplate>
-                                <DockPanel>
-                                    <Border BorderBrush="Red" BorderThickness="2">
-                                        <AdornedElementPlaceholder />
-                                    </Border>
-                                </DockPanel>
-                            </ControlTemplate>
-                        </Validation.ErrorTemplate>
-                        <Binding Path="SelectedCharge.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox>
+                    </Grid>
                 </StackPanel>
-                <StackPanel Orientation="Vertical">
+                <StackPanel Grid.Column="2"  Orientation="Vertical">
                     <TextBlock x:Name="PrimaryPaidAmountTag"
-                               Text="Paid Amount*" Margin="5,5,5,0" />
+                               Text="Paid Amount*" Margin="5,0,5,0" />
                     <TextBox x:Name="PrimaryPaidAmountInput"
-                             Text="{Binding SelectedCharge.PaymentAmount, StringFormat=\{0:F2\}}" Margin="5,0"
+                             Text="{Binding SelectedCharge.PaymentAmount}" Margin="5,0"
                              TabIndex="40" PreviewTextInput="PrimaryPaidAmountInput_PreviewTextInput">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -136,31 +174,11 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
                 </StackPanel>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Column="3">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock x:Name="PatientCopayTag"
-                               Text="Copay*" Margin="5,5,5,0" />
-                    <TextBox x:Name="PatientCopayInput"
-                             Text="{Binding SelectedCharge.Copay, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
-                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34"
-                             PreviewTextInput="PatientCopayInput_PreviewTextInput">
-                        <Validation.ErrorTemplate>
-                            <ControlTemplate>
-                                <DockPanel>
-                                    <Border BorderBrush="Red" BorderThickness="2">
-                                        <AdornedElementPlaceholder />
-                                    </Border>
-                                </DockPanel>
-                            </ControlTemplate>
-                        </Validation.ErrorTemplate>
-                    </TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Vertical">
+                <StackPanel Grid.Column="3" Orientation="Vertical">
                     <TextBlock x:Name="PrimaryChargesAmountTag"
-                               Text="Charge Amount" Margin="5,5,5,0" />
+                               Text="Charge Amount" Margin="5,0,5,0" />
                     <TextBox x:Name="PrimaryChargesAmountInput"
-                             Text="{Binding SelectedCharge.ChargeCost, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding SelectedCharge.ChargeCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Margin="5,0" TabIndex="41" PreviewTextInput="PrimaryChargesAmountInput_PreviewTextInput">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -173,32 +191,22 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
                 </StackPanel>
-
-            </StackPanel>
-
-            <StackPanel Grid.Column="4">
-                <StackPanel>
-                    <StackPanel Orientation="Vertical" Margin="0">
-                        <TextBlock Text="{Binding TextConfirmed}" Margin="5,5,5,0" />
-                        <TextBox Margin="5,0,5,5" Visibility="Hidden" />
-                    </StackPanel>
+                <StackPanel Grid.Column="4">
                     <StackPanel Orientation="Vertical">
                         <StackPanel.DataContext>
                             <viewModel:PreferenceViewModel />
                         </StackPanel.DataContext>
                         <CheckBox Content="Reuse Code"
                                   IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
-                                  Command="{Binding SavePreferenceCommand}" Margin="5,5,5,0" TabIndex="42" />
+                                  Command="{Binding SavePreferenceCommand}" Margin="5,0,5,0" TabIndex="42" />
                     </StackPanel>
-                </StackPanel>
-                <StackPanel>
                     <Button
                         x:Name="AddChargeToPatient"
                         Command="{Binding AddChargeToPatientCommand}"
-                        Content="Add Charge" Margin="5,0" TabIndex="43" VerticalContentAlignment="Center" />
+                        Content="Add Charge" Margin="5,0,0,0" TabIndex="43" VerticalContentAlignment="Center" />
 
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

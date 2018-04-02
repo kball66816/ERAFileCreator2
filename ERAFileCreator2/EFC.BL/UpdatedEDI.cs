@@ -9,44 +9,28 @@ namespace EFC.BL
 {
     public class UpdatedEdi
     {
-        private readonly Provider billingProvider;
+        private readonly Provider _billingProvider;
 
-        private readonly InsuranceCompany insurance;
+        private readonly InsuranceCompany _insurance;
 
-        private readonly List<Patient> patients;
+        private readonly List<Patient> _patients;
 
-        private readonly IAddonChargeRepository addonChargeRepository;
-
-        private readonly IAdjustmentRepository adjustmentRepository;
-
-        private readonly IPrimaryChargeRepository chargeRepository;
-
-        private int segmentCount = 6;
+        private int _segmentCount = 6;
 
         public UpdatedEdi()
         {
             IInsurance insuranceCompany = new InsuranceRepository();
-            insurance = insuranceCompany.GetInsurance();
-            chargeRepository = new PrimaryChargeRepository();
-
-            addonChargeRepository = new AddonChargeRepository();
-
-            adjustmentRepository = new AdjustmentRepository();
+            this._insurance = insuranceCompany.GetInsurance();
             IPatientRepository patientList = new PatientRepository();
-            patients = patientList.GetAllPatients()
-                .Where(p => !string.IsNullOrEmpty(p.FirstName)
-                            || !string.IsNullOrEmpty(p.LastName)).ToList();
+            this._patients = patientList.GetAllPatients().ToList();
             IProvider provider = new BillingProviderRepository();
-            billingProvider = provider.GetBillingProvider();
-
-
+            this._billingProvider = provider.GetBillingProvider();
         }
 
 
         public string Create835File()
         {
             var edi = new StringBuilder();
-
             var isa = new Isa();
             edi.Append(isa.BuildIsa());
 
@@ -56,117 +40,114 @@ namespace EFC.BL
             var st = new St();
 
             edi.Append(st.BuildSt());
-            segmentCount++;
+            this._segmentCount++;
 
-            var bpr = new Bpr(insurance);
+            var bpr = new Bpr(this._insurance);
 
             edi.Append(bpr.BuildBpr());
-            segmentCount++;
+            this._segmentCount++;
 
-            var trn = new Trn(insurance);
+            var trn = new Trn(this._insurance);
 
             edi.Append(trn.BuildTrn());
-            segmentCount++;
+            this._segmentCount++;
 
             var dtm = new Dtm();
             edi.Append(dtm.BuildDtm());
-            segmentCount++;
+            this._segmentCount++;
 
-            var insuranceN1 = new N1(insurance);
+            var insuranceN1 = new N1(this._insurance);
 
             edi.Append(insuranceN1.BuildN1());
-            segmentCount++;
+            this._segmentCount++;
 
-            var insuranceN3 = new N3(insurance);
+            var insuranceN3 = new N3(this._insurance);
             edi.Append(insuranceN3.BuildN3());
-            segmentCount++;
+            this._segmentCount++;
 
-            var insuranceN4 = new N4(insurance);
+            var insuranceN4 = new N4(this._insurance);
             edi.Append(insuranceN4.BuildN4());
-            segmentCount++;
+            this._segmentCount++;
 
-            var insuranceRef = new Ref(insurance);
+            var insuranceRef = new Ref(this._insurance);
             edi.Append(insuranceRef.BuildRef());
-            segmentCount++;
+            this._segmentCount++;
 
             var per = new Per();
             edi.Append(per.BuildPer());
-            segmentCount++;
+            this._segmentCount++;
 
-            var billingProviderN1 = new N1(billingProvider);
+            var billingProviderN1 = new N1(this._billingProvider);
             edi.Append(billingProviderN1.BuildN1());
-            segmentCount++;
+            this._segmentCount++;
 
-            var billingProviderN3 = new N3(billingProvider);
+            var billingProviderN3 = new N3(this._billingProvider);
             edi.Append(billingProviderN3.BuildN3());
-            segmentCount++;
+            this._segmentCount++;
 
-            var billingProviderN4 = new N4(billingProvider);
+            var billingProviderN4 = new N4(this._billingProvider);
             edi.Append(billingProviderN4.BuildN4());
-            segmentCount++;
+            this._segmentCount++;
 
-            if (billingProvider.IsAlsoRendering)
+            if (!this._billingProvider.IsIndividual)
             {
-                var billingProviderRef = new Ref(billingProvider, billingProvider.IsAlsoRendering);
+                var billingProviderRef = new Ref(this._billingProvider, this._billingProvider.IsIndividual);
                 edi.Append(billingProviderRef.BuildRef());
             }
 
             else
             {
-                var billingProviderRef = new Ref(billingProvider);
+                var billingProviderRef = new Ref(this._billingProvider);
                 edi.Append(billingProviderRef.BuildRef());
             }
 
-            segmentCount++;
+            this._segmentCount++;
 
             var lx = new Lx();
             edi.Append(lx.BuildLx());
-            segmentCount++;
+            this._segmentCount++;
 
-            foreach (var patient in patients)
+            foreach (var patient in this._patients)
             {
-                var encounters = chargeRepository.GetSelectedCharges(patient.Id).ToList();
-                if (encounters.Count == 0) continue;
-                var clp = new Clp(encounters);
+                var clp = new Clp(patient.Charges);
                 edi.Append(clp.BuildClp());
-                segmentCount++;
+                this._segmentCount++;
 
                 var patientNm1 = new Nm1(patient);
                 edi.Append(patientNm1.BuildNm1());
-                segmentCount++;
+                this._segmentCount++;
 
                 if (patient.IncludeSubscriber)
                 {
                     var subscriberNm1 = new Nm1(patient.Subscriber);
                     edi.Append(subscriberNm1.BuildNm1());
-                    segmentCount++;
+                    this._segmentCount++;
                 }
 
                 var renderingNm1 = new Nm1(patient.RenderingProvider);
                 edi.Append(renderingNm1.BuildNm1());
-                segmentCount++;
+                this._segmentCount++;
 
-                var startDtm = new Dtm(patient,
-                    chargeRepository.GetAllCharges().FirstOrDefault(c => c.PatientId == patient.Id));
+                var startDtm = new Dtm(patient);
                 edi.Append(startDtm.BuildDtm());
-                segmentCount++;
+                this._segmentCount++;
 
                 var chargeCount = 0;
 
-                foreach (var charge in encounters)
+                foreach (var charge in patient.Charges)
                 {
                     chargeCount++;
                     var svc = new Svc(charge);
                     edi.Append(svc.BuildSvc());
-                    segmentCount++;
+                    this._segmentCount++;
 
                     var dateOfServiceDtm = new Dtm(charge);
                     edi.Append(dateOfServiceDtm.BuildDtm());
-                    segmentCount++;
+                    this._segmentCount++;
 
                     var copayCas = new Cas(charge);
 
-                    var chargeAdjustments = adjustmentRepository.GetSelectedAdjustments(charge.Id);
+                    var chargeAdjustments = charge.Adjustments;
 
                     if (chargeAdjustments != null)
                     {
@@ -174,7 +155,7 @@ namespace EFC.BL
                         {
                             var cas = new Cas(adjustment);
                             edi.Append(cas.BuildCas());
-                            segmentCount++;
+                            this._segmentCount++;
                         }
 
                         edi.Append(copayCas.BuildCas());
@@ -184,39 +165,39 @@ namespace EFC.BL
                         edi.Append(copayCas.BuildCas());
                     }
 
-                    segmentCount++;
+                    this._segmentCount++;
 
                     var chargeRef = new Ref(charge, chargeCount);
                     edi.Append(chargeRef.BuildRef());
-                    segmentCount++;
+                    this._segmentCount++;
 
                     var amt = new Amt(charge);
                     edi.Append(amt.BuildAmt());
-                    segmentCount++;
+                    this._segmentCount++;
 
-                    var addons = addonChargeRepository.GetSelectedAddonCharges(charge.Id);
+                    var addons = charge.AddonCharges;
                     foreach (var addonCharge in addons)
                     {
                         var addonsvc = new Svc(addonCharge);
                         edi.Append(addonsvc.BuildSvc());
-                        segmentCount++;
+                        this._segmentCount++;
 
-                        var addonAdjustments = adjustmentRepository.GetSelectedAdjustments(addonCharge.Id);
+                        var addonAdjustments = addonCharge.Adjustments;
                         foreach (var adjustment in addonAdjustments)
                         {
                             var cas = new Cas(adjustment);
                             edi.Append(cas.BuildCas());
-                            segmentCount++;
+                            this._segmentCount++;
 
                             var addonAmt = new Amt(addonCharge);
                             edi.Append(addonAmt.BuildAmt());
-                            segmentCount++;
+                            this._segmentCount++;
                         }
                     }
                 }
             }
 
-            var se = new Se(segmentCount);
+            var se = new Se(this._segmentCount);
             edi.Append(se.BuildSe());
 
 

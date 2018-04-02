@@ -12,9 +12,12 @@ namespace EraFileCreator
     {
         public MainWindow()
         {
-            InitializeComponent();
-            Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
-                new Action(() => { Messenger.Default.Send(new InitializationCompleteMessage()); }));
+            this.InitializeComponent();
+            this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                new Action(() =>
+                {
+                    Messenger.Default.Send(new InitializationCompleteMessage(),"Initialization Complete");
+                }));
         }
     }
 }

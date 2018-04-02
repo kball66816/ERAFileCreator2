@@ -12,7 +12,7 @@ namespace Edi835._835Segments
             ReferenceIdentification = "1440054";
         }
 
-        public Ref(Provider billingProvider, bool b)
+        public Ref(Provider billingProvider, bool isIndividual)
         {
             SegmentIdentifier = "REF";
             ReferenceIdQualifier = "TJ";

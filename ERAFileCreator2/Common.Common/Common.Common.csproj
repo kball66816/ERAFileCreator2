@@ -48,7 +48,6 @@
     <Compile Include="Converters\NotConverter.cs" />
     <Compile Include="Services\InitializationCompleteMessage.cs" />
     <Compile Include="Services\Messenger.cs" />
-    <Compile Include="UploadFile.cs" />
     <Compile Include="Validators\NpivalidationRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveToFile.cs" />

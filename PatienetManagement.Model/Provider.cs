@@ -9,37 +9,40 @@ namespace PatientManagement.Model
     /// </summary>
     public class Provider : IPerson, INotifyPropertyChanged
     {
-        private string businessName;
+        private string _businessName;
 
-        private string firstName;
+        private string _firstName;
 
-        private string fullName;
+        private string _fullName;
 
-        private string lastName;
+        private string _lastName;
 
-        private string npi;
+        private string _npi;
 
         public Provider(Provider provider)
         {
-            Address = provider.Address;
-            FirstName = provider.FirstName;
-            LastName = provider.LastName;
-            Npi = provider.Npi;
-            MiddleInitial = provider.MiddleInitial;
+            this.Address = provider.Address;
+            this.FirstName = provider.FirstName;
+            this.LastName = provider.LastName;
+            this.Npi = provider.Npi;
+            this.MiddleInitial = provider.MiddleInitial;
         }
 
         public Provider()
         {
-            Address = new Address();
+            this.Address = new Address();
         }
 
         public string BusinessName
         {
-            get => businessName;
+            get
+            {
+                return this.IsIndividual ? this.FullName : this._businessName;
+            }
             set
             {
-                businessName = value;
-                RaisePropertyChanged("BusinessName");
+                this._businessName = value;
+                this.RaisePropertyChanged("BusinessName");
             }
         }
 
@@ -47,35 +50,33 @@ namespace PatientManagement.Model
         {
             get
             {
-                var fullName = FirstName;
+                var fullName = this.FirstName;
 
-                if (!string.IsNullOrEmpty(LastName)) fullName = fullName += " " + LastName;
+                if (!string.IsNullOrEmpty(this.LastName)) fullName += " " + this.LastName;
                 return fullName;
             }
 
             set
             {
-                if (value != fullName)
+                if (value != this._fullName)
                 {
-                    fullName = value;
-                    RaisePropertyChanged("FullName");
+                    this._fullName = value;
+                    this.RaisePropertyChanged("FullName");
                 }
             }
         }
 
         public Address Address { get; set; }
 
-        public bool IsAlsoRendering { get; set; }
-
         public string Npi
         {
-            get => npi;
+            get => this._npi;
             set
             {
-                if (value != npi)
+                if (value != this._npi)
                 {
-                    npi = value;
-                    RaisePropertyChanged("Npi");
+                    this._npi = value;
+                    this.RaisePropertyChanged("Npi");
                 }
             }
         }
@@ -86,30 +87,30 @@ namespace PatientManagement.Model
 
         public string FirstName
         {
-            get => firstName;
+            get => this._firstName;
             set
             {
-                if (value != firstName)
+                if (value != this._firstName)
                 {
-                    firstName = value;
-                    RaisePropertyChanged("FirstName");
-                    RaisePropertyChanged("Name");
-                    RaisePropertyChanged("FullName");
+                    this._firstName = value;
+                    this.RaisePropertyChanged("FirstName");
+                    this.RaisePropertyChanged("Name");
+                    this.RaisePropertyChanged("FullName");
                 }
             }
         }
 
         public string LastName
         {
-            get => lastName;
+            get => this._lastName;
             set
             {
-                if (value != lastName)
+                if (value != this._lastName)
                 {
-                    lastName = value;
-                    RaisePropertyChanged("LastName");
-                    RaisePropertyChanged("Name");
-                    RaisePropertyChanged("FullName");
+                    this._lastName = value;
+                    this.RaisePropertyChanged("LastName");
+                    this.RaisePropertyChanged("Name");
+                    this.RaisePropertyChanged("FullName");
                 }
             }
         }
@@ -121,7 +122,7 @@ namespace PatientManagement.Model
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (this.PropertyChanged != null) this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

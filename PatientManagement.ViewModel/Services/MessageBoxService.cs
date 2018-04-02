@@ -1,39 +1,40 @@
-﻿using PatientManagement.Model;
-using System.Windows;
+﻿using System.Windows;
 
 namespace PatientManagement.ViewModel.Services
 {
-    public class MessageBoxService
+    public class MessageBoxService : IMessageBoxService
     {
-        public MessageBoxService(Patient patient)
+        public MessageBoxResult NewDialogResult { get; set; }
+
+        public bool DialogResult { get; set; }
+
+        public string Identifier { get; set; }
+
+        public void DisplayMessage(string identifier)
         {
-            identifier = patient.FullName;
-            DisplayMessageBox();
+            this.NewDialogResult = MessageBox.Show(this.MessageBoxMessage(identifier), $"Reuse {identifier}",
+               MessageBoxButton.YesNo);
         }
 
-        public MessageBoxService(AddonCharge addon)
+        public void ClearMessage(string identifier)
         {
-            identifier = addon.ProcedureCode;
-            DisplayMessageBox();
-        }
-
-        private MessageBoxResult newDialogResult;
-
-        private bool dialogResult;
-
-        private readonly string identifier;
-
-        private void DisplayMessageBox()
-        {
-            newDialogResult = MessageBox.Show($"Do you want to Add an additional {identifier}?", $"Reuse {identifier}",
+            this.NewDialogResult = MessageBox.Show(this.ClearMessageBoxMessage(identifier), $"Clear {identifier}",
                 MessageBoxButton.YesNo);
         }
 
+        public string ClearMessageBoxMessage(string identifier)
+        {
+            return $"Do you want to clear this {identifier}";
+        }
+        public string MessageBoxMessage(string identifier)
+        {
+            return $"Do you want to Reuse the details of {identifier}?";
+        }
         public bool ShowDialog()
         {
-            dialogResult = newDialogResult == MessageBoxResult.Yes;
+            this.DialogResult = this.NewDialogResult == MessageBoxResult.Yes;
 
-            return dialogResult;
+            return this.DialogResult;
         }
     }
 }

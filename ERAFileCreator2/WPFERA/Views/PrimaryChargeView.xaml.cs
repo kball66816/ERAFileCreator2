@@ -16,17 +16,17 @@ namespace EraFileCreator.Views
 
         private void PrimaryChargesAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToDecimalOnly(e);
+
         }
 
         private void PrimaryPaidAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToDecimalOnly(e);
+
         }
 
         private void PatientCopayInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToDecimalOnly(e);
+
         }
     }
 }

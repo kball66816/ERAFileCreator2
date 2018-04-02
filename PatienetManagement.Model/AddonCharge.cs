@@ -11,14 +11,14 @@ namespace PatientManagement.Model
         public AddonCharge()
         {
             Id = Guid.NewGuid();
-            AdjustmentList = new ObservableCollection<Adjustment>();
+            Adjustments = new ObservableCollection<Adjustment>();
             Modifier = new Modifier();
         }
 
         public AddonCharge(AddonCharge addon)
         {
             Id = Guid.NewGuid();
-            AdjustmentList = new ObservableCollection<Adjustment>();
+            Adjustments = new ObservableCollection<Adjustment>();
             Modifier = new Modifier(addon.Modifier);
             ChargeCost = addon.ChargeCost;
             PaymentAmount = addon.PaymentAmount;

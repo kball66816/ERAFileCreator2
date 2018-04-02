@@ -29,7 +29,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="vertical">
                 <TextBlock x:Name="AddonProcedureCodeTag"
                            Text="Procedure Code" Margin="5,0,0,0" Padding="5,5,5,0" />
                 <TextBox x:Name="AddonProcedureCodeInput"
@@ -37,18 +37,17 @@
                 UpdateSourceTrigger=PropertyChanged}"
                          Margin="5,0" TabIndex="48" />
             </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Vertical" d:LayoutOverrides="Height">
+            <StackPanel Grid.Column="1" Orientation="vertical">
                 <StackPanel Orientation="Vertical">
                     <TextBlock x:Name="AddonModifiersTag"
                                Text="Modifiers" Margin="5,0,0,0" Padding="5,5,5,0" />
                 </StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="AddonModifierOneInput"
                              Text="{Binding SelectedAddonCharge.Modifier.ModifierOne}"
@@ -68,7 +67,7 @@
 
                 </Grid>
             </StackPanel>
-            <StackPanel Grid.Column="2" Orientation="Vertical">
+            <StackPanel Grid.Column="2" Orientation="vertical">
                 <TextBlock x:Name="AddonPaidAmountTag"
                            Text="Paid Amount" Margin="5,5,5,0" />
                 <TextBox x:Name="AddonPaidAmountInput"
@@ -76,7 +75,7 @@
                          HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53"
                          PreviewTextInput="AddonPaidAmountInput_PreviewTextInput" />
             </StackPanel>
-            <StackPanel Grid.Column="3" Orientation="Vertical">
+            <StackPanel Grid.Column="3" Orientation="vertical">
                 <TextBlock x:Name="AddonChargesAmountTag"
                            Text="Charge Amount" Margin="5,5,5,0" />
                 <TextBox x:Name="AddonChargesAmountInput"

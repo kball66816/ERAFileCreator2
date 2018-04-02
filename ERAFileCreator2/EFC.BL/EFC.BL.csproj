@@ -43,13 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddonChargeRepository.cs" />
-    <Compile Include="AdjustmentRepository.cs" />
     <Compile Include="BillingProviderRepository.cs" />
-    <Compile Include="EdiParse.cs" />
     <Compile Include="InsuranceRepository.cs" />
     <Compile Include="PatientRepository.cs" />
-    <Compile Include="PrimaryChargeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdatedEDI.cs" />
   </ItemGroup>
@@ -71,7 +67,9 @@
       <Name>Common.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

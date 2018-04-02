@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using Common.Common.Extensions;
 using PatientManagement.Model;
@@ -16,9 +17,9 @@ namespace Edi835._835Segments
             DateTimeQualifier = "405";
         }
 
-        public Dtm(Patient patient, PrimaryCharge charge)
+        public Dtm(Patient patient)
         {
-            Charge = charge;
+            Charge = patient.Charges.FirstOrDefault();
             SegmentIdentifier = "DTM";
             ServiceStartDateDetails();
         }

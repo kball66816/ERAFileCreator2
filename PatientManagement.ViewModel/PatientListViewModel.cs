@@ -1,47 +1,69 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
 using Common.Common.Services;
-using EFC.BL;
-using PatientManagement.DAL;
 using PatientManagement.Model;
+using PatientManagement.ViewModel.Service.Messaging;
+using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
 {
     public class PatientListViewModel : INotifyPropertyChanged
     {
-        private readonly IPatientRepository patientRepository = new PatientRepository();
 
-        private Patient patient;
+        private Patient _patient;
 
-        private ObservableCollection<Patient> patients;
+        private ObservableCollection<Patient> _patients;
 
         public PatientListViewModel()
         {
-            Patients = patientRepository.GetAllPatients();
+            this.Patients = PatientService.PatientRepository.GetAllPatients();
+            ClearPatientList = new Command(this.ClearPatientListCommand, this.CanClearPatientList);
         }
+
+        private bool CanClearPatientList(object obj)
+        {
+            return PatientService.PatientRepository.GetAllPatients() != null;
+        }
+
+        private void ClearPatientListCommand(object obj)
+        {
+            var dialog = new MessageBoxService();
+            dialog.ClearMessage("Patient List");
+            if (dialog.NewDialogResult == MessageBoxResult.Yes)
+            {
+                PatientService.PatientRepository.GetAllPatients().Clear();
+                Messenger.Default.Send(new ListClearedMessage(), "Patient List Cleared");
+                Messenger.Default.Send(new UpdateCalculations());
+            }
+        }
+
+
+        public ICommand ClearPatientList { get; set; }
 
         public ObservableCollection<Patient> Patients
         {
-            get => patients;
+            get => this._patients;
             private set
             {
-                if (value != patients)
+                if (value != this._patients)
                 {
-                    patients = value;
-                    RaisePropertyChanged("Patients");
+                    this._patients = value;
+                    this.RaisePropertyChanged("Patients");
                 }
             }
         }
 
         public Patient Patient
         {
-            get => patient;
+            get => this._patient;
             set
             {
-                if (value == patient) return;
-                patient = value;
-                RaisePropertyChanged("Patient");
-                Messenger.Default.Send(Patient);
+                if (value == this._patient) return;
+                this._patient = value;
+                this.RaisePropertyChanged("Patient");
+                Messenger.Default.Send(this.Patient);
             }
         }
 
@@ -50,7 +72,7 @@ namespace PatientManagement.ViewModel
 
         private void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

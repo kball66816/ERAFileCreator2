@@ -19,7 +19,7 @@ namespace PatientManagement.Model
 
         private string procedureCode;
 
-        public ObservableCollection<Adjustment> AdjustmentList
+        public ObservableCollection<Adjustment> Adjustments
         {
             get => adjustmentList;
             set
@@ -80,7 +80,7 @@ namespace PatientManagement.Model
 
         public abstract decimal AllowedAmount { get; }
 
-        public string CountAdjustments => AdjustmentList.Count.ToString();
+        public string CountAdjustments => Adjustments.Count.ToString();
 
         [field: NonSerialized] public event PropertyChangedEventHandler PropertyChanged;
 

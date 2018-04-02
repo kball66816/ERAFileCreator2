@@ -11,35 +11,24 @@ namespace PatientManagement.ViewModel
 {
     public class PrimaryAdjustmentViewModel : INotifyPropertyChanged
     {
-        private Guid currentChargeGuid;
-
-        private bool initializationComplete;
-
-        private Adjustment selectedAdjustment;
+        private Adjustment _selectedAdjustment;
 
         public PrimaryAdjustmentViewModel()
         {
-            SelectedAdjustment = AdjustmentService.GetNewAdjustment();
-            PrimaryAdjustmentReasonCodes = selectedAdjustment.AdjustmentReasonCodes;
-            PrimaryAdjustmentType = SelectedAdjustment.AdjustmentTypes;
-            AddChargeAdjustmentCommand = new Command(AddAdjustmentCommand, CanAddAdjustment);
-            Messenger.Default.Register<SendGuidService>(this, OnChargeIdReceived, "ChargeIdSent");
-        }
-
-        public int Count
-        {
-            get => AdjustmentService.AdjustmentRepository.GetAllAdjustments()
-                .Count(a => a.ChargeId == currentChargeGuid);
+            this.SelectedAdjustment = AdjustmentService.GetNewAdjustment();
+            this.PrimaryAdjustmentReasonCodes = this._selectedAdjustment.AdjustmentReasonCodes;
+            this.PrimaryAdjustmentType = this.SelectedAdjustment.AdjustmentTypes;
+            this.AddChargeAdjustmentCommand = new Command(this.AddAdjustmentCommand, this.CanAddAdjustment);
         }
 
         public Adjustment SelectedAdjustment
         {
-            get => selectedAdjustment;
+            get => this._selectedAdjustment;
             set
             {
-                if (value == selectedAdjustment) return;
-                selectedAdjustment = value;
-                RaisePropertyChanged("SelectedAdjustment");
+                if (value == this._selectedAdjustment) return;
+                this._selectedAdjustment = value;
+                this.RaisePropertyChanged("SelectedAdjustment");
             }
         }
 
@@ -51,33 +40,20 @@ namespace PatientManagement.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnChargeIdReceived(SendGuidService sent)
-        {
-            if (initializationComplete)
-            {
-                SelectedAdjustment = AdjustmentService.GetNewAdjustment();
-            }
-            initializationComplete = true;
-            AdjustmentService.AssociateChargeId(SelectedAdjustment, sent.Id);
-            currentChargeGuid = sent.Id;
-        }
-
         private void AddAdjustmentCommand(object obj)
         {
-            AdjustmentService.AdjustmentRepository.Add(SelectedAdjustment);
-            SelectedAdjustment = AdjustmentService.GetNewAdjustment();
-            AdjustmentService.AssociateChargeId(SelectedAdjustment, currentChargeGuid);
+            Messenger.Default.Send(SelectedAdjustment, "PrimaryAdjustment");
+            this.SelectedAdjustment = AdjustmentService.GetNewAdjustment();
         }
 
         private bool CanAddAdjustment(object obj)
         {
-            return !string.IsNullOrEmpty(SelectedAdjustment.AdjustmentReasonCode) &&
-                   SelectedAdjustment.AdjustmentAmount > 0;
+            return !string.IsNullOrEmpty(this.SelectedAdjustment.AdjustmentReasonCode) && this.SelectedAdjustment.AdjustmentAmount != 0;
         }
 
         private void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

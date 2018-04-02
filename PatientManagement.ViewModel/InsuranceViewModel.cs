@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Common.Common.Services;
 using EFC.BL;
 using PatientManagement.DAL;
@@ -12,28 +11,30 @@ namespace PatientManagement.ViewModel
 {
     public class InsuranceViewModel : INotifyPropertyChanged
     {
-        private InsuranceCompany insurance;
+        private InsuranceCompany _insurance;
 
         public InsuranceViewModel()
         {
-            LoadInsuranceCompany();
-            Messenger.Default.Register<UpdateCalculations>(this, OnUpdateCalculation);
-            Messenger.Default.Register<UpdateRepositoriesMessage>(this, OnUpdateRepositoriesMessageReceieved,"UpdateRepositories");
-            Messenger.Default.Register<SettingsSavedMessage>(this, OnSettingsSaved, "UpdateSettings");
-            Messenger.Default.Register<SaveFileMessage>(this, OnSaveFileReceived, "SaveTextFiletoSelectedDirectory");
-            insurance.CheckAmount = CalculateCheckAmount();
+            this._settingsService = new SettingsService();
+            this.LoadInsuranceCompany();
+            Messenger.Default.Register<UpdateCalculations>(this, this.OnUpdateCalculation);
+            Messenger.Default.Register<UpdateRepositoriesMessage>(this, this.OnUpdateRepositoriesMessageReceieved,"UpdateRepositories");
+            Messenger.Default.Register<SettingsSavedMessage>(this, this.OnSettingsSaved, "UpdateSettings");
+            Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileReceived, "SaveTextFiletoSelectedDirectory");
+            this.Insurance.CheckAmount = this.CalculateCheckAmount();
         }
 
+        private readonly ISettingsService _settingsService;
         public Dictionary<string, string> InsuranceStates { get; set; }
 
         public InsuranceCompany Insurance
         {
-            get => insurance;
+            get => this._insurance;
             set
             {
-                if (value == insurance) return;
-                insurance = value;
-                RaisePropertyChanged("Insurance");
+                if (value == this._insurance) return;
+                this._insurance = value;
+                this.RaisePropertyChanged("Insurance");
             }
         }
 
@@ -43,64 +44,71 @@ namespace PatientManagement.ViewModel
 
         private void OnSaveFileReceived(SaveFileMessage obj)
         {
-            SaveSettings();
-            insurance = new InsuranceCompany(insurance);
-            RaisePropertyChanged("Insurance");
-            SaveInsuranceToRepository();
+            this.SaveSettings();
+            this._insurance = new InsuranceCompany(this._insurance);
+            this.RaisePropertyChanged("Insurance");
+            this.SaveInsuranceToRepository();
         }
 
         private void OnSettingsSaved(SettingsSavedMessage obj)
         {
-            SaveSettings();
+            this.SaveSettings();
         }
 
         private void OnUpdateRepositoriesMessageReceieved(UpdateRepositoriesMessage obj)
         {
-            SaveInsuranceToRepository();
+            this.SaveInsuranceToRepository();
         }
 
         private void OnUpdateCalculation(UpdateCalculations obj)
         {
-            CalculateCheckAmount();
-            RaisePropertyChanged("CheckAmount");
+            this.CalculateCheckAmount();
+            this.RaisePropertyChanged("CheckAmount");
         }
 
         private decimal CalculateCheckAmount()
         {
-            IPrimaryChargeRepository pcr = new PrimaryChargeRepository();
-            var chargesPaidAmount = pcr.GetAllCharges().Sum(c => c.PaymentAmount);
+            decimal chargesPaidAmount = 0;
+            decimal addonsPaidAmount = 0;
+            foreach (var patient in PatientService.PatientRepository.GetAllPatients())
+            foreach (var c in patient.Charges)
+            {
+                chargesPaidAmount += c.PaymentAmount;
 
-            IAddonChargeRepository acr = new AddonChargeRepository();
-            var addonsPaidAmount = acr.GetAllCharges().Sum(a => a.PaymentAmount);
+                foreach (var addonCharge in c.AddonCharges)
+                {
+                    addonsPaidAmount += addonCharge.PaymentAmount;
+                }
+            }
 
-            return Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
+            return this.Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
         }
 
         private void LoadInsuranceCompany()
         {
-            Insurance = new InsuranceCompany();
-            Insurance = SettingsService.PullDefaultInsurance(Insurance);
-            PaymentTypes = Insurance.PaymentTypes;
-            InsuranceStates = Insurance.Address.States;
-            SaveInsuranceToRepository();
-            RaisePropertyChanged("Insurance");
+            this.Insurance = new InsuranceCompany();
+            this.PaymentTypes = this.Insurance.PaymentTypes;
+            this.InsuranceStates = this.Insurance.Address.States;
+            this.Insurance = this._settingsService.PullDefaultInsurance(this.Insurance);
+            this.SaveInsuranceToRepository();
+            this.RaisePropertyChanged("Insurance");
         }
 
 
         private void SaveInsuranceToRepository()
         {
             IInsurance saveInsurance = new InsuranceRepository();
-            saveInsurance.AddInsurance(insurance);
+            saveInsurance.AddInsurance(this._insurance);
         }
 
         private void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void SaveSettings()
         {
-            SettingsService.SetDefaultInsurance(insurance);
+          this._settingsService.SetDefaultInsurance(this._insurance);
         }
     }
 }

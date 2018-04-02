@@ -7,27 +7,26 @@ namespace PatientManagement.ViewModel
 {
     public class PreferenceViewModel : INotifyPropertyChanged
     {
-        private Preference preference;
-
-        public SettingsService Settings;
+        private Preference _preference;
 
         public PreferenceViewModel()
         {
-            Preference = new Preference();
-            Settings = new SettingsService();
-            Preference = SettingsService.PullDefaultPreferences(preference);
-            LoadCommands();
+            this._settingsService = new SettingsService();
+            this.Preference = new Preference();
+            this.Preference = this._settingsService.PullDefaultPreferences(this._preference);
+            this.LoadCommands();
         }
 
+        private readonly ISettingsService _settingsService;
         public Preference Preference
         {
-            get => preference;
+            get => this._preference;
             set
             {
-                if (value != preference)
+                if (value != this._preference)
                 {
-                    preference = value;
-                    RaisePropertyChanged("Preference");
+                    this._preference = value;
+                    this.RaisePropertyChanged("Preference");
                 }
             }
         }
@@ -38,17 +37,17 @@ namespace PatientManagement.ViewModel
 
         private void SavePreference(object obj)
         {
-            SettingsService.SetDefaultPreferences(Preference);
+            this._settingsService.SetDefaultPreferences(this.Preference);
         }
 
         private void LoadCommands()
         {
-            SavePreferenceCommand = new Command(SavePreference);
+            this.SavePreferenceCommand = new Command(this.SavePreference);
         }
 
         private void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

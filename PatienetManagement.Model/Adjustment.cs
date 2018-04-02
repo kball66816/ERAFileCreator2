@@ -634,8 +634,8 @@ namespace PatientManagement.Model
 
         private decimal adjustmentAmount;
 
-
         private string adjustmentReasonCode;
+
         private string adjustmentType;
 
         public Adjustment()

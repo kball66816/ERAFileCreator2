@@ -11,7 +11,7 @@ namespace PatientManagement.ViewModel
     {
         public SaveFileViewModel()
         {
-            LoadCommands();
+            this.LoadCommands();
         }
 
         public ICommand SaveFileCommand { get; set; }
@@ -45,8 +45,8 @@ namespace PatientManagement.ViewModel
 
         private void LoadCommands()
         {
-            SaveFileCommand = new Command(Save, CanSave);
-            SaveBatchOfFiles = new Command(Save50Files, CanSave);
+            this.SaveFileCommand = new Command(Save, CanSave);
+            this.SaveBatchOfFiles = new Command(Save50Files, CanSave);
         }
 
         private static void SendCalculateRequest()

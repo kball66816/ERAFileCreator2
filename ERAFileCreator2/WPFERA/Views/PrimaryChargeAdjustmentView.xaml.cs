@@ -16,7 +16,7 @@ namespace EraFileCreator.Views
 
         private void PrimaryAdjustmentAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToDecimalOnly(e);
+
         }
     }
 }

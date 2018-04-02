@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 using Common.Common.Services;
 using PatientManagement.Model;
@@ -11,115 +9,54 @@ namespace PatientManagement.ViewModel
 {
     public class AddonChargeViewModel : INotifyPropertyChanged
     {
-        private Guid currentChargeGuid;
-
-        private AddonCharge selectedAddonCharge;
+        private AddonCharge _selectedAddonCharge;
 
         public AddonChargeViewModel()
         {
-            SelectedAddonCharge = AddonChargeService.GetNewAddonCharge();
-            AddAddonCommand = new Command(AddAddon, CanAddAddon);
-            Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationCompleteMessage);
-            Messenger.Default.Register<SendGuidService>(this, OnChargeIdReceived, "ChargeIdSent");
+            this.SelectedAddonCharge = AddonChargeService.GetNewAddonCharge();
+            this.AddAddonCommand = new Command(this.AddAddon, this.CanAddAddon);
+            Messenger.Default.Register<Adjustment>(this, this.OnAdjustmentReceived, "AddonAdjustment");
+        }
+
+        private void OnAdjustmentReceived(Adjustment adjustment)
+        {
+            AddonChargeService.AssociateAdjustmentToCharge(this.SelectedAddonCharge, adjustment);
         }
 
         public ICommand AddAddonCommand { get; }
 
-        public int Count
-        {
-            get => AddonChargeService.ChargeRepository
-                .GetAllCharges().Count(c => c.PrimaryChargeId == currentChargeGuid);
-        }
-
-
         public AddonCharge SelectedAddonCharge
         {
-            get => selectedAddonCharge;
+            get => this._selectedAddonCharge;
             set
             {
-                if (value == selectedAddonCharge) return;
-                selectedAddonCharge = value;
-                RaisePropertyChanged("Addon");
+                if (value == this._selectedAddonCharge) return;
+                this._selectedAddonCharge = value;
+                this.RaisePropertyChanged("Addon");
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnInitializationCompleteMessage(InitializationCompleteMessage sent)
-        {
-            SendChargeId();
-        }
-
-        private void SendChargeId()
-        {
-            Messenger.Default.Send(new SendGuidService(SelectedAddonCharge.Id), "AddonChargeIdSent");
-        }
-
-        private void OnChargeIdReceived(SendGuidService sent)
-        {
-            if (StarterService.InitializationComplete)
-            {
-                SelectedAddonCharge = AddonChargeService.GetNewAddonCharge();
-            }
-
-            SelectedAddonCharge.AssociateChargeId(sent.Id);
-            currentChargeGuid = sent.Id;
-            RaisePropertyChanged("SelectedAddonCharge");
-            RaisePropertyChanged("Count");
-        }
-
         private void AddAddon(object obj)
         {
-            AddonChargeService.ChargeRepository.Add(SelectedAddonCharge);
-
-            if (SettingsService.ReuseSameAddonEnabled)
-            {
-                GetNewAddonDependentOnUserPromptPreference();
-            }
-
-            else
-            {
-                SelectedAddonCharge = AddonChargeService.GetNewAddonCharge();
-            }
-
-            SelectedAddonCharge.PrimaryChargeId = currentChargeGuid;
-            SendChargeId();
-            RaisePropertyChanged("SelectedAddonCharge");
-            RaisePropertyChanged("CheckAmount");
-            RaisePropertyChanged("Count");
+            AddonChargeService.SendAddonMessage(this.SelectedAddonCharge);
+            AddonChargeService.GetNewAddonSettingsBased(this.SelectedAddonCharge);
+            this.RaisePropertyChanged("SelectedAddonCharge");
+            this.RaisePropertyChanged("CheckAmount");
+            this.RaisePropertyChanged("Count");
             Messenger.Default.Send(new UpdateCalculations());
-        }
-
-        private void GetNewAddonDependentOnUserPromptPreference()
-        {
-            if (SettingsService.AddonPromptEnabled)
-            {
-                PromptTypeOfNewAddon();
-            }
-
-            else
-            {
-                SelectedAddonCharge.Clone();
-            }
-        }
-
-        private void PromptTypeOfNewAddon()
-        {
-            var dialogPrompt = new MessageBoxService(SelectedAddonCharge);
-
-            SelectedAddonCharge = dialogPrompt.ShowDialog() ?
-                AddonChargeService.Clone(SelectedAddonCharge) : AddonChargeService.GetNewAddonCharge();
         }
 
         private void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private bool CanAddAddon(object obj)
         {
-            return !string.IsNullOrEmpty(SelectedAddonCharge.ProcedureCode)
-            && (SelectedAddonCharge.ChargeCost > 0);
+            return !string.IsNullOrEmpty(this.SelectedAddonCharge.ProcedureCode)
+            && (this.SelectedAddonCharge.ChargeCost > 0);
         }
     }
 }

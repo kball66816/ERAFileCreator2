@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common .CommonTests", "Common .CommonTests\Common .CommonTests.csproj", "{49D702B5-3B6C-43B1-BE9F-55D32F12B80C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientManagement.ViewModel.Services.Test", "PatientManagement.ViewModel.Services.Test\PatientManagement.ViewModel.Services.Test.csproj", "{6DC07EED-36E2-4993-B36C-843CB8D0131F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,12 +61,17 @@ Global
 		{49D702B5-3B6C-43B1-BE9F-55D32F12B80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49D702B5-3B6C-43B1-BE9F-55D32F12B80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49D702B5-3B6C-43B1-BE9F-55D32F12B80C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DC07EED-36E2-4993-B36C-843CB8D0131F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DC07EED-36E2-4993-B36C-843CB8D0131F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DC07EED-36E2-4993-B36C-843CB8D0131F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DC07EED-36E2-4993-B36C-843CB8D0131F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{49D702B5-3B6C-43B1-BE9F-55D32F12B80C} = {60A58664-EA39-4D06-8ADD-E4CAD462CC4A}
+		{6DC07EED-36E2-4993-B36C-843CB8D0131F} = {60A58664-EA39-4D06-8ADD-E4CAD462CC4A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3A1DA79E-1478-4B9F-9190-05B9E99056E3}

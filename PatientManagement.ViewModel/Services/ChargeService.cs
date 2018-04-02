@@ -1,6 +1,4 @@
-﻿using EFC.BL;
-using PatientManagement.DAL;
-using PatientManagement.Model;
+﻿using PatientManagement.Model;
 
 namespace PatientManagement.ViewModel.Services
 {
@@ -8,10 +6,10 @@ namespace PatientManagement.ViewModel.Services
     {
         static ChargeService()
         {
-            ChargeRepository = new PrimaryChargeRepository();
+            SettingsService = new SettingsService();
         }
 
-        public static readonly IPrimaryChargeRepository ChargeRepository;
+        private static readonly ISettingsService SettingsService;
 
         public static PrimaryCharge GetNewCharge()
         {
@@ -23,7 +21,14 @@ namespace PatientManagement.ViewModel.Services
             return new PrimaryCharge(charge);
         }
 
-
+        public static void AssociateAddonWithCharge(PrimaryCharge charge, AddonCharge addon)
+        {
+            charge.AddonCharges.Add(addon);
+        }
+        public static void AssociateAdjustmentWithCharge(PrimaryCharge charge, Adjustment adjustment)
+        {
+            charge.Adjustments.Add(adjustment);
+        }
         public static PrimaryCharge SetNewOrClonedChargeByUserSettings(PrimaryCharge charge)
         {
             charge = SettingsService.ReuseCharge ? Clone(charge) : GetNewCharge();

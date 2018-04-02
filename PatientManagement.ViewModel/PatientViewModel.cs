@@ -1,6 +1,4 @@
 ﻿using Common.Common.Services;
-using EFC.BL;
-using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Services;
 using System.ComponentModel;
@@ -11,43 +9,38 @@ namespace PatientManagement.ViewModel
 {
     public class PatientViewModel : INotifyPropertyChanged
     {
-        private readonly IPatientRepository patientRepository;
-
-        private Patient selectedPatient;
+        private Patient _selectedPatient;
 
         public PatientViewModel()
         {
-            LoadInitialPatient();
-            Messenger.Default.Register<InitializationCompleteMessage>(this, OnInitializationComplete);
-            Messenger.Default.Register<Provider>(this, OnProviderReceived, "AddRenderingProvider");
-            Messenger.Default.Register<SaveFileMessage>(this, OnSaveFileMessage, "SaveTextFiletoSelectedDirectory");
-            Messenger.Default.Register<ResumeManualActionMessage>(this, OnResumeManualActionMessage, "Disable");
-            patientRepository = new PatientRepository();
-            AddPatientCommand = new Command(AddPatient, CanAddPatient);
-            isAddPatientEnabled = true;
+            this.SelectedPatient = PatientService.LoadInitialPatient();
+            PatientService.SettingsService.PullDefaultRenderingProvider(this.SelectedPatient.RenderingProvider);
+            PatientService.PatientRepository.Add(this.SelectedPatient);
+            Messenger.Default.Register<PrimaryCharge>(this, this.OnChargeReceived);
+            Messenger.Default.Register<Provider>(this, this.OnProviderReceived, "BillingProvider");
+            Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileMessage, "SaveTextFiletoSelectedDirectory");
+            Messenger.Default.Register<ListClearedMessage>(this, this.OnListClearedMessageReceived, "Patient List Cleared");
+            this.AddPatientCommand = new Command(this.AddPatient, this.CanAddPatient);
         }
 
-        private bool isAddPatientEnabled;
-
-        private void OnResumeManualActionMessage(ResumeManualActionMessage resume)
+        private void OnListClearedMessageReceived(ListClearedMessage obj)
         {
-            isAddPatientEnabled = resume.IsEnabled;
-            if (isAddPatientEnabled)
-            {
-                LoadInitialPatient();
-                patientRepository.Add(SelectedPatient);
-            }
+            PatientService.PatientRepository.Add(this.SelectedPatient);
+        }
+
+        private void OnChargeReceived(PrimaryCharge charge)
+        {
+            this.SelectedPatient.Charges.Add(charge);
         }
 
         public Patient SelectedPatient
         {
-            get => selectedPatient;
+            get => this._selectedPatient;
             set
             {
-                if (value == selectedPatient) return;
-                selectedPatient = value;
-                RaisePropertyChanged("SelectedPatient");
-                SendPatientCharges();
+                if (value == this._selectedPatient) return;
+                this._selectedPatient = value;
+                this.RaisePropertyChanged("SelectedPatient");
             }
         }
 
@@ -55,106 +48,33 @@ namespace PatientManagement.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnInitializationComplete(InitializationCompleteMessage message)
-        {
-            patientRepository.Add(SelectedPatient);
-            SendPatientId();
-        }
-
         private void OnSaveFileMessage(SaveFileMessage obj)
         {
-            SaveSettings();
+            PatientService.SaveSettings(this.SelectedPatient);
         }
 
         private void OnProviderReceived(Provider provider)
         {
-            selectedPatient.RenderingProvider = provider;
-            RaisePropertyChanged("SelectedPatient");
-        }
-
-        private void SendPatientCharges()
-        {
-            Messenger.Default.Send(selectedPatient.Charges, "UpdateChargesList");
-        }
-
-        private void LoadInitialPatient()
-        {
-            SelectedPatient = new Patient();
-            SelectedPatient = SettingsService.PullDefaultPatient();
-            SendPatientId();
-        }
-
-        private void SendPatientId()
-        {
-            Messenger.Default.Send(new SendGuidService(SelectedPatient.Id), "PatientIdSent");
+            this.SelectedPatient.RenderingProvider = provider.CopyProvider();
+            this.RaisePropertyChanged("SelectedPatient");
         }
 
         private void AddPatient(object obj)
         {
-            Messenger.Default.Send(SelectedPatient, "AddRenderingProvider");
-            ReturnNewPatient();
-            patientRepository.Add(SelectedPatient);
-            SendPatientId();
-            RaisePropertyChanged("CheckAmount");
+            Messenger.Default.Send(this.SelectedPatient, "AddRenderingProvider");
+            this.SelectedPatient = PatientService.GetNewPatientBasedOnSettings(this.SelectedPatient);
+            PatientService.PatientRepository.Add(this.SelectedPatient);
+            this.RaisePropertyChanged("CheckAmount");
         }
-
-        private void ReturnNewPatient()
-        {
-            if (SettingsService.ReuseSamePatientEnabled)
-                GetNewPatientDependentOnUserPromptPreference();
-
-            else if (SettingsService.ReuseSamePatientEnabled == false)
-                SelectedPatient = new Patient();
-            RaisePropertyChanged("Patient");
-        }
-
-        private void GetNewPatientDependentOnUserPromptPreference()
-        {
-            if (SettingsService.PatientPromptEnabled)
-                PromptTypeOfNewPatient();
-
-            else if (SettingsService.PatientPromptEnabled == false)
-                CloneSelectedPatient();
-        }
-
-        private void PromptTypeOfNewPatient()
-        {
-            var dialogPrompt = new MessageBoxService(selectedPatient);
-
-            if (dialogPrompt.ShowDialog())
-                CloneSelectedPatient();
-
-            else
-                SelectedPatient = new Patient();
-        }
-
-        private void CloneSelectedPatient()
-        {
-            SelectedPatient = patientRepository.GetSelectedPatient(selectedPatient.Id).CopyPatient();
-            RaisePropertyChanged("SelectedPatient");
-        }
-
         private bool CanAddPatient(object obj)
         {
-            bool b = false;
-            if (isAddPatientEnabled)
-            {
-                b = !string.IsNullOrEmpty(SelectedPatient.FirstName) &&
-                    !string.IsNullOrEmpty(selectedPatient.LastName);
-            }
-
-            return b;
+            return !string.IsNullOrEmpty(this.SelectedPatient.FirstName) &&
+                 !string.IsNullOrEmpty(this._selectedPatient.LastName);
         }
 
         private void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void SaveSettings()
-        {
-            Messenger.Default.Send(new SettingsSavedMessage(), "UpdateSettings");
-            SettingsService.SetDefaultPatient(selectedPatient);
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

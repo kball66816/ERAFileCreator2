@@ -50,37 +50,36 @@
     <Compile Include="AddonChargeViewModel.cs" />
     <Compile Include="BillingProviderViewModel.cs" />
     <Compile Include="InsuranceViewModel.cs" />
+    <Compile Include="Mocks\SettingsServiceMock.cs" />
+    <Compile Include="Service.Messaging\ListClearedMessage.cs" />
+    <Compile Include="Services\ISettingsService.cs" />
+    <Compile Include="Mocks\MessageBoxServiceMock.cs" />
     <Compile Include="PatientListViewModel.cs" />
     <Compile Include="PrimaryAdjustmentViewModel.cs" />
     <Compile Include="PrimaryChargeViewModel.cs" />
-    <Compile Include="RenderingProviderViewModel.cs" />
     <Compile Include="SaveFileViewModel.cs" />
-    <Compile Include="Service.Messaging\ResumeManualActionMessage.cs" />
     <Compile Include="Services\AdjustmentService.cs" />
     <Compile Include="Services\AddonChargeService.cs" />
     <Compile Include="Services\ChargeService.cs" />
-    <Compile Include="Services\SendGuidService.cs" />
-    <Compile Include="Services\ConfirmationService.cs" />
+    <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\PatientService.cs" />
+    <Compile Include="Services\ProviderService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="PatientViewModel.cs" />
     <Compile Include="PreferenceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Command.cs" />
     <Compile Include="Service.Messaging\SaveFileMessage.cs" />
-    <Compile Include="Service.Messaging\SendAddonAdjustmentMessage.cs" />
     <Compile Include="Service.Messaging\SendRenderingProviderMessage.cs" />
     <Compile Include="Service.Messaging\SettingsSavedMessage.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Service.Messaging\UpdateCalculations.cs" />
     <Compile Include="Service.Messaging\UpdateRepositoriesMessage.cs" />
-    <Compile Include="Service.Messaging\UploadCompleteMessage.cs" />
-    <Compile Include="Services\StarterService.cs" />
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.settings</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="UploadFileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ERAFileCreator2\Common.Common\Common.Common.csproj">

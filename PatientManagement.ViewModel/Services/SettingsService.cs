@@ -2,19 +2,28 @@
 
 namespace PatientManagement.ViewModel.Services
 {
-    public class SettingsService
+    public class SettingsService : ISettingsService
     {
-        public static bool ReuseCharge => Settings.Default.ReuseCharge;
+        public SettingsService()
+        {
+            this.PatientPromptEnabled = Settings.Default.EnableReusePatientPrompt;
 
-        public static bool PatientPromptEnabled => Settings.Default.EnableReusePatientPrompt;
+            this.ReuseSamePatientEnabled = Settings.Default.ReusePatient;
 
-        public static bool ReuseSamePatientEnabled => Settings.Default.ReusePatient;
+            this.AddonPromptEnabled = Settings.Default.EnableReuseAddonPrompt;
 
-        public static bool AddonPromptEnabled => Settings.Default.EnableReuseAddonPrompt;
+            this.ReuseSameAddonEnabled = Settings.Default.ReuseAddon;
 
-        public static bool ReuseSameAddonEnabled => Settings.Default.ReuseAddon;
+            this.ReuseCharge = Settings.Default.ReuseCharge;
+        }
+        public bool PatientPromptEnabled { get; set; }
+        public bool ReuseSamePatientEnabled { get; set; }
+        public bool AddonPromptEnabled { get; set; }
+        public bool ReuseSameAddonEnabled { get; set; }
 
-        public static void SetDefaultPreferences(Preference preference)
+        public bool ReuseCharge { get; set; }
+
+        public void SetDefaultPreferences(Preference preference)
         {
             Settings.Default.EnableReusePatientPrompt = preference.EnablePatientReusePrompt;
             Settings.Default.EnableReuseAddonPrompt = preference.EnableAddonReusePrompt;
@@ -25,7 +34,8 @@ namespace PatientManagement.ViewModel.Services
             Settings.Default.Save();
         }
 
-        public static Preference PullDefaultPreferences(Preference preference)
+
+        public Preference PullDefaultPreferences(Preference preference)
         {
             preference.EnableAddonReusePrompt = Settings.Default.EnableReuseAddonPrompt;
             preference.EnablePatientReusePrompt = Settings.Default.EnableReusePatientPrompt;
@@ -37,7 +47,7 @@ namespace PatientManagement.ViewModel.Services
             return preference;
         }
 
-        public static InsuranceCompany PullDefaultInsurance(InsuranceCompany insurance)
+        public InsuranceCompany PullDefaultInsurance(InsuranceCompany insurance)
         {
             if (!string.IsNullOrEmpty(Settings.Default.InsuranceCompanyName))
                 insurance.Name = Settings.Default.InsuranceCompanyName;
@@ -62,7 +72,7 @@ namespace PatientManagement.ViewModel.Services
             return insurance;
         }
 
-        public static void SetDefaultInsurance(InsuranceCompany insurance)
+        public void SetDefaultInsurance(InsuranceCompany insurance)
         {
             Settings.Default.InsuranceCompanyName = insurance.Name;
             Settings.Default.InsuranceCompanyTaxId = insurance.TaxId;
@@ -74,10 +84,14 @@ namespace PatientManagement.ViewModel.Services
             Settings.Default.Save();
         }
 
-        public static Patient PullDefaultPatient()
+        public Patient PullDefaultPatient(Patient patient)
         {
-            var patient = new Patient();
-            return Settings.Default.ReloadLastPatient ? LoadPatientFromSettings(patient) : patient;
+            if (Settings.Default.ReloadLastPatient)
+            {
+                patient = LoadPatientFromSettings(patient);
+            }
+
+            return patient;
         }
 
         private static Patient LoadPatientFromSettings(Patient patient)
@@ -90,7 +104,7 @@ namespace PatientManagement.ViewModel.Services
             return patient;
         }
 
-        public static Provider PullDefaultRenderingProvider(Provider renderingProvider)
+        public Provider PullDefaultRenderingProvider(Provider renderingProvider)
         {
             if (!string.IsNullOrEmpty(Settings.Default.RenderingProviderFirstName))
                 renderingProvider.FirstName = Settings.Default.RenderingProviderFirstName;
@@ -104,7 +118,7 @@ namespace PatientManagement.ViewModel.Services
             return renderingProvider;
         }
 
-        public static void SetDefaultRenderingProvider(Provider renderingProvider)
+        public void SetDefaultRenderingProvider(Provider renderingProvider)
         {
             Settings.Default.RenderingProviderFirstName = renderingProvider.FirstName;
             Settings.Default.RenderingProviderLastName = renderingProvider.LastName;
@@ -112,7 +126,7 @@ namespace PatientManagement.ViewModel.Services
             Settings.Default.Save();
         }
 
-        public static void SetDefaultPatient(Patient patient)
+        public void SetDefaultPatient(Patient patient)
         {
             Settings.Default.PatientFirstName = patient.FirstName;
             Settings.Default.PatientLastName = patient.LastName;
@@ -123,7 +137,7 @@ namespace PatientManagement.ViewModel.Services
         }
 
 
-        public static Provider PullDefaultBillingProvider(Provider billingProvider)
+        public Provider PullDefaultBillingProvider(Provider billingProvider)
         {
             billingProvider.IsIndividual = Settings.Default.BillingProviderIsIndividual;
 
@@ -137,7 +151,7 @@ namespace PatientManagement.ViewModel.Services
                 billingProvider.Npi = Settings.Default.BillingProviderNpi;
 
             if (!string.IsNullOrEmpty(Settings.Default.BillingProviderName))
-                billingProvider.FullName = Settings.Default.BillingProviderName;
+                billingProvider.BusinessName = Settings.Default.BillingProviderName;
 
             if (!string.IsNullOrEmpty(Settings.Default.BillingProviderAddressLineOne))
                 billingProvider.Address.StreetOne = Settings.Default.BillingProviderAddressLineOne;
@@ -156,12 +170,12 @@ namespace PatientManagement.ViewModel.Services
             return billingProvider;
         }
 
-        public static void SetDefaultBillingProvider(Provider billingProvider)
+        public void SetDefaultBillingProvider(Provider billingProvider)
         {
             Settings.Default.BillingProviderFirstName = billingProvider.FirstName;
             Settings.Default.BillingProviderLastName = billingProvider.LastName;
             Settings.Default.BillingProviderNpi = billingProvider.Npi;
-            Settings.Default.BillingProviderName = billingProvider.FullName;
+            Settings.Default.BillingProviderName = billingProvider.BusinessName;
             Settings.Default.BillingProviderAddressLineOne = billingProvider.Address.StreetOne;
             Settings.Default.BillingProviderAddressLineTwo = billingProvider.Address.StreetTwo;
             Settings.Default.BillingProviderAddressCity = billingProvider.Address.City;

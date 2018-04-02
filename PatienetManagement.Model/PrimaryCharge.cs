@@ -7,37 +7,37 @@ namespace PatientManagement.Model
     [Serializable]
     public class PrimaryCharge : Charge
     {
-        private string billId;
-        private decimal copay;
-        private DateTime dateOfService;
-        private bool formatClassicBillId;
-        private Guid patientId;
+        private string _billId;
+        private decimal _copay;
+        private DateTime _dateOfService;
+        private bool _formatClassicBillId;
+        private Guid _patientId;
 
         public PrimaryCharge()
         {
-            Id = Guid.NewGuid();
-            AddonChargeList = new ObservableCollection<AddonCharge>();
-            AdjustmentList = new ObservableCollection<Adjustment>();
-            Modifier = new Modifier();
-            DateOfService = DateTime.Today;
-            PlaceOfService = new PlaceOfService();
+            this.Id = Guid.NewGuid();
+            this.AddonCharges = new ObservableCollection<AddonCharge>();
+            this.Adjustments = new ObservableCollection<Adjustment>();
+            this.Modifier = new Modifier();
+            this.DateOfService = DateTime.Today;
+            this.PlaceOfService = new PlaceOfService();
         }
 
         public PrimaryCharge(PrimaryCharge charge)
         {
-            FormatClassicBillId = charge.formatClassicBillId;
-            BillId = charge.BillId;
-            Copay = charge.Copay;
-            ProcedureCode = charge.ProcedureCode;
-            ChargeCost = charge.ChargeCost;
-            PaymentAmount = charge.PaymentAmount;
-            PlaceOfService = new PlaceOfService(charge.PlaceOfService);
-            Modifier = new Modifier(charge.Modifier);
-            DateOfService = charge.DateOfService;
+            this.FormatClassicBillId = charge._formatClassicBillId;
+            this.BillId = charge.BillId;
+            this.Copay = charge.Copay;
+            this.ProcedureCode = charge.ProcedureCode;
+            this.ChargeCost = charge.ChargeCost;
+            this.PaymentAmount = charge.PaymentAmount;
+            this.PlaceOfService = new PlaceOfService(charge.PlaceOfService);
+            this.Modifier = new Modifier(charge.Modifier);
+            this.DateOfService = charge.DateOfService;
 
-            AddonChargeList = new ObservableCollection<AddonCharge>();
-            AdjustmentList = new ObservableCollection<Adjustment>();
-            Id = Guid.NewGuid();
+            this.AddonCharges = new ObservableCollection<AddonCharge>();
+            this.Adjustments = new ObservableCollection<Adjustment>();
+            this.Id = Guid.NewGuid();
         }
 
 
@@ -45,41 +45,41 @@ namespace PatientManagement.Model
 
         public DateTime DateOfService
         {
-            get => dateOfService;
+            get => this._dateOfService;
             set
             {
-                if (value != dateOfService)
+                if (value != this._dateOfService)
                 {
-                    dateOfService = value;
-                    RaisePropertyChanged("DateOfService");
+                    this._dateOfService = value;
+                    this.RaisePropertyChanged("DateOfService");
                 }
             }
         }
 
-        public ObservableCollection<AddonCharge> AddonChargeList { get; set; }
+        public ObservableCollection<AddonCharge> AddonCharges { get; set; }
 
         public string ReferenceId { get; set; }
 
         public bool FormatClassicBillId
         {
-            get => formatClassicBillId;
+            get => this._formatClassicBillId;
             set
             {
-                if (formatClassicBillId == value) return;
-                formatClassicBillId = value;
-                RaisePropertyChanged("FormatClassicBillId");
+                if (this._formatClassicBillId == value) return;
+                this._formatClassicBillId = value;
+                this.RaisePropertyChanged("FormatClassicBillId");
             }
         }
 
         public string BillId
         {
-            get => billId;
+            get => this._billId;
             set
             {
-                if (value != billId)
+                if (value != this._billId)
                 {
-                    billId = value;
-                    RaisePropertyChanged("BillId");
+                    this._billId = value;
+                    this.RaisePropertyChanged("BillId");
                 }
             }
         }
@@ -87,25 +87,25 @@ namespace PatientManagement.Model
 
         public decimal Copay
         {
-            get => copay;
+            get => this._copay;
             set
             {
-                if (value != copay)
+                if (value != this._copay)
                 {
-                    copay = value;
-                    RaisePropertyChanged("Copay");
-                    RaisePropertyChanged("AllowedAmount");
+                    this._copay = value;
+                    this.RaisePropertyChanged("Copay");
+                    this.RaisePropertyChanged("AllowedAmount");
                 }
             }
         }
 
-        public override decimal AllowedAmount => PaymentAmount + Copay;
+        public override decimal AllowedAmount => this.PaymentAmount + this.Copay;
 
         private decimal TotalCostofAddonCharge
         {
             get
             {
-                var totalCostOfAddon = AddonChargeList.Sum(addon => addon.ChargeCost);
+                var totalCostOfAddon = this.AddonCharges.Sum(addon => addon.ChargeCost);
                 return totalCostOfAddon;
             }
         }
@@ -114,7 +114,7 @@ namespace PatientManagement.Model
         {
             get
             {
-                var totalChargesPaid = AddonChargeList.Sum(addon => addon.PaymentAmount);
+                var totalChargesPaid = this.AddonCharges.Sum(addon => addon.PaymentAmount);
                 return totalChargesPaid;
             }
         }
@@ -124,7 +124,7 @@ namespace PatientManagement.Model
         {
             get
             {
-                var total = PaymentAmount + TotalAddonChargesPaid;
+                var total = this.PaymentAmount + this.TotalAddonChargesPaid;
                 return total;
             }
         }
@@ -133,15 +133,15 @@ namespace PatientManagement.Model
         {
             get
             {
-                var totalCost = ChargeCost + TotalCostofAddonCharge;
+                var totalCost = this.ChargeCost + this.TotalCostofAddonCharge;
                 return totalCost;
             }
         }
 
         public Guid PatientId
         {
-            get => patientId;
-            set => patientId = value;
+            get => this._patientId;
+            set => this._patientId = value;
         }
     }
 }
