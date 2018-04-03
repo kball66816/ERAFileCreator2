@@ -86,9 +86,7 @@
                         <TextBlock x:Name="PatientCopayTag"
                                Text="Copay*" Margin="5,5,5,0" />
                         <TextBox x:Name="PatientCopayInput"
-                             Text="{Binding SelectedCharge.Copay, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
-                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34"
-                             PreviewTextInput="PatientCopayInput_PreviewTextInput">
+                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34">
                             <Validation.ErrorTemplate>
                                 <ControlTemplate>
                                     <DockPanel>
@@ -98,6 +96,11 @@
                                     </DockPanel>
                                 </ControlTemplate>
                             </Validation.ErrorTemplate>
+                            <Binding Path="SelectedCharge.Copay" UpdateSourceTrigger="LostFocus">
+                                <Binding.ValidationRules>
+                                    <validators:StringToDecimalValidationRule ValidationStep="RawProposedValue" />
+                                </Binding.ValidationRules>
+                            </Binding>
                         </TextBox>
                     </StackPanel>
 
@@ -161,8 +164,7 @@
                     <TextBlock x:Name="PrimaryPaidAmountTag"
                                Text="Paid Amount*" Margin="5,0,5,0" />
                     <TextBox x:Name="PrimaryPaidAmountInput"
-                             Text="{Binding SelectedCharge.PaymentAmount}" Margin="5,0"
-                             TabIndex="40" PreviewTextInput="PrimaryPaidAmountInput_PreviewTextInput">
+                             TabIndex="40">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -172,13 +174,17 @@
                                 </DockPanel>
                             </ControlTemplate>
                         </Validation.ErrorTemplate>
+                        <Binding Path="SelectedCharge.PaymentAmount" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <validators:StringToDecimalValidationRule ValidationStep="RawProposedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
                     </TextBox>
                 </StackPanel>
                 <StackPanel Grid.Column="3" Orientation="Vertical">
                     <TextBlock x:Name="PrimaryChargesAmountTag"
                                Text="Charge Amount" Margin="5,0,5,0" />
                     <TextBox x:Name="PrimaryChargesAmountInput"
-                             Text="{Binding SelectedCharge.ChargeCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Margin="5,0" TabIndex="41" PreviewTextInput="PrimaryChargesAmountInput_PreviewTextInput">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -189,6 +195,11 @@
                                 </DockPanel>
                             </ControlTemplate>
                         </Validation.ErrorTemplate>
+                        <Binding Path="SelectedCharge.ChargeCost" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <validators:StringToDecimalValidationRule ValidationStep="RawProposedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
                     </TextBox>
                 </StackPanel>
                 <StackPanel Grid.Column="4">

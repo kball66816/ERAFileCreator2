@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:EraFileCreator.Views"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
+             xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:AddonChargeViewModel />
@@ -71,17 +72,43 @@
                 <TextBlock x:Name="AddonPaidAmountTag"
                            Text="Paid Amount" Margin="5,5,5,0" />
                 <TextBox x:Name="AddonPaidAmountInput"
-                         Text="{Binding SelectedAddonCharge.PaymentAmount, StringFormat=\{0:F2\}}"
-                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53"
-                         PreviewTextInput="AddonPaidAmountInput_PreviewTextInput" />
+                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <DockPanel>
+                                <Border BorderBrush="Red" BorderThickness="2">
+                                    <AdornedElementPlaceholder />
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                    <Binding Path="SelectedAddonCharge.PaymentAmount" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <validators:StringToDecimalValidationRule ValidationStep="RawProposedValue" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
             </StackPanel>
             <StackPanel Grid.Column="3" Orientation="vertical">
                 <TextBlock x:Name="AddonChargesAmountTag"
                            Text="Charge Amount" Margin="5,5,5,0" />
                 <TextBox x:Name="AddonChargesAmountInput"
-                         Text="{Binding SelectedAddonCharge.ChargeCost, Mode=TwoWay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
-                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54"
-                         PreviewTextInput="AddonChargesAmountInput_PreviewTextInput" />
+                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <DockPanel>
+                                <Border BorderBrush="Red" BorderThickness="2">
+                                    <AdornedElementPlaceholder />
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                    <Binding Path="SelectedAddonCharge.ChargeCost" UpdateSourceTrigger="LostFocus">
+                        <Binding.ValidationRules>
+                            <validators:StringToDecimalValidationRule ValidationStep="RawProposedValue" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox>
             </StackPanel>
             <StackPanel Grid.Column="4" Orientation="Vertical">
                 <TextBlock Text="Addon Code Button Placeholder" Margin="5,5,5,0" Visibility="Hidden"

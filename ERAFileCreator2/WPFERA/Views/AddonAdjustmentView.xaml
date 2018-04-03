@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
+             xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:AddonAdjustmentViewModel />
@@ -51,18 +52,21 @@
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Vertical" >
                     <TextBox x:Name="AddonAdjustmentAmountInput"
-                         Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="5,5,5,0" TabIndex="58" Grid.Column="2"
-                         PreviewTextInput="AddonAdjustmentAmountInput_PreviewTextInput">
+                         Margin="5,5,5,0" TabIndex="58" Grid.Column="2">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
-                                    <Border BorderBrush="Red" BorderThickness="1">
+                                    <Border BorderBrush="Red" BorderThickness="2">
                                         <AdornedElementPlaceholder />
                                     </Border>
                                 </DockPanel>
                             </ControlTemplate>
                         </Validation.ErrorTemplate>
+                        <Binding Path="AddonAdjustment.AdjustmentAmount" UpdateSourceTrigger="LostFocus">
+                            <Binding.ValidationRules>
+                                <validators:StringToDecimalValidationRule ValidationStep="RawProposedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
                     </TextBox>
                 </StackPanel>
                 <StackPanel Grid.Column="3" Orientation="Vertical">

@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
+using Common.Common.Extensions;
 
 namespace Common.Common.Validators
 {
@@ -7,9 +8,29 @@ namespace Common.Common.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return decimal.TryParse(value.ToString(), out var d)
-                ? new ValidationResult(true, null)
-                : new ValidationResult(false, "Please enter a valid number");
+            if (value != null && decimal.TryParse(value.ToString(), out var d))
+            {
+                return AreTwoDecimalsTheSame(d, d.Truncated(2));
+
+            }
+            else
+            {
+                return new ValidationResult(false, "Please enter a valid number");
+            }
+        }
+
+        private static ValidationResult AreTwoDecimalsTheSame(decimal decimalOne, decimal decimalTwo)
+        {
+            var checkOne = decimalOne.ToString();
+            var checkTwo = decimalTwo.ToString();
+            if (checkOne.Length == checkTwo.Length)
+            {
+                return new ValidationResult(true, null);
+            }
+            else
+            {
+                return new ValidationResult(false, "Please enter a valid number");
+            }
         }
     }
 }

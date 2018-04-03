@@ -14,9 +14,5 @@ namespace EraFileCreator.Views
             InitializeComponent();
         }
 
-        private void PrimaryAdjustmentAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-
-        }
     }
 }

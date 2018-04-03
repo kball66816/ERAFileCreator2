@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using Common.Common.Extensions;
 using EraFileCreator.Utility;
 
 namespace EraFileCreator.Views
@@ -16,17 +17,10 @@ namespace EraFileCreator.Views
 
         private void PrimaryChargesAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            if (e.ToString() == ".")
+            {
 
-        }
-
-        private void PrimaryPaidAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-
-        }
-
-        private void PatientCopayInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-
+            }
         }
     }
 }

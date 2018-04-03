@@ -16,7 +16,7 @@ namespace EraFileCreator.Views
 
         private void AddonChargesAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            InputRestrictions.RestrictTextToDecimalOnly(e);
+
         }
 
         private void AddonPaidAmountInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
