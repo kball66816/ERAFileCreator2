@@ -55,13 +55,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PatienetManagement.Model\PatientManagement.Model.csproj">
-      <Project>{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}</Project>
-      <Name>PatientManagement.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PatientManagement.DAL\PatientManagement.DAL.csproj">
       <Project>{642F2574-CAEC-4E41-BA46-C3AA96966FBC}</Project>
       <Name>PatientManagement.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatientManagement.Model\PatientManagement.Model.csproj">
+      <Project>{24fc5f3c-4a3c-4e22-afb8-96979998e9e6}</Project>
+      <Name>PatientManagement.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\PatientManagement.ViewModel\PatientManagement.ViewModel.csproj">
       <Project>{cf866762-41ec-448b-b713-97948e9b23f9}</Project>

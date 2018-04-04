@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{25504FA7-B820-4DE4-BEED-D84E2FB697E5}</ProjectGuid>
+    <ProjectGuid>{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Edi835</RootNamespace>
-    <AssemblyName>Edi835</AssemblyName>
+    <RootNamespace>EFC.BL</RootNamespace>
+    <AssemblyName>EFC.BL</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,8 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,38 +43,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BillingProviderRepository.cs" />
+    <Compile Include="InsuranceRepository.cs" />
+    <Compile Include="PatientRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="835Segments\Amt.cs" />
-    <Compile Include="835Segments\Bpr.cs" />
-    <Compile Include="835Segments\Cas.cs" />
-    <Compile Include="835Segments\Clp.cs" />
-    <Compile Include="835Segments\Dtm.cs" />
-    <Compile Include="835Segments\Ge.cs" />
-    <Compile Include="835Segments\Gs.cs" />
-    <Compile Include="835Segments\Iea.cs" />
-    <Compile Include="835Segments\Isa.cs" />
-    <Compile Include="835Segments\Lx.cs" />
-    <Compile Include="835Segments\N1.cs" />
-    <Compile Include="835Segments\N3.cs" />
-    <Compile Include="835Segments\N4.cs" />
-    <Compile Include="835Segments\Nm1.cs" />
-    <Compile Include="835Segments\Per.cs" />
-    <Compile Include="835Segments\Ref.cs" />
-    <Compile Include="835Segments\Se.cs" />
-    <Compile Include="835Segments\SegmentBase.cs" />
-    <Compile Include="835Segments\St.cs" />
-    <Compile Include="835Segments\Svc.cs" />
-    <Compile Include="835Segments\Trn.cs" />
+    <Compile Include="UpdatedEDI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Common\Common.Common.csproj">
-      <Project>{b4e23efb-5228-40c5-9455-904ca873a7e5}</Project>
-      <Name>Common.Common</Name>
+    <ProjectReference Include="..\Edi835\Edi835.csproj">
+      <Project>{25504fa7-b820-4de4-beed-d84e2fb697e5}</Project>
+      <Name>Edi835</Name>
     </ProjectReference>
     <ProjectReference Include="..\PatientManagement.Model\PatientManagement.Model.csproj">
       <Project>{24fc5f3c-4a3c-4e22-afb8-96979998e9e6}</Project>
       <Name>PatientManagement.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PatientManagement.DAL\PatientManagement.DAL.csproj">
+      <Project>{642f2574-caec-4e41-ba46-c3aa96966fbc}</Project>
+      <Name>PatientManagement.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

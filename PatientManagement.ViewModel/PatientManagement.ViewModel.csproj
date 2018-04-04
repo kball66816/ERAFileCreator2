@@ -82,21 +82,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ERAFileCreator2\Common.Common\Common.Common.csproj">
-      <Project>{B4E23EFB-5228-40C5-9455-904CA873A7E5}</Project>
+    <ProjectReference Include="..\Common.Common\Common.Common.csproj">
+      <Project>{b4e23efb-5228-40c5-9455-904ca873a7e5}</Project>
       <Name>Common.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ERAFileCreator2\EFC.BL\EFC.BL.csproj">
+    <ProjectReference Include="..\EFC.BL\EFC.BL.csproj">
       <Project>{8aa2d6aa-dc1b-4aa5-a5bc-097a46d52dae}</Project>
       <Name>EFC.BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PatienetManagement.Model\PatientManagement.Model.csproj">
-      <Project>{24FC5F3C-4A3C-4E22-AFB8-96979998E9E6}</Project>
-      <Name>PatientManagement.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\PatientManagement.DAL\PatientManagement.DAL.csproj">
       <Project>{642f2574-caec-4e41-ba46-c3aa96966fbc}</Project>
       <Name>PatientManagement.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatientManagement.Model\PatientManagement.Model.csproj">
+      <Project>{24fc5f3c-4a3c-4e22-afb8-96979998e9e6}</Project>
+      <Name>PatientManagement.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

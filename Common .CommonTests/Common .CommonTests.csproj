@@ -59,7 +59,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ERAFileCreator2\Common.Common\Common.Common.csproj">
+    <ProjectReference Include="..\Common.Common\Common.Common.csproj">
       <Project>{b4e23efb-5228-40c5-9455-904ca873a7e5}</Project>
       <Name>Common.Common</Name>
     </ProjectReference>
