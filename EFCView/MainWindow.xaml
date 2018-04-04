@@ -8,7 +8,7 @@
         Title="ERA File Creator"
         HorizontalContentAlignment="Stretch"
         VerticalAlignment="Stretch"
-        WindowStartupLocation="CenterOwner" SizeToContent="WidthAndHeight">
+        WindowStartupLocation="CenterOwner" SizeToContent="Height">
 
     <DockPanel x:Name="TopGrid" Background="#FF7789D8">
         <views:PatientListView DockPanel.Dock="Left" />
