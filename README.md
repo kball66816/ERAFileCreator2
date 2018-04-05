@@ -5,6 +5,10 @@ The ERA File Creator is a WPF program written with C#. It's design is to write a
 The Program manages this by Taking End User input and storing them in in memory to be retrieved when the user wants to generate the file.
 Once they are retrieved they are built using a stringbuilder, once built the string is written to a text file using StreamWriter.
 
+To Run
+To run this program you can either install through the executable in the publish folder. This looks for updates within the folder on github and is deployed using clickonce.
+Alternatively you can open the solution in Visual Studio and select EFC.View as the startup project
+
 There are no 3rd party dependencies
 
 Instructions
@@ -18,5 +22,3 @@ Addon Charges - Each Charge within an encounter can theoretically have an addon 
 
 Addon Adjustment - Just like a Charge adjustment, you want each adjustment to be unique, an addon charge can have more than one adjustment of different types. Duplicate adjustment checks are not currently enforced.
 You will want to add the Addon Adjustment before you add the Addon Charge to the Charge.
-
-
