@@ -14,7 +14,7 @@ namespace PatientManagement.ViewModel
         {
             this.SelectedCharge = ChargeService.GetNewCharge();
             this.PlacesOfService = this._selectedCharge.PlaceOfService.PlacesOfService;
-            Messenger.Default.Register<Adjustment>(this, this.OnAdjustmentReceived,"PrimaryAdjustment");
+            Messenger.Default.Register<Adjustment>(this, this.OnAdjustmentReceived, "PrimaryAdjustment");
             Messenger.Default.Register<AddonCharge>(this, this.OnAddonReceived);
             this.AddChargeToPatientCommand = new Command(this.AddNewCharge, this.CanAddChargeToPatient);
         }
