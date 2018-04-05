@@ -60,10 +60,7 @@ namespace PatientManagement.ViewModel
 
             foreach (var patient in PatientService.PatientRepository.GetAllPatients())
             {
-                if (patient.Charges.Count > 0)
-                {
-                    canSave = true;
-                }
+                canSave = patient.Charges.Count > 0;
             }
 
             return canSave;
