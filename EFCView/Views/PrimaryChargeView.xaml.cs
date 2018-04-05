@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Common.Common.Extensions;
 using EraFileCreator.Utility;
@@ -83,5 +85,19 @@ namespace EraFileCreator.Views
             InputRules.HighlightAllText(sender);
         }
 
+        private void PrimaryChargesAmountInput_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            InputRules.IgnoreDecimalInput(sender, e);
+        }
+
+        private void PrimaryPaidAmountInput_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            InputRules.IgnoreDecimalInput(sender,e);
+        }
+
+        private void PatientCopayInput_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            InputRules.IgnoreDecimalInput(sender, e);
+        }
     }
 }

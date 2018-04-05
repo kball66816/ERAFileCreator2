@@ -19,9 +19,9 @@ namespace EraFileCreator.Views
             InputRules.HighlightAllText(sender);
         }
 
-        private void PrimaryAdjustmentAmountInput_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void PrimaryAdjustmentAmountInput_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-
+            InputRules.IgnoreDecimalInput(sender, e);
         }
     }
 }

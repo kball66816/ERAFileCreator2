@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
-             xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:PrimaryAdjustmentViewModel />
@@ -48,12 +47,14 @@
                           SelectedValuePath="Value"
                           SelectedValue="{Binding SelectedAdjustment.AdjustmentReasonCode}"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}"
-                          SelectedIndex="34" Margin="5,5,5,0" TabIndex="45" Grid.Column="1"
+                          SelectedIndex="34" Margin="5,5,5,0" TabIndex="45"
                           HorizontalContentAlignment="Stretch" />
                 </StackPanel>
                 <StackPanel Grid.Column="2">
                     <TextBox x:Name="PrimaryAdjustmentAmountInput"
-                         Margin="5,5,5,0" TabIndex="46" HorizontalContentAlignment="Stretch" Text="{Binding SelectedAdjustment.AdjustmentAmount, StringFormat=\{0:C\}}" GotFocus="PrimaryAdjustmentAmountInput_GotFocus">
+                         Margin="5,5,5,0" TabIndex="46" HorizontalContentAlignment="Stretch" 
+                             Text="{Binding SelectedAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                             GotFocus="PrimaryAdjustmentAmountInput_GotFocus" PreviewKeyDown="PrimaryAdjustmentAmountInput_PreviewKeyDown">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -66,7 +67,7 @@
                     </TextBox>
                 </StackPanel>
                 <StackPanel Grid.Column="3">
-                    <Button x:Name="AddAdjustmentButton" Grid.Column="1"
+                    <Button x:Name="AddAdjustmentButton"
                     Command="{Binding AddChargeAdjustmentCommand}"
                     Content="Add Adjustment" Margin="5,5,5,0" HorizontalContentAlignment="Center" TabIndex="47"
                     VerticalContentAlignment="Center" />

@@ -83,7 +83,9 @@
                         <TextBlock x:Name="PatientCopayTag"
                                Text="Copay*" Margin="5,5,5,0" />
                         <TextBox x:Name="PatientCopayInput"
-                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34" GotFocus="PatientCopayInput_GotFocus" Text="{Binding SelectedCharge.Copay, StringFormat=\{0:C\}}" MouseDoubleClick="PatientCopayInput_MouseDoubleClick">
+                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34" GotFocus="PatientCopayInput_GotFocus" Text="{Binding SelectedCharge.Copay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                                 MouseDoubleClick="PatientCopayInput_MouseDoubleClick" 
+                                 PreviewKeyDown="PatientCopayInput_PreviewKeyDown">
                             <Validation.ErrorTemplate>
                                 <ControlTemplate>
                                     <DockPanel>
@@ -110,7 +112,8 @@
                 <StackPanel Orientation="Vertical">
                     <TextBlock x:Name="PrimaryProcedureCodeTag"
                                Text="Procedure Code*" Margin="5,0,0,0" />
-                    <TextBox x:Name="PrimaryProcedureCodeInput" Margin="5,0" TabIndex="35" GotFocus="PrimaryProcedureCodeInput_GotFocus">
+                    <TextBox x:Name="PrimaryProcedureCodeInput" Margin="5,0" TabIndex="35" 
+                             GotFocus="PrimaryProcedureCodeInput_GotFocus">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -156,7 +159,9 @@
                     <TextBlock x:Name="PrimaryPaidAmountTag"
                                Text="Paid Amount*" Margin="5,0,5,0" />
                     <TextBox x:Name="PrimaryPaidAmountInput"
-                             TabIndex="40" GotFocus="PrimaryPaidAmountInput_GotFocus" Text="{Binding SelectedCharge.PaymentAmount, StringFormat=\{0:C\}}" MouseDoubleClick="PrimaryPaidAmountInput_MouseDoubleClick">
+                             TabIndex="40" GotFocus="PrimaryPaidAmountInput_GotFocus"
+                             Text="{Binding SelectedCharge.PaymentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                             MouseDoubleClick="PrimaryPaidAmountInput_MouseDoubleClick" PreviewKeyDown="PrimaryPaidAmountInput_PreviewKeyDown">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -172,7 +177,11 @@
                     <TextBlock x:Name="PrimaryChargesAmountTag"
                                Text="Charge Amount" Margin="5,0,5,0" />
                     <TextBox x:Name="PrimaryChargesAmountInput"
-                             Margin="5,0" TabIndex="41" PreviewTextInput="PrimaryChargesAmountInput_PreviewTextInput" GotFocus="PrimaryChargesAmountInput_GotFocus" Text="{Binding SelectedCharge.ChargeCost, StringFormat=\{0:C\}}" MouseDoubleClick="PrimaryChargesAmountInput_MouseDoubleClick">
+                             Margin="5,0" TabIndex="41" 
+                             PreviewTextInput="PrimaryChargesAmountInput_PreviewTextInput"
+                             GotFocus="PrimaryChargesAmountInput_GotFocus" 
+                             Text="{Binding SelectedCharge.ChargeCost, StringFormat=\{0:F2\},UpdateSourceTrigger=PropertyChanged}" 
+                             MouseDoubleClick="PrimaryChargesAmountInput_MouseDoubleClick" PreviewKeyDown="PrimaryChargesAmountInput_PreviewKeyDown">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>

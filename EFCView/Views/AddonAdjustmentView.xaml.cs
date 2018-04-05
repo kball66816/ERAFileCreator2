@@ -24,5 +24,9 @@ namespace EraFileCreator.Views
             InputRules.HighlightAllText(sender);
         }
 
+        private void AddonAdjustmentAmountInput_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            InputRules.IgnoreDecimalInput(sender, e);
+        }
     }
 }
