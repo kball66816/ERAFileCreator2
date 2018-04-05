@@ -25,6 +25,7 @@ namespace PatientManagement.ViewModel
 
         private void OnListClearedMessageReceived(ListClearedMessage obj)
         {
+            this.SelectedPatient = PatientService.LoadInitialPatient();
             PatientService.PatientRepository.Add(this.SelectedPatient);
         }
 
