@@ -69,7 +69,8 @@
                 <TextBlock x:Name="AddonPaidAmountTag"
                            Text="Paid Amount" Margin="5,5,5,0" />
                 <TextBox x:Name="AddonPaidAmountInput"
-                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53" GotFocus="AddonPaidAmountInput_GotFocus" Text="{Binding SelectedAddonCharge.PaymentAmount, StringFormat=\{0:C\}}">
+                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53" GotFocus="AddonPaidAmountInput_GotFocus" 
+                         Text="{Binding SelectedAddonCharge.PaymentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" PreviewKeyDown="AddonPaidAmountInput_PreviewKeyDown">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel>
@@ -85,7 +86,8 @@
                 <TextBlock x:Name="AddonChargesAmountTag"
                            Text="Charge Amount" Margin="5,5,5,0" />
                 <TextBox x:Name="AddonChargesAmountInput"
-                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54" Text="{Binding SelectedAddonCharge.ChargeCost, StringFormat=\{0:C\}}" GotFocus="AddonChargesAmountInput_GotFocus" MouseDoubleClick="AddonChargesAmountInput_MouseDoubleClick">
+                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54" 
+                         Text="{Binding SelectedAddonCharge.ChargeCost, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" GotFocus="AddonChargesAmountInput_GotFocus" MouseDoubleClick="AddonChargesAmountInput_MouseDoubleClick" PreviewKeyDown="AddonChargesAmountInput_PreviewKeyDown">
                     <Validation.ErrorTemplate>
                         <ControlTemplate>
                             <DockPanel>

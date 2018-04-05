@@ -69,7 +69,8 @@ namespace PatientManagement.ViewModel
         private bool CanAddPatient(object obj)
         {
             return !string.IsNullOrEmpty(this.SelectedPatient.FirstName) &&
-                 !string.IsNullOrEmpty(this._selectedPatient.LastName);
+                   !string.IsNullOrEmpty(this.SelectedPatient.LastName)
+                   && this.SelectedPatient.Charges.Count > 0;
         }
 
         private void RaisePropertyChanged(string propertyName)

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 
 namespace EraFileCreator.Utility
@@ -11,6 +12,18 @@ namespace EraFileCreator.Utility
             if (sender is TextBox tb)
             {
                tb.SelectAll();
+            }
+        }
+
+        public static void IgnoreDecimalInput(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Decimal)
+            {
+                if (sender is TextBox tb)
+                {
+                    e.Handled = true;
+                    tb.CaretIndex += 1;
+                }
             }
         }
     }

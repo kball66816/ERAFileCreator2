@@ -39,7 +39,7 @@ namespace PatientManagement.ViewModel
 
         private static void SendMessages()
         {
-            Messenger.Default.Send(new UpdateRepositoriesMessage(),"UpdateRepositories");
+            Messenger.Default.Send(new UpdateRepositoriesMessage(), "UpdateRepositories");
             Messenger.Default.Send(new SaveFileMessage(), "SaveTextFiletoSelectedDirectory");
         }
 
@@ -56,7 +56,14 @@ namespace PatientManagement.ViewModel
 
         private static bool CanSave(object obj)
         {
-            return true;
+            var canSave = false;
+
+            foreach (var patient in PatientService.PatientRepository.GetAllPatients())
+            {
+                canSave = patient.Charges.Count > 0;
+            }
+
+            return canSave;
         }
     }
 }

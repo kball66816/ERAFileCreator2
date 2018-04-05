@@ -6,9 +6,6 @@
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <Storyboard x:Key="OnGotFocus1"/>
-    </UserControl.Resources>
     <UserControl.DataContext>
         <viewModel:AddonAdjustmentViewModel />
     </UserControl.DataContext>
@@ -52,7 +49,9 @@
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Vertical" >
                     <TextBox x:Name="AddonAdjustmentAmountInput"
-                         Margin="5,5,5,0" TabIndex="58" Grid.Column="2" GotFocus="AddonAdjustmentAmountInput_GotFocus" Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:C\}}" MouseDoubleClick="AddonAdjustmentAmountInput_MouseDoubleClick">
+                         Margin="5,5,5,0" TabIndex="58" GotFocus="AddonAdjustmentAmountInput_GotFocus" 
+                             Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                             MouseDoubleClick="AddonAdjustmentAmountInput_MouseDoubleClick" PreviewKeyDown="AddonAdjustmentAmountInput_PreviewKeyDown">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
