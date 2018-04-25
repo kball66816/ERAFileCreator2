@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              mc:Ignorable="d">
-    <UserControl.DataContext>
-        <viewModel:PrimaryAdjustmentViewModel />
-    </UserControl.DataContext>
+    
     <Grid Margin="5">
+        <Grid.DataContext>
+            <viewModel:PrimaryAdjustmentViewModel />
+        </Grid.DataContext>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />

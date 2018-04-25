@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
+             xmlns:views="clr-namespace:EraFileCreator.Views"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:PrimaryChargeViewModel />
@@ -12,15 +13,19 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Patient Encounters" FontSize="16" TextDecorations="Underline" Margin="5,0,0,5"/>
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -193,19 +198,280 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
                 </StackPanel>
-                <StackPanel Grid.Column="4">
+
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.DataContext>
+                    <viewModel:PrimaryAdjustmentViewModel />
+                </Grid.DataContext>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="1">
+                    <TextBlock x:Name="AdjustmentType"
+                       Text="Adjustment Type" Margin="5,0,0,0" />
+                </StackPanel>-->
+                <Grid Grid.Column="0">
+                    <Expander Header="Adjustment Type" RenderTransformOrigin="0.5,0.5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <ComboBox x:Name="AdjustmentTypeDropdown"
+                          ItemsSource="{Binding PrimaryAdjustmentType}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Value"
+                          SelectedValue="{Binding SelectedAdjustment.AdjustmentType}"
+                          SelectedIndex="0"
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentTypeDropdown}" Margin="5,5,5,0"
+                          TabIndex="44" HorizontalContentAlignment="Stretch" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <ComboBox x:Name="AdjustmentReasonCodeDropdown"
+                          ItemsSource="{Binding PrimaryAdjustmentReasonCodes}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Value"
+                          SelectedValue="{Binding SelectedAdjustment.AdjustmentReasonCode}"
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}"
+                          SelectedIndex="34" Margin="5,5,5,0" TabIndex="45"
+                          HorizontalContentAlignment="Stretch" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBox x:Name="PrimaryAdjustmentAmountInput"
+                         Margin="5,5,5,0" TabIndex="46" HorizontalContentAlignment="Stretch" 
+                             Text="{Binding SelectedAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" >
+                                    <!--GotFocus="PrimaryAdjustmentAmountInput_GotFocus" PreviewKeyDown="PrimaryAdjustmentAmountInput_PreviewKeyDown"-->
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <DockPanel>
+                                                <Border BorderBrush="Red" BorderThickness="2">
+                                                    <AdornedElementPlaceholder />
+                                                </Border>
+                                            </DockPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3">
+                                <Button x:Name="AddAdjustmentButton"
+                    Command="{Binding AddChargeAdjustmentCommand}"
+                    Content="Add Adjustment" Margin="5,5,5,0" HorizontalContentAlignment="Center" TabIndex="47"
+                    VerticalContentAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </Expander>
+
+
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid>
+                    <Expander Header="Additional Service Description">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.DataContext>
+                                    <viewModel:AddonChargeViewModel />
+                                </Grid.DataContext>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Orientation="vertical">
+                                    <TextBlock x:Name="AddonProcedureCodeTag"
+                           Text="Procedure Code" Margin="5,0,0,0" Padding="5,5,5,0" />
+                                    <TextBox x:Name="AddonProcedureCodeInput"
+                         Text="{Binding SelectedAddonCharge.ProcedureCode,
+                UpdateSourceTrigger=PropertyChanged}"
+                             Margin="5,0" TabIndex="48" />
+                                    <!--GotFocus="AddonProcedureCodeInput_GotFocus"-->
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="vertical">
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock x:Name="AddonModifiersTag"
+                               Text="Modifiers" Margin="5,0,0,0" Padding="5,5,5,0" />
+                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox x:Name="AddonModifierOneInput"
+                             Text="{Binding SelectedAddonCharge.Modifier.ModifierOne}"
+                             MaxLength="2" Margin="5,0" TabIndex="49"  />
+                                        <!--GotFocus="AddonModifierOneInput_GotFocus"-->
+                                        <TextBox x:Name="AddonModifierTwoInput"
+                             Text="{Binding SelectedAddonCharge.Modifier.ModifierTwo}"
+                             MaxLength="2"
+                             Margin="5,0" TabIndex="50" Grid.Column="1" 
+                               />
+                                        <!--GotFocus="AddonModifierTwoInput_GotFocus"-->
+                                        <TextBox x:Name="AddonModifierThreeInput"
+                             Text="{Binding SelectedAddonCharge.Modifier.ModifierThree}"
+                             MaxLength="2"
+                             Margin="5,0" TabIndex="51" Grid.Column="2" 
+                                 />
+                                        <!--GotFocus="AddonModifierThreeInput_GotFocus"-->
+                                        <TextBox x:Name="AddonModifierFourInput" 
+                             Text="{Binding SelectedAddonCharge.Modifier.ModifierFour}"
+                             MaxLength="2"
+                             Margin="5,0" TabIndex="52" Grid.Column="3" />
+                                        <!--GotFocus="AddonModifierFourInput_OnGotFocus"-->
+
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Orientation="vertical">
+                                    <TextBlock x:Name="AddonPaidAmountTag"
+                           Text="Paid Amount" Margin="5,5,5,0" />
+                                    <TextBox x:Name="AddonPaidAmountInput"
+                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53" 
+
+                         Text="{Binding SelectedAddonCharge.PaymentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}">
+                                        <!--GotFocus="AddonPaidAmountInput_GotFocus"-->
+                                        <!--PreviewKeyDown="AddonPaidAmountInput_PreviewKeyDown"-->
+                                        <Validation.ErrorTemplate>
+                                            <ControlTemplate>
+                                                <DockPanel>
+                                                    <Border BorderBrush="Red" BorderThickness="2">
+                                                        <AdornedElementPlaceholder />
+                                                    </Border>
+                                                </DockPanel>
+                                            </ControlTemplate>
+                                        </Validation.ErrorTemplate>
+                                    </TextBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="3" Orientation="vertical">
+                                    <TextBlock x:Name="AddonChargesAmountTag"
+                           Text="Charge Amount" Margin="5,5,5,0" />
+                                    <TextBox x:Name="AddonChargesAmountInput"
+                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54" 
+                         Text="{Binding SelectedAddonCharge.ChargeCost, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                            >
+                                        <!--GotFocus="AddonChargesAmountInput_GotFocus" 
+                             MouseDoubleClick="AddonChargesAmountInput_MouseDoubleClick"
+                             PreviewKeyDown="AddonChargesAmountInput_PreviewKeyDown"-->
+                                        <Validation.ErrorTemplate>
+                                            <ControlTemplate>
+                                                <DockPanel>
+                                                    <Border BorderBrush="Red" BorderThickness="2">
+                                                        <AdornedElementPlaceholder />
+                                                    </Border>
+                                                </DockPanel>
+                                            </ControlTemplate>
+                                        </Validation.ErrorTemplate>
+                                    </TextBox>
+                                </StackPanel>
+
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Expander Header="Adjustment Types">
+                                        <Grid Margin="5,5,5,5">
+                                            <Grid.DataContext>
+                                                <viewModel:AddonAdjustmentViewModel />
+                                            </Grid.DataContext>
+                                            <!--<StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="AddonAdjustmentType"
+                       Text="Adjustment Type" Margin="5,0,0,5" />
+                    </StackPanel>-->
+                                            <Grid>
+
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Orientation="Vertical">
+                                                    <ComboBox x:Name="AddonAdjustmentTypeDropdown"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding AddonAdjustmentType}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Value"
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}"
+                          Margin="5,5,5,0" TabIndex="56" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                    <ComboBox x:Name="AddonAdjustmentReasonCodeDropdown"
+                          ItemsSource="{Binding AddonAdjustmentReasonCodes}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Value"
+                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentReasonCodeDropdown}"
+                          SelectedIndex="34" Margin="5,5,5,0" TabIndex="57"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="2" Orientation="Vertical" >
+                                                    <TextBox x:Name="AddonAdjustmentAmountInput"
+                         Margin="5,5,5,0" TabIndex="58" 
+                             Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" >
+                                                        <!--MouseDoubleClick="AddonAdjustmentAmountInput_MouseDoubleClick" GotFocus="AddonAdjustmentAmountInput_GotFocus" PreviewKeyDown="AddonAdjustmentAmountInput_PreviewKeyDown"-->
+                                                        <Validation.ErrorTemplate>
+                                                            <ControlTemplate>
+                                                                <DockPanel>
+                                                                    <Border BorderBrush="Red" BorderThickness="2">
+                                                                        <AdornedElementPlaceholder />
+                                                                    </Border>
+                                                                </DockPanel>
+                                                            </ControlTemplate>
+                                                        </Validation.ErrorTemplate>
+                                                    </TextBox>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="3" Orientation="Vertical">
+                                                    <Button x:Name="AddonAdjustmentButton"
+                        Content="Add Adjustment"
+                        Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,5,5,0"
+                        HorizontalContentAlignment="Center" TabIndex="59" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Grid>
+                                    </Expander>
+                                    <Grid Grid.Column="1">
+                                        <StackPanel Orientation="Vertical">
+                                            <Button x:Name="AddAddonChargesButton"
+                                                    Content="Add Addon"
+                                                    Command="{Binding AddAddonCommand}" Margin="5,30,5,0" TabIndex="55"
+                                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Expander>
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Row="4">
+                <StackPanel>
                     <StackPanel Orientation="Vertical">
                         <StackPanel.DataContext>
                             <viewModel:PreferenceViewModel />
                         </StackPanel.DataContext>
                         <CheckBox Content="Reuse Code"
-                                  IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
-                                  Command="{Binding SavePreferenceCommand}" Margin="5,0,5,0" TabIndex="42" />
+                                      IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
+                                      Command="{Binding SavePreferenceCommand}" 
+                                      Margin="5,5,5,0" TabIndex="42" />
                     </StackPanel>
                     <Button
-                        x:Name="AddChargeToPatient"
-                        Command="{Binding AddChargeToPatientCommand}"
-                        Content="Add Charge" Margin="5,0,0,0" TabIndex="43" VerticalContentAlignment="Center" />
+                            x:Name="AddChargeToPatient"
+                            Command="{Binding AddChargeToPatientCommand}"
+                            Content="Add Charge" Margin="5,5,5,0" TabIndex="43" VerticalContentAlignment="Center" />
 
                 </StackPanel>
             </Grid>

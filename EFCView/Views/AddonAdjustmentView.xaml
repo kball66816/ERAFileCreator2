@@ -6,10 +6,11 @@
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
              mc:Ignorable="d">
-    <UserControl.DataContext>
-        <viewModel:AddonAdjustmentViewModel />
-    </UserControl.DataContext>
+   
     <Grid Margin="5,5,5,5">
+        <Grid.DataContext>
+            <viewModel:AddonAdjustmentViewModel />
+        </Grid.DataContext>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />

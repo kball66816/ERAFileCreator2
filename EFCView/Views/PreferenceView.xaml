@@ -6,48 +6,46 @@
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              mc:Ignorable="d" Margin="5,5,5,0">
     <Grid Margin="5">
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid.DataContext>
             <viewModel:PreferenceViewModel />
         </Grid.DataContext>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Content="Reuse Same Patient"
+                          Name="ReusePatientPreference"
+                          Command="{Binding SavePreferenceCommand}"
+                          IsChecked="{Binding Preference.ReusePatient,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          Margin="5" TabIndex="62" />
+                <CheckBox Content="Reuse Same Addon Code"
+                          Name="ReuseAddonPreference"
+                          Command="{Binding SavePreferenceCommand}"
+                          IsChecked="{Binding Preference.ReuseAddon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          Margin="5" TabIndex="63" />
+                <CheckBox Content="Patient From Last Run"
+                          Command="{Binding SavePreferenceCommand}"
+                          IsChecked="{Binding Preference.ReloadLastPatientFromLastSession,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Margin="5" TabIndex="64" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
 
-        <StackPanel Orientation="Vertical">
-            <CheckBox Content="Reuse Same Patient"
-                      Name="ReusePatientPreference"
-                      Command="{Binding SavePreferenceCommand}"
-                      IsChecked="{Binding Preference.ReusePatient,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      Margin="5" TabIndex="62" />
-            <CheckBox Content="Reuse Patient Prompt"
-                      Command="{Binding SavePreferenceCommand}"
-                      IsChecked="{Binding Preference.EnablePatientReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      IsEnabled="{Binding ElementName=ReusePatientPreference,Path=IsChecked}" Margin="5,0,0,0"
-                      TabIndex="65" />
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Column="1">
-            <CheckBox Content="Reuse Same Addon Code"
-                      Name="ReuseAddonPreference"
-                      Command="{Binding SavePreferenceCommand}"
-                      IsChecked="{Binding Preference.ReuseAddon,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      Margin="5" TabIndex="63" />
-            <CheckBox Content="Reuse Addon Prompt"
-                      Command="{Binding SavePreferenceCommand}"
-                      IsChecked="{Binding Preference.EnableAddonReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      IsEnabled="{Binding ElementName=ReuseAddonPreference,Path=IsChecked}" Margin="5,0,0,0"
-                      TabIndex="66" />
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Column="2">
-            <CheckBox Content="Patient From Last Run"
-                      Command="{Binding SavePreferenceCommand}"
-                      IsChecked="{Binding Preference.ReloadLastPatientFromLastSession,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      Margin="5" TabIndex="64" />
-        </StackPanel>
+                <CheckBox Content="Reuse Patient Prompt"
+                          Command="{Binding SavePreferenceCommand}"
+                          IsChecked="{Binding Preference.EnablePatientReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          IsEnabled="{Binding ElementName=ReusePatientPreference,Path=IsChecked}" Margin="5,0,0,0"
+                          TabIndex="65" />
+                <CheckBox Content="Reuse Addon Prompt"
+                          Command="{Binding SavePreferenceCommand}"
+                          IsChecked="{Binding Preference.EnableAddonReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          IsEnabled="{Binding ElementName=ReuseAddonPreference,Path=IsChecked}" Margin="5,0,0,0"
+                          TabIndex="66" />
+            </StackPanel>
+        </Grid>
     </Grid>
 
 </UserControl>

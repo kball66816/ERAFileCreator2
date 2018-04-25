@@ -11,8 +11,8 @@
     </UserControl.DataContext>
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="5">
             <StackPanel Orientation="Vertical">
@@ -25,9 +25,9 @@
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" 
                   Visibility="{Binding IsEnabled, Converter={StaticResource VisibilityDisabled}, ElementName=BillingProviderNameInput}">
@@ -178,7 +178,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" Grid.Column="0">
                     <TextBlock x:Name="BillingProviderLineOneTag"
