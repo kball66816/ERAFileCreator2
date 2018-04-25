@@ -113,6 +113,9 @@
     <Compile Include="Views\InsuranceCompanyView.xaml.cs">
       <DependentUpon>InsuranceCompanyView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PatientEncounterView.xaml.cs">
+      <DependentUpon>PatientEncounterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PatientListView.xaml.cs">
       <DependentUpon>PatientListView.Xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InsuranceCompanyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PatientEncounterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
