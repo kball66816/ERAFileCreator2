@@ -12,7 +12,6 @@ namespace PatientManagement.Model
 
         public ServiceDescription()
         {
-            this.AddonCharges = new ObservableCollection<AddonCharge>();
             this.AdditionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
             this.Adjustments = new ObservableCollection<Adjustment>();
             this.Modifier = new Modifier();
@@ -30,8 +29,6 @@ namespace PatientManagement.Model
             this.PlaceOfService = new PlaceOfService(charge.PlaceOfService);
             this.Modifier = new Modifier(charge.Modifier);
             this.DateOfService = charge.DateOfService;
-
-            this.AddonCharges = new ObservableCollection<AddonCharge>();
             this.AdditionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
             this.Adjustments = new ObservableCollection<Adjustment>();
             this.Id = Guid.NewGuid();
@@ -54,8 +51,6 @@ namespace PatientManagement.Model
         }
 
         public ObservableCollection<ServiceDescription> AdditionalServiceDescriptions { get; }
-
-        public ObservableCollection<AddonCharge> AddonCharges { get; set; }
 
         public string ReferenceId
         {

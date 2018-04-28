@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddonCharge.cs" />
     <Compile Include="Adjustment.cs" />
     <Compile Include="Interfaces\IPerson.cs" />
     <Compile Include="ServiceDescription.cs" />
