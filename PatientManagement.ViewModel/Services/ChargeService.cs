@@ -24,6 +24,8 @@ namespace PatientManagement.ViewModel.Services
         public static void AssociateAdditionalServiceDescription(ServiceDescription primary, ServiceDescription additional)
         {
             additional.BillId = primary.BillId;
+            additional.DateOfService = primary.DateOfService;
+            additional.PlaceOfService.ServiceLocation = primary.PlaceOfService.ServiceLocation;
             primary.AdditionalServiceDescriptions.Add(additional);
         }
         public static void AssociateAdjustmentWithCharge(ServiceDescription charge, Adjustment adjustment)
