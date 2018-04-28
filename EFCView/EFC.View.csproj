@@ -101,12 +101,6 @@
     <Compile Include="Utility\InputRestrictions.cs" />
     <Compile Include="Utility\InputRules.cs" />
     <Compile Include="Utility\NotConverter.cs" />
-    <Compile Include="Views\AddonAdjustmentView.xaml.cs">
-      <DependentUpon>AddonAdjustmentView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AddonChargeView.xaml.cs">
-      <DependentUpon>AddonChargeView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\BillingProviderView.xaml.cs">
       <DependentUpon>BillingProviderView.xaml</DependentUpon>
     </Compile>
@@ -124,9 +118,6 @@
     </Compile>
     <Compile Include="Views\PreferenceView.xaml.cs">
       <DependentUpon>PreferenceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PrimaryChargeAdjustmentView.xaml.cs">
-      <DependentUpon>PrimaryChargeAdjustmentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PrimaryChargeView.xaml.cs">
       <DependentUpon>PrimaryChargeView.xaml</DependentUpon>
@@ -146,14 +137,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\AddonAdjustmentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AddonChargeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\BillingProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,10 +158,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PreferenceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PrimaryChargeAdjustmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

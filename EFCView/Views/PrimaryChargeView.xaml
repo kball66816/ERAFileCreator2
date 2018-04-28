@@ -64,7 +64,7 @@
                     <StackPanel>
                         <TextBlock x:Name="BillIdTag"
                                Text="Bill ID*" Margin="5,5,5,0" />
-                        <TextBox x:Name="BillIdInput" Margin="5,0,5,5" TabIndex="33" GotFocus="BillIdInput_GotFocus">
+                        <TextBox x:Name="BillIdInput" Margin="5,0,5,5" TabIndex="33" GotFocus="HightlightAllText">
                             <Validation.ErrorTemplate>
                                 <ControlTemplate>
                                     <DockPanel>
@@ -88,9 +88,9 @@
                         <TextBlock x:Name="PatientCopayTag"
                                Text="Copay*" Margin="5,5,5,0" />
                         <TextBox x:Name="PatientCopayInput"
-                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34" GotFocus="PatientCopayInput_GotFocus" Text="{Binding PrimaryServiceDescription.Copay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
-                                 MouseDoubleClick="PatientCopayInput_MouseDoubleClick" 
-                                 PreviewKeyDown="PatientCopayInput_PreviewKeyDown">
+                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34" GotFocus="HightlightAllText" Text="{Binding PrimaryServiceDescription.Copay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                                 MouseDoubleClick="HightlightAllText" 
+                                 PreviewKeyDown="IgnoreDecimalInput">
                             <Validation.ErrorTemplate>
                                 <ControlTemplate>
                                     <DockPanel>
@@ -118,7 +118,7 @@
                     <TextBlock x:Name="PrimaryProcedureCodeTag"
                                Text="Procedure Code*" Margin="5,0,0,0" />
                     <TextBox x:Name="PrimaryProcedureCodeInput" Margin="5,0" TabIndex="35" 
-                             GotFocus="PrimaryProcedureCodeInput_GotFocus">
+                             GotFocus="HightlightAllText">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -148,25 +148,25 @@
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="PrimaryModifierOneInput"
                              Text="{Binding PrimaryServiceDescription.Modifier.ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             MaxLength="2" Margin="5,0" MinWidth="20" TabIndex="36" GotFocus="PrimaryModifierOneInput_GotFocus" />
+                             MaxLength="2" Margin="5,0" MinWidth="20" TabIndex="36" GotFocus="HightlightAllText" />
                         <TextBox x:Name="PrimaryModifierTwoInput"
                              Text="{Binding PrimaryServiceDescription.Modifier.ModifierTwo}"
-                             MaxLength="2" TabIndex="37" MinWidth="20" Grid.Column="1" Margin="5,0" GotFocus="PrimaryModifierTwoInput_GotFocus" />
+                             MaxLength="2" TabIndex="37" MinWidth="20" Grid.Column="1" Margin="5,0" GotFocus="HightlightAllText" />
                         <TextBox x:Name="PrimaryModifierThreeInput"
                              Text="{Binding PrimaryServiceDescription.Modifier.ModifierThree}"
-                             MaxLength="2" TabIndex="38" MinWidth="20" Grid.Column="2" Margin="5,0" GotFocus="PrimaryModifierThreeInput_GotFocus" />
+                             MaxLength="2" TabIndex="38" MinWidth="20" Grid.Column="2" Margin="5,0" GotFocus="HightlightAllText" />
                         <TextBox x:Name="PrimaryModifierFourInput"
                              Text="{Binding PrimaryServiceDescription.Modifier.ModifierFour}"
-                             MaxLength="2" TabIndex="39" MinWidth="20" Grid.Column="3" Margin="5,0" GotFocus="PrimaryModifierFourInput_GotFocus" />
+                             MaxLength="2" TabIndex="39" MinWidth="20" Grid.Column="3" Margin="5,0" GotFocus="HightlightAllText" />
                     </Grid>
                 </StackPanel>
                 <StackPanel Grid.Column="2"  Orientation="Vertical">
                     <TextBlock x:Name="PrimaryPaidAmountTag"
                                Text="Paid Amount*" Margin="5,0,5,0" />
                     <TextBox x:Name="PrimaryPaidAmountInput"
-                             TabIndex="40" GotFocus="PrimaryPaidAmountInput_GotFocus"
+                             TabIndex="40" GotFocus="HightlightAllText"
                              Text="{Binding PrimaryServiceDescription.PaymentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
-                             MouseDoubleClick="PrimaryPaidAmountInput_MouseDoubleClick" PreviewKeyDown="PrimaryPaidAmountInput_PreviewKeyDown">
+                             MouseDoubleClick="HightlightAllText" PreviewKeyDown="IgnoreDecimalInput">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -183,10 +183,9 @@
                                Text="Charge Amount" Margin="5,0,5,0" />
                     <TextBox x:Name="PrimaryChargesAmountInput"
                              Margin="5,0" TabIndex="41" 
-                             PreviewTextInput="PrimaryChargesAmountInput_PreviewTextInput"
-                             GotFocus="PrimaryChargesAmountInput_GotFocus" 
+                             GotFocus="HightlightAllText" 
                              Text="{Binding PrimaryServiceDescription.ChargeCost, StringFormat=\{0:F2\},UpdateSourceTrigger=PropertyChanged}" 
-                             MouseDoubleClick="PrimaryChargesAmountInput_MouseDoubleClick" PreviewKeyDown="PrimaryChargesAmountInput_PreviewKeyDown">
+                             MouseDoubleClick="HightlightAllText" PreviewKeyDown="IgnoreDecimalInput">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -244,8 +243,8 @@
                             <StackPanel Grid.Column="2">
                                 <TextBox x:Name="PrimaryAdjustmentAmountInput"
                          Margin="5,5,5,0" TabIndex="46" HorizontalContentAlignment="Stretch" 
-                             Text="{Binding SelectedAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" >
-                                    <!--GotFocus="PrimaryAdjustmentAmountInput_GotFocus" PreviewKeyDown="PrimaryAdjustmentAmountInput_PreviewKeyDown"-->
+                             Text="{Binding SelectedAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                                    GotFocus="HightlightAllText" PreviewKeyDown="IgnoreDecimalInput">
                                     <Validation.ErrorTemplate>
                                         <ControlTemplate>
                                             <DockPanel>
@@ -308,25 +307,24 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBox x:Name="AddonModifierOneInput"
                              Text="{Binding Modifier.ModifierOne}"
-                             MaxLength="2" Margin="5,0" TabIndex="49"  />
-                                        <!--GotFocus="AddonModifierOneInput_GotFocus"-->
+                             MaxLength="2" Margin="5,0" TabIndex="49"  
+                                        GotFocus="HightlightAllText"/>
                                         <TextBox x:Name="AddonModifierTwoInput"
                              Text="{Binding Modifier.ModifierTwo}"
                              MaxLength="2"
                              Margin="5,0" TabIndex="50" Grid.Column="1" 
-                               />
-                                        <!--GotFocus="AddonModifierTwoInput_GotFocus"-->
+                               
+                                        GotFocus="HightlightAllText"/>
                                         <TextBox x:Name="AddonModifierThreeInput"
                              Text="{Binding Modifier.ModifierThree}"
                              MaxLength="2"
                              Margin="5,0" TabIndex="51" Grid.Column="2" 
-                                 />
-                                        <!--GotFocus="AddonModifierThreeInput_GotFocus"-->
+                                        GotFocus="HightlightAllText"/>
                                         <TextBox x:Name="AddonModifierFourInput" 
                              Text="{Binding Modifier.ModifierFour}"
                              MaxLength="2"
-                             Margin="5,0" TabIndex="52" Grid.Column="3" />
-                                        <!--GotFocus="AddonModifierFourInput_OnGotFocus"-->
+                             Margin="5,0" TabIndex="52" Grid.Column="3" 
+                                        GotFocus="HightlightAllText"/>
 
                                     </Grid>
                                 </StackPanel>
@@ -336,9 +334,9 @@
                                     <TextBox x:Name="AddonPaidAmountInput"
                          HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53" 
 
-                         Text="{Binding PaymentAmount, StringFormat=\{0:F2\}}">
-                                        <!--GotFocus="AddonPaidAmountInput_GotFocus"-->
-                                        <!--PreviewKeyDown="AddonPaidAmountInput_PreviewKeyDown"-->
+                         Text="{Binding PaymentAmount, StringFormat=\{0:F2\}}"
+                                        GotFocus="HightlightAllText"
+                                        PreviewKeyDown="IgnoreDecimalInput">
                                         <Validation.ErrorTemplate>
                                             <ControlTemplate>
                                                 <DockPanel>
@@ -356,10 +354,9 @@
                                     <TextBox x:Name="AddonChargesAmountInput"
                          HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54" 
                          Text="{Binding ChargeCost, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
-                            >
-                                        <!--GotFocus="AddonChargesAmountInput_GotFocus" 
-                             MouseDoubleClick="AddonChargesAmountInput_MouseDoubleClick"
-                             PreviewKeyDown="AddonChargesAmountInput_PreviewKeyDown"-->
+                                             GotFocus="HightlightAllText"
+                             MouseDoubleClick="HightlightAllText"
+                             PreviewKeyDown="IgnoreDecimalInput">
                                         <Validation.ErrorTemplate>
                                             <ControlTemplate>
                                                 <DockPanel>
@@ -416,8 +413,9 @@
                                                 <StackPanel Grid.Column="2" Orientation="Vertical" >
                                                     <TextBox x:Name="AddonAdjustmentAmountInput"
                          Margin="5,5,5,0" TabIndex="58" 
-                             Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" >
-                                                        <!--MouseDoubleClick="AddonAdjustmentAmountInput_MouseDoubleClick" GotFocus="AddonAdjustmentAmountInput_GotFocus" PreviewKeyDown="AddonAdjustmentAmountInput_PreviewKeyDown"-->
+                             Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                                                        MouseDoubleClick="HightlightAllText" GotFocus="HightlightAllText" 
+                                                             PreviewKeyDown="IgnoreDecimalInput">
                                                         <Validation.ErrorTemplate>
                                                             <ControlTemplate>
                                                                 <DockPanel>
