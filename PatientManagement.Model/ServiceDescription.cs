@@ -4,28 +4,24 @@ using System.Linq;
 
 namespace PatientManagement.Model
 {
-    [Serializable]
-    public class PrimaryCharge : Charge
+    public class ServiceDescription : Charge
     {
         private string _billId;
         private decimal _copay;
         private DateTime _dateOfService;
-        private bool _formatClassicBillId;
-        private Guid _patientId;
 
-        public PrimaryCharge()
+        public ServiceDescription()
         {
-            this.Id = Guid.NewGuid();
             this.AddonCharges = new ObservableCollection<AddonCharge>();
+            this.AdditionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
             this.Adjustments = new ObservableCollection<Adjustment>();
             this.Modifier = new Modifier();
             this.DateOfService = DateTime.Today;
             this.PlaceOfService = new PlaceOfService();
         }
 
-        public PrimaryCharge(PrimaryCharge charge)
+        public ServiceDescription(ServiceDescription charge)
         {
-            this.FormatClassicBillId = charge._formatClassicBillId;
             this.BillId = charge.BillId;
             this.Copay = charge.Copay;
             this.ProcedureCode = charge.ProcedureCode;
@@ -36,6 +32,7 @@ namespace PatientManagement.Model
             this.DateOfService = charge.DateOfService;
 
             this.AddonCharges = new ObservableCollection<AddonCharge>();
+            this.AdditionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
             this.Adjustments = new ObservableCollection<Adjustment>();
             this.Id = Guid.NewGuid();
         }
@@ -56,21 +53,16 @@ namespace PatientManagement.Model
             }
         }
 
+        public ObservableCollection<ServiceDescription> AdditionalServiceDescriptions { get; }
+
         public ObservableCollection<AddonCharge> AddonCharges { get; set; }
 
-        public string ReferenceId { get; set; }
-
-        public bool FormatClassicBillId
+        public string ReferenceId
         {
-            get => this._formatClassicBillId;
-            set
-            {
-                if (this._formatClassicBillId == value) return;
-                this._formatClassicBillId = value;
-                this.RaisePropertyChanged("FormatClassicBillId");
-            }
+            get => BillId + "-" + ReferenceIdCounter;
         }
 
+        public int ReferenceIdCounter;
         public string BillId
         {
             get => this._billId;
@@ -103,45 +95,23 @@ namespace PatientManagement.Model
 
         private decimal TotalCostofAddonCharge
         {
-            get
-            {
-                var totalCostOfAddon = this.AddonCharges.Sum(addon => addon.ChargeCost);
-                return totalCostOfAddon;
-            }
+            get => this.AdditionalServiceDescriptions.Sum(addon => addon.ChargeCost);
         }
 
         private decimal TotalAddonChargesPaid
         {
-            get
-            {
-                var totalChargesPaid = this.AddonCharges.Sum(addon => addon.PaymentAmount);
-                return totalChargesPaid;
-            }
+            get => this.AdditionalServiceDescriptions.Sum(addon => addon.PaymentAmount);
         }
 
 
         public decimal SumOfChargePaid
         {
-            get
-            {
-                var total = this.PaymentAmount + this.TotalAddonChargesPaid;
-                return total;
-            }
+            get => this.PaymentAmount + this.TotalAddonChargesPaid;
         }
 
         public decimal SumOfChargeCost
         {
-            get
-            {
-                var totalCost = this.ChargeCost + this.TotalCostofAddonCharge;
-                return totalCost;
-            }
-        }
-
-        public Guid PatientId
-        {
-            get => this._patientId;
-            set => this._patientId = value;
+            get => this.ChargeCost + this.TotalCostofAddonCharge;
         }
     }
 }

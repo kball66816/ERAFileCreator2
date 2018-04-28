@@ -11,25 +11,26 @@ namespace PatientManagement.ViewModel.Services
 
         private static readonly ISettingsService SettingsService;
 
-        public static PrimaryCharge GetNewCharge()
+        public static ServiceDescription GetNewCharge()
         {
-            return new PrimaryCharge();
+            return new ServiceDescription();
         }
 
-        private static PrimaryCharge Clone(PrimaryCharge charge)
+        private static ServiceDescription Clone(ServiceDescription charge)
         {
-            return new PrimaryCharge(charge);
+            return new ServiceDescription(charge);
         }
 
-        public static void AssociateAddonWithCharge(PrimaryCharge charge, AddonCharge addon)
+        public static void AssociateAdditionalServiceDescription(ServiceDescription primary, ServiceDescription additional)
         {
-            charge.AddonCharges.Add(addon);
+            additional.BillId = primary.BillId;
+            primary.AdditionalServiceDescriptions.Add(additional);
         }
-        public static void AssociateAdjustmentWithCharge(PrimaryCharge charge, Adjustment adjustment)
+        public static void AssociateAdjustmentWithCharge(ServiceDescription charge, Adjustment adjustment)
         {
             charge.Adjustments.Add(adjustment);
         }
-        public static PrimaryCharge SetNewOrClonedChargeByUserSettings(PrimaryCharge charge)
+        public static ServiceDescription SetNewOrClonedChargeByUserSettings(ServiceDescription charge)
         {
             charge = SettingsService.ReuseCharge ? Clone(charge) : GetNewCharge();
 

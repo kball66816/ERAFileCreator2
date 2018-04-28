@@ -109,34 +109,32 @@ namespace EFC.BL
 
             foreach (var patient in this._patients)
             {
-                var clp = new Clp(patient.Charges);
-                edi.Append(clp.BuildClp());
-                this._segmentCount++;
-
-                var patientNm1 = new Nm1(patient);
-                edi.Append(patientNm1.BuildNm1());
-                this._segmentCount++;
-
-                if (patient.IncludeSubscriber)
-                {
-                    var subscriberNm1 = new Nm1(patient.Subscriber);
-                    edi.Append(subscriberNm1.BuildNm1());
-                    this._segmentCount++;
-                }
-
-                var renderingNm1 = new Nm1(patient.RenderingProvider);
-                edi.Append(renderingNm1.BuildNm1());
-                this._segmentCount++;
-
-                var startDtm = new Dtm(patient);
-                edi.Append(startDtm.BuildDtm());
-                this._segmentCount++;
-
-                var chargeCount = 0;
-
                 foreach (var charge in patient.Charges)
                 {
-                    chargeCount++;
+                    var clp = new Clp(charge);
+                    edi.Append(clp.BuildClp());
+                    this._segmentCount++;
+
+                    var patientNm1 = new Nm1(patient);
+                    edi.Append(patientNm1.BuildNm1());
+                    this._segmentCount++;
+
+                    if (patient.IncludeSubscriber)
+                    {
+                        var subscriberNm1 = new Nm1(patient.Subscriber);
+                        edi.Append(subscriberNm1.BuildNm1());
+                        this._segmentCount++;
+                    }
+
+                    var renderingNm1 = new Nm1(patient.RenderingProvider);
+                    edi.Append(renderingNm1.BuildNm1());
+                    this._segmentCount++;
+
+                    var startDtm = new Dtm(patient);
+                    edi.Append(startDtm.BuildDtm());
+                    this._segmentCount++;
+
+
                     var svc = new Svc(charge);
                     edi.Append(svc.BuildSvc());
                     this._segmentCount++;
@@ -167,7 +165,8 @@ namespace EFC.BL
 
                     this._segmentCount++;
 
-                    var chargeRef = new Ref(charge, chargeCount);
+                    charge.ReferenceIdCounter++;
+                    var chargeRef = new Ref(charge);
                     edi.Append(chargeRef.BuildRef());
                     this._segmentCount++;
 
@@ -175,24 +174,48 @@ namespace EFC.BL
                     edi.Append(amt.BuildAmt());
                     this._segmentCount++;
 
-                    var addons = charge.AddonCharges;
-                    foreach (var addonCharge in addons)
+                    var additionalServiceDescriptions = charge.AdditionalServiceDescriptions;
+                    foreach (var serviceDescription in additionalServiceDescriptions)
                     {
-                        var addonsvc = new Svc(addonCharge);
-                        edi.Append(addonsvc.BuildSvc());
+                        charge.ReferenceIdCounter++;
+                        serviceDescription.ReferenceIdCounter = charge.ReferenceIdCounter;
+                        var additionalSvc = new Svc(serviceDescription);
+                        edi.Append(additionalSvc.BuildSvc());
                         this._segmentCount++;
 
-                        var addonAdjustments = addonCharge.Adjustments;
-                        foreach (var adjustment in addonAdjustments)
-                        {
-                            var cas = new Cas(adjustment);
-                            edi.Append(cas.BuildCas());
-                            this._segmentCount++;
+                        var additionalDateOfServiceDtm = new Dtm(serviceDescription);
+                        edi.Append(additionalDateOfServiceDtm.BuildDtm());
+                        this._segmentCount++;
 
-                            var addonAmt = new Amt(addonCharge);
-                            edi.Append(addonAmt.BuildAmt());
-                            this._segmentCount++;
+                        var additionalcopayCas = new Cas(serviceDescription);
+
+                        var additionalAdjustments = serviceDescription.Adjustments;
+
+                        if (additionalAdjustments != null)
+                        {
+                            foreach (var adjustment in additionalAdjustments)
+                            {
+                                var cas = new Cas(adjustment);
+                                edi.Append(cas.BuildCas());
+                                this._segmentCount++;
+                            }
+
+                            edi.Append(additionalcopayCas.BuildCas());
                         }
+                        else
+                        {
+                            edi.Append(additionalcopayCas.BuildCas());
+                        }
+
+                        this._segmentCount++;
+
+                        var additionalRef = new Ref(serviceDescription);
+                        edi.Append(additionalRef.BuildRef());
+                        this._segmentCount++;
+
+                        var additionalamt = new Amt(serviceDescription);
+                        edi.Append(additionalamt.BuildAmt());
+                        this._segmentCount++;
                     }
                 }
             }

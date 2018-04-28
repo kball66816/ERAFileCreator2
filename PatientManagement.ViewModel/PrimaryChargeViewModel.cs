@@ -12,56 +12,91 @@ namespace PatientManagement.ViewModel
     {
         public PrimaryChargeViewModel()
         {
-            this.SelectedCharge = ChargeService.GetNewCharge();
-            this.PlacesOfService = this._selectedCharge.PlaceOfService.PlacesOfService;
-            Messenger.Default.Register<Adjustment>(this, this.OnAdjustmentReceived, "PrimaryAdjustment");
-            Messenger.Default.Register<AddonCharge>(this, this.OnAddonReceived);
-            this.AddChargeToPatientCommand = new Command(this.AddNewCharge, this.CanAddChargeToPatient);
+            this.PrimaryServiceDescription = ChargeService.GetNewCharge();
+            this.AdditionalServiceDescription = ChargeService.GetNewCharge();
+            this.PlacesOfService = this._primaryServiceDescription.PlaceOfService.PlacesOfService;
+            Messenger.Default.Register<Adjustment>(this, this.OnPrimaryAdjustmentReceived, "PrimaryAdjustment");
+            Messenger.Default.Register<Adjustment>(this, this.OnAdditionalAdjustmentReceived, "AdditionalServiceDescriptionAdjustment");
+            this.AddChargeToPatientCommand = new Command(this.AddNewCharge, CanAddChargeToPatient);
+            this.AddAddonCommand = new Command(this.AddAdditionalServiceDescription, CanAddChargeToPatient);
+
+
         }
 
-        private void OnAddonReceived(AddonCharge addon)
+        private void OnAdditionalAdjustmentReceived(Adjustment adjustment)
         {
-            ChargeService.AssociateAddonWithCharge(this.SelectedCharge, addon);
+            ChargeService.AssociateAdjustmentWithCharge(this.AdditionalServiceDescription, adjustment);
         }
-
-        private void OnAdjustmentReceived(Adjustment adjustment)
-        {
-            ChargeService.AssociateAdjustmentWithCharge(this.SelectedCharge, adjustment);
-        }
-
-        private PrimaryCharge _selectedCharge;
 
         public ICommand AddChargeToPatientCommand { get; set; }
 
-        public PrimaryCharge SelectedCharge
-        {
-            get => this._selectedCharge;
-            set
-            {
-                if (value == this._selectedCharge) return;
-                this._selectedCharge = value;
-                this.RaisePropertyChanged("SelectedCharge");
-            }
-        }
+        public ICommand AddAddonCommand { get; }
 
         public Dictionary<string, string> PlacesOfService { get; set; }
 
-        public string TextConfirmed { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void AddNewCharge(object obj)
+        private void OnPrimaryAdjustmentReceived(Adjustment adjustment)
         {
-            Messenger.Default.Send(this.SelectedCharge);
-            this.SelectedCharge = ChargeService.SetNewOrClonedChargeByUserSettings(this.SelectedCharge);
-            this.RaisePropertyChanged("SelectedCharge");
-            this.RaisePropertyChanged("Count");
+            ChargeService.AssociateAdjustmentWithCharge(this.PrimaryServiceDescription, adjustment);
+        }
+
+        private ServiceDescription _primaryServiceDescription;
+        private ServiceDescription _additionalServiceDescription;
+
+        public ServiceDescription PrimaryServiceDescription
+        {
+            get => this._primaryServiceDescription;
+            set
+            {
+                if (value == this._primaryServiceDescription) return;
+                this._primaryServiceDescription = value;
+                this.RaisePropertyChanged("PrimaryServiceDescription");
+            }
+        }
+
+        public ServiceDescription AdditionalServiceDescription
+        {
+            get => this._additionalServiceDescription;
+            set
+            {
+                if (value == this._additionalServiceDescription) return;
+                this._additionalServiceDescription = value;
+                this.RaisePropertyChanged("AdditionalServiceDescription");
+            }
+        }
+
+        private void AddAdditionalServiceDescription(object description)
+        {
+            ChargeService.AssociateAdditionalServiceDescription(this.PrimaryServiceDescription, description as  ServiceDescription);
+            this.AdditionalServiceDescription =
+                ChargeService.SetNewOrClonedChargeByUserSettings(AdditionalServiceDescription);
+            this.RaisePropertyChanged("SelectedAddonCharge");
+            this.RaisePropertyChanged("CheckAmount");
             Messenger.Default.Send(new UpdateCalculations());
         }
 
-        private bool CanAddChargeToPatient(object obj)
+        private void AddNewCharge(object description)
         {
-            return this.SelectedCharge.ChargeCost != 0 && !string.IsNullOrEmpty(this.SelectedCharge.ProcedureCode);
+            Messenger.Default.Send(description as ServiceDescription);
+            this.PrimaryServiceDescription = ChargeService.SetNewOrClonedChargeByUserSettings(description as ServiceDescription);
+            this.AdditionalServiceDescription = ChargeService.GetNewCharge();
+            this.RaisePropertyChanged("PrimaryServiceDescription");
+            this.RaisePropertyChanged("AdditionalServiceDescription");
+            Messenger.Default.Send(new UpdateCalculations());
         }
+
+        private static bool CanAddChargeToPatient(object obj)
+        {
+            var canAdd = false;
+            if (obj is ServiceDescription s)
+            {
+                canAdd = s.ChargeCost != 0 && !string.IsNullOrEmpty(s.ProcedureCode);
+            }
+
+            return canAdd;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
         {

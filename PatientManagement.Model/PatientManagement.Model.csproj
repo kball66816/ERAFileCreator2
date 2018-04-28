@@ -44,7 +44,7 @@
     <Compile Include="AddonCharge.cs" />
     <Compile Include="Adjustment.cs" />
     <Compile Include="Interfaces\IPerson.cs" />
-    <Compile Include="PrimaryCharge.cs" />
+    <Compile Include="ServiceDescription.cs" />
     <Compile Include="InsuranceCompany.cs" />
     <Compile Include="Modifier.cs" />
     <Compile Include="Patient.cs" />

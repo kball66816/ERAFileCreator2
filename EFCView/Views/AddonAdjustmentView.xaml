@@ -68,6 +68,7 @@
                     <Button x:Name="AddonAdjustmentButton"
                         Content="Add Adjustment"
                         Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,5,5,0"
+                        CommandParameter="{Binding AddonAdjustment}"
                         HorizontalContentAlignment="Center" TabIndex="59" />
                 </StackPanel>
             </Grid>

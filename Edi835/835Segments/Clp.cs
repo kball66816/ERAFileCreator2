@@ -7,21 +7,20 @@ namespace Edi835._835Segments
 {
     public class Clp : SegmentBase
     {
-        public Clp(IEnumerable<PrimaryCharge> encounters)
+        public Clp(ServiceDescription serviceDescription)
         {
             SegmentIdentifier = "CLP";
 
-            if (encounters == null) return;
-
-            encounters = encounters.ToList();
-            ClaimSubmittersIdentifier = encounters.FirstOrDefault()?.BillId;
+            ClaimSubmittersIdentifier = serviceDescription.BillId;
             ClaimStatusCode = "1";
-            TotalClaimChargeAmount = encounters.Sum(c => c.ChargeCost);
-            TotalClaimPaymentAmount = encounters.Sum(c => c.SumOfChargePaid);
-            PatientResponsibility = encounters.Sum(c => c.Copay);
+            TotalClaimChargeAmount = serviceDescription.ChargeCost+serviceDescription.AdditionalServiceDescriptions.Sum(s=>s.ChargeCost);
+            TotalClaimPaymentAmount = serviceDescription.PaymentAmount +
+                                      serviceDescription.AdditionalServiceDescriptions.Sum(s => s.SumOfChargePaid);
+            PatientResponsibility = serviceDescription.Copay +
+                                    serviceDescription.AdditionalServiceDescriptions.Sum(s => s.Copay);
             ClaimFilingIndicatorCode = "12";
             PayerClaimControlNumber = "EMC5841338";
-            FacilityTypeCode = encounters.FirstOrDefault()?.PlaceOfService.ServiceLocation;
+            FacilityTypeCode = serviceDescription.PlaceOfService.ServiceLocation;
             ClaimFrequencyCode = string.Empty;
             DrgCode = string.Empty;
             DrgWeight = 0;

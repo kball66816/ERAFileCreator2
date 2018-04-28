@@ -75,7 +75,7 @@ namespace PatientManagement.ViewModel
             {
                 chargesPaidAmount += c.PaymentAmount;
 
-                foreach (var addonCharge in c.AddonCharges)
+                foreach (var addonCharge in c.AdditionalServiceDescriptions)
                 {
                     addonsPaidAmount += addonCharge.PaymentAmount;
                 }

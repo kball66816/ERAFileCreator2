@@ -39,9 +39,9 @@ namespace PatientManagement.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void AddAdjustment(object obj)
+        private void AddAdjustment(object adjustment)
         {
-            Messenger.Default.Send(this.AddonAdjustment, "AddonAdjustment");
+            Messenger.Default.Send(adjustment, "AddonAdjustment");
             this.AddonAdjustment = AdjustmentService.GetNewAdjustment();
         }
 

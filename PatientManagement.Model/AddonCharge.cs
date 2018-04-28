@@ -25,6 +25,10 @@ namespace PatientManagement.Model
             ProcedureCode = addon.ProcedureCode;
         }
 
+        public AddonCharge(string billId)
+        {
+
+        }
         public override decimal AllowedAmount => PaymentAmount;
 
         public Guid PrimaryChargeId

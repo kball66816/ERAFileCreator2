@@ -24,7 +24,7 @@ namespace Edi835._835Segments
             ServiceStartDateDetails();
         }
 
-        public Dtm(PrimaryCharge charge)
+        public Dtm(ServiceDescription charge)
         {
             Charge = charge;
             SegmentIdentifier = "DTM";
@@ -32,7 +32,7 @@ namespace Edi835._835Segments
             Date = charge.DateOfService.DateToYearFirstShortString();
         }
 
-        private PrimaryCharge Charge { get; }
+        private ServiceDescription Charge { get; }
         private string DateTimeQualifier { get; set; }
         private string Date { get; set; }
 

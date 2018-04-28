@@ -16,7 +16,7 @@ namespace PatientManagement.ViewModel
             this.SelectedPatient = PatientService.LoadInitialPatient();
             PatientService.SettingsService.PullDefaultRenderingProvider(this.SelectedPatient.RenderingProvider);
             PatientService.PatientRepository.Add(this.SelectedPatient);
-            Messenger.Default.Register<PrimaryCharge>(this, this.OnChargeReceived);
+            Messenger.Default.Register<ServiceDescription>(this, this.OnChargeReceived);
             Messenger.Default.Register<Provider>(this, this.OnProviderReceived, "BillingProvider");
             Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileMessage, "SaveTextFiletoSelectedDirectory");
             Messenger.Default.Register<ListClearedMessage>(this, this.OnListClearedMessageReceived, "Patient List Cleared");
@@ -29,7 +29,7 @@ namespace PatientManagement.ViewModel
             PatientService.PatientRepository.Add(this.SelectedPatient);
         }
 
-        private void OnChargeReceived(PrimaryCharge charge)
+        private void OnChargeReceived(ServiceDescription charge)
         {
             this.SelectedPatient.Charges.Add(charge);
         }

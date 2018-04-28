@@ -12,12 +12,14 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>  
-        <local:InsuranceCompanyView Grid.Row="0"/>
-        <local:BillingProviderView Grid.Row="1"/>
-        <local:PatientView Grid.Row="2"/>
-        <local:PrimaryChargeView Grid.Row="3"/>
-        <local:PreferenceView Grid.Row="4" Background="#FF7789D8"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <local:InsuranceCompanyView Grid.Row="0" Background="#FFD0E8FF"/>
+        <local:BillingProviderView Grid.Row="1" Background="#FFD0E8FF"/>
+        <local:PatientView Grid.Row="2" Background="#FFD0E8FF"/>
+        <local:PrimaryChargeView Grid.Row="3" Background="#FFD0E8FF"/>
+        <local:SaveFileView Grid.Row="4" Background="#FFD0E8FF"/>
+        <local:PreferenceView Grid.Row="5" Background="#FF7789D8"/>
     </Grid>
 </UserControl>

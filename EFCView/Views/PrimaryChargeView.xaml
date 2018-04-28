@@ -10,7 +10,7 @@
     <UserControl.DataContext>
         <viewModel:PrimaryChargeViewModel />
     </UserControl.DataContext>
-    <Grid Margin="5">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto"/>
@@ -42,7 +42,7 @@
                                Text="Date Of Service*" />
                         <DatePicker x:Name="DateofServiceInput"
                                 Margin="5,0,5,5"
-                                SelectedDate="{Binding SelectedCharge.DateOfService}" TabIndex="31" MinWidth="102" />
+                                SelectedDate="{Binding PrimaryServiceDescription.DateOfService}" TabIndex="31" MinWidth="102" />
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="1">
@@ -52,7 +52,7 @@
                         <ComboBox x:Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}"
                               DisplayMemberPath="Key"
                               SelectedValuePath="Key"
-                              SelectedValue="{Binding SelectedCharge.PlaceOfService.ServiceLocation}"
+                              SelectedValue="{Binding PrimaryServiceDescription.PlaceOfService.ServiceLocation}"
                               SelectedIndex="9"
                               ToolTip="{Binding SelectedItem.Value, ElementName=PlaceOfServiceComboBox, Mode=OneWay}"
                               Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="32" />
@@ -74,7 +74,7 @@
                                     </DockPanel>
                                 </ControlTemplate>
                             </Validation.ErrorTemplate>
-                            <Binding Path="SelectedCharge.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                            <Binding Path="PrimaryServiceDescription.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                                 <Binding.ValidationRules>
                                     <validators:StringValidationRule ValidationStep="RawProposedValue" />
                                 </Binding.ValidationRules>
@@ -88,7 +88,7 @@
                         <TextBlock x:Name="PatientCopayTag"
                                Text="Copay*" Margin="5,5,5,0" />
                         <TextBox x:Name="PatientCopayInput"
-                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34" GotFocus="PatientCopayInput_GotFocus" Text="{Binding SelectedCharge.Copay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="34" GotFocus="PatientCopayInput_GotFocus" Text="{Binding PrimaryServiceDescription.Copay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
                                  MouseDoubleClick="PatientCopayInput_MouseDoubleClick" 
                                  PreviewKeyDown="PatientCopayInput_PreviewKeyDown">
                             <Validation.ErrorTemplate>
@@ -128,7 +128,7 @@
                                 </DockPanel>
                             </ControlTemplate>
                         </Validation.ErrorTemplate>
-                        <Binding Path="SelectedCharge.ProcedureCode" UpdateSourceTrigger="PropertyChanged"
+                        <Binding Path="PrimaryServiceDescription.ProcedureCode" UpdateSourceTrigger="PropertyChanged"
                                  Mode="TwoWay">
                             <Binding.ValidationRules>
                                 <validators:StringValidationRule ValidationStep="RawProposedValue" />
@@ -147,16 +147,16 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="PrimaryModifierOneInput"
-                             Text="{Binding SelectedCharge.Modifier.ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding PrimaryServiceDescription.Modifier.ModifierOne, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              MaxLength="2" Margin="5,0" MinWidth="20" TabIndex="36" GotFocus="PrimaryModifierOneInput_GotFocus" />
                         <TextBox x:Name="PrimaryModifierTwoInput"
-                             Text="{Binding SelectedCharge.Modifier.ModifierTwo}"
+                             Text="{Binding PrimaryServiceDescription.Modifier.ModifierTwo}"
                              MaxLength="2" TabIndex="37" MinWidth="20" Grid.Column="1" Margin="5,0" GotFocus="PrimaryModifierTwoInput_GotFocus" />
                         <TextBox x:Name="PrimaryModifierThreeInput"
-                             Text="{Binding SelectedCharge.Modifier.ModifierThree}"
+                             Text="{Binding PrimaryServiceDescription.Modifier.ModifierThree}"
                              MaxLength="2" TabIndex="38" MinWidth="20" Grid.Column="2" Margin="5,0" GotFocus="PrimaryModifierThreeInput_GotFocus" />
                         <TextBox x:Name="PrimaryModifierFourInput"
-                             Text="{Binding SelectedCharge.Modifier.ModifierFour}"
+                             Text="{Binding PrimaryServiceDescription.Modifier.ModifierFour}"
                              MaxLength="2" TabIndex="39" MinWidth="20" Grid.Column="3" Margin="5,0" GotFocus="PrimaryModifierFourInput_GotFocus" />
                     </Grid>
                 </StackPanel>
@@ -165,7 +165,7 @@
                                Text="Paid Amount*" Margin="5,0,5,0" />
                     <TextBox x:Name="PrimaryPaidAmountInput"
                              TabIndex="40" GotFocus="PrimaryPaidAmountInput_GotFocus"
-                             Text="{Binding SelectedCharge.PaymentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                             Text="{Binding PrimaryServiceDescription.PaymentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
                              MouseDoubleClick="PrimaryPaidAmountInput_MouseDoubleClick" PreviewKeyDown="PrimaryPaidAmountInput_PreviewKeyDown">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -185,7 +185,7 @@
                              Margin="5,0" TabIndex="41" 
                              PreviewTextInput="PrimaryChargesAmountInput_PreviewTextInput"
                              GotFocus="PrimaryChargesAmountInput_GotFocus" 
-                             Text="{Binding SelectedCharge.ChargeCost, StringFormat=\{0:F2\},UpdateSourceTrigger=PropertyChanged}" 
+                             Text="{Binding PrimaryServiceDescription.ChargeCost, StringFormat=\{0:F2\},UpdateSourceTrigger=PropertyChanged}" 
                              MouseDoubleClick="PrimaryChargesAmountInput_MouseDoubleClick" PreviewKeyDown="PrimaryChargesAmountInput_PreviewKeyDown">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -278,10 +278,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <Grid.DataContext>
-                                    <viewModel:AddonChargeViewModel />
-                                </Grid.DataContext>
+                            <Grid Grid.Row="0" DataContext="{Binding AdditionalServiceDescription}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -293,8 +290,7 @@
                                     <TextBlock x:Name="AddonProcedureCodeTag"
                            Text="Procedure Code" Margin="5,0,0,0" Padding="5,5,5,0" />
                                     <TextBox x:Name="AddonProcedureCodeInput"
-                         Text="{Binding SelectedAddonCharge.ProcedureCode,
-                UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding ProcedureCode}"
                              Margin="5,0" TabIndex="48" />
                                     <!--GotFocus="AddonProcedureCodeInput_GotFocus"-->
                                 </StackPanel>
@@ -311,23 +307,23 @@
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
                                         <TextBox x:Name="AddonModifierOneInput"
-                             Text="{Binding SelectedAddonCharge.Modifier.ModifierOne}"
+                             Text="{Binding Modifier.ModifierOne}"
                              MaxLength="2" Margin="5,0" TabIndex="49"  />
                                         <!--GotFocus="AddonModifierOneInput_GotFocus"-->
                                         <TextBox x:Name="AddonModifierTwoInput"
-                             Text="{Binding SelectedAddonCharge.Modifier.ModifierTwo}"
+                             Text="{Binding Modifier.ModifierTwo}"
                              MaxLength="2"
                              Margin="5,0" TabIndex="50" Grid.Column="1" 
                                />
                                         <!--GotFocus="AddonModifierTwoInput_GotFocus"-->
                                         <TextBox x:Name="AddonModifierThreeInput"
-                             Text="{Binding SelectedAddonCharge.Modifier.ModifierThree}"
+                             Text="{Binding Modifier.ModifierThree}"
                              MaxLength="2"
                              Margin="5,0" TabIndex="51" Grid.Column="2" 
                                  />
                                         <!--GotFocus="AddonModifierThreeInput_GotFocus"-->
                                         <TextBox x:Name="AddonModifierFourInput" 
-                             Text="{Binding SelectedAddonCharge.Modifier.ModifierFour}"
+                             Text="{Binding Modifier.ModifierFour}"
                              MaxLength="2"
                              Margin="5,0" TabIndex="52" Grid.Column="3" />
                                         <!--GotFocus="AddonModifierFourInput_OnGotFocus"-->
@@ -340,7 +336,7 @@
                                     <TextBox x:Name="AddonPaidAmountInput"
                          HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53" 
 
-                         Text="{Binding SelectedAddonCharge.PaymentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}">
+                         Text="{Binding PaymentAmount, StringFormat=\{0:F2\}}">
                                         <!--GotFocus="AddonPaidAmountInput_GotFocus"-->
                                         <!--PreviewKeyDown="AddonPaidAmountInput_PreviewKeyDown"-->
                                         <Validation.ErrorTemplate>
@@ -359,7 +355,7 @@
                            Text="Charge Amount" Margin="5,5,5,0" />
                                     <TextBox x:Name="AddonChargesAmountInput"
                          HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54" 
-                         Text="{Binding SelectedAddonCharge.ChargeCost, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
+                         Text="{Binding ChargeCost, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
                             >
                                         <!--GotFocus="AddonChargesAmountInput_GotFocus" 
                              MouseDoubleClick="AddonChargesAmountInput_MouseDoubleClick"
@@ -447,6 +443,7 @@
                                             <Button x:Name="AddAddonChargesButton"
                                                     Content="Add Addon"
                                                     Command="{Binding AddAddonCommand}" Margin="5,30,5,0" TabIndex="55"
+                                                    CommandParameter="{Binding AdditionalServiceDescription}"
                                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" />
                                         </StackPanel>
                                     </Grid>
@@ -471,7 +468,9 @@
                     <Button
                             x:Name="AddChargeToPatient"
                             Command="{Binding AddChargeToPatientCommand}"
-                            Content="Add Charge" Margin="5,5,5,0" TabIndex="43" VerticalContentAlignment="Center" />
+                        CommandParameter="{Binding PrimaryServiceDescription}"
+                            Content="Add Charge" Margin="5,5,5,0" TabIndex="43" VerticalContentAlignment="Center"
+ />
 
                 </StackPanel>
             </Grid>

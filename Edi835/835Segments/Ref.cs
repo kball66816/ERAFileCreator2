@@ -26,11 +26,11 @@ namespace Edi835._835Segments
             ReferenceIdentification = "20123";
         }
 
-        public Ref(PrimaryCharge charge, int chargeCount)
+        public Ref(ServiceDescription charge)
         {
             SegmentIdentifier = "REF";
             ReferenceIdQualifier = "6R";
-            ReferenceIdentification = charge.BillId + "-" + chargeCount;
+            ReferenceIdentification = charge.ReferenceId;
         }
 
         private string ReferenceIdQualifier { get; }

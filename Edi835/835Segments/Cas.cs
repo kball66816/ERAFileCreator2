@@ -5,7 +5,7 @@ namespace Edi835._835Segments
 {
     public class Cas : SegmentBase
     {
-        public Cas(PrimaryCharge charge)
+        public Cas(ServiceDescription charge)
         {
             Charge = charge;
             SegmentIdentifier = "CAS";
@@ -26,7 +26,7 @@ namespace Edi835._835Segments
         private string ClaimAdjustmentGroupCode { get; }
         private string ClaimAdjustmentReasonCode { get; }
         private decimal MonetaryAmount { get; }
-        private PrimaryCharge Charge { get; }
+        private ServiceDescription Charge { get; }
         private Adjustment Adjustment { get; }
 
         public string BuildCas()

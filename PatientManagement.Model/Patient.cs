@@ -7,7 +7,7 @@ namespace PatientManagement.Model
 {
     public class Patient : IPerson, INotifyPropertyChanged
     {
-        private ObservableCollection<PrimaryCharge> charges;
+        private ObservableCollection<ServiceDescription> charges;
 
         private string firstName;
 
@@ -20,7 +20,7 @@ namespace PatientManagement.Model
             MemberId = "ZLF1155487866";
             Subscriber = new Subscriber();
             RenderingProvider = new Provider();
-            Charges = new ObservableCollection<PrimaryCharge>();
+            Charges = new ObservableCollection<ServiceDescription>();
             Id = Guid.NewGuid();
         }
 
@@ -44,7 +44,7 @@ namespace PatientManagement.Model
             }
         }
 
-        public ObservableCollection<PrimaryCharge> Charges
+        public ObservableCollection<ServiceDescription> Charges
         {
             get => charges;
             set
@@ -111,7 +111,7 @@ namespace PatientManagement.Model
         {
             var clone = (Patient) MemberwiseClone();
             clone.Id = Guid.NewGuid();
-            clone.Charges = new ObservableCollection<PrimaryCharge>();
+            clone.Charges = new ObservableCollection<ServiceDescription>();
             clone.RenderingProvider = new Provider(RenderingProvider);
             return clone;
         }
