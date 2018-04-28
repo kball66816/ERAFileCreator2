@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace PatientManagement.Model
 {
-    public class ServiceDescription : Charge
+    public class ServiceDescription
     {
         private string _billId;
         private decimal _copay;
@@ -34,6 +35,73 @@ namespace PatientManagement.Model
             this.Id = Guid.NewGuid();
         }
 
+        private ObservableCollection<Adjustment> adjustmentList;
+
+
+        private decimal chargeCost;
+
+        private decimal paymentAmount;
+
+
+        private string procedureCode;
+
+        public ObservableCollection<Adjustment> Adjustments
+        {
+            get => adjustmentList;
+            set
+            {
+                if (value != adjustmentList)
+                {
+                    adjustmentList = value;
+                    RaisePropertyChanged("AdjustmentList");
+                }
+            }
+        }
+
+        public Modifier Modifier { get; set; }
+
+        public Guid Id { get; set; }
+
+        public decimal ChargeCost
+        {
+            get => chargeCost;
+            set
+            {
+                if (value != chargeCost)
+                {
+                    chargeCost = value;
+                    RaisePropertyChanged("ChargeCost");
+                }
+            }
+        }
+
+        public decimal PaymentAmount
+        {
+            get => paymentAmount;
+            set
+            {
+                if (value != paymentAmount)
+                {
+                    paymentAmount = value;
+                    RaisePropertyChanged("PaymentAmount");
+                    RaisePropertyChanged("CheckAmount");
+                    RaisePropertyChanged("AllowedAmount");
+                }
+            }
+        }
+
+        public string ProcedureCode
+        {
+            get => procedureCode;
+            set
+            {
+                if (value != procedureCode)
+                {
+                    procedureCode = value;
+                    RaisePropertyChanged("ProcedureCode");
+                }
+            }
+        }
 
         public PlaceOfService PlaceOfService { get; set; }
 
@@ -86,7 +154,7 @@ namespace PatientManagement.Model
             }
         }
 
-        public override decimal AllowedAmount => this.PaymentAmount + this.Copay;
+        public decimal AllowedAmount => this.PaymentAmount + this.Copay;
 
         private decimal TotalCostofAddonCharge
         {
@@ -107,6 +175,13 @@ namespace PatientManagement.Model
         public decimal SumOfChargeCost
         {
             get => this.ChargeCost + this.TotalCostofAddonCharge;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RaisePropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null) this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

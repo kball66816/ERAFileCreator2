@@ -10,10 +10,6 @@ namespace PatientManagement.ViewModel.Services
 
         bool ReuseSamePatientEnabled { get; set; }
 
-        bool AddonPromptEnabled { get; set; }
-
-        bool ReuseSameAddonEnabled { get; set; }
-
         void SetDefaultPreferences(Preference preference);
 
         Preference PullDefaultPreferences(Preference preference);

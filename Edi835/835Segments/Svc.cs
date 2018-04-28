@@ -5,7 +5,7 @@ namespace Edi835._835Segments
 {
     public class Svc : SegmentBase
     {
-        public Svc(Charge charge)
+        public Svc(ServiceDescription charge)
         {
             SegmentIdentifier = "SVC";
             CompositeMedicalProcedureIdentifier = "HC";
