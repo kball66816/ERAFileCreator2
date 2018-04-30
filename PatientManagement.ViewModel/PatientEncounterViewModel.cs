@@ -9,9 +9,9 @@ using System.Windows.Input;
 
 namespace PatientManagement.ViewModel
 {
-    public class PrimaryChargeViewModel : INotifyPropertyChanged
+    public class PatientEncounterViewModel : INotifyPropertyChanged
     {
-        public PrimaryChargeViewModel()
+        public PatientEncounterViewModel()
         {
             this.PrimaryServiceDescription = ChargeService.GetNewCharge();
             this.AdditionalServiceDescription = ChargeService.GetNewCharge();
@@ -32,7 +32,6 @@ namespace PatientManagement.ViewModel
         public ICommand AddAddonCommand { get; }
 
         public Dictionary<string, string> PlacesOfService { get; set; }
-
 
         private void OnPrimaryAdjustmentReceived(Adjustment adjustment)
         {

@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <local:InsuranceCompanyView Grid.Row="0" Background="#FFD0E8FF"/>
         <local:BillingProviderView Grid.Row="1" Grid.Column="0" Background="#FFD0E8FF"/>

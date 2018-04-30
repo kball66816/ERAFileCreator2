@@ -5,10 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
-             xmlns:views="clr-namespace:EraFileCreator.Views"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModel:PrimaryChargeViewModel />
+        <viewModel:PatientEncounterViewModel />
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -16,7 +15,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Patient Encounters" FontSize="16" TextDecorations="Underline" Margin="5,0,0,5"/>
+            <TextBlock Text="Patient Encounters" FontSize="16" TextDecorations="Underline"
+                       Margin="5,0,0,5"/>
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -196,18 +196,22 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
                 </StackPanel>
+                
             </Grid>
             <Grid Grid.Row="2">
-                <Grid.DataContext>
-                    <viewModel:PrimaryAdjustmentViewModel />
-                </Grid.DataContext>
+              
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="23*"/>
-                    <ColumnDefinition Width="173*"/>
-                    <ColumnDefinition Width="196*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Grid.ColumnSpan="2">
-                    <Expander Header="Adjustment Type" RenderTransformOrigin="0.5,0.5">
+                <Grid Grid.Column="0">
+                    <Grid.DataContext>
+                        <viewModel:PrimaryAdjustmentViewModel />
+                    </Grid.DataContext>
+                    <Expander Header="Adjustment Type"
+                              TabIndex="42" IsTabStop="True" 
+                              KeyDown="Expander_KeyDown">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -223,7 +227,7 @@
                           SelectedValue="{Binding SelectedAdjustment.AdjustmentType}"
                           SelectedIndex="0"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentTypeDropdown}" Margin="5,5,5,0"
-                          TabIndex="44" HorizontalContentAlignment="Stretch" />
+                          TabIndex="43" HorizontalContentAlignment="Stretch"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1">
                                 <ComboBox x:Name="AdjustmentReasonCodeDropdown"
@@ -232,7 +236,7 @@
                           SelectedValuePath="Value"
                           SelectedValue="{Binding SelectedAdjustment.AdjustmentReasonCode}"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}"
-                          SelectedIndex="34" Margin="5,5,5,0" TabIndex="45"
+                          SelectedIndex="34" Margin="5,5,5,0" TabIndex="44"
                           HorizontalContentAlignment="Stretch" />
                             </StackPanel>
                             <StackPanel Grid.Column="2">
@@ -255,18 +259,29 @@
                                 <Button x:Name="AddAdjustmentButton"
                     Command="{Binding AddChargeAdjustmentCommand}"
                     Content="Add Adjustment" Margin="5,5,5,0" HorizontalContentAlignment="Center" TabIndex="47"
-                    VerticalContentAlignment="Center" />
+                    VerticalContentAlignment="Center" Padding="5,1" />
                             </StackPanel>
                         </Grid>
                     </Expander>
 
 
                 </Grid>
-
+                <StackPanel Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Additional Service Descriptions:"
+                                   Margin="5,5,0,5"/>
+                        <TextBlock Text="{Binding PrimaryServiceDescription.AdditionalServiceDescriptions.Count}"
+                                   Margin="5"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <TextBlock Text="Adjustment Count:" Margin="5,5,0,5"/>
+                    <TextBlock Text="{Binding PrimaryServiceDescription.Adjustments.Count}" Margin="5"></TextBlock>
+                </StackPanel>
             </Grid>
             <Grid Grid.Row="3">
                 <Grid>
-                    <Expander Header="Additional Service Description">
+                    <Expander Header="Additional Service Description" TabIndex="48" IsTabStop="True" KeyDown="Expander_KeyDown_2">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -285,7 +300,7 @@
                            Text="Procedure Code" Margin="5,0,0,0" Padding="5,5,5,0" />
                                     <TextBox x:Name="AddonProcedureCodeInput"
                          Text="{Binding ProcedureCode}"
-                             Margin="5,0" TabIndex="48"
+                             Margin="5,0" TabIndex="49"
                                     GotFocus="HightlightAllText"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Orientation="vertical">
@@ -302,23 +317,23 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBox x:Name="AddonModifierOneInput"
                              Text="{Binding Modifier.ModifierOne}"
-                             MaxLength="2" Margin="5,0" TabIndex="49"  
+                             MaxLength="2" Margin="5,0" TabIndex="50"  
                                         GotFocus="HightlightAllText"/>
                                         <TextBox x:Name="AddonModifierTwoInput"
                              Text="{Binding Modifier.ModifierTwo}"
                              MaxLength="2"
-                             Margin="5,0" TabIndex="50" Grid.Column="1" 
+                             Margin="5,0" TabIndex="51" Grid.Column="1" 
                                
                                         GotFocus="HightlightAllText"/>
                                         <TextBox x:Name="AddonModifierThreeInput"
                              Text="{Binding Modifier.ModifierThree}"
                              MaxLength="2"
-                             Margin="5,0" TabIndex="51" Grid.Column="2" 
+                             Margin="5,0" TabIndex="52" Grid.Column="2" 
                                         GotFocus="HightlightAllText"/>
                                         <TextBox x:Name="AddonModifierFourInput" 
                              Text="{Binding Modifier.ModifierFour}"
                              MaxLength="2"
-                             Margin="5,0" TabIndex="52" Grid.Column="3" 
+                             Margin="5,0" TabIndex="53" Grid.Column="3" 
                                         GotFocus="HightlightAllText"/>
 
                                     </Grid>
@@ -327,7 +342,7 @@
                                     <TextBlock x:Name="AddonPaidAmountTag"
                            Text="Paid Amount" Margin="5,5,5,0" />
                                     <TextBox x:Name="AddonPaidAmountInput"
-                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="53" 
+                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54" 
 
                          Text="{Binding PaymentAmount, StringFormat=\{0:F2\}}"
                                         GotFocus="HightlightAllText"
@@ -347,7 +362,7 @@
                                     <TextBlock x:Name="AddonChargesAmountTag"
                            Text="Charge Amount" Margin="5,5,5,0" />
                                     <TextBox x:Name="AddonChargesAmountInput"
-                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54" 
+                         HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="55" 
                          Text="{Binding ChargeCost, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
                                              GotFocus="HightlightAllText"
                              MouseDoubleClick="HightlightAllText"
@@ -371,17 +386,13 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Expander Header="Adjustment Types">
+                                    <Expander Header="Adjustment Types" TabIndex="56" 
+                                              KeyDown="Expander_KeyDown_1" IsTabStop="True">
                                         <Grid Margin="5,5,5,5">
                                             <Grid.DataContext>
                                                 <viewModel:AddonAdjustmentViewModel />
                                             </Grid.DataContext>
-                                            <!--<StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="AddonAdjustmentType"
-                       Text="Adjustment Type" Margin="5,0,0,5" />
-                    </StackPanel>-->
                                             <Grid>
-
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition />
                                                     <ColumnDefinition />
@@ -390,12 +401,13 @@
                                                 </Grid.ColumnDefinitions>
                                                 <StackPanel Grid.Column="0" Orientation="Vertical">
                                                     <ComboBox x:Name="AddonAdjustmentTypeDropdown"
-                          SelectedIndex="0"
-                          ItemsSource="{Binding AddonAdjustmentType}"
-                          DisplayMemberPath="Value"
-                          SelectedValuePath="Value"
-                          ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentTypeDropdown}"
-                          Margin="5,5,5,0" TabIndex="56" />
+                                                              SelectedIndex="0"
+                                                              ItemsSource="{Binding AddonAdjustmentType}"
+                                                              DisplayMemberPath="Value"
+                                                              SelectedValuePath="Value"
+                                                              ToolTip="{Binding SelectedItem.Key, 
+                                                        ElementName=AddonAdjustmentTypeDropdown}"
+                                                              Margin="5,5,5,0" TabIndex="57" />
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="1" Orientation="Vertical">
                                                     <ComboBox x:Name="AddonAdjustmentReasonCodeDropdown"
@@ -403,11 +415,11 @@
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentReasonCodeDropdown}"
-                          SelectedIndex="34" Margin="5,5,5,0" TabIndex="57"/>
+                          SelectedIndex="34" Margin="5,5,5,0" TabIndex="58"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="2" Orientation="Vertical" >
                                                     <TextBox x:Name="AddonAdjustmentAmountInput"
-                         Margin="5,5,5,0" TabIndex="58" 
+                         Margin="5,5,5,0" TabIndex="59" 
                              Text="{Binding AddonAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
                                                         MouseDoubleClick="HightlightAllText" GotFocus="HightlightAllText" 
                                                              PreviewKeyDown="IgnoreDecimalInput">
@@ -424,18 +436,26 @@
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="3" Orientation="Vertical">
                                                     <Button x:Name="AddonAdjustmentButton"
-                        Content="Add Adjustment"
-                        Command="{Binding AddAddonChargeAdjustmentCommand}" Margin="5,5,5,0"
-                        HorizontalContentAlignment="Center" TabIndex="59" />
+                                                            Content="Add Adjustment"
+                                                            Command="{Binding AddAddonChargeAdjustmentCommand}" 
+                                                            CommandParameter="{Binding AddonAdjustment}"
+                                                            Margin="5,5,5,0"
+                                                            HorizontalContentAlignment="Center" 
+                                                            TabIndex="60" 
+                                                            Padding="5,1" />
                                                 </StackPanel>
                                             </Grid>
                                         </Grid>
                                     </Expander>
                                     <Grid Grid.Column="1">
                                         <StackPanel Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Adjustment Count:" Margin="5"/>
+                                                <TextBlock Text="{Binding AdditionalServiceDescription.Adjustments.Count}" Margin="5"/>
+                                            </StackPanel>
                                             <Button x:Name="AddAddonChargesButton"
                                                     Content="Add Addon"
-                                                    Command="{Binding AddAddonCommand}" Margin="5,30,5,0" TabIndex="55"
+                                                    Command="{Binding AddAddonCommand}" Margin="5,5,5,0" TabIndex="61"
                                                     CommandParameter="{Binding AdditionalServiceDescription}"
                                                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" />
                                         </StackPanel>
@@ -456,14 +476,13 @@
                         <CheckBox Content="Reuse Code"
                                       IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
                                       Command="{Binding SavePreferenceCommand}" 
-                                      Margin="5,5,5,0" TabIndex="42" />
+                                      Margin="5,5,5,0" TabIndex="62" />
                     </StackPanel>
                     <Button
                             x:Name="AddChargeToPatient"
                             Command="{Binding AddChargeToPatientCommand}"
                         CommandParameter="{Binding PrimaryServiceDescription}"
-                            Content="Add Charge" Margin="5,5,5,0" TabIndex="43" VerticalContentAlignment="Center"
- />
+                            Content="Add Charge" Margin="5,5,5,0" TabIndex="63" VerticalContentAlignment="Center"/>
 
                 </StackPanel>
             </Grid>

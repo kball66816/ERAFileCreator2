@@ -41,7 +41,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAdjustment(object adjustment)
         {
-            Messenger.Default.Send(adjustment, "AddonAdjustment");
+            Messenger.Default.Send(adjustment as Adjustment, "AdditionalServiceDescriptionAdjustment");
             this.AddonAdjustment = AdjustmentService.GetNewAdjustment();
         }
 

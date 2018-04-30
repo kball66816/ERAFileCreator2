@@ -56,7 +56,7 @@
     <Compile Include="Mocks\MessageBoxServiceMock.cs" />
     <Compile Include="PatientListViewModel.cs" />
     <Compile Include="PrimaryAdjustmentViewModel.cs" />
-    <Compile Include="PrimaryChargeViewModel.cs" />
+    <Compile Include="PatientEncounterViewModel.cs" />
     <Compile Include="SaveFileViewModel.cs" />
     <Compile Include="Services\AdjustmentService.cs" />
     <Compile Include="Services\ChargeService.cs" />
