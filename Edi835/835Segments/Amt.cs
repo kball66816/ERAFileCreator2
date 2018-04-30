@@ -5,7 +5,7 @@ namespace Edi835._835Segments
 {
     public class Amt : SegmentBase
     {
-        public Amt(Charge charge)
+        public Amt(ServiceDescription charge)
         {
             SegmentIdentifier = "AMT";
             AmountQualifier = "B6";

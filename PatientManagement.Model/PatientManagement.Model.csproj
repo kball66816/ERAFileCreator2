@@ -41,10 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddonCharge.cs" />
     <Compile Include="Adjustment.cs" />
     <Compile Include="Interfaces\IPerson.cs" />
-    <Compile Include="PrimaryCharge.cs" />
+    <Compile Include="ServiceDescription.cs" />
     <Compile Include="InsuranceCompany.cs" />
     <Compile Include="Modifier.cs" />
     <Compile Include="Patient.cs" />
@@ -52,7 +51,6 @@
     <Compile Include="PlaceOfService.cs" />
     <Compile Include="Preference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Charge.cs" />
     <Compile Include="Provider.cs" />
     <Compile Include="Subscriber.cs" />
   </ItemGroup>

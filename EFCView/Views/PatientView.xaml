@@ -12,19 +12,23 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition />
+            <RowDefinition  Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.ColumnSpan="4" Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
             <TextBlock Text="Patient" FontSize="16" TextDecorations="Underline" Margin="5" />
             <CheckBox x:Name="IncludeSubscriberInput"
                       IsChecked="{Binding SelectedPatient.IncludeSubscriber}"
-                      Content="Include Subscriber?" TabIndex="20" Margin="5" />
+                      Content="Include Subscriber?" TabIndex="20" Margin="5,10,5,5" />
+            <TextBlock Text="Encounter Count:"
+                       Margin="5,8,5,5"/>
+            <TextBlock Text="{Binding SelectedPatient.Charges.Count}"
+                       Margin="5,8,5,5"/>
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition  Height="Auto"/>
+                <RowDefinition  Height="Auto"/>
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>

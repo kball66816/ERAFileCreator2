@@ -25,7 +25,6 @@ namespace PatientManagement.ViewModel
         }
 
         private readonly ISettingsService _settingsService;
-        public Dictionary<string, string> InsuranceStates { get; set; }
 
         public InsuranceCompany Insurance
         {
@@ -75,7 +74,7 @@ namespace PatientManagement.ViewModel
             {
                 chargesPaidAmount += c.PaymentAmount;
 
-                foreach (var addonCharge in c.AddonCharges)
+                foreach (var addonCharge in c.AdditionalServiceDescriptions)
                 {
                     addonsPaidAmount += addonCharge.PaymentAmount;
                 }
@@ -88,7 +87,6 @@ namespace PatientManagement.ViewModel
         {
             this.Insurance = new InsuranceCompany();
             this.PaymentTypes = this.Insurance.PaymentTypes;
-            this.InsuranceStates = this.Insurance.Address.States;
             this.Insurance = this._settingsService.PullDefaultInsurance(this.Insurance);
             this.SaveInsuranceToRepository();
             this.RaisePropertyChanged("Insurance");

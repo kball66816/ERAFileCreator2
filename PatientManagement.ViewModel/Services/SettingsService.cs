@@ -10,16 +10,10 @@ namespace PatientManagement.ViewModel.Services
 
             this.ReuseSamePatientEnabled = Settings.Default.ReusePatient;
 
-            this.AddonPromptEnabled = Settings.Default.EnableReuseAddonPrompt;
-
-            this.ReuseSameAddonEnabled = Settings.Default.ReuseAddon;
-
             this.ReuseCharge = Settings.Default.ReuseCharge;
         }
         public bool PatientPromptEnabled { get; set; }
         public bool ReuseSamePatientEnabled { get; set; }
-        public bool AddonPromptEnabled { get; set; }
-        public bool ReuseSameAddonEnabled { get; set; }
 
         public bool ReuseCharge { get; set; }
 

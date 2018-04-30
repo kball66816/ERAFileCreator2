@@ -16,7 +16,6 @@ namespace PatientManagement.ViewModel
         {
             this.BillingProvider = ProviderService.LoadBillingProvider();
             ProviderService.SaveBillingProvider(this.BillingProvider);
-            ProviderStates = BillingProvider.Address.States;
             Messenger.Default.Register<UpdateRepositoriesMessage>(this, this.OnUpdateRepositoriesMessage);
             Messenger.Default.Register<SettingsSavedMessage>(this, this.OnSettingsSavedMessage, "UpdateSettings");
             this.UpdateRenderingProviderCommand = new Command(this.UpdateRenderingProvider, CanUpdateRenderingProvider);
@@ -34,8 +33,6 @@ namespace PatientManagement.ViewModel
                 this.RaisePropertyChanged("BillingProvider");
             }
         }
-
-        public Dictionary<string, string> ProviderStates { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -14,18 +14,18 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
             <TextBlock Text="Insurance Company"
                        FontSize="16"
                        TextDecorations="Underline"
                        Margin="5,5,5,5" />
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Check #:" Margin="5,5,5,0" />
+                <TextBlock Text="Check #:" Margin="5,10,5,0" />
                 <TextBlock Text="{Binding Insurance.CheckNumber}"
-                           Margin="0,5,5,0" />
+                           Margin="0,10,5,0" />
             </StackPanel>
 
         </StackPanel>
@@ -57,25 +57,6 @@
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
-                <TextBlock x:Name="InsuranceAddressLineOneTag"
-                           Text="Street Line One*" Margin="5,5,5,0" />
-                <TextBox x:Name="InsuranceStreetLineOneInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,0"
-                         TabIndex="4" GotFocus="InsuranceStreetLineOneInput_GotFocus" MouseDoubleClick="InsuranceStreetLineOneInput_MouseDoubleClick">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <DockPanel>
-                                <Border BorderBrush="Red" BorderThickness="2">
-                                    <AdornedElementPlaceholder />
-                                </Border>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                    <Binding Path="Insurance.Address.StreetOne" UpdateSourceTrigger="LostFocus">
-                        <Binding.ValidationRules>
-                            <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="PaymentTypeTag"
@@ -87,25 +68,6 @@
                           SelectedValue="{Binding Insurance.PaymentType}"
                           ItemsSource="{Binding PaymentTypes}" HorizontalContentAlignment="Stretch" Margin="5,0,5,5"
                           TabIndex="1" />
-                <TextBlock x:Name="InsuranceStreetLineTwoTag"
-                           Text="Street Line Two" Margin="5,2,5,0" />
-                <TextBox x:Name="InsuranceStreetLineTwoInput" Margin="5,0,0,0" HorizontalContentAlignment="Stretch"
-                         TabIndex="5" MouseDoubleClick="InsuranceStreetLineTwoInput_MouseDoubleClick" GotFocus="InsuranceStreetLineTwoInput_GotFocus">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <DockPanel>
-                                <Border BorderBrush="Red" BorderThickness="2">
-                                    <AdornedElementPlaceholder />
-                                </Border>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                    <Binding Path="Insurance.Address.StreetTwo" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="2">
                 <TextBlock x:Name="InsuranceCompanyTaxIdTag"
@@ -127,24 +89,6 @@
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
-                <TextBlock x:Name="InsuranceCityTag"
-                           Text="City*" Margin="5,5,5,0" />
-                <TextBox x:Name="InsuranceCityInput" HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="6" GotFocus="InsuranceCityInput_GotFocus" MouseDoubleClick="InsuranceCityInput_MouseDoubleClick">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <DockPanel>
-                                <Border BorderBrush="Red" BorderThickness="2">
-                                    <AdornedElementPlaceholder />
-                                </Border>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                    <Binding Path="Insurance.Address.City" UpdateSourceTrigger="LostFocus">
-                        <Binding.ValidationRules>
-                            <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="3">
                 <TextBlock x:Name="CheckAmountTag"
@@ -153,14 +97,6 @@
                          IsEnabled="False"
                          Text="{Binding Insurance.CheckAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          HorizontalContentAlignment="Stretch" Margin="5,0,5,5" />
-                <TextBlock x:Name="InsuranceStateTag"
-                           Text="State*" Margin="5,5,5,0" />
-                <ComboBox x:Name="InsuranceAddressStateInput"
-                          ItemsSource="{Binding InsuranceStates}"
-                          SelectedValuePath="Value"
-                          DisplayMemberPath="Key"
-                          SelectedValue="{Binding Insurance.Address.State}" HorizontalContentAlignment="Stretch"
-                          Margin="5,0,0,0" TabIndex="7" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="4">
                 <TextBlock x:Name="CheckDateTag"
@@ -168,26 +104,6 @@
                            Text="Check Date*" />
                 <DatePicker x:Name="CheckDateInput"
                             SelectedDate="{Binding Insurance.CheckDate}" Margin="5,0,5,5" TabIndex="3" />
-                <TextBlock x:Name="InsuranceZipCodeTag"
-                           Text="Zip Code*" Margin="5,0" />
-                <TextBox x:Name="InsuranceZipCodeInput"
-                         MaxLength="9" Margin="5,0,0,0" TabIndex="8"
-                         PreviewTextInput="InsuranceZipCodeInput_PreviewTextInput" MouseDoubleClick="InsuranceZipCodeInput_MouseDoubleClick" GotFocus="InsuranceZipCodeInput_GotFocus">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <DockPanel>
-                                <Border BorderBrush="Red" BorderThickness="2">
-                                    <AdornedElementPlaceholder />
-                                </Border>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                    <Binding Path="Insurance.Address.ZipCode" UpdateSourceTrigger="LostFocus">
-                        <Binding.ValidationRules>
-                            <validators:ZipCodeValidationRule ValidationStep="RawProposedValue" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox>
             </StackPanel>
         </Grid>
     </Grid>

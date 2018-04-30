@@ -21,12 +21,12 @@
                 Command="{Binding SaveFileCommand}"
                 Content="Create 835 File"
                 Margin="5"
-                TabIndex="60" HorizontalContentAlignment="Center" />
+                TabIndex="64" HorizontalContentAlignment="Center" />
         <Button Grid.Column="4"
                 Command="{Binding SaveBatchOfFiles}"
                 Content="Create 50 835 Files"
                 Margin="5"
-                TabIndex="61" HorizontalContentAlignment="Center"
+                TabIndex="65" HorizontalContentAlignment="Center"
                 ToolTip="Creates 50 835 files using the data currently saved. These default to the public users folder." />
     </Grid>
 </UserControl>
