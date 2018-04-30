@@ -473,7 +473,7 @@
                         <StackPanel.DataContext>
                             <viewModel:PreferenceViewModel />
                         </StackPanel.DataContext>
-                        <CheckBox Content="Reuse Code"
+                        <CheckBox Content="Reuse Primary Service Description"
                                       IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
                                       Command="{Binding SavePreferenceCommand}" 
                                       Margin="5,5,5,0" TabIndex="62" />

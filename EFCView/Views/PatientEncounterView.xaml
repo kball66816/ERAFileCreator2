@@ -4,19 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EraFileCreator.Views"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Background="#FFD0E8FF">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <local:InsuranceCompanyView Grid.Row="0" Background="#FFD0E8FF"/>
-        <local:BillingProviderView Grid.Row="1" Grid.Column="0" Background="#FFD0E8FF"/>
-        <local:PatientView Grid.Row="2" Grid.Column="0" Background="#FFD0E8FF"/>
-        <local:PrimaryChargeView Grid.Row="3" Grid.Column="0" Background="#FFD0E8FF"/>
-        <local:SaveFileView Grid.Row="4" Grid.Column="0" Background="#FFD0E8FF"/>
+        <local:InsuranceCompanyView Grid.Row="0"/>
+        <local:BillingProviderView Grid.Row="1" Grid.Column="0"/>
+        <local:PatientView Grid.Row="2" Grid.Column="0"/>
+        <local:PrimaryChargeView Grid.Row="3" Grid.Column="0"/>
+        <local:SaveFileView Grid.Row="4" Grid.Column="0"/>
     </Grid>
 </UserControl>
