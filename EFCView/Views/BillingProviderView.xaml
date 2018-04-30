@@ -92,28 +92,28 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel  Grid.Column="0" Orientation="Vertical">
-                        <TextBlock x:Name="BillingProviderFirstNameTag"
+                    <TextBlock x:Name="BillingProviderFirstNameTag"
                                    Text="First Name" Margin="5,5,5,0" 
                                    MinWidth="{Binding ActualWidth, ElementName=BillingProviderLineOneTag, Mode=OneWay}"/>
-                        <TextBox x:Name="BillingProviderFirstNameInput"
+                    <TextBox x:Name="BillingProviderFirstNameInput"
                                  IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag}" Margin="5,0,5,5"
                                  HorizontalContentAlignment="Stretch" TabIndex="12" GotFocus="BillingProviderFirstNameInput_GotFocus">
-                            <Validation.ErrorTemplate>
-                                <ControlTemplate>
-                                    <DockPanel>
-                                        <Border BorderBrush="Red" BorderThickness="2">
-                                            <AdornedElementPlaceholder />
-                                        </Border>
-                                    </DockPanel>
-                                </ControlTemplate>
-                            </Validation.ErrorTemplate>
-                            <Binding Path="BillingProvider.FirstName" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox>
-                    </StackPanel>
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="2">
+                                        <AdornedElementPlaceholder />
+                                    </Border>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                        <Binding Path="BillingProvider.FirstName" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validators:StringValidationRule ValidationStep="RawProposedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox>
+                </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="1"
                               Visibility="{Binding IsChecked, Converter={StaticResource VisibilityDisabled}, ElementName=IsIndividualBillingTag}">
                     <TextBlock x:Name="BillingProviderLastNameTag"
@@ -169,111 +169,6 @@
                             Command="{Binding UpdateRenderingProviderCommand}"
                             IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag}"
                             x:Name="Copy" Margin="5,20,0,0" TabIndex="15" />
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Vertical" Grid.Column="0">
-                    <TextBlock x:Name="BillingProviderLineOneTag"
-                               Text="Street Line One*" Margin="5,5,5,0" />
-                    <TextBox x:Name="ProviderAddressLineOneInput" Margin="5,0" HorizontalContentAlignment="Stretch"
-                             TabIndex="16" GotFocus="ProviderAddressLineOneInput_GotFocus" MouseDoubleClick="ProviderAddressLineOneInput_MouseDoubleClick">
-                        <Validation.ErrorTemplate>
-                            <ControlTemplate>
-                                <DockPanel>
-                                    <Border BorderBrush="Red" BorderThickness="2">
-                                        <AdornedElementPlaceholder />
-                                    </Border>
-                                </DockPanel>
-                            </ControlTemplate>
-                        </Validation.ErrorTemplate>
-                        <Binding Path="BillingProvider.Address.StreetOne" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock x:Name="BillingProviderAddressTwoTag"
-                               Text="Street Line Two" VerticalAlignment="Top" Margin="5,5,5,0" />
-                    <TextBox x:Name="BillingProviderAddressTwoInput" HorizontalContentAlignment="Stretch" Margin="5,0"
-                             TabIndex="17" GotFocus="BillingProviderAddressTwoInput_GotFocus" MouseDoubleClick="BillingProviderAddressTwoInput_MouseDoubleClick">
-                        <Validation.ErrorTemplate>
-                            <ControlTemplate>
-                                <DockPanel>
-                                    <Border BorderBrush="Red" BorderThickness="2">
-                                        <AdornedElementPlaceholder />
-                                    </Border>
-                                </DockPanel>
-                            </ControlTemplate>
-                        </Validation.ErrorTemplate>
-                        <Binding Path="BillingProvider.Address.StreetTwo" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Grid.Column="2">
-                    <TextBlock x:Name="BillingProviderCityTag"
-                               Text="City" VerticalAlignment="Top" Margin="5,5,5,0" />
-                    <TextBox x:Name="BillingProviderCityInput" Margin="5,0" HorizontalContentAlignment="Stretch"
-                             TabIndex="18" GotFocus="BillingProviderCityInput_GotFocus" MouseDoubleClick="BillingProviderCityInput_MouseDoubleClick">
-                        <Validation.ErrorTemplate>
-                            <ControlTemplate>
-                                <DockPanel>
-                                    <Border BorderBrush="Red" BorderThickness="2">
-                                        <AdornedElementPlaceholder />
-                                    </Border>
-                                </DockPanel>
-                            </ControlTemplate>
-                        </Validation.ErrorTemplate>
-                        <Binding Path="BillingProvider.Address.City" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Grid.Column="3">
-                    <TextBlock x:Name="BillingProviderStateTag"
-                               Text="State" VerticalAlignment="Top" Margin="5,5,5,0" />
-                    <ComboBox x:Name="BillingProviderStateInput"
-                              ItemsSource="{Binding ProviderStates}"
-                              SelectedValuePath="Value"
-                              DisplayMemberPath="Key"
-                              SelectedValue="{Binding BillingProvider.Address.State}" Margin="5,0"
-                              HorizontalContentAlignment="Stretch" TabIndex="19" />
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Grid.Column="4">
-                    <TextBlock x:Name="BillingProviderZipCodeTag"
-                               Text="Zip Code" Margin="5,5,5,0" />
-                    <TextBox x:Name="BillingProviderZipCodeInput"
-                             MaxLength="9" Margin="5,0" HorizontalContentAlignment="Stretch" TabIndex="20"
-                             PreviewTextInput="BillingProviderZipCodeInput_PreviewTextInput" GotFocus="BillingProviderZipCodeInput_GotFocus" >
-                        <Validation.ErrorTemplate>
-                            <ControlTemplate>
-                                <DockPanel>
-                                    <Border BorderBrush="Red" BorderThickness="1">
-                                        <AdornedElementPlaceholder />
-                                    </Border>
-                                </DockPanel>
-                            </ControlTemplate>
-                        </Validation.ErrorTemplate>
-                        <Binding Path="BillingProvider.Address.ZipCode" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <validators:ZipCodeValidationRule ValidationStep="RawProposedValue" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox>
                 </StackPanel>
             </Grid>
         </Grid>
