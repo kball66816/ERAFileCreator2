@@ -3,6 +3,7 @@ using PatientManagement.Model;
 using PatientManagement.ViewModel.Service.Messaging;
 using PatientManagement.ViewModel.Services;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -19,8 +20,6 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<Adjustment>(this, this.OnAdditionalAdjustmentReceived, "AdditionalServiceDescriptionAdjustment");
             this.AddChargeToPatientCommand = new Command(this.AddNewCharge, CanAddChargeToPatient);
             this.AddAddonCommand = new Command(this.AddAdditionalServiceDescription, CanAddChargeToPatient);
-
-
         }
 
         private void OnAdditionalAdjustmentReceived(Adjustment adjustment)

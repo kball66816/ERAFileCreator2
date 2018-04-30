@@ -15,6 +15,5 @@
         <ScrollViewer DockPanel.Dock="Top">
             <views:PatientEncounterView />
         </ScrollViewer>
-        
     </DockPanel>
 </Window>

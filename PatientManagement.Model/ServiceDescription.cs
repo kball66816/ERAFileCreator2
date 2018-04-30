@@ -13,7 +13,7 @@ namespace PatientManagement.Model
 
         public ServiceDescription()
         {
-            this.AdditionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
+            this._additionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
             this.Adjustments = new ObservableCollection<Adjustment>();
             this.Modifier = new Modifier();
             this.DateOfService = DateTime.Today;
@@ -30,7 +30,7 @@ namespace PatientManagement.Model
             this.PlaceOfService = new PlaceOfService(charge.PlaceOfService);
             this.Modifier = new Modifier(charge.Modifier);
             this.DateOfService = charge.DateOfService;
-            this.AdditionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
+            this._additionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
             this.Adjustments = new ObservableCollection<Adjustment>();
             this.Id = Guid.NewGuid();
         }
@@ -118,7 +118,22 @@ namespace PatientManagement.Model
             }
         }
 
-        public ObservableCollection<ServiceDescription> AdditionalServiceDescriptions { get; }
+        public ObservableCollection<ServiceDescription> AdditionalServiceDescriptions
+        {
+            get
+            {
+                return this._additionalServiceDescriptions;
+            }
+
+            set
+            {
+                if (value != this._additionalServiceDescriptions)
+                {
+                    this._additionalServiceDescriptions = value;
+                    this.RaisePropertyChanged("AdditionalServiceDescriptions");
+                }
+            }
+        }
 
         public string ReferenceId
         {
@@ -126,6 +141,8 @@ namespace PatientManagement.Model
         }
 
         public int ReferenceIdCounter;
+        private ObservableCollection<ServiceDescription> _additionalServiceDescriptions;
+
         public string BillId
         {
             get => this._billId;
