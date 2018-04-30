@@ -14,13 +14,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="5">
-            <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="5">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock
                     Text="Billing Provider" FontSize="16" TextDecorations="Underline" Margin="5,0,0,5" />
                 <CheckBox Content="Use Individual Provider"
                           IsChecked="{Binding BillingProvider.IsIndividual}"
-                          x:Name="IsIndividualBillingTag" Margin="5,0,0,5" TabIndex="10" />
+                          x:Name="IsIndividualBillingTag" Margin="10,5,0,5" TabIndex="10" />
             </StackPanel>
         </StackPanel>
         <Grid Grid.Row="1">
@@ -37,12 +37,11 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" Grid.Column="0">
                     <TextBlock x:Name="BillingProviderNameTag"
-                               Text="Business Name*" Margin="5,5,5,0" 
-                               MinWidth="{Binding ActualWidth, ElementName=BillingProviderLineOneTag, Mode=OneWay}"/>
+                               Text="Business Name*" Margin="5,5,5,0" />
                     <TextBox x:Name="BillingProviderNameInput"
                              IsEnabled="{Binding IsChecked, Converter={StaticResource NotConverter}, ElementName=IsIndividualBillingTag}"
                              Margin="5,0,5,5" HorizontalContentAlignment="Stretch"
-                             MinWidth="{Binding ActualWidth, ElementName=BillingProviderLineOneTag, Mode=OneWay}" TabIndex="11" GotFocus="BillingProviderNameInput_GotFocus" MouseDoubleClick="BillingProviderNameInput_MouseDoubleClick">
+                             MouseDoubleClick="BillingProviderNameInput_MouseDoubleClick">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -93,8 +92,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel  Grid.Column="0" Orientation="Vertical">
                     <TextBlock x:Name="BillingProviderFirstNameTag"
-                                   Text="First Name" Margin="5,5,5,0" 
-                                   MinWidth="{Binding ActualWidth, ElementName=BillingProviderLineOneTag, Mode=OneWay}"/>
+                                   Text="First Name" Margin="5,5,5,0" />
                     <TextBox x:Name="BillingProviderFirstNameInput"
                                  IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag}" Margin="5,0,5,5"
                                  HorizontalContentAlignment="Stretch" TabIndex="12" GotFocus="BillingProviderFirstNameInput_GotFocus">
@@ -119,10 +117,11 @@
                     <TextBlock x:Name="BillingProviderLastNameTag"
                            Text="Last Name" Margin="5,5,5,0" />
                     <TextBox x:Name="BillingProviderLastNameInput"
-                         IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag, Mode=TwoWay}"
-                         Margin="5,0,5,5" 
-                             MinWidth="{Binding ActualWidth, ElementName=BillingProviderLineOneTag, Mode=OneWay}"
-                             HorizontalContentAlignment="Stretch" TabIndex="13" GotFocus="BillingProviderLastNameInput_GotFocus">
+                             IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag, Mode=TwoWay}"
+                             Margin="5,0,5,5" 
+                             HorizontalContentAlignment="Stretch" 
+                             TabIndex="13" 
+                             GotFocus="BillingProviderLastNameInput_GotFocus">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -141,8 +140,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="2">
                     <TextBlock x:Name="BillingProviderNpiTag"
-                           Text="NPI*" Margin="5,5,5,0" 
-                               MinWidth="{Binding ActualWidth, ElementName=BillingProviderLineOneTag, Mode=OneWay}"/>
+                           Text="NPI*" Margin="5,5,5,0" />
                     <TextBox x:Name="BillingProviderNpiInput"
                          MaxLength="10" Margin="5,0,5,5" 
                              HorizontalContentAlignment="Stretch" TabIndex="14"
