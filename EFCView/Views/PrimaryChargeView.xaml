@@ -344,7 +344,7 @@
                                     <TextBox x:Name="AddonPaidAmountInput"
                          HorizontalContentAlignment="Stretch" Margin="5,0" TabIndex="54" 
 
-                         Text="{Binding PaymentAmount, StringFormat=\{0:F2\}}"
+                         Text="{Binding PaymentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
                                         GotFocus="HightlightAllText"
                                         PreviewKeyDown="IgnoreDecimalInput">
                                         <Validation.ErrorTemplate>
