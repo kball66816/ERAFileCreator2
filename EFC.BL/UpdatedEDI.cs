@@ -165,7 +165,7 @@ namespace EFC.BL
 
                     this._segmentCount++;
 
-                    charge.ReferenceIdCounter++;
+                    charge.ReferenceIdCounter=1;
                     var chargeRef = new Ref(charge);
                     edi.Append(chargeRef.BuildRef());
                     this._segmentCount++;
