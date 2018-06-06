@@ -24,8 +24,13 @@ namespace PatientManagement.ViewModel
             SendCalculateRequest();
             var edi = new UpdatedEdi();
             edi.Create835File().SaveTextFiletoSelectedDirectory();
+            SendFileCreationComplete();
         }
 
+        private static void SendFileCreationComplete()
+        {
+            Messenger.Default.Send(new SaveFileMessage(),"CreationCompleted");
+        }
         private static void Save50Files(object obj)
         {
             SendCalculateRequest();

@@ -20,11 +20,11 @@ namespace PatientManagement.ViewModel
             Messenger.Default.Register<UpdateCalculations>(this, this.OnUpdateCalculation);
             Messenger.Default.Register<UpdateRepositoriesMessage>(this, this.OnUpdateRepositoriesMessageReceieved,"UpdateRepositories");
             Messenger.Default.Register<SettingsSavedMessage>(this, this.OnSettingsSaved, "UpdateSettings");
-            Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileReceived, "SaveTextFiletoSelectedDirectory");
+            Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileReceived, "CreationCompleted");
             this.Insurance.CheckAmount = this.CalculateCheckAmount();
         }
 
-        private readonly ISettingsService _settingsService;
+        private ISettingsService _settingsService;
 
         public InsuranceCompany Insurance
         {
@@ -87,7 +87,7 @@ namespace PatientManagement.ViewModel
         {
             this.Insurance = new InsuranceCompany();
             this.PaymentTypes = this.Insurance.PaymentTypes;
-            this.Insurance = this._settingsService.PullDefaultInsurance(this.Insurance);
+           this.Insurance = this._settingsService.PullDefaultInsurance(this.Insurance);
             this.SaveInsuranceToRepository();
             this.RaisePropertyChanged("Insurance");
         }
@@ -106,7 +106,7 @@ namespace PatientManagement.ViewModel
 
         private void SaveSettings()
         {
-          this._settingsService.SetDefaultInsurance(this._insurance);
+         this._settingsService.SetDefaultInsurance(this._insurance);
         }
     }
 }

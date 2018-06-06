@@ -2,7 +2,7 @@
 
 namespace PatientManagement.ViewModel.Services
 {
-    public class SettingsService : ISettingsService
+    public class SettingsService: ISettingsService
     {
         public SettingsService()
         {
@@ -10,7 +10,7 @@ namespace PatientManagement.ViewModel.Services
 
             this.ReuseSamePatientEnabled = Settings.Default.ReusePatient;
 
-            this.ReuseCharge = Settings.Default.ReuseCharge;
+            this.ReuseCharge = Settings.Default.ReuseChargeForNextPatient;
         }
         public bool PatientPromptEnabled { get; set; }
         public bool ReuseSamePatientEnabled { get; set; }
@@ -24,7 +24,7 @@ namespace PatientManagement.ViewModel.Services
             Settings.Default.ReusePatient = preference.ReusePatient;
             Settings.Default.ReuseAddon = preference.ReuseAddon;
             Settings.Default.ReloadLastPatient = preference.ReloadLastPatientFromLastSession;
-            Settings.Default.ReuseCharge = preference.ReuseLastChargeForNextPatient;
+            Settings.Default.ReuseChargeForNextPatient = preference.ReuseLastChargeForNextPatient;
             Settings.Default.Save();
         }
 
@@ -36,7 +36,7 @@ namespace PatientManagement.ViewModel.Services
             preference.ReusePatient = Settings.Default.ReusePatient;
             preference.ReuseAddon = Settings.Default.ReuseAddon;
             preference.ReloadLastPatientFromLastSession = Settings.Default.ReloadLastPatient;
-            preference.ReuseLastChargeForNextPatient = Settings.Default.ReuseCharge;
+            preference.ReuseLastChargeForNextPatient = Settings.Default.ReuseChargeForNextPatient;
 
             return preference;
         }
