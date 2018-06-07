@@ -1,16 +1,18 @@
-﻿using PatientManagement.Model;
+﻿using Common.Common.Services;
+using PatientManagement.Model;
+using PatientManagement.ViewModel.Service.Messaging;
 
 namespace PatientManagement.ViewModel.Services
 {
-    public class SettingsService : ISettingsService
+    public class SettingsService: ISettingsService
     {
         public SettingsService()
         {
             this.PatientPromptEnabled = Settings.Default.EnableReusePatientPrompt;
-
             this.ReuseSamePatientEnabled = Settings.Default.ReusePatient;
+            this.ReuseCharge = Settings.Default.ReuseChargeForNextPatient;
+            Messenger.Default.Register<PreferenceUpdatedMessage>(this, this.OnPrefenceUpdatedMessage, "Preferences Updated");
 
-            this.ReuseCharge = Settings.Default.ReuseCharge;
         }
         public bool PatientPromptEnabled { get; set; }
         public bool ReuseSamePatientEnabled { get; set; }
@@ -24,7 +26,8 @@ namespace PatientManagement.ViewModel.Services
             Settings.Default.ReusePatient = preference.ReusePatient;
             Settings.Default.ReuseAddon = preference.ReuseAddon;
             Settings.Default.ReloadLastPatient = preference.ReloadLastPatientFromLastSession;
-            Settings.Default.ReuseCharge = preference.ReuseLastChargeForNextPatient;
+            Settings.Default.ReuseChargeForNextPatient = preference.ReuseLastChargeForNextPatient;
+
             Settings.Default.Save();
         }
 
@@ -36,7 +39,7 @@ namespace PatientManagement.ViewModel.Services
             preference.ReusePatient = Settings.Default.ReusePatient;
             preference.ReuseAddon = Settings.Default.ReuseAddon;
             preference.ReloadLastPatientFromLastSession = Settings.Default.ReloadLastPatient;
-            preference.ReuseLastChargeForNextPatient = Settings.Default.ReuseCharge;
+            preference.ReuseLastChargeForNextPatient = Settings.Default.ReuseChargeForNextPatient;
 
             return preference;
         }
@@ -177,6 +180,13 @@ namespace PatientManagement.ViewModel.Services
             Settings.Default.BillingProviderAddressZipCode = billingProvider.Address.ZipCode;
             Settings.Default.BillingProviderIsIndividual = billingProvider.IsIndividual;
             Settings.Default.Save();
+        }
+
+        private void OnPrefenceUpdatedMessage(PreferenceUpdatedMessage obj)
+        {
+            this.PatientPromptEnabled = Settings.Default.EnableReusePatientPrompt;
+            this.ReuseSamePatientEnabled = Settings.Default.ReusePatient;
+            this.ReuseCharge = Settings.Default.ReuseChargeForNextPatient;
         }
     }
 }

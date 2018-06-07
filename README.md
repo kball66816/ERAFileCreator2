@@ -1,24 +1,27 @@
-ERA File Creator
+# ERA File Creator
 
 The ERA File Creator is a WPF program written with C#. It's design is to write asterisk delimited segments to fit the requirements of the EDI 835 ANSI spec.
 
 The Program manages this by Taking End User input and storing them in in memory to be retrieved when the user wants to generate the file.
 Once they are retrieved they are built using a stringbuilder, once built the string is written to a text file using StreamWriter.
 
-To Run
+### To Run
 To run this program you can either install through the executable in the publish folder. This looks for updates within the folder on github and is deployed using clickonce.
 Alternatively you can open the solution in Visual Studio and select EFC.View as the startup project
 
 There are no 3rd party dependencies
 
-Instructions
-Patients - Each patient represents one encounter. Each encounter can have more than one charge but they share the same claim/bill Id
+### Instructions
+Patient - The entity you are associating the encounter to
 
-Charge - Each charge can have 0 or more adjustments. If you want to attach an adjustment to the charge you must first add an adjustment to the charge
+Patient Encounters - Each service has at least one service description. The service description can have 0 to many adjustments and/or 0 to many Additional Service Descriptions
 
-Adjustment - Ideally you want each adjustment to be unique, a charge can have more than one adjustment of different types. Duplicate adjustments are not currently enforced.
+Adjustment - Ideally you want each adjustment to be unique, a Service Description can have more than one adjustment of different types.
 
-Addon Charges - Each Charge within an encounter can theoretically have an addon charge. These will need to be added before you add the charge to the patient
+Additional Service Description - Each Encounter can have more than one service Additional Service Descriptions keep a primary and additional service descriptions tied together. These will need to be added before you add the charge to the patient.
 
-Addon Adjustment - Just like a Charge adjustment, you want each adjustment to be unique, an addon charge can have more than one adjustment of different types. Duplicate adjustment checks are not currently enforced.
-You will want to add the Addon Adjustment before you add the Addon Charge to the Charge.
+**V 1.0.0.23**
+**Contains  the following fixes
+* Check Date and Check Number will no longer default back to today before creating the file
+* Library update to .net 4.6.2
+* Settings are now usable without needing to exit and restart

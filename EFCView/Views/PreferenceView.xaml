@@ -16,15 +16,18 @@
                 <CheckBox Content="Reuse Same Patient"
                           Name="ReusePatientPreference"
                           Command="{Binding SavePreferenceCommand}"
+                          CommandParameter="{Binding Preference}"
                           IsChecked="{Binding Preference.ReusePatient,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                           Margin="5" TabIndex="66" />
                 <CheckBox Content="Reuse Patient Prompt"
                           Command="{Binding SavePreferenceCommand}"
+                          CommandParameter="{Binding Preference}"
                           IsChecked="{Binding Preference.EnablePatientReusePrompt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                           IsEnabled="{Binding ElementName=ReusePatientPreference,Path=IsChecked}" Margin="5,0,0,0"
                           TabIndex="67" />
                 <CheckBox Content="Patient From Last Run"
                           Command="{Binding SavePreferenceCommand}"
+                          CommandParameter="{Binding Preference}"
                           IsChecked="{Binding Preference.ReloadLastPatientFromLastSession,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Margin="5" TabIndex="68" />
             </StackPanel>
