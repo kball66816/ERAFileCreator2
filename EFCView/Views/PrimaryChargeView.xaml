@@ -476,7 +476,8 @@
                         </StackPanel.DataContext>
                         <CheckBox Content="Reuse Primary Service Description"
                                       IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"
-                                      Command="{Binding SavePreferenceCommand}" 
+                                  CommandParameter="{Binding Preference}"    
+                                  Command="{Binding SavePreferenceCommand}" 
                                       Margin="5,5,5,0" TabIndex="62" />
                     </StackPanel>
                     <Button

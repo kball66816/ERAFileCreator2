@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
+using Common.Common.Services;
 using PatientManagement.Model;
+using PatientManagement.ViewModel.Service.Messaging;
 using PatientManagement.ViewModel.Services;
 
 namespace PatientManagement.ViewModel
@@ -35,9 +37,10 @@ namespace PatientManagement.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void SavePreference(object obj)
+        private void SavePreference(object preference)
         {
-            this._settingsService.SetDefaultPreferences(this.Preference);
+            this._settingsService.SetDefaultPreferences(preference as Preference);
+            PreferencesUpdated();
         }
 
         private void LoadCommands()
@@ -48,6 +51,11 @@ namespace PatientManagement.ViewModel
         private void RaisePropertyChanged(string propertyName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void PreferencesUpdated()
+        {
+            Messenger.Default.Send(new PreferenceUpdatedMessage(), "Preferences Updated");
         }
     }
 }

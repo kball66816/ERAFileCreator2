@@ -52,6 +52,7 @@
     <Compile Include="InsuranceViewModel.cs" />
     <Compile Include="Mocks\SettingsServiceMock.cs" />
     <Compile Include="Service.Messaging\ListClearedMessage.cs" />
+    <Compile Include="Service.Messaging\PreferenceUpdatedMessage.cs" />
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Mocks\MessageBoxServiceMock.cs" />
     <Compile Include="PatientListViewModel.cs" />
