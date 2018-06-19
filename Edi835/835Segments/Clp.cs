@@ -12,7 +12,7 @@ namespace Edi835._835Segments
             SegmentIdentifier = "CLP";
 
             ClaimSubmittersIdentifier = serviceDescription.BillId;
-            ClaimStatusCode = "1";
+            ClaimStatusCode = serviceDescription.ClaimStatus.Code;
             TotalClaimChargeAmount = serviceDescription.ChargeCost+serviceDescription.AdditionalServiceDescriptions.Sum(s=>s.ChargeCost);
             TotalClaimPaymentAmount = serviceDescription.PaymentAmount +
                                       serviceDescription.AdditionalServiceDescriptions.Sum(s => s.SumOfChargePaid);

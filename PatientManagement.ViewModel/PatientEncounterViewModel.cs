@@ -16,10 +16,25 @@ namespace PatientManagement.ViewModel
             this.PrimaryServiceDescription = ChargeService.GetNewCharge();
             this.AdditionalServiceDescription = ChargeService.GetNewCharge();
             this.PlacesOfService = this._primaryServiceDescription.PlaceOfService.PlacesOfService;
+            this.ClaimStatusCodes = this.PrimaryServiceDescription.ClaimStatus.Codes;
             Messenger.Default.Register<Adjustment>(this, this.OnPrimaryAdjustmentReceived, "PrimaryAdjustment");
             Messenger.Default.Register<Adjustment>(this, this.OnAdditionalAdjustmentReceived, "AdditionalServiceDescriptionAdjustment");
             this.AddChargeToPatientCommand = new Command(this.AddNewCharge, CanAddChargeToPatient);
             this.AddAddonCommand = new Command(this.AddAdditionalServiceDescription, CanAddChargeToPatient);
+        }
+
+        public Dictionary<string, string> ClaimStatusCodes
+        {
+            get { return this._claimStatusCodes; }
+            set
+            {
+                if (value != this._claimStatusCodes)
+                {
+                    this._claimStatusCodes = value;
+                    RaisePropertyChanged("ClaimStatusCodes");
+                }
+
+            }
         }
 
         private void OnAdditionalAdjustmentReceived(Adjustment adjustment)
@@ -40,6 +55,7 @@ namespace PatientManagement.ViewModel
 
         private ServiceDescription _primaryServiceDescription;
         private ServiceDescription _additionalServiceDescription;
+        private Dictionary<string, string> _claimStatusCodes;
 
         public ServiceDescription PrimaryServiceDescription
         {
@@ -65,7 +81,7 @@ namespace PatientManagement.ViewModel
 
         private void AddAdditionalServiceDescription(object description)
         {
-            ChargeService.AssociateAdditionalServiceDescription(this.PrimaryServiceDescription, description as  ServiceDescription);
+            ChargeService.AssociateAdditionalServiceDescription(this.PrimaryServiceDescription, description as ServiceDescription);
             this.AdditionalServiceDescription =
                 ChargeService.SetNewOrClonedChargeByUserSettings(AdditionalServiceDescription);
             this.RaisePropertyChanged("SelectedAddonCharge");

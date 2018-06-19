@@ -70,7 +70,7 @@ namespace PatientManagement.Model
 
         public PlaceOfService(PlaceOfService placeOfService)
         {
-            serviceLocation = placeOfService.serviceLocation;
+            this.serviceLocation = placeOfService.serviceLocation;
         }
 
         public string ServiceLocation
