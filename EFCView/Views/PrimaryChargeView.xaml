@@ -33,6 +33,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" Grid.Column="0">
                     <StackPanel>
@@ -56,34 +57,44 @@
                               SelectedIndex="9"
                               ToolTip="{Binding SelectedItem.Value, ElementName=PlaceOfServiceComboBox, Mode=OneWay}"
                               Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="32" />
-
                     </StackPanel>
+                  
 
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="2">
-                    <StackPanel>
-                        <TextBlock x:Name="BillIdTag"
-                               Text="Bill ID*" Margin="5,5,5,0" />
-                        <TextBox x:Name="BillIdInput" Margin="5,0,5,5" TabIndex="33" GotFocus="HightlightAllText">
-                            <Validation.ErrorTemplate>
-                                <ControlTemplate>
-                                    <DockPanel>
-                                        <Border BorderBrush="Red" BorderThickness="2">
-                                            <AdornedElementPlaceholder />
-                                        </Border>
-                                    </DockPanel>
-                                </ControlTemplate>
-                            </Validation.ErrorTemplate>
-                            <Binding Path="PrimaryServiceDescription.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                                <Binding.ValidationRules>
-                                    <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock x:Name="ClaimStatus"
+                                   Text="Claim Status" Margin="5,5,5,0" />
+                        <ComboBox x:Name="ClaimStatusDropdown" ItemsSource="{Binding ClaimStatusCodes}"
+                                  DisplayMemberPath="Key"
+                                  SelectedValuePath="Key"
+                                  SelectedValue="{Binding PrimaryServiceDescription.ClaimStatus.Code}"
+                                  SelectedIndex="0"
+                                  ToolTip="{Binding SelectedItem.Value, ElementName=ClaimStatusDropdown, Mode=OneWay}"
+                                  Margin="5,0,5,5" HorizontalContentAlignment="Stretch" TabIndex="32" />
                     </StackPanel>
-
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Grid.Column="3">
+                <StackPanel Grid.Column="3">
+                    <TextBlock x:Name="BillIdTag"
+                               Text="Bill ID*" Margin="5,5,5,0" />
+                    <TextBox x:Name="BillIdInput" Margin="5,0,5,5" TabIndex="33" GotFocus="HightlightAllText">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <DockPanel>
+                                    <Border BorderBrush="Red" BorderThickness="2">
+                                        <AdornedElementPlaceholder />
+                                    </Border>
+                                </DockPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                        <Binding Path="PrimaryServiceDescription.BillId" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <validators:StringValidationRule ValidationStep="RawProposedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="4">
                     <StackPanel Orientation="Vertical">
                         <TextBlock x:Name="PatientCopayTag"
                                Text="Copay*" Margin="5,5,5,0" />

@@ -18,6 +18,7 @@ namespace PatientManagement.Model
             this.Modifier = new Modifier();
             this.DateOfService = DateTime.Today;
             this.PlaceOfService = new PlaceOfService();
+            this.ClaimStatus = new ClaimStatusCode();
         }
 
         public ServiceDescription(ServiceDescription charge)
@@ -32,27 +33,27 @@ namespace PatientManagement.Model
             this.DateOfService = charge.DateOfService;
             this._additionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
             this.Adjustments = new ObservableCollection<Adjustment>();
-            this.Id = Guid.NewGuid();
+            this.ClaimStatus = new ClaimStatusCode(charge.ClaimStatus);
         }
 
-        private ObservableCollection<Adjustment> adjustmentList;
+        private ObservableCollection<Adjustment> _adjustmentList;
 
 
-        private decimal chargeCost;
+        private decimal _chargeCost;
 
-        private decimal paymentAmount;
+        private decimal _paymentAmount;
 
 
-        private string procedureCode;
+        private string _procedureCode;
 
         public ObservableCollection<Adjustment> Adjustments
         {
-            get => adjustmentList;
+            get => this._adjustmentList;
             set
             {
-                if (value != adjustmentList)
+                if (value != this._adjustmentList)
                 {
-                    adjustmentList = value;
+                    this._adjustmentList = value;
                     RaisePropertyChanged("AdjustmentList");
                 }
             }
@@ -60,16 +61,14 @@ namespace PatientManagement.Model
 
         public Modifier Modifier { get; set; }
 
-        public Guid Id { get; set; }
-
         public decimal ChargeCost
         {
-            get => chargeCost;
+            get => this._chargeCost;
             set
             {
-                if (value != chargeCost)
+                if (value != this._chargeCost)
                 {
-                    chargeCost = value;
+                    this._chargeCost = value;
                     RaisePropertyChanged("ChargeCost");
                 }
             }
@@ -77,12 +76,12 @@ namespace PatientManagement.Model
 
         public decimal PaymentAmount
         {
-            get => paymentAmount;
+            get => this._paymentAmount;
             set
             {
-                if (value != paymentAmount)
+                if (value != this._paymentAmount)
                 {
-                    paymentAmount = value;
+                    this._paymentAmount = value;
                     RaisePropertyChanged("PaymentAmount");
                     RaisePropertyChanged("CheckAmount");
                     RaisePropertyChanged("AllowedAmount");
@@ -92,12 +91,12 @@ namespace PatientManagement.Model
 
         public string ProcedureCode
         {
-            get => procedureCode;
+            get => this._procedureCode;
             set
             {
-                if (value != procedureCode)
+                if (value != this._procedureCode)
                 {
-                    procedureCode = value;
+                    this._procedureCode = value;
                     RaisePropertyChanged("ProcedureCode");
                 }
             }
@@ -194,11 +193,13 @@ namespace PatientManagement.Model
             get => this.ChargeCost + this.TotalCostofAddonCharge;
         }
 
+        public ClaimStatusCode ClaimStatus { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string propertyName)
         {
-            if (this.PropertyChanged != null) this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
