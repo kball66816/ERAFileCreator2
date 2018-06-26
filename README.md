@@ -20,6 +20,11 @@ Adjustment - Ideally you want each adjustment to be unique, a Service Descriptio
 
 Additional Service Description - Each Encounter can have more than one service Additional Service Descriptions keep a primary and additional service descriptions tied together. These will need to be added before you add the charge to the patient.
 
+**V1.0.1.0**
+**Contains the following feature
+*Claim Status in the CLP segment is now changeable
+*Claim Status will tell you its plain text reason when you hover
+
 **V 1.0.0.23**
 **Contains  the following fixes
 * Check Date and Check Number will no longer default back to today before creating the file

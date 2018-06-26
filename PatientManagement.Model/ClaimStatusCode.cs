@@ -18,7 +18,7 @@ namespace PatientManagement.Model
             {"20","Processed as Secondary, Forwarded to Additional Payer(s)" },
             {"22","Reversal of Previous Payment" },
             {"23","Not Our Claim, Forwarded To Additional Payers" },
-            {"25","Predetermination Pricing ONly - No Payment" }
+            {"25","Predetermination Pricing Only - No Payment" }
         };
 
         public ClaimStatusCode()
