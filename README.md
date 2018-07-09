@@ -22,8 +22,8 @@ Additional Service Description - Each Encounter can have more than one service A
 
 **V1.0.1.0**
 **Contains the following feature
-*Claim Status in the CLP segment is now changeable
-*Claim Status will tell you its plain text reason when you hover
+* Claim Status in the CLP segment is now changeable
+* Claim Status will tell you its plain text reason when you hover
 
 **V 1.0.0.23**
 **Contains  the following fixes
