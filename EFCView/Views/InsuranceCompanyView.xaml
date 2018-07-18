@@ -22,10 +22,13 @@
                        FontSize="16"
                        TextDecorations="Underline"
                        Margin="5,5,5,5" />
+          
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Check #:" Margin="5,10,5,0" />
-                <TextBlock Text="{Binding Insurance.CheckNumber}"
+                <TextBlock Text="{Binding Payment.Number}"
                            Margin="0,10,5,0" />
+                <Button Command="{Binding CreateJsonCommand}"
+                        CommandParameter="{Binding Insurance}">Test</Button>
             </StackPanel>
 
         </StackPanel>
@@ -65,7 +68,7 @@
                 <ComboBox x:Name="PaymentTypeDropdown"
                           SelectedValuePath="Value"
                           DisplayMemberPath="Key"
-                          SelectedValue="{Binding Insurance.PaymentType}"
+                          SelectedValue="{Binding Payment.Type}"
                           ItemsSource="{Binding PaymentTypes}" HorizontalContentAlignment="Stretch" Margin="5,0,5,5"
                           TabIndex="1" />
             </StackPanel>
@@ -95,7 +98,7 @@
                            Text="Check Amount*" Margin="5,5,5,0" />
                 <TextBox x:Name="CheckAmountInput"
                          IsEnabled="False"
-                         Text="{Binding Insurance.CheckAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Payment.Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          HorizontalContentAlignment="Stretch" Margin="5,0,5,5" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="4">
@@ -103,7 +106,8 @@
                            Margin="5,5,5,0"
                            Text="Check Date*" />
                 <DatePicker x:Name="CheckDateInput"
-                            SelectedDate="{Binding Insurance.CheckDate}" Margin="5,0,5,5" TabIndex="3" />
+                            SelectedDate="{Binding Payment.Date}" Margin="5,0,5,5" TabIndex="3" />
+                <TextBox Text="{Binding test}"></TextBox>
             </StackPanel>
         </Grid>
     </Grid>

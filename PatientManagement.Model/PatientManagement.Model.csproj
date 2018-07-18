@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adjustment.cs" />
+    <Compile Include="InsurancePayment.cs" />
+    <Compile Include="Payment.cs" />
     <Compile Include="ClaimStatusCode.cs" />
     <Compile Include="Interfaces\IPerson.cs" />
     <Compile Include="ServiceDescription.cs" />

@@ -15,12 +15,17 @@ namespace EFC.BL
 
         private readonly List<Patient> _patients;
 
+        private readonly Payment _payment;
+
         private int _segmentCount = 6;
 
         public UpdatedEdi()
         {
-            IInsurance insuranceCompany = new InsuranceRepository();
-            this._insurance = insuranceCompany.GetInsurance();
+            var insurancePaymentRepository = new InsurancePaymentRepository();
+            this._insurance = insurancePaymentRepository.GetInsuranceWithPayment().InsuranceCompany;
+            this._payment = insurancePaymentRepository.GetInsuranceWithPayment().Payment;
+            //IInsurance insuranceCompany = new InsuranceRepository();
+            //this._insurance = insuranceCompany.GetInsurance();
             IPatientRepository patientList = new PatientRepository();
             this._patients = patientList.GetAllPatients().ToList();
             IProvider provider = new BillingProviderRepository();
@@ -42,12 +47,12 @@ namespace EFC.BL
             edi.Append(st.BuildSt());
             this._segmentCount++;
 
-            var bpr = new Bpr(this._insurance);
+            var bpr = new Bpr(this._payment);
 
             edi.Append(bpr.BuildBpr());
             this._segmentCount++;
 
-            var trn = new Trn(this._insurance);
+            var trn = new Trn(this._payment, this._insurance);
 
             edi.Append(trn.BuildTrn());
             this._segmentCount++;

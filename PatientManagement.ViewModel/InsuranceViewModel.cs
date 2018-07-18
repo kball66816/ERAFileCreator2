@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Input;
 using Common.Common.Services;
 using EFC.BL;
+using Newtonsoft.Json;
 using PatientManagement.DAL;
 using PatientManagement.Model;
 using PatientManagement.ViewModel.Service.Messaging;
@@ -16,15 +18,52 @@ namespace PatientManagement.ViewModel
         public InsuranceViewModel()
         {
             this._settingsService = new SettingsService();
+            Payment = new Payment();
             this.LoadInsuranceCompany();
             Messenger.Default.Register<UpdateCalculations>(this, this.OnUpdateCalculation);
-            Messenger.Default.Register<UpdateRepositoriesMessage>(this, this.OnUpdateRepositoriesMessageReceieved,"UpdateRepositories");
+            Messenger.Default.Register<UpdateRepositoriesMessage>(this, this.OnUpdateRepositoriesMessageReceieved, "UpdateRepositories");
             Messenger.Default.Register<SettingsSavedMessage>(this, this.OnSettingsSaved, "UpdateSettings");
             Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileReceived, "CreationCompleted");
-            this.Insurance.CheckAmount = this.CalculateCheckAmount();
+            Payment.Amount = this.CalculateCheckAmount();
+            this.CreateJsonCommand = new Command(CreateJson);
+        }
+
+        public Payment Payment
+        {
+            get => this._payment;
+            set
+            {
+                this._payment = value;
+                RaisePropertyChanged("Payment");
+            }
+        }
+
+        private void CreateJson(object obj)
+        {
+            var insuranceCompany = obj as InsuranceCompany;
+            insuranceCompany.Address.StreetOne = "Street One";
+            insuranceCompany.Address.StreetTwo = "Street Two";
+            insuranceCompany.Address.City = "Birmingham";
+            insuranceCompany.Address.State = "AL";
+            insuranceCompany.Address.ZipCode = "12345";
+            this.test = JsonConvert.SerializeObject(insuranceCompany, Formatting.Indented);
         }
 
         private ISettingsService _settingsService;
+
+        public ICommand CreateJsonCommand { get; set; }
+        private string _test;
+        private Payment _payment;
+
+        public string test
+        {
+            get => this._test;
+            set
+            {
+                this._test = value;
+                RaisePropertyChanged("test");
+            }
+        }
 
         public InsuranceCompany Insurance
         {
@@ -70,24 +109,25 @@ namespace PatientManagement.ViewModel
             decimal chargesPaidAmount = 0;
             decimal addonsPaidAmount = 0;
             foreach (var patient in PatientService.PatientRepository.GetAllPatients())
-            foreach (var c in patient.Charges)
-            {
-                chargesPaidAmount += c.PaymentAmount;
-
-                foreach (var addonCharge in c.AdditionalServiceDescriptions)
+                foreach (var c in patient.Charges)
                 {
-                    addonsPaidAmount += addonCharge.PaymentAmount;
-                }
-            }
+                    chargesPaidAmount += c.PaymentAmount;
 
-            return this.Insurance.CheckAmount = chargesPaidAmount + addonsPaidAmount;
+                    foreach (var addonCharge in c.AdditionalServiceDescriptions)
+                    {
+                        addonsPaidAmount += addonCharge.PaymentAmount;
+                    }
+                }
+
+            Payment.Amount = chargesPaidAmount + addonsPaidAmount;
+            return Payment.Amount;
         }
 
         private void LoadInsuranceCompany()
         {
             this.Insurance = new InsuranceCompany();
-            this.PaymentTypes = this.Insurance.PaymentTypes;
-           this.Insurance = this._settingsService.PullDefaultInsurance(this.Insurance);
+            this.PaymentTypes = Payment.Types;
+            this.Insurance = this._settingsService.PullDefaultInsurance(this.Insurance);
             this.SaveInsuranceToRepository();
             this.RaisePropertyChanged("Insurance");
         }
@@ -95,8 +135,8 @@ namespace PatientManagement.ViewModel
 
         private void SaveInsuranceToRepository()
         {
-            IInsurance saveInsurance = new InsuranceRepository();
-            saveInsurance.AddInsurance(this._insurance);
+            var insuranceWithPaymentRepository = new InsurancePaymentRepository();
+            insuranceWithPaymentRepository.AddInsurancePayment(this.Insurance, this.Payment);
         }
 
         private void RaisePropertyChanged(string propertyName)
@@ -106,7 +146,7 @@ namespace PatientManagement.ViewModel
 
         private void SaveSettings()
         {
-         this._settingsService.SetDefaultInsurance(this._insurance);
+            this._settingsService.SetDefaultInsurance(this._insurance);
         }
     }
 }

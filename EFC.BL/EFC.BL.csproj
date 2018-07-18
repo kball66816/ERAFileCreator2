@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BillingProviderRepository.cs" />
+    <Compile Include="InsurancePaymentRepository.cs" />
     <Compile Include="InsuranceRepository.cs" />
     <Compile Include="PatientRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

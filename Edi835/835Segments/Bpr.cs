@@ -6,15 +6,13 @@ namespace Edi835._835Segments
 {
     public class Bpr : SegmentBase
     {
-        public Bpr(InsuranceCompany insurance)
+        public Bpr(Payment payment)
         {
             SegmentIdentifier = "BPR"; //bpr 1
             TransactionHandlingCode = "I"; // bpr 2
-            MonetaryAmount = insurance.CheckAmount;
-            //insurance.CheckAmount = MonetaryAmount; //bpr3 
+            MonetaryAmount = payment.Amount;
             CreditOrDebtFlag = "C"; //bpr4
-            PaymentMethodCode = insurance.PaymentType;
-            insurance.PaymentType = PaymentMethodCode; //bpr5
+            PaymentMethodCode = payment.Type;
             PaymentFormatCode = "CCP"; //bpr6
             SenderDfiIdNumberQualifier = "01"; //bpr7
             SenderDfiIdNumber = "043000096"; //bpr8
@@ -26,7 +24,7 @@ namespace Edi835._835Segments
             ReceivingDfiNumber = "GAPFILL"; //bpr13
             ReceivingAccountNumberQualifier = "DA"; //bpr14
             ReceivingAccountNumber = "0"; //bpr15
-            Date = insurance.CheckDate.DateToYearFirstShortString();
+            Date = payment.Date.DateToYearFirstShortString();
         }
 
         private string TransactionHandlingCode { get; }
@@ -49,8 +47,6 @@ namespace Edi835._835Segments
         public string BuildBpr()
         {
             var buildBpr = new StringBuilder();
-
-            //Begin BPR     
 
             buildBpr.Append(SegmentIdentifier);
             buildBpr.Append(DataElementTerminator)
@@ -105,27 +101,6 @@ namespace Edi835._835Segments
 
             buildBpr.Append(Date);
             buildBpr.Append(SegmentTerminator);
-
-            //buildBpr.Append("BPR" + "*");
-            //buildBpr.Append("I" + "*"); // BPR01 Transaction Handling Code Remittance Information Only
-            //buildBpr.Append(insurance.CheckAmount + "*"); // BPR02 Monetary Amount
-            //buildBpr.Append("C" + "*"); //BPR03 Credit/Debit Flag
-            //buildBpr.Append(insurance.PaymentType + "*"); //BPR04 Payment Method Code
-            //buildBpr.Append("CCP" + "*"); //BPR05 Payment Format Code, Cash Concentration plus addenda
-            //buildBpr.Append("01" + "*"); //BPR06 DFI ID Number Qualifier
-            //buildBpr.Append("043000096" + "*"); //BPR07 ABA Sender Transit Routing Number
-            //buildBpr.Append("DA" + "*"); //BPR08 Account Number Qualifier
-            //buildBpr.Append("0" + "*"); //BPR09 Sender Bank Account NUmber
-            //buildBpr.Append("5135511997" + "*"); //BPR10 Originating Company Identifier
-            //buildBpr.Append("01" + "*"); //BPR12 ABA Receiver Transit Routing Number
-            //buildBpr.Append("*");
-            //buildBpr.Append("GAPFILL" + "*");
-            //buildBpr.Append("DA" + "*"); //BPR013 Account Number Qualifier
-            //buildBpr.Append("0" + "*"); //BPR015 Receiver or Provider Account Number
-
-            //var dateConversion = new DateConversion();
-            //buildBpr.Append(dateConversion.DateToYearFirstShortString(insurance.CheckDate)); //BPR016 Check Issue/Effective date
-            //buildBpr.Append("~");
 
             return buildBpr.ToString();
         }

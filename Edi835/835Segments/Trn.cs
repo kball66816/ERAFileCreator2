@@ -5,11 +5,11 @@ namespace Edi835._835Segments
 {
     public class Trn : SegmentBase
     {
-        public Trn(InsuranceCompany insurance)
+        public Trn(Payment payment, InsuranceCompany insurance)
         {
             SegmentIdentifier = "TRN";
             TraceTypeCode = "1";
-            ReferenceIdentification = insurance.CheckNumber;
+            ReferenceIdentification = payment.Number;
             OriginatingCompanyIdentifier = "1" + insurance.TaxId;
             OriginatingCompanySupplementalCode = "13551";
         }

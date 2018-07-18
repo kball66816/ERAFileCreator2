@@ -219,7 +219,7 @@ namespace PatientManagement.Model
             {"Payer deems the information submitted does not support this day's supply.", "154"},
             {"Patient refused the service/procedure.", "155"},
             {"Service/procedure was provided as a result of an act of war.", "157"},
-            {"Service/procedure was provided outside of the United States.", "158"},
+            {"Service/procedure was provided outside of the United StatesDictionary.", "158"},
             {"Service/procedure was provided as a result of terrorism.", "159"},
             {"Injury/illness was the result of an activity that is a benefit exclusion.", "160"},
             {"Provider performance bonus", "161"},
