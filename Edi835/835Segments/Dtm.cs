@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 using Common.Common.Extensions;
-using PatientManagement.Model;
+using PatientManagement.DAL;
 
 namespace Edi835._835Segments
 {

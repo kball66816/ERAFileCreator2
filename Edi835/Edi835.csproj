@@ -69,9 +69,9 @@
       <Project>{b4e23efb-5228-40c5-9455-904ca873a7e5}</Project>
       <Name>Common.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PatientManagement.Model\PatientManagement.Model.csproj">
-      <Project>{24fc5f3c-4a3c-4e22-afb8-96979998e9e6}</Project>
-      <Name>PatientManagement.Model</Name>
+    <ProjectReference Include="..\PatientManagement.DAL\PatientManagement.DAL.csproj">
+      <Project>{642f2574-caec-4e41-ba46-c3aa96966fbc}</Project>
+      <Name>PatientManagement.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

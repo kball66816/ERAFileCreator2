@@ -24,5 +24,6 @@ namespace EraFileCreator.Views
         {
             InitializeComponent();
         }
+
     }
 }

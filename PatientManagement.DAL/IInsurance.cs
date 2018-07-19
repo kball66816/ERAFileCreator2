@@ -1,6 +1,4 @@
-﻿using PatientManagement.Model;
-
-namespace PatientManagement.DAL
+﻿namespace PatientManagement.DAL
 {
     public interface IInsurance
     {

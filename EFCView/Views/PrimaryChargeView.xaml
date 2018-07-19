@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
+             xmlns:viewModels="clr-namespace:EraFileCreator.ViewModels"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModel:PatientEncounterViewModel />
+        <viewModels:PatientEncounterViewModel />
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -218,7 +218,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.DataContext>
-                        <viewModel:PrimaryAdjustmentViewModel />
+                        <viewModels:PrimaryAdjustmentViewModel />
                     </Grid.DataContext>
                     <Expander Header="Adjustment Type"
                               TabIndex="42" IsTabStop="True" 
@@ -402,7 +402,7 @@
                                               KeyDown="Expander_KeyDown_1" IsTabStop="True">
                                         <Grid Margin="5,5,5,5">
                                             <Grid.DataContext>
-                                                <viewModel:AddonAdjustmentViewModel />
+                                                <viewModels:AddonAdjustmentViewModel />
                                             </Grid.DataContext>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -483,7 +483,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Vertical">
                         <StackPanel.DataContext>
-                            <viewModel:PreferenceViewModel />
+                            <viewModels:PreferenceViewModel />
                         </StackPanel.DataContext>
                         <CheckBox Content="Reuse Primary Service Description"
                                       IsChecked="{Binding Preference.ReuseLastChargeForNextPatient}"

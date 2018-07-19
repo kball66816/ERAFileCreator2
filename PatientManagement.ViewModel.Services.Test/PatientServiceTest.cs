@@ -1,7 +1,7 @@
 ﻿using System;
+using EraFileCreator.Mocks;
+using EraFileCreator.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PatientManagement.Model;
-using PatientManagement.ViewModel.Mocks;
 
 namespace PatientManagement.ViewModel.Services.Test
 {

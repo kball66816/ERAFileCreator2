@@ -3,13 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:EraFileCreator.Views"
-             xmlns:validation="clr-namespace:Common.Common;assembly=Common.Common"
-             xmlns:viewModel="clr-namespace:PatientManagement.ViewModel;assembly=PatientManagement.ViewModel"
              xmlns:validators="clr-namespace:Common.Common.Validators;assembly=Common.Common"
+             xmlns:viewModels="clr-namespace:EraFileCreator.ViewModels"
              mc:Ignorable="d">
     <UserControl.DataContext>
-        <viewModel:InsuranceViewModel />
+        <viewModels:InsuranceViewModel />
     </UserControl.DataContext>
     <Grid Margin="5">
         <Grid.RowDefinitions>
@@ -28,7 +26,13 @@
                 <TextBlock Text="{Binding Payment.Number}"
                            Margin="0,10,5,0" />
                 <Button Command="{Binding CreateJsonCommand}"
-                        CommandParameter="{Binding Insurance}">Test</Button>
+                        CommandParameter="{Binding Insurance}"
+                        Content="Update Insurance Companies"
+                        Margin="5"/>
+                <ComboBox ItemsSource="{Binding InsuranceCompanies}"
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding Insurance, UpdateSourceTrigger=PropertyChanged}"
+                          />
             </StackPanel>
 
         </StackPanel>

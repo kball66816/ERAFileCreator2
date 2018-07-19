@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using PatientManagement.Model;
+using PatientManagement.DAL;
 
 namespace Edi835._835Segments
 {

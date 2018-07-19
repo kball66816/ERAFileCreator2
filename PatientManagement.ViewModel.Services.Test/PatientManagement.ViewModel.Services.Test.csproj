@@ -52,6 +52,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EFCView\EFC.View.csproj">
+      <Project>{00BB8A7E-46D3-4326-B966-A41231929748}</Project>
+      <Name>EFC.View</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PatientManagement.DAL\PatientManagement.DAL.csproj">
       <Project>{642F2574-CAEC-4E41-BA46-C3AA96966FBC}</Project>
       <Name>PatientManagement.DAL</Name>

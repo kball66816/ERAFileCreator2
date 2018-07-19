@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using PatientManagement.DAL;
-using PatientManagement.Model;
 
 namespace EFC.BL
 {
