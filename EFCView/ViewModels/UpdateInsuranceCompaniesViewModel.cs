@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using Common.Common.Services;
 using EraFileCreator.Service.Messaging;
@@ -19,10 +18,11 @@ namespace EraFileCreator.ViewModels
         public UpdateInsuranceCompaniesViewModel()
         {
             this.InsuranceCompany = new InsuranceCompany();
-            this.InsuranceCompanies = new ObservableCollection<InsuranceCompany>();
             this.AddInsuranceCompanyCommand = new Command(this.AddInsuranceCompany, this.CanAddInsuranceCompany);
             this.SaveInsuranceCompaniesCommand = new Command(this.SaveInsuranceCompanies, this.CanSaveInsuranceCompanies);
             this.SettingsService = new SettingsService();
+            this.InsuranceCompanies =
+                new ObservableCollection<InsuranceCompany>(SettingsService.GetInsuranceCompanies());
         }
 
         private bool CanSaveInsuranceCompanies(object obj)

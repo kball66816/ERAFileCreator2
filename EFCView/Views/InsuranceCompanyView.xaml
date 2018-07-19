@@ -29,10 +29,6 @@
                         CommandParameter="{Binding Insurance}"
                         Content="Update Insurance Companies"
                         Margin="5"/>
-                <ComboBox ItemsSource="{Binding InsuranceCompanies}"
-                          DisplayMemberPath="Name"
-                          SelectedItem="{Binding Insurance, UpdateSourceTrigger=PropertyChanged}"
-                          />
             </StackPanel>
 
         </StackPanel>
@@ -47,23 +43,11 @@
             <StackPanel Orientation="Vertical">
                 <TextBlock x:Name="InsuranceCompanyNameTag"
                            Text="Name*" Margin="5,5,5,0" />
-                <TextBox x:Name="InsuranceCompanyNameInput" HorizontalContentAlignment="Stretch" Margin="5,0,5,5"
-                         TabIndex="0" GotFocus="InsuranceCompanyNameInput_GotFocus" MouseDoubleClick="InsuranceCompanyNameInput_MouseDoubleClick">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <DockPanel>
-                                <Border BorderBrush="Red" BorderThickness="1">
-                                    <AdornedElementPlaceholder />
-                                </Border>
-                            </DockPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
-                    <Binding Path="Insurance.Name" UpdateSourceTrigger="LostFocus">
-                        <Binding.ValidationRules>
-                            <validators:StringValidationRule ValidationStep="RawProposedValue" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox>
+                <ComboBox ItemsSource="{Binding InsuranceCompanies}"
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding Insurance, UpdateSourceTrigger=PropertyChanged}"
+                          Margin="5,0,5,0"
+                          SelectedIndex="0"/>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="PaymentTypeTag"

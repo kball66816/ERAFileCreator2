@@ -35,6 +35,7 @@ namespace EraFileCreator.Services
             {
                 var insuranceCompaniesAsString = JsonConvert.SerializeObject(insuranceCompanies, Formatting.Indented);
                 Settings.Default.InsuranceCompanies = insuranceCompaniesAsString;
+                Settings.Default.Save();
             }
         }
 

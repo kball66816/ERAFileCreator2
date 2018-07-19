@@ -65,10 +65,6 @@
       <Project>{B4E23EFB-5228-40C5-9455-904CA873A7E5}</Project>
       <Name>Common.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PatientManagement.Model\PatientManagement.Model.csproj">
-      <Project>{24fc5f3c-4a3c-4e22-afb8-96979998e9e6}</Project>
-      <Name>PatientManagement.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

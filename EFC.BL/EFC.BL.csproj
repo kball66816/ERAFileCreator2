@@ -56,10 +56,6 @@
       <Project>{25504fa7-b820-4de4-beed-d84e2fb697e5}</Project>
       <Name>Edi835</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PatientManagement.Model\PatientManagement.Model.csproj">
-      <Project>{24fc5f3c-4a3c-4e22-afb8-96979998e9e6}</Project>
-      <Name>PatientManagement.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PatientManagement.DAL\PatientManagement.DAL.csproj">
       <Project>{642f2574-caec-4e41-ba46-c3aa96966fbc}</Project>
       <Name>PatientManagement.DAL</Name>

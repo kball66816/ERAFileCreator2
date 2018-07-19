@@ -8,8 +8,6 @@ namespace Edi835._835Segments
         public N3(InsuranceCompany insurance)
         {
             SegmentIdentifier = "N3";
-
-            Insurance = insurance;
             AddressLineOne = insurance.Address.StreetOne;
             AddressLineTwo = insurance.Address.StreetTwo;
         }
@@ -17,13 +15,10 @@ namespace Edi835._835Segments
         public N3(Provider billingProvider)
         {
             SegmentIdentifier = "N3";
-            Provider = billingProvider;
-            AddressLineOne = Provider.Address.StreetOne;
-            AddressLineTwo = Provider.Address.StreetTwo;
+            AddressLineOne = billingProvider.Address.StreetOne;
+            AddressLineTwo = billingProvider.Address.StreetTwo;
         }
 
-        private Provider Provider { get; }
-        private InsuranceCompany Insurance { get; }
         private string AddressLineOne { get; }
         private string AddressLineTwo { get; }
 
