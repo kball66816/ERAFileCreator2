@@ -14,15 +14,31 @@ namespace EraFileCreator.ViewModels
     {
         private InsuranceCompany _insuranceCompany;
         private ObservableCollection<InsuranceCompany> _insuranceCompanies;
+        private InsuranceCompany _insuranceCompanyInEdit;
 
         public UpdateInsuranceCompaniesViewModel()
         {
+            this.InsuranceCompanyInEdit = new InsuranceCompany();
             this.InsuranceCompany = new InsuranceCompany();
             this.AddInsuranceCompanyCommand = new Command(this.AddInsuranceCompany, this.CanAddInsuranceCompany);
             this.SaveInsuranceCompaniesCommand = new Command(this.SaveInsuranceCompanies, this.CanSaveInsuranceCompanies);
+            this.DeleteSelectedInsuranceCommand = new Command(this.DeleteSelectedInsurance, CanDeleteSelectedInsurance);
             this.SettingsService = new SettingsService();
             this.InsuranceCompanies =
-                new ObservableCollection<InsuranceCompany>(SettingsService.GetInsuranceCompanies());
+                new ObservableCollection<InsuranceCompany>(SettingsService.GetInsuranceCompanies().OrderBy(a=>a.Name));
+        }
+
+        private void DeleteSelectedInsurance(object obj)
+        {
+            if (obj is InsuranceCompany insuranceCompany)
+            {
+                InsuranceCompanies.Remove(insuranceCompany);
+            }
+        }
+
+        private bool CanDeleteSelectedInsurance(object obj)
+        {
+            return true;
         }
 
         private bool CanSaveInsuranceCompanies(object obj)
@@ -49,6 +65,18 @@ namespace EraFileCreator.ViewModels
         private bool CanAddInsuranceCompany(object obj)
         {
             return !string.IsNullOrEmpty(this.InsuranceCompany.Name) && !string.IsNullOrEmpty(this.InsuranceCompany.TaxId);
+        }
+
+        public ICommand DeleteSelectedInsuranceCommand { get; set; }
+
+        public InsuranceCompany InsuranceCompanyInEdit
+        {
+            get => this._insuranceCompanyInEdit;
+            set
+            {
+                this._insuranceCompanyInEdit = value;
+                RaisePropertyChanged("InsuranceCompanyInEdit");
+            }
         }
 
         public ISettingsService SettingsService { get; set; }

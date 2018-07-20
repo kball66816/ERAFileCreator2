@@ -41,7 +41,8 @@
                     <TextBox x:Name="BillingProviderNameInput"
                              IsEnabled="{Binding IsChecked, Converter={StaticResource NotConverter}, ElementName=IsIndividualBillingTag}"
                              Margin="5,0,5,5" HorizontalContentAlignment="Stretch"
-                             MouseDoubleClick="BillingProviderNameInput_MouseDoubleClick">
+                             MouseDoubleClick="BillingProviderNameInput_MouseDoubleClick"
+                             TabIndex="13">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>

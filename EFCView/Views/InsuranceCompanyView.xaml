@@ -25,10 +25,6 @@
                 <TextBlock Text="Check #:" Margin="5,10,5,0" />
                 <TextBlock Text="{Binding Payment.Number}"
                            Margin="0,10,5,0" />
-                <Button Command="{Binding CreateJsonCommand}"
-                        CommandParameter="{Binding Insurance}"
-                        Content="Update Insurance Companies"
-                        Margin="5"/>
             </StackPanel>
 
         </StackPanel>
@@ -39,6 +35,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical">
                 <TextBlock x:Name="InsuranceCompanyNameTag"
@@ -47,7 +44,8 @@
                           DisplayMemberPath="Name"
                           SelectedItem="{Binding Insurance, UpdateSourceTrigger=PropertyChanged}"
                           Margin="5,0,5,0"
-                          SelectedIndex="0"/>
+                          SelectedIndex="0"
+                          TabIndex="0"/>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="PaymentTypeTag"
@@ -94,8 +92,14 @@
                            Margin="5,5,5,0"
                            Text="Check Date*" />
                 <DatePicker x:Name="CheckDateInput"
-                            SelectedDate="{Binding Payment.Date}" Margin="5,0,5,5" TabIndex="3" />
-                <TextBox Text="{Binding test}"></TextBox>
+                            SelectedDate="{Binding Payment.Date}" Margin="5,0,5,5" TabIndex="3"
+                            Padding="0,0,0,0"/>
+            </StackPanel>
+            <StackPanel Grid.Column="5">
+                <Button Command="{Binding CreateJsonCommand}"
+                        CommandParameter="{Binding Insurance}"
+                        Content="Update Insurance Companies"
+                        Margin="5,20,5,5"/>
             </StackPanel>
         </Grid>
     </Grid>

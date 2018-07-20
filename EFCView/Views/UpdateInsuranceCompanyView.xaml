@@ -17,8 +17,31 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <ComboBox ItemsSource="{Binding InsuranceCompanies}"
+                          DisplayMemberPath="Name"
+                          Margin="5"
+                          SelectedIndex="0"
+                          SelectedItem="{Binding InsuranceCompanyInEdit}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Button Content="Delete Selected"
+                        Margin="5"
+                        Command="{Binding DeleteSelectedInsuranceCommand}"
+                        CommandParameter="{Binding InsuranceCompanyInEdit}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -34,7 +57,7 @@
                          Text="{Binding InsuranceCompany.TaxId}"/>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -68,7 +91,7 @@
                          Text="{Binding InsuranceCompany.Address.ZipCode}"/>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -81,10 +104,6 @@
                         Command="{Binding AddInsuranceCompanyCommand}"
                         CommandParameter="{Binding InsuranceCompany}"/>
             </StackPanel>
-            <StackPanel Grid.Column="2">
-                <ComboBox ItemsSource="{Binding InsuranceCompanies}"
-                          DisplayMemberPath="Name"></ComboBox>
-            </StackPanel>
             <StackPanel Grid.Column="4">
                 <Button Margin="5" Content="Save"
                         Command="{Binding SaveInsuranceCompaniesCommand}"
@@ -93,3 +112,4 @@
         </Grid>
     </Grid>
 </UserControl>
+
