@@ -254,7 +254,8 @@
                                 <TextBox x:Name="PrimaryAdjustmentAmountInput"
                          Margin="5,5,5,0" TabIndex="46" HorizontalContentAlignment="Stretch" 
                              Text="{Binding SelectedAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
-                                    GotFocus="HightlightAllText" PreviewKeyDown="IgnoreDecimalInput">
+                                    GotFocus="HightlightAllText" PreviewKeyDown="IgnoreDecimalInput"
+                                         MouseDoubleClick="HightlightAllText">
                                     <Validation.ErrorTemplate>
                                         <ControlTemplate>
                                             <DockPanel>

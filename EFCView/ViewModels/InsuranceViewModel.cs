@@ -103,7 +103,8 @@ namespace EraFileCreator.ViewModels
         private void OnSaveFileReceived(SaveFileMessage obj)
         {
             this.SaveSettings();
-            this._insurance = new InsuranceCompany(this._insurance);
+            this.Insurance = new InsuranceCompany(this.Insurance);
+            this.Payment = new Payment();
             this.RaisePropertyChanged("Insurance");
             this.SaveInsuranceToRepository();
         }
@@ -148,7 +149,6 @@ namespace EraFileCreator.ViewModels
             this.Insurance = new InsuranceCompany();
             this.PaymentTypes = this.Payment.Types;
             this.InsuranceCompanies = new ObservableCollection<InsuranceCompany>(this._settingsService.GetInsuranceCompanies());
-            //this.Insurance = this._settingsService.PullDefaultInsurance(this.Insurance);
             this.SaveInsuranceToRepository();
             this.RaisePropertyChanged("Insurance");
         }
