@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using PatientManagement.Model;
+using PatientManagement.DAL;
 
 namespace Edi835._835Segments
 {
@@ -7,18 +7,18 @@ namespace Edi835._835Segments
     {
         public N4(InsuranceCompany insurance)
         {
-            SegmentIdentifier = "N4";
-            City = insurance.Address.City;
-            State = insurance.Address.State;
-            ZipCode = insurance.Address.ZipCode;
+            this.SegmentIdentifier = "N4";
+            this.City = insurance.Address.City;
+            this.State = insurance.Address.State;
+            this.ZipCode = insurance.Address.ZipCode;
         }
 
         public N4(Provider billingProvider)
         {
-            SegmentIdentifier = "N4";
-            City = billingProvider.Address.City;
-            State = billingProvider.Address.State;
-            ZipCode = billingProvider.Address.ZipCode;
+            this.SegmentIdentifier = "N4";
+            this.City = billingProvider.Address.City;
+            this.State = billingProvider.Address.State;
+            this.ZipCode = billingProvider.Address.ZipCode;
         }
 
         private string City { get; }
@@ -29,14 +29,14 @@ namespace Edi835._835Segments
         {
             var buildN4 = new StringBuilder();
 
-            buildN4.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(City)
-                .Append(DataElementTerminator)
-                .Append(State)
-                .Append(DataElementTerminator)
-                .Append(ZipCode)
-                .Append(SegmentTerminator);
+            buildN4.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.City)
+                .Append(this.DataElementTerminator)
+                .Append(this.State)
+                .Append(this.DataElementTerminator)
+                .Append(this.ZipCode)
+                .Append(this.SegmentTerminator);
 
             return buildN4.ToString();
         }

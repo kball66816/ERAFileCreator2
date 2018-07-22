@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using PatientManagement.DAL;
-using PatientManagement.Model;
 
 namespace EFC.BL
 {
@@ -17,13 +16,13 @@ namespace EFC.BL
         public void Add(Patient patient)
         {
             PatientList.Add(patient);
-            RaisePropertyChanged("patientList");
+            this.RaisePropertyChanged("patientList");
         }
 
         public void Delete(Patient patient)
         {
             PatientList.Remove(patient);
-            RaisePropertyChanged("patientList");
+            this.RaisePropertyChanged("patientList");
         }
 
         public ObservableCollection<Patient> GetAllPatients()
@@ -38,7 +37,8 @@ namespace EFC.BL
 
         private void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (this.PropertyChanged != null)
+                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

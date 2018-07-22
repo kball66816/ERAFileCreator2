@@ -9,7 +9,7 @@ namespace EraFileCreator.Views
     {
         public PatientListView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

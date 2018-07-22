@@ -9,14 +9,8 @@ namespace Common.Common.Validators
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (value != null && decimal.TryParse(value.ToString(), out var d))
-            {
                 return AreTwoDecimalsTheSame(d, d.Truncated(2));
-
-            }
-            else
-            {
-                return new ValidationResult(false, "Please enter a valid number");
-            }
+            return new ValidationResult(false, "Please enter a valid number");
         }
 
         private static ValidationResult AreTwoDecimalsTheSame(decimal decimalOne, decimal decimalTwo)
@@ -24,13 +18,8 @@ namespace Common.Common.Validators
             var checkOne = decimalOne.ToString();
             var checkTwo = decimalTwo.ToString();
             if (checkOne.Length == checkTwo.Length)
-            {
                 return new ValidationResult(true, null);
-            }
-            else
-            {
-                return new ValidationResult(false, "Please enter a valid number");
-            }
+            return new ValidationResult(false, "Please enter a valid number");
         }
     }
 }

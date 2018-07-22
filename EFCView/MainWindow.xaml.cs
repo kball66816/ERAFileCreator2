@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Threading;
-using Common.Common.Services;
+﻿using System.Windows;
 
 namespace EraFileCreator
 {
@@ -12,7 +9,7 @@ namespace EraFileCreator
     {
         public MainWindow()
         {
-            this.InitializeComponent(); 
+            this.InitializeComponent();
         }
     }
 }

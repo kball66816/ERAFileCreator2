@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using PatientManagement.Model;
+using PatientManagement.DAL;
 
 namespace Edi835._835Segments
 {
@@ -7,14 +7,14 @@ namespace Edi835._835Segments
     {
         public Svc(ServiceDescription charge)
         {
-            SegmentIdentifier = "SVC";
-            CompositeMedicalProcedureIdentifier = "HC";
-            ServiceId = charge.ProcedureCode;
-            ChargeAmount = charge.ChargeCost;
-            PaymentAmount = charge.PaymentAmount;
-            RevenueCode = string.Empty;
-            Quanitity = 1;
-            ProcedureModifier = charge.Modifier;
+            this.SegmentIdentifier = "SVC";
+            this.CompositeMedicalProcedureIdentifier = "HC";
+            this.ServiceId = charge.ProcedureCode;
+            this.ChargeAmount = charge.ChargeCost;
+            this.PaymentAmount = charge.PaymentAmount;
+            this.RevenueCode = string.Empty;
+            this.Quanitity = 1;
+            this.ProcedureModifier = charge.Modifier;
         }
 
         private string CompositeMedicalProcedureIdentifier { get; }
@@ -31,60 +31,60 @@ namespace Edi835._835Segments
         {
             var svc = new StringBuilder();
 
-            svc.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(CompositeMedicalProcedureIdentifier)
-                .Append(ComponentIdentifier)
-                .Append(ServiceId);
+            svc.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.CompositeMedicalProcedureIdentifier)
+                .Append(this.ComponentIdentifier)
+                .Append(this.ServiceId);
 
-            if (ProcedureModifier != null)
+            if (this.ProcedureModifier != null)
             {
-                AppendModifierOne(svc);
-                AppendModifierTwo(svc);
-                AppendModifierThree(svc);
-                AppendModifierFour(svc);
+                this.AppendModifierOne(svc);
+                this.AppendModifierTwo(svc);
+                this.AppendModifierThree(svc);
+                this.AppendModifierFour(svc);
             }
 
 
-            svc.Append(DataElementTerminator)
-                .Append(ChargeAmount)
-                .Append(DataElementTerminator)
-                .Append(PaymentAmount)
-                .Append(DataElementTerminator)
-                .Append(RevenueCode)
-                .Append(DataElementTerminator)
-                .Append(Quanitity)
-                .Append(SegmentTerminator);
+            svc.Append(this.DataElementTerminator)
+                .Append(this.ChargeAmount)
+                .Append(this.DataElementTerminator)
+                .Append(this.PaymentAmount)
+                .Append(this.DataElementTerminator)
+                .Append(this.RevenueCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.Quanitity)
+                .Append(this.SegmentTerminator);
 
             return svc.ToString();
         }
 
         private void AppendModifierFour(StringBuilder svc)
         {
-            if (!string.IsNullOrEmpty(ProcedureModifier.ModifierFour))
-                svc.Append(ComponentIdentifier)
-                    .Append(ProcedureModifier.ModifierFour);
+            if (!string.IsNullOrEmpty(this.ProcedureModifier.ModifierFour))
+                svc.Append(this.ComponentIdentifier)
+                    .Append(this.ProcedureModifier.ModifierFour);
         }
 
         private void AppendModifierThree(StringBuilder svc)
         {
-            if (!string.IsNullOrEmpty(ProcedureModifier.ModifierThree))
-                svc.Append(ComponentIdentifier)
-                    .Append(ProcedureModifier.ModifierThree);
+            if (!string.IsNullOrEmpty(this.ProcedureModifier.ModifierThree))
+                svc.Append(this.ComponentIdentifier)
+                    .Append(this.ProcedureModifier.ModifierThree);
         }
 
         private void AppendModifierTwo(StringBuilder svc)
         {
-            if (!string.IsNullOrEmpty(ProcedureModifier.ModifierTwo))
-                svc.Append(ComponentIdentifier)
-                    .Append(ProcedureModifier.ModifierTwo);
+            if (!string.IsNullOrEmpty(this.ProcedureModifier.ModifierTwo))
+                svc.Append(this.ComponentIdentifier)
+                    .Append(this.ProcedureModifier.ModifierTwo);
         }
 
         private void AppendModifierOne(StringBuilder svc)
         {
-            if (!string.IsNullOrEmpty(ProcedureModifier.ModifierOne))
-                svc.Append(ComponentIdentifier)
-                    .Append(ProcedureModifier.ModifierOne);
+            if (!string.IsNullOrEmpty(this.ProcedureModifier.ModifierOne))
+                svc.Append(this.ComponentIdentifier)
+                    .Append(this.ProcedureModifier.ModifierOne);
         }
     }
 }

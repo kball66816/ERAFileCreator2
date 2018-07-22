@@ -6,9 +6,9 @@ namespace Edi835._835Segments
     {
         public Lx()
         {
-            SegmentIdentifier = "LX";
+            this.SegmentIdentifier = "LX";
 
-            ClaimSequenceNumber = "1";
+            this.ClaimSequenceNumber = "1";
         }
 
         private string ClaimSequenceNumber { get; }
@@ -17,10 +17,10 @@ namespace Edi835._835Segments
         {
             var buildLx = new StringBuilder();
 
-            buildLx.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(ClaimSequenceNumber)
-                .Append(SegmentTerminator);
+            buildLx.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.ClaimSequenceNumber)
+                .Append(this.SegmentTerminator);
 
             return buildLx.ToString();
         }

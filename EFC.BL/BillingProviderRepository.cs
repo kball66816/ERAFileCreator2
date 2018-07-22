@@ -1,5 +1,4 @@
 ﻿using PatientManagement.DAL;
-using PatientManagement.Model;
 
 namespace EFC.BL
 {

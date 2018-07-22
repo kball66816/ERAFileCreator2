@@ -6,9 +6,9 @@ namespace Edi835._835Segments
     {
         public Ge()
         {
-            SegmentIdentifier = "GE";
-            TransactionSetQuantity = "1";
-            GroupControlNumber = "201541257";
+            this.SegmentIdentifier = "GE";
+            this.TransactionSetQuantity = "1";
+            this.GroupControlNumber = "201541257";
         }
 
         private string TransactionSetQuantity { get; }
@@ -19,11 +19,11 @@ namespace Edi835._835Segments
         {
             var buildGe = new StringBuilder();
             buildGe.Append("GE")
-                .Append(DataElementTerminator)
-                .Append(TransactionSetQuantity)
-                .Append(DataElementTerminator)
-                .Append(GroupControlNumber)
-                .Append(SegmentTerminator);
+                .Append(this.DataElementTerminator)
+                .Append(this.TransactionSetQuantity)
+                .Append(this.DataElementTerminator)
+                .Append(this.GroupControlNumber)
+                .Append(this.SegmentTerminator);
 
             return buildGe.ToString();
         }

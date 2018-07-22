@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using PatientManagement.Model;
+using PatientManagement.DAL;
 
 namespace Edi835._835Segments
 {
@@ -7,20 +7,20 @@ namespace Edi835._835Segments
     {
         public Cas(ServiceDescription charge)
         {
-            Charge = charge;
-            SegmentIdentifier = "CAS";
-            ClaimAdjustmentGroupCode = "PR";
-            ClaimAdjustmentReasonCode = "3";
-            MonetaryAmount = charge.Copay;
+            this.Charge = charge;
+            this.SegmentIdentifier = "CAS";
+            this.ClaimAdjustmentGroupCode = "PR";
+            this.ClaimAdjustmentReasonCode = "3";
+            this.MonetaryAmount = charge.Copay;
         }
 
         public Cas(Adjustment adjustment)
         {
-            Adjustment = adjustment;
-            SegmentIdentifier = "CAS";
-            ClaimAdjustmentGroupCode = adjustment.AdjustmentType;
-            ClaimAdjustmentReasonCode = adjustment.AdjustmentReasonCode;
-            MonetaryAmount = adjustment.AdjustmentAmount;
+            this.Adjustment = adjustment;
+            this.SegmentIdentifier = "CAS";
+            this.ClaimAdjustmentGroupCode = adjustment.AdjustmentType;
+            this.ClaimAdjustmentReasonCode = adjustment.AdjustmentReasonCode;
+            this.MonetaryAmount = adjustment.AdjustmentAmount;
         }
 
         private string ClaimAdjustmentGroupCode { get; }
@@ -33,14 +33,14 @@ namespace Edi835._835Segments
         {
             var buildCas = new StringBuilder();
             {
-                buildCas.Append(SegmentIdentifier);
-                buildCas.Append(DataElementTerminator);
-                buildCas.Append(ClaimAdjustmentGroupCode);
-                buildCas.Append(DataElementTerminator);
-                buildCas.Append(ClaimAdjustmentReasonCode);
-                buildCas.Append(DataElementTerminator);
-                buildCas.Append(MonetaryAmount);
-                buildCas.Append(SegmentTerminator);
+                buildCas.Append(this.SegmentIdentifier);
+                buildCas.Append(this.DataElementTerminator);
+                buildCas.Append(this.ClaimAdjustmentGroupCode);
+                buildCas.Append(this.DataElementTerminator);
+                buildCas.Append(this.ClaimAdjustmentReasonCode);
+                buildCas.Append(this.DataElementTerminator);
+                buildCas.Append(this.MonetaryAmount);
+                buildCas.Append(this.SegmentTerminator);
             }
             return buildCas.ToString();
         }

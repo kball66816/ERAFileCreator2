@@ -28,9 +28,10 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://raw.githubusercontent.com/kball66816/ERAFileCreator2/master/Publish/</InstallUrl>
     <UpdateUrl>https://raw.githubusercontent.com/kball66816/ERAFileCreator2/master/Publish/</UpdateUrl>
+    <ProductName>ERA File Creator</ProductName>
     <MinimumRequiredVersion>1.0.0.1</MinimumRequiredVersion>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -74,6 +75,9 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -98,9 +102,49 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Mocks\MessageBoxServiceMock.cs" />
+    <Compile Include="Mocks\SettingsServiceMock.cs" />
+    <Compile Include="Service.Messaging\ListClearedMessage.cs" />
+    <Compile Include="Service.Messaging\PreferenceUpdatedMessage.cs" />
+    <Compile Include="Service.Messaging\SaveFileMessage.cs" />
+    <Compile Include="Service.Messaging\SendRenderingProviderMessage.cs" />
+    <Compile Include="Service.Messaging\SettingsSavedMessage.cs" />
+    <Compile Include="Service.Messaging\UpdateCalculations.cs" />
+    <Compile Include="Service.Messaging\UpdateInsuranceCompaniesMessage.cs" />
+    <Compile Include="Service.Messaging\UpdateRepositoriesMessage.cs" />
+    <Compile Include="Service.Messaging\WindowMessenger.cs" />
+    <Compile Include="Services\AdjustmentService.cs" />
+    <Compile Include="Services\ChargeService.cs" />
+    <Compile Include="Services\Command.cs" />
+    <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\ISettingsService.cs" />
+    <Compile Include="Services\MessageBoxService.cs" />
+    <Compile Include="Services\PatientService.cs" />
+    <Compile Include="Services\ProviderService.cs" />
+    <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UpdateInsuranceCompaniesWindow.xaml.cs">
+      <DependentUpon>UpdateInsuranceCompaniesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\InputRestrictions.cs" />
     <Compile Include="Utility\InputRules.cs" />
     <Compile Include="Utility\NotConverter.cs" />
+    <Compile Include="ViewFactory.cs" />
+    <Compile Include="ViewModels\AddonAdjustmentViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BillingProviderViewModel.cs" />
+    <Compile Include="ViewModels\InsuranceViewModel.cs" />
+    <Compile Include="ViewModels\PatientEncounterViewModel.cs" />
+    <Compile Include="ViewModels\PatientListViewModel.cs" />
+    <Compile Include="ViewModels\PatientViewModel.cs" />
+    <Compile Include="ViewModels\PreferenceViewModel.cs" />
+    <Compile Include="ViewModels\PrimaryAdjustmentViewModel.cs" />
+    <Compile Include="ViewModels\SaveFileViewModel.cs" />
+    <Compile Include="ViewModels\UpdateInsuranceCompaniesViewModel.cs" />
     <Compile Include="Views\BillingProviderView.xaml.cs">
       <DependentUpon>BillingProviderView.xaml</DependentUpon>
     </Compile>
@@ -125,6 +169,9 @@
     <Compile Include="Views\SaveFileView.xaml.cs">
       <DependentUpon>SaveFileView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UpdateInsuranceCompanyView.xaml.cs">
+      <DependentUpon>UpdateInsuranceCompanyView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -137,6 +184,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UpdateInsuranceCompaniesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BillingProviderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +220,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UpdateInsuranceCompanyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -188,12 +243,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -205,17 +265,13 @@
       <Project>{B4E23EFB-5228-40C5-9455-904CA873A7E5}</Project>
       <Name>Common.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PatientManagement.Model\PatientManagement.Model.csproj">
-      <Project>{24fc5f3c-4a3c-4e22-afb8-96979998e9e6}</Project>
-      <Name>PatientManagement.Model</Name>
+    <ProjectReference Include="..\EFC.BL\EFC.BL.csproj">
+      <Project>{8AA2D6AA-DC1B-4AA5-A5BC-097A46D52DAE}</Project>
+      <Name>EFC.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\PatientManagement.DAL\PatientManagement.DAL.csproj">
       <Project>{642F2574-CAEC-4E41-BA46-C3AA96966FBC}</Project>
       <Name>PatientManagement.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PatientManagement.ViewModel\PatientManagement.ViewModel.csproj">
-      <Project>{cf866762-41ec-448b-b713-97948e9b23f9}</Project>
-      <Name>PatientManagement.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

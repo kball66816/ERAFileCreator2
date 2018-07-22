@@ -1,7 +1,7 @@
 ﻿using System;
+using EraFileCreator.Mocks;
+using EraFileCreator.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PatientManagement.Model;
-using PatientManagement.ViewModel.Mocks;
 
 namespace PatientManagement.ViewModel.Services.Test
 {
@@ -27,7 +27,7 @@ namespace PatientManagement.ViewModel.Services.Test
         {
             //Arrange
             PatientService.SettingsService = new SettingsServiceMock
-                { ReuseSamePatientEnabled = true};
+                {ReuseSamePatientEnabled = true};
             PatientService.DialogPrompt = new MessageBoxServiceMock();
             var patient = PatientService.LoadInitialPatient();
 
@@ -47,7 +47,7 @@ namespace PatientManagement.ViewModel.Services.Test
         {
             //Arrange
             PatientService.SettingsService = new SettingsServiceMock
-                { ReuseSamePatientEnabled = false };
+                {ReuseSamePatientEnabled = false};
             PatientService.DialogPrompt = new MessageBoxServiceMock();
             var patient = PatientService.LoadInitialPatient();
             var patient2 = PatientService.LoadInitialPatient();
@@ -69,7 +69,7 @@ namespace PatientManagement.ViewModel.Services.Test
             PatientService.SettingsService = new SettingsServiceMock
             {
                 ReuseSamePatientEnabled = false,
-                PatientPromptEnabled = true,
+                PatientPromptEnabled = true
             };
             PatientService.DialogPrompt = new MessageBoxServiceMock();
             var patient = PatientService.LoadInitialPatient();

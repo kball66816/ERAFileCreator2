@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using PatientManagement.Model;
+using PatientManagement.DAL;
 
 namespace Edi835._835Segments
 {
@@ -7,30 +7,30 @@ namespace Edi835._835Segments
     {
         public Ref(Provider billingProvider)
         {
-            SegmentIdentifier = "REF";
-            ReferenceIdQualifier = "TJ";
-            ReferenceIdentification = "1440054";
+            this.SegmentIdentifier = "REF";
+            this.ReferenceIdQualifier = "TJ";
+            this.ReferenceIdentification = "1440054";
         }
 
         public Ref(Provider billingProvider, bool isIndividual)
         {
-            SegmentIdentifier = "REF";
-            ReferenceIdQualifier = "TJ";
-            ReferenceIdentification = "123456789";
+            this.SegmentIdentifier = "REF";
+            this.ReferenceIdQualifier = "TJ";
+            this.ReferenceIdentification = "123456789";
         }
 
         public Ref(InsuranceCompany insurance)
         {
-            SegmentIdentifier = "REF";
-            ReferenceIdQualifier = "2U";
-            ReferenceIdentification = "20123";
+            this.SegmentIdentifier = "REF";
+            this.ReferenceIdQualifier = "2U";
+            this.ReferenceIdentification = "20123";
         }
 
         public Ref(ServiceDescription charge)
         {
-            SegmentIdentifier = "REF";
-            ReferenceIdQualifier = "6R";
-            ReferenceIdentification = charge.ReferenceId;
+            this.SegmentIdentifier = "REF";
+            this.ReferenceIdQualifier = "6R";
+            this.ReferenceIdentification = charge.ReferenceId;
         }
 
         private string ReferenceIdQualifier { get; }
@@ -41,12 +41,12 @@ namespace Edi835._835Segments
         {
             var buildRef = new StringBuilder();
 
-            buildRef.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(ReferenceIdQualifier)
-                .Append(DataElementTerminator)
-                .Append(ReferenceIdentification)
-                .Append(SegmentTerminator);
+            buildRef.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.ReferenceIdQualifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.ReferenceIdentification)
+                .Append(this.SegmentTerminator);
 
             return buildRef.ToString();
         }

@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using PatientManagement.Model;
+using PatientManagement.DAL;
 
 namespace Edi835._835Segments
 {
@@ -7,43 +7,43 @@ namespace Edi835._835Segments
     {
         public Nm1(Patient patient)
         {
-            SegmentIdentifier = "NM1";
-            EntityTypeQualifier = "QC";
-            EntityIdCode = "1";
-            LastNameOrOrganizationName = patient.LastName;
-            FirstName = patient.FirstName;
-            MiddleName = patient.MiddleInitial;
-            Suffix = patient.Suffix;
-            Prefix = patient.Prefix;
-            IdCodeQualifier = "MI";
-            IdCode = patient.MemberId;
+            this.SegmentIdentifier = "NM1";
+            this.EntityTypeQualifier = "QC";
+            this.EntityIdCode = "1";
+            this.LastNameOrOrganizationName = patient.LastName;
+            this.FirstName = patient.FirstName;
+            this.MiddleName = patient.MiddleInitial;
+            this.Suffix = patient.Suffix;
+            this.Prefix = patient.Prefix;
+            this.IdCodeQualifier = "MI";
+            this.IdCode = patient.MemberId;
         }
 
         public Nm1(Provider renderingProvider)
         {
-            SegmentIdentifier = "NM1";
-            EntityTypeQualifier = "82";
-            EntityIdCode = "1";
-            LastNameOrOrganizationName = renderingProvider.LastName;
-            FirstName = renderingProvider.FirstName;
-            MiddleName = renderingProvider.MiddleInitial;
-            Suffix = renderingProvider.Suffix;
-            Prefix = renderingProvider.Prefix;
-            IdCodeQualifier = "XX";
-            IdCode = renderingProvider.Npi;
+            this.SegmentIdentifier = "NM1";
+            this.EntityTypeQualifier = "82";
+            this.EntityIdCode = "1";
+            this.LastNameOrOrganizationName = renderingProvider.LastName;
+            this.FirstName = renderingProvider.FirstName;
+            this.MiddleName = renderingProvider.MiddleInitial;
+            this.Suffix = renderingProvider.Suffix;
+            this.Prefix = renderingProvider.Prefix;
+            this.IdCodeQualifier = "XX";
+            this.IdCode = renderingProvider.Npi;
         }
 
         public Nm1(Subscriber subscriber)
         {
-            SegmentIdentifier = "NM1";
-            EntityTypeQualifier = "IL";
-            LastNameOrOrganizationName = subscriber.LastName;
-            FirstName = subscriber.FirstName;
-            MiddleName = subscriber.MiddleInitial;
-            Suffix = subscriber.Suffix;
-            Prefix = subscriber.Prefix;
-            IdCodeQualifier = "MI";
-            IdCode = subscriber.MemberId;
+            this.SegmentIdentifier = "NM1";
+            this.EntityTypeQualifier = "IL";
+            this.LastNameOrOrganizationName = subscriber.LastName;
+            this.FirstName = subscriber.FirstName;
+            this.MiddleName = subscriber.MiddleInitial;
+            this.Suffix = subscriber.Suffix;
+            this.Prefix = subscriber.Prefix;
+            this.IdCodeQualifier = "MI";
+            this.IdCode = subscriber.MemberId;
         }
 
         private string EntityIdCode { get; }
@@ -60,33 +60,33 @@ namespace Edi835._835Segments
         {
             var buildNm1 = new StringBuilder();
 
-            buildNm1.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(EntityTypeQualifier)
-                .Append(DataElementTerminator)
-                .Append(EntityIdCode)
-                .Append(DataElementTerminator)
-                .Append(LastNameOrOrganizationName)
-                .Append(DataElementTerminator)
-                .Append(FirstName)
-                .Append(DataElementTerminator)
-                .Append(MiddleName)
-                .Append(DataElementTerminator)
-                .Append(Prefix)
-                .Append(DataElementTerminator)
-                .Append(Suffix);
-            AppendIfIdCodeOrQualifierExists(buildNm1);
-            buildNm1.Append(SegmentTerminator);
+            buildNm1.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.EntityTypeQualifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.EntityIdCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.LastNameOrOrganizationName)
+                .Append(this.DataElementTerminator)
+                .Append(this.FirstName)
+                .Append(this.DataElementTerminator)
+                .Append(this.MiddleName)
+                .Append(this.DataElementTerminator)
+                .Append(this.Prefix)
+                .Append(this.DataElementTerminator)
+                .Append(this.Suffix);
+            this.AppendIfIdCodeOrQualifierExists(buildNm1);
+            buildNm1.Append(this.SegmentTerminator);
             return buildNm1.ToString();
         }
 
         private void AppendIfIdCodeOrQualifierExists(StringBuilder buildNm1)
         {
-            if (!string.IsNullOrEmpty(IdCodeQualifier) || string.IsNullOrEmpty(IdCode))
-                buildNm1.Append(DataElementTerminator)
-                    .Append(IdCodeQualifier)
-                    .Append(DataElementTerminator)
-                    .Append(IdCode);
+            if (!string.IsNullOrEmpty(this.IdCodeQualifier) || string.IsNullOrEmpty(this.IdCode))
+                buildNm1.Append(this.DataElementTerminator)
+                    .Append(this.IdCodeQualifier)
+                    .Append(this.DataElementTerminator)
+                    .Append(this.IdCode);
         }
     }
 }

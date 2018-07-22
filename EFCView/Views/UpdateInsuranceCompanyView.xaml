@@ -1,0 +1,118 @@
+﻿<UserControl x:Class="EraFileCreator.Views.UpdateInsuranceCompanyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:EraFileCreator.Views"
+             xmlns:viewModels="clr-namespace:EraFileCreator.ViewModels"
+             xmlns:viewModels1="clr-namespace:EraFileCreator.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="150" d:DesignWidth="400"
+             Background="#FFD0E8FF">
+    <Grid>
+        <Grid.DataContext>
+            <viewModels1:UpdateInsuranceCompaniesViewModel />
+        </Grid.DataContext>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <ComboBox ItemsSource="{Binding InsuranceCompanies}"
+                          DisplayMemberPath="Name"
+                          Margin="5"
+                          SelectedIndex="0"
+                          SelectedItem="{Binding InsuranceCompanyInEdit}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Button Content="Delete Selected"
+                        Margin="5"
+                        Command="{Binding DeleteSelectedInsuranceCommand}"
+                        CommandParameter="{Binding InsuranceCompanyInEdit}" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Name" Margin="5,5,5,0" />
+                <TextBox Margin="5,0,5,5"
+                         Text="{Binding InsuranceCompany.Name}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Tax Id" Margin="5,5,5,0" />
+                <TextBox Margin="5,0,5,5"
+                         Text="{Binding InsuranceCompany.TaxId}" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Address Line One" Margin="5,5,5,0" />
+                <TextBox Margin="5,0,5,5"
+                         Text="{Binding InsuranceCompany.Address.StreetOne}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Address Line Two" Margin="5,5,5,0" />
+                <TextBox Margin="5,0,5,5"
+                         Text="{Binding InsuranceCompany.Address.StreetTwo}" />
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="City" Margin="5,5,5,0" />
+                <TextBox Margin="5,0,5,5"
+                         Text="{Binding InsuranceCompany.Address.City}" />
+            </StackPanel>
+            <StackPanel Grid.Column="3">
+                <TextBlock Text="State" Margin="5,5,5,0" />
+                <ComboBox Margin="5,0,5,5"
+                          ItemsSource="{Binding States}"
+                          DisplayMemberPath="Key"
+                          SelectedValuePath="Value"
+                          SelectedValue="{Binding InsuranceCompany.Address.State}"
+                          SelectedIndex="9" />
+            </StackPanel>
+            <StackPanel Grid.Column="4">
+                <TextBlock Text="Zip Code" Margin="5,5,5,0" />
+                <TextBox Margin="5,0,5,5"
+                         Text="{Binding InsuranceCompany.Address.ZipCode}" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <Button Margin="5" Content="Add"
+                        Command="{Binding AddInsuranceCompanyCommand}"
+                        CommandParameter="{Binding InsuranceCompany}" />
+            </StackPanel>
+            <StackPanel Grid.Column="4">
+                <Button Margin="5" Content="Save and Close"
+                        Command="{Binding SaveInsuranceCompaniesCommand}"
+                        CommandParameter="{Binding InsuranceCompanies}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

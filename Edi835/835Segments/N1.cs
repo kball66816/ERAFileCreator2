@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using PatientManagement.Model;
+using PatientManagement.DAL;
 
 namespace Edi835._835Segments
 {
@@ -7,22 +7,22 @@ namespace Edi835._835Segments
     {
         public N1(InsuranceCompany insurance)
         {
-            SegmentIdentifier = "N1";
-            EntityIdCode = "PR";
-            Insurance = insurance;
-            Name = insurance.Name;
-            IdCodeQualifier = "XV";
-            IdCode = "20123";
+            this.SegmentIdentifier = "N1";
+            this.EntityIdCode = "PR";
+            this.Insurance = insurance;
+            this.Name = insurance.Name;
+            this.IdCodeQualifier = "XV";
+            this.IdCode = "20123";
         }
 
         public N1(Provider billingProvider)
         {
-            SegmentIdentifier = "N1";
-            EntityIdCode = "PE";
-            Provider = billingProvider;
-            Name = billingProvider.BusinessName;
-            IdCodeQualifier = "XX";
-            IdCode = billingProvider.Npi;
+            this.SegmentIdentifier = "N1";
+            this.EntityIdCode = "PE";
+            this.Provider = billingProvider;
+            this.Name = billingProvider.BusinessName;
+            this.IdCodeQualifier = "XX";
+            this.IdCode = billingProvider.Npi;
         }
 
         private InsuranceCompany Insurance { get; }
@@ -36,16 +36,16 @@ namespace Edi835._835Segments
         {
             var buildN1 = new StringBuilder();
 
-            buildN1.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(EntityIdCode)
-                .Append(DataElementTerminator)
-                .Append(Name)
-                .Append(DataElementTerminator)
-                .Append(IdCodeQualifier)
-                .Append(DataElementTerminator)
-                .Append(IdCode)
-                .Append(SegmentTerminator);
+            buildN1.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.EntityIdCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.Name)
+                .Append(this.DataElementTerminator)
+                .Append(this.IdCodeQualifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.IdCode)
+                .Append(this.SegmentTerminator);
 
             return buildN1.ToString();
         }

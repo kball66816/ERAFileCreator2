@@ -1,0 +1,14 @@
+﻿<Window x:Class="EraFileCreator.UpdateInsuranceCompaniesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:EraFileCreator.Views"
+        mc:Ignorable="d"
+        Title="Update Insurance Companies" ShowInTaskbar="False"
+        SizeToContent="Height"
+        Width="560">
+    <Grid>
+        <views:UpdateInsuranceCompanyView />
+    </Grid>
+</Window>

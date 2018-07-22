@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using EraFileCreator.Utility;
 using System.Windows.Controls;
 using System.Windows.Input;
+using EraFileCreator.Utility;
 
 namespace EraFileCreator.Views
 {
@@ -12,7 +12,7 @@ namespace EraFileCreator.Views
     {
         public BillingProviderView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void BillingProviderZipCodeInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
