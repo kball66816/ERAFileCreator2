@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Common.Common.Services;
 using EraFileCreator.Service.Messaging;
 using EraFileCreator.Services;
@@ -7,7 +6,7 @@ using PatientManagement.DAL;
 
 namespace EraFileCreator.ViewModels
 {
-    public class PreferenceViewModel : INotifyPropertyChanged
+    public class PreferenceViewModel : BaseViewModel
     {
         private Preference _preference;
 
@@ -35,8 +34,6 @@ namespace EraFileCreator.ViewModels
 
         public ICommand SavePreferenceCommand { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void SavePreference(object preference)
         {
             this._settingsService.SetDefaultPreferences(preference as Preference);
@@ -46,11 +43,6 @@ namespace EraFileCreator.ViewModels
         private void LoadCommands()
         {
             this.SavePreferenceCommand = new Command(this.SavePreference);
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void PreferencesUpdated()

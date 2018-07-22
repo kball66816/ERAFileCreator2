@@ -133,7 +133,7 @@
     <Compile Include="Utility\NotConverter.cs" />
     <Compile Include="ViewFactory.cs" />
     <Compile Include="ViewModels\AddonAdjustmentViewModel.cs" />
-    <Compile Include="ViewModels\AddonChargeViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BillingProviderViewModel.cs" />
     <Compile Include="ViewModels\InsuranceViewModel.cs" />
     <Compile Include="ViewModels\PatientEncounterViewModel.cs" />

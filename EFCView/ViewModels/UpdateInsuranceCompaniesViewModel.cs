@@ -10,7 +10,7 @@ using PatientManagement.DAL;
 
 namespace EraFileCreator.ViewModels
 {
-    public class UpdateInsuranceCompaniesViewModel : INotifyPropertyChanged
+    public class UpdateInsuranceCompaniesViewModel : BaseViewModel
     {
         private InsuranceCompany _insuranceCompany;
         private ObservableCollection<InsuranceCompany> _insuranceCompanies;
@@ -100,13 +100,6 @@ namespace EraFileCreator.ViewModels
                 this._insuranceCompany = value;
                 this.RaisePropertyChanged("InsuranceCompany");
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }

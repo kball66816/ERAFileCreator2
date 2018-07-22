@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Input;
 using Common.Common.Services;
 using EraFileCreator.Services;
@@ -7,7 +6,7 @@ using PatientManagement.DAL;
 
 namespace EraFileCreator.ViewModels
 {
-    public class PrimaryAdjustmentViewModel : INotifyPropertyChanged
+    public class PrimaryAdjustmentViewModel : BaseViewModel
     {
         private Adjustment _selectedAdjustment;
 
@@ -36,8 +35,6 @@ namespace EraFileCreator.ViewModels
 
         public ICommand AddChargeAdjustmentCommand { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void AddAdjustmentCommand(object obj)
         {
             Messenger.Default.Send(this.SelectedAdjustment, "PrimaryAdjustment");
@@ -47,11 +44,6 @@ namespace EraFileCreator.ViewModels
         private bool CanAddAdjustment(object obj)
         {
             return !string.IsNullOrEmpty(this.SelectedAdjustment.AdjustmentReasonCode) && this.SelectedAdjustment.AdjustmentAmount != 0;
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

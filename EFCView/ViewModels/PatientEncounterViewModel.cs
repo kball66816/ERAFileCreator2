@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Input;
 using Common.Common.Services;
 using EraFileCreator.Service.Messaging;
@@ -8,7 +7,7 @@ using PatientManagement.DAL;
 
 namespace EraFileCreator.ViewModels
 {
-    public class PatientEncounterViewModel : INotifyPropertyChanged
+    public class PatientEncounterViewModel : BaseViewModel
     {
         public PatientEncounterViewModel()
         {
@@ -107,13 +106,6 @@ namespace EraFileCreator.ViewModels
             }
 
             return canAdd;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

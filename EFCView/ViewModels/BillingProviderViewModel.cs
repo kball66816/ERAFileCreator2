@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Common.Common.Services;
 using EraFileCreator.Service.Messaging;
 using EraFileCreator.Services;
@@ -7,7 +6,7 @@ using PatientManagement.DAL;
 
 namespace EraFileCreator.ViewModels
 {
-    public class BillingProviderViewModel : INotifyPropertyChanged
+    public class BillingProviderViewModel : BaseViewModel
     {
         private Provider _billingProvider;
 
@@ -33,8 +32,6 @@ namespace EraFileCreator.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void UpdateRenderingProvider(object obj)
         {
             Messenger.Default.Send(this.BillingProvider, "BillingProvider");
@@ -53,11 +50,6 @@ namespace EraFileCreator.ViewModels
         private void OnUpdateRepositoriesMessage(UpdateRepositoriesMessage obj)
         {
            ProviderService.BillingProviderRepository.AddBillingProvider(this.BillingProvider);
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }

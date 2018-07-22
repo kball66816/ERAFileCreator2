@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using Common.Common.Services;
@@ -11,7 +10,7 @@ using PatientManagement.DAL;
 
 namespace EraFileCreator.ViewModels
 {
-    public class InsuranceViewModel : INotifyPropertyChanged
+    public class InsuranceViewModel : BaseViewModel
     {
         private InsuranceCompany _insurance;
 
@@ -26,7 +25,7 @@ namespace EraFileCreator.ViewModels
             Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileReceived, "CreationCompleted");
             Messenger.Default.Register<UpdateInsuranceCompaniesMessage>(this, this.OnUpdateReceived,"NewInsuranceSaved");
             this.Payment.Amount = this.CalculateCheckAmount();
-            this.CreateJsonCommand = new Command(this.CreateJson);
+            this.OpenEditWindowCommand = new Command(this.OpenEditWindow);
         }
 
         private void OnUpdateReceived(UpdateInsuranceCompaniesMessage obj)
@@ -54,36 +53,17 @@ namespace EraFileCreator.ViewModels
             }
         }
 
-        private void CreateJson(object obj)
+        private void OpenEditWindow(object obj)
         {
             var window = new ViewFactory();
             window.ShowUpdateInsuranceCompaniesWindow();
-            //var insuranceCompany = obj as InsuranceCompany;
-            //InsuranceCompanies.Add(insuranceCompany);
-            //insuranceCompany.Address.StreetOne = "Street One";
-            //insuranceCompany.Address.StreetTwo = "Street Two";
-            //insuranceCompany.Address.City = "Birmingham";
-            //insuranceCompany.Address.State = "AL";
-            //insuranceCompany.Address.ZipCode = "12345";
-            //this.test = JsonConvert.SerializeObject(insuranceCompany, Formatting.Indented);
         }
 
         private ISettingsService _settingsService;
 
-        public ICommand CreateJsonCommand { get; set; }
-        private string _test;
+        public ICommand OpenEditWindowCommand { get; set; }
         private Payment _payment;
         private ObservableCollection<InsuranceCompany> _insuranceCompanies;
-
-        public string test
-        {
-            get => this._test;
-            set
-            {
-                this._test = value;
-                this.RaisePropertyChanged("test");
-            }
-        }
 
         public InsuranceCompany Insurance
         {
@@ -97,8 +77,6 @@ namespace EraFileCreator.ViewModels
         }
 
         public Dictionary<string, string> PaymentTypes { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnSaveFileReceived(SaveFileMessage obj)
         {
@@ -153,16 +131,10 @@ namespace EraFileCreator.ViewModels
             this.RaisePropertyChanged("Insurance");
         }
 
-
         private void SaveInsuranceToRepository()
         {
             var insuranceWithPaymentRepository = new InsurancePaymentRepository();
             insuranceWithPaymentRepository.AddInsurancePayment(this.Insurance, this.Payment);
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void SaveSettings()

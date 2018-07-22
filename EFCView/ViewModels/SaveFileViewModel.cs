@@ -7,7 +7,7 @@ using EraFileCreator.Services;
 
 namespace EraFileCreator.ViewModels
 {
-    public class SaveFileViewModel
+    public class SaveFileViewModel : BaseViewModel
     {
         public SaveFileViewModel()
         {
@@ -23,7 +23,7 @@ namespace EraFileCreator.ViewModels
             SendMessages();
             SendCalculateRequest();
             var edi = new UpdatedEdi();
-            SaveToFile.SaveTextFiletoSelectedDirectory(edi.Create835File());
+            edi.Create835File().SaveTextFiletoSelectedDirectory();
             SendFileCreationComplete();
         }
 
@@ -38,7 +38,7 @@ namespace EraFileCreator.ViewModels
             {
                 SendMessages();
                 var edi = new UpdatedEdi();
-                SaveToFile.SaveFiletoADefaultDirectory(edi.Create835File());
+                edi.Create835File().SaveFiletoADefaultDirectory();
             }
         }
 

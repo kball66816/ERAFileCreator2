@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Input;
 using Common.Common.Services;
 using EraFileCreator.Services;
@@ -7,9 +6,8 @@ using PatientManagement.DAL;
 
 namespace EraFileCreator.ViewModels
 {
-    public class AddonAdjustmentViewModel : INotifyPropertyChanged
+    public class AddonAdjustmentViewModel : BaseViewModel
     {
-
         private Adjustment _addonAdjustment;
 
         public AddonAdjustmentViewModel()
@@ -37,8 +35,6 @@ namespace EraFileCreator.ViewModels
 
         public Dictionary<string, string> AddonAdjustmentReasonCodes { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void AddAdjustment(object adjustment)
         {
             Messenger.Default.Send(adjustment as Adjustment, "AdditionalServiceDescriptionAdjustment");
@@ -48,11 +44,6 @@ namespace EraFileCreator.ViewModels
         private bool CanAddAddonAdjustment(object obj)
         {
             return !string.IsNullOrEmpty(this.AddonAdjustment.AdjustmentReasonCode) && this.AddonAdjustment.AdjustmentAmount != 0;
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

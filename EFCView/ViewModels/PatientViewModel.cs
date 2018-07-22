@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Common.Common.Services;
 using EraFileCreator.Service.Messaging;
 using EraFileCreator.Services;
@@ -7,7 +6,7 @@ using PatientManagement.DAL;
 
 namespace EraFileCreator.ViewModels
 {
-    public class PatientViewModel : INotifyPropertyChanged
+    public class PatientViewModel : BaseViewModel
     {
         private Patient _selectedPatient;
 
@@ -47,8 +46,6 @@ namespace EraFileCreator.ViewModels
 
         public ICommand AddPatientCommand { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void OnSaveFileMessage(SaveFileMessage obj)
         {
             PatientService.SaveSettings(this.SelectedPatient);
@@ -72,11 +69,6 @@ namespace EraFileCreator.ViewModels
             return !string.IsNullOrEmpty(this.SelectedPatient.FirstName) &&
                    !string.IsNullOrEmpty(this.SelectedPatient.LastName)
                    && this.SelectedPatient.Charges.Count > 0;
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
