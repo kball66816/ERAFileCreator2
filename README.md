@@ -21,6 +21,10 @@ Adjustment - Ideally you want each adjustment to be unique, a Service Descriptio
 
 Additional Service Description - Each Encounter can have more than one service Additional Service Descriptions keep a primary and additional service descriptions tied together. These will need to be added before you add the charge to the patient.
 
+** V1.2.1
+Contains the following fixes
+* Removed publish name that prevents update error
+
 ** V1.2.0.0
 Contains the following feature
 * Stores Payer list in the settings
