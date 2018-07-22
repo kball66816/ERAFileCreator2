@@ -214,7 +214,6 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.DataContext>
@@ -224,14 +223,15 @@
                               TabIndex="42" IsTabStop="True" 
                               KeyDown="Expander_KeyDown">
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel>
-                                <ComboBox x:Name="AdjustmentTypeDropdown"
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <ComboBox x:Name="AdjustmentTypeDropdown"
                           ItemsSource="{Binding PrimaryAdjustmentType}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
@@ -239,9 +239,9 @@
                           SelectedIndex="0"
                           ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentTypeDropdown}" Margin="5,5,5,0"
                           TabIndex="43" HorizontalContentAlignment="Stretch"/>
-                            </StackPanel>
-                            <StackPanel Grid.Column="1">
-                                <ComboBox x:Name="AdjustmentReasonCodeDropdown"
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <ComboBox x:Name="AdjustmentReasonCodeDropdown"
                           ItemsSource="{Binding PrimaryAdjustmentReasonCodes}"
                           DisplayMemberPath="Value"
                           SelectedValuePath="Value"
@@ -249,47 +249,45 @@
                           ToolTip="{Binding SelectedItem.Key, ElementName=AdjustmentReasonCodeDropdown, Mode=OneWay}"
                           SelectedIndex="34" Margin="5,5,5,0" TabIndex="44"
                           HorizontalContentAlignment="Stretch" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="2">
-                                <TextBox x:Name="PrimaryAdjustmentAmountInput"
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBox x:Name="PrimaryAdjustmentAmountInput"
                          Margin="5,5,5,0" TabIndex="46" HorizontalContentAlignment="Stretch" 
                              Text="{Binding SelectedAdjustment.AdjustmentAmount, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}" 
                                     GotFocus="HightlightAllText" PreviewKeyDown="IgnoreDecimalInput"
                                          MouseDoubleClick="HightlightAllText">
-                                    <Validation.ErrorTemplate>
-                                        <ControlTemplate>
-                                            <DockPanel>
-                                                <Border BorderBrush="Red" BorderThickness="2">
-                                                    <AdornedElementPlaceholder />
-                                                </Border>
-                                            </DockPanel>
-                                        </ControlTemplate>
-                                    </Validation.ErrorTemplate>
-                                </TextBox>
-                            </StackPanel>
-                            <StackPanel Grid.Column="3">
-                                <Button x:Name="AddAdjustmentButton"
+                                        <Validation.ErrorTemplate>
+                                            <ControlTemplate>
+                                                <DockPanel>
+                                                    <Border BorderBrush="Red" BorderThickness="2">
+                                                        <AdornedElementPlaceholder />
+                                                    </Border>
+                                                </DockPanel>
+                                            </ControlTemplate>
+                                        </Validation.ErrorTemplate>
+                                    </TextBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="3">
+                                    <Button x:Name="AddAdjustmentButton"
                     Command="{Binding AddChargeAdjustmentCommand}"
                     Content="Add Adjustment" Margin="5,5,10,0" HorizontalContentAlignment="Center" TabIndex="47"
                     VerticalContentAlignment="Center"/>
-                            </StackPanel>
+                                </StackPanel>
+                            </Grid>
                         </Grid>
                     </Expander>
 
 
                 </Grid>
                 <StackPanel Grid.Column="1">
-                    <StackPanel></StackPanel>
                     <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Adjustment Count:" Margin="5,5,0,5"/>
+                        <TextBlock Text="{Binding PrimaryServiceDescription.Adjustments.Count}" Margin="5"></TextBlock>
                         <TextBlock Text="Additional Service Descriptions:"
-                                   Margin="5,5,0,5"/>
+                                   Margin="145,5,5,5"/>
                         <TextBlock Text="{Binding PrimaryServiceDescription.AdditionalServiceDescriptions.Count}"
                                    Margin="5"/>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel Grid.Column="2" Orientation="Horizontal">
-                    <TextBlock Text="Adjustment Count:" Margin="5,5,0,5"/>
-                    <TextBlock Text="{Binding PrimaryServiceDescription.Adjustments.Count}" Margin="5"></TextBlock>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="3">

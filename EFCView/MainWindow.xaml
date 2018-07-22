@@ -8,7 +8,8 @@
         Title="ERA File Creator"
         HorizontalContentAlignment="Stretch"
         VerticalAlignment="Stretch"
-        WindowStartupLocation="CenterOwner" SizeToContent="Height">
+        WindowStartupLocation="CenterOwner" SizeToContent="Height"
+        Width="1200">
 
     <DockPanel x:Name="TopGrid">
         <DockPanel DockPanel.Dock="Left">

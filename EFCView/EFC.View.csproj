@@ -111,6 +111,7 @@
     <Compile Include="Service.Messaging\UpdateCalculations.cs" />
     <Compile Include="Service.Messaging\UpdateInsuranceCompaniesMessage.cs" />
     <Compile Include="Service.Messaging\UpdateRepositoriesMessage.cs" />
+    <Compile Include="Service.Messaging\WindowMessenger.cs" />
     <Compile Include="Services\AdjustmentService.cs" />
     <Compile Include="Services\ChargeService.cs" />
     <Compile Include="Services\Command.cs" />

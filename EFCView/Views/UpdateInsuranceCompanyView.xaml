@@ -82,8 +82,12 @@
             </StackPanel>
             <StackPanel Grid.Column="3">
                 <TextBlock Text="State" Margin="5,5,5,0"/>
-                <TextBox Margin="5,0,5,5"
-                         Text="{Binding InsuranceCompany.Address.State}"/>
+                <ComboBox Margin="5,0,5,5"
+                          ItemsSource="{Binding States}"
+                          DisplayMemberPath="Key"
+                          SelectedValuePath="Value"
+                          SelectedValue="{Binding InsuranceCompany.Address.State}"
+                          SelectedIndex="9"/>
             </StackPanel>
             <StackPanel Grid.Column="4">
                 <TextBlock Text="Zip Code" Margin="5,5,5,0"/>
@@ -105,7 +109,7 @@
                         CommandParameter="{Binding InsuranceCompany}"/>
             </StackPanel>
             <StackPanel Grid.Column="4">
-                <Button Margin="5" Content="Save"
+                <Button Margin="5" Content="Save and Close"
                         Command="{Binding SaveInsuranceCompaniesCommand}"
                         CommandParameter="{Binding InsuranceCompanies}"/>
             </StackPanel>

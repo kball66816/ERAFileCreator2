@@ -24,8 +24,14 @@ namespace EraFileCreator.ViewModels
             Messenger.Default.Register<SettingsSavedMessage>(this, this.OnSettingsSaved, "UpdateSettings");
             Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileReceived, "CreationCompleted");
             Messenger.Default.Register<UpdateInsuranceCompaniesMessage>(this, this.OnUpdateReceived,"NewInsuranceSaved");
+            Messenger.Default.Register<WindowMessenger>(this,this.OnWindowMessageReceived,"CloseWindow");
             this.Payment.Amount = this.CalculateCheckAmount();
             this.OpenEditWindowCommand = new Command(this.OpenEditWindow);
+        }
+
+        private void OnWindowMessageReceived(WindowMessenger obj)
+        {
+            ViewFactory.CloseUpdateInsuranceCompaniesWindow();
         }
 
         private void OnUpdateReceived(UpdateInsuranceCompaniesMessage obj)
@@ -55,8 +61,7 @@ namespace EraFileCreator.ViewModels
 
         private void OpenEditWindow(object obj)
         {
-            var window = new ViewFactory();
-            window.ShowUpdateInsuranceCompaniesWindow();
+            ViewFactory.ShowUpdateInsuranceCompaniesWindow();
         }
 
         private ISettingsService _settingsService;

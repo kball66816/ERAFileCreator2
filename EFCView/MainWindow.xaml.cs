@@ -12,7 +12,7 @@ namespace EraFileCreator
     {
         public MainWindow()
         {
-            this.InitializeComponent(); 
+            this.InitializeComponent();
         }
     }
 }

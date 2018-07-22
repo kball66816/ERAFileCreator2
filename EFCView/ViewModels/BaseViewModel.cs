@@ -9,6 +9,13 @@ namespace EraFileCreator.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        public BaseViewModel()
+        {
+            ViewFactory = new ViewFactory();
+        }
+
+        public ViewFactory ViewFactory { get; private set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged(string propertyName)

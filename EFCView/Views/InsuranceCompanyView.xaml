@@ -96,7 +96,7 @@
                             Padding="0,0,0,0"/>
             </StackPanel>
             <StackPanel Grid.Column="5">
-                <Button Command="{Binding CreateJsonCommand}"
+                <Button Command="{Binding OpenEditWindowCommand}"
                         CommandParameter="{Binding Insurance}"
                         Content="Update Insurance Companies"
                         Margin="5,20,5,5"/>
