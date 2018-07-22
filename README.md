@@ -9,7 +9,8 @@ Once they are retrieved they are built using a stringbuilder, once built the str
 To run this program you can either install through the executable in the publish folder. This looks for updates within the folder on github and is deployed using clickonce.
 Alternatively you can open the solution in Visual Studio and select EFC.View as the startup project
 
-There are no 3rd party dependencies
+### Dependencies
+* program uses Newtonsoft.Json
 
 ### Instructions
 Patient - The entity you are associating the encounter to
@@ -20,12 +21,18 @@ Adjustment - Ideally you want each adjustment to be unique, a Service Descriptio
 
 Additional Service Description - Each Encounter can have more than one service Additional Service Descriptions keep a primary and additional service descriptions tied together. These will need to be added before you add the charge to the patient.
 
-**V1.0.1.0**
+** V1.2.0.0
+Contains the following feature
+* Stores Payer list in the settings
+* Can now add payers to saved list 
+* Replaced Payer name field with dropdown
+
+**V1.0.1.0
 **Contains the following feature
 * Claim Status in the CLP segment is now changeable
 * Claim Status will tell you its plain text reason when you hover
 
-**V 1.0.0.23**
+**V 1.0.0.23
 **Contains  the following fixes
 * Check Date and Check Number will no longer default back to today before creating the file
 * Library update to .net 4.6.2
