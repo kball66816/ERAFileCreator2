@@ -13,9 +13,10 @@ namespace EraFileCreator.Services
             this.PatientPromptEnabled = Settings.Default.EnableReusePatientPrompt;
             this.ReuseSamePatientEnabled = Settings.Default.ReusePatient;
             this.ReuseCharge = Settings.Default.ReuseChargeForNextPatient;
-            Messenger.Default.Register<PreferenceUpdatedMessage>(this, this.OnPrefenceUpdatedMessage, "Preferences Updated");
-
+            Messenger.Default.Register<PreferenceUpdatedMessage>(this, this.OnPrefenceUpdatedMessage,
+                "Preferences Updated");
         }
+
         public bool PatientPromptEnabled { get; set; }
         public bool ReuseSamePatientEnabled { get; set; }
 
@@ -25,7 +26,8 @@ namespace EraFileCreator.Services
         {
             var insuranceCompanies = new List<InsuranceCompany>();
             if (!string.IsNullOrEmpty(Settings.Default.InsuranceCompanies))
-                insuranceCompanies = JsonConvert.DeserializeObject<List<InsuranceCompany>>(Settings.Default.InsuranceCompanies);
+                insuranceCompanies =
+                    JsonConvert.DeserializeObject<List<InsuranceCompany>>(Settings.Default.InsuranceCompanies);
             return insuranceCompanies;
         }
 
@@ -103,21 +105,8 @@ namespace EraFileCreator.Services
 
         public Patient PullDefaultPatient(Patient patient)
         {
-            if (Settings.Default.ReloadLastPatient)
-            {
-                patient = LoadPatientFromSettings(patient);
-            }
+            if (Settings.Default.ReloadLastPatient) patient = LoadPatientFromSettings(patient);
 
-            return patient;
-        }
-
-        private static Patient LoadPatientFromSettings(Patient patient)
-        {
-            if (!string.IsNullOrEmpty(Settings.Default.PatientFirstName))
-                patient.FirstName = Settings.Default.PatientFirstName;
-
-            if (!string.IsNullOrEmpty(Settings.Default.PatientLastName))
-                patient.LastName = Settings.Default.PatientLastName;
             return patient;
         }
 
@@ -200,6 +189,16 @@ namespace EraFileCreator.Services
             Settings.Default.BillingProviderAddressZipCode = billingProvider.Address.ZipCode;
             Settings.Default.BillingProviderIsIndividual = billingProvider.IsIndividual;
             Settings.Default.Save();
+        }
+
+        private static Patient LoadPatientFromSettings(Patient patient)
+        {
+            if (!string.IsNullOrEmpty(Settings.Default.PatientFirstName))
+                patient.FirstName = Settings.Default.PatientFirstName;
+
+            if (!string.IsNullOrEmpty(Settings.Default.PatientLastName))
+                patient.LastName = Settings.Default.PatientLastName;
+            return patient;
         }
 
         private void OnPrefenceUpdatedMessage(PreferenceUpdatedMessage obj)

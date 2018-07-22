@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using EraFileCreator.Utility;
 
@@ -11,7 +12,7 @@ namespace EraFileCreator.Views
     {
         public PatientView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void RenderingProviderNpiInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -19,7 +20,7 @@ namespace EraFileCreator.Views
             InputRestrictions.RestrictTextToIntegerOnly(e);
         }
 
-        private void PatientFirstNameInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void PatientFirstNameInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
@@ -29,42 +30,42 @@ namespace EraFileCreator.Views
             InputRules.HighlightAllText(sender);
         }
 
-        private void SubscriberFirstNameInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void SubscriberFirstNameInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
 
-        private void SubscriberLastNameInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void SubscriberLastNameInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
 
-        private void RenderingProviderNpiInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void RenderingProviderNpiInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
 
-        private void SubscriberMemberIdnput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void SubscriberMemberIdnput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
 
-        private void RenderingProviderFirstNameInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void RenderingProviderFirstNameInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
 
-        private void PatientLastNameInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void PatientLastNameInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
 
-        private void PatientMemberId_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void PatientMemberId_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
 
-        private void RenderingProviderLastNameInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void RenderingProviderLastNameInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }

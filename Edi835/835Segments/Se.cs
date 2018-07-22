@@ -6,9 +6,9 @@ namespace Edi835._835Segments
     {
         public Se(int totalSegmentCount)
         {
-            SegmentIdentifier = "SE";
-            TransactionSegmentCount = totalSegmentCount;
-            TransactionSetControlNumber = "000000001";
+            this.SegmentIdentifier = "SE";
+            this.TransactionSegmentCount = totalSegmentCount;
+            this.TransactionSetControlNumber = "000000001";
         }
 
         private int TransactionSegmentCount { get; }
@@ -18,12 +18,12 @@ namespace Edi835._835Segments
         {
             var buildSe = new StringBuilder();
 
-            buildSe.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(TransactionSegmentCount)
-                .Append(DataElementTerminator)
-                .Append(TransactionSetControlNumber)
-                .Append(SegmentTerminator);
+            buildSe.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.TransactionSegmentCount)
+                .Append(this.DataElementTerminator)
+                .Append(this.TransactionSetControlNumber)
+                .Append(this.SegmentTerminator);
 
             return buildSe.ToString();
         }

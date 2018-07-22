@@ -13,6 +13,10 @@ namespace EraFileCreator.ViewModels
     public class InsuranceViewModel : BaseViewModel
     {
         private InsuranceCompany _insurance;
+        private ObservableCollection<InsuranceCompany> _insuranceCompanies;
+        private Payment _payment;
+
+        private readonly ISettingsService _settingsService;
 
         public InsuranceViewModel()
         {
@@ -20,23 +24,15 @@ namespace EraFileCreator.ViewModels
             this.Payment = new Payment();
             this.LoadInsuranceCompany();
             Messenger.Default.Register<UpdateCalculations>(this, this.OnUpdateCalculation);
-            Messenger.Default.Register<UpdateRepositoriesMessage>(this, this.OnUpdateRepositoriesMessageReceieved, "UpdateRepositories");
+            Messenger.Default.Register<UpdateRepositoriesMessage>(this, this.OnUpdateRepositoriesMessageReceieved,
+                "UpdateRepositories");
             Messenger.Default.Register<SettingsSavedMessage>(this, this.OnSettingsSaved, "UpdateSettings");
             Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileReceived, "CreationCompleted");
-            Messenger.Default.Register<UpdateInsuranceCompaniesMessage>(this, this.OnUpdateReceived,"NewInsuranceSaved");
-            Messenger.Default.Register<WindowMessenger>(this,this.OnWindowMessageReceived,"CloseWindow");
+            Messenger.Default.Register<UpdateInsuranceCompaniesMessage>(this, this.OnUpdateReceived,
+                "NewInsuranceSaved");
+            Messenger.Default.Register<WindowMessenger>(this, this.OnWindowMessageReceived, "CloseWindow");
             this.Payment.Amount = this.CalculateCheckAmount();
             this.OpenEditWindowCommand = new Command(this.OpenEditWindow);
-        }
-
-        private void OnWindowMessageReceived(WindowMessenger obj)
-        {
-            ViewFactory.CloseUpdateInsuranceCompaniesWindow();
-        }
-
-        private void OnUpdateReceived(UpdateInsuranceCompaniesMessage obj)
-        {
-            this.InsuranceCompanies = new ObservableCollection<InsuranceCompany>(this._settingsService.GetInsuranceCompanies());
         }
 
         public ObservableCollection<InsuranceCompany> InsuranceCompanies
@@ -59,16 +55,7 @@ namespace EraFileCreator.ViewModels
             }
         }
 
-        private void OpenEditWindow(object obj)
-        {
-            ViewFactory.ShowUpdateInsuranceCompaniesWindow();
-        }
-
-        private ISettingsService _settingsService;
-
         public ICommand OpenEditWindowCommand { get; set; }
-        private Payment _payment;
-        private ObservableCollection<InsuranceCompany> _insuranceCompanies;
 
         public InsuranceCompany Insurance
         {
@@ -82,6 +69,22 @@ namespace EraFileCreator.ViewModels
         }
 
         public Dictionary<string, string> PaymentTypes { get; set; }
+
+        private void OnWindowMessageReceived(WindowMessenger obj)
+        {
+            this.ViewFactory.CloseUpdateInsuranceCompaniesWindow();
+        }
+
+        private void OnUpdateReceived(UpdateInsuranceCompaniesMessage obj)
+        {
+            this.InsuranceCompanies =
+                new ObservableCollection<InsuranceCompany>(this._settingsService.GetInsuranceCompanies());
+        }
+
+        private void OpenEditWindow(object obj)
+        {
+            this.ViewFactory.ShowUpdateInsuranceCompaniesWindow();
+        }
 
         private void OnSaveFileReceived(SaveFileMessage obj)
         {
@@ -113,15 +116,13 @@ namespace EraFileCreator.ViewModels
             decimal chargesPaidAmount = 0;
             decimal addonsPaidAmount = 0;
             foreach (var patient in PatientService.PatientRepository.GetAllPatients())
-                foreach (var c in patient.Charges)
-                {
-                    chargesPaidAmount += c.PaymentAmount;
+            foreach (var c in patient.Charges)
+            {
+                chargesPaidAmount += c.PaymentAmount;
 
-                    foreach (var addonCharge in c.AdditionalServiceDescriptions)
-                    {
-                        addonsPaidAmount += addonCharge.PaymentAmount;
-                    }
-                }
+                foreach (var addonCharge in c.AdditionalServiceDescriptions)
+                    addonsPaidAmount += addonCharge.PaymentAmount;
+            }
 
             this.Payment.Amount = chargesPaidAmount + addonsPaidAmount;
             return this.Payment.Amount;
@@ -131,7 +132,8 @@ namespace EraFileCreator.ViewModels
         {
             this.Insurance = new InsuranceCompany();
             this.PaymentTypes = this.Payment.Types;
-            this.InsuranceCompanies = new ObservableCollection<InsuranceCompany>(this._settingsService.GetInsuranceCompanies());
+            this.InsuranceCompanies =
+                new ObservableCollection<InsuranceCompany>(this._settingsService.GetInsuranceCompanies());
             this.SaveInsuranceToRepository();
             this.RaisePropertyChanged("Insurance");
         }

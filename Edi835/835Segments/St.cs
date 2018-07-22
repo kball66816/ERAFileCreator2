@@ -6,9 +6,9 @@ namespace Edi835._835Segments
     {
         public St()
         {
-            SegmentIdentifier = "ST";
-            TransactionsetIdentifierCode = "835";
-            TransactionSetControlNumber = "000000001";
+            this.SegmentIdentifier = "ST";
+            this.TransactionsetIdentifierCode = "835";
+            this.TransactionSetControlNumber = "000000001";
         }
 
         private string TransactionsetIdentifierCode { get; }
@@ -18,12 +18,12 @@ namespace Edi835._835Segments
         {
             var buildSt = new StringBuilder();
 
-            buildSt.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(TransactionsetIdentifierCode)
-                .Append(DataElementTerminator)
-                .Append(TransactionSetControlNumber)
-                .Append(SegmentTerminator);
+            buildSt.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.TransactionsetIdentifierCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.TransactionSetControlNumber)
+                .Append(this.SegmentTerminator);
 
             return buildSt.ToString();
         }

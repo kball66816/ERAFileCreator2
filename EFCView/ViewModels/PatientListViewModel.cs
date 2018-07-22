@@ -10,7 +10,6 @@ namespace EraFileCreator.ViewModels
 {
     public class PatientListViewModel : BaseViewModel
     {
-
         private Patient _patient;
 
         private ObservableCollection<Patient> _patients;
@@ -19,23 +18,6 @@ namespace EraFileCreator.ViewModels
         {
             this.Patients = PatientService.PatientRepository.GetAllPatients();
             this.ClearPatientList = new Command(this.ClearPatientListCommand, this.CanClearPatientList);
-        }
-
-        private bool CanClearPatientList(object obj)
-        {
-            return PatientService.PatientRepository.GetAllPatients() != null;
-        }
-
-        private void ClearPatientListCommand(object obj)
-        {
-            var dialog = new MessageBoxService();
-            dialog.ClearMessage("Patient List");
-            if (dialog.NewDialogResult == MessageBoxResult.Yes)
-            {
-                PatientService.PatientRepository.GetAllPatients().Clear();
-                Messenger.Default.Send(new ListClearedMessage(), "Patient List Cleared");
-                Messenger.Default.Send(new UpdateCalculations());
-            }
         }
 
 
@@ -63,6 +45,23 @@ namespace EraFileCreator.ViewModels
                 this._patient = value;
                 this.RaisePropertyChanged("Patient");
                 Messenger.Default.Send(this.Patient);
+            }
+        }
+
+        private bool CanClearPatientList(object obj)
+        {
+            return PatientService.PatientRepository.GetAllPatients() != null;
+        }
+
+        private void ClearPatientListCommand(object obj)
+        {
+            var dialog = new MessageBoxService();
+            dialog.ClearMessage("Patient List");
+            if (dialog.NewDialogResult == MessageBoxResult.Yes)
+            {
+                PatientService.PatientRepository.GetAllPatients().Clear();
+                Messenger.Default.Send(new ListClearedMessage(), "Patient List Cleared");
+                Messenger.Default.Send(new UpdateCalculations());
             }
         }
     }

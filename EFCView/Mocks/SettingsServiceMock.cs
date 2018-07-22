@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.Common;
 using EraFileCreator.Services;
 using PatientManagement.DAL;
@@ -7,6 +8,16 @@ namespace EraFileCreator.Mocks
 {
     public class SettingsServiceMock : ISettingsService
     {
+        private Provider _mockBillingProvider;
+
+        private InsuranceCompany _mockInsurance;
+
+        private Patient _mockPatient;
+
+        private Preference _mockPreference;
+
+        private Provider _mockRenderingProvider;
+
         public SettingsServiceMock()
         {
             this.LoadMockBillingProvider();
@@ -16,91 +27,21 @@ namespace EraFileCreator.Mocks
             this.LoadMockRenderingProvider();
         }
 
-        private Patient _mockPatient;
-
-        private InsuranceCompany _mockInsurance;
-
-        private Preference _mockPreference;
-
-        private Provider _mockRenderingProvider;
-
-        private Provider _mockBillingProvider;
-
-        private void LoadMockBillingProvider()
-        {
-            this._mockBillingProvider = new Provider()
-            {
-                BusinessName = "Provider Business",
-                Npi = "9876543213",
-                Address = new Address()
-                {
-                    StreetOne = "123 Fake Street",
-                    StreetTwo = "Ste 230",
-                    City = "Seattle",
-                    State = "WA",
-                }
-            };
-        }
-
-        private void LoadMockRenderingProvider()
-        {
-            this._mockRenderingProvider = new Provider()
-            {
-                FirstName = "Provider",
-                LastName = "One",
-                Npi = "1234567893"
-            };
-        }
-        private void LoadMockPreference()
-        {
-            this._mockPreference = new Preference()
-            {
-                ReloadLastPatientFromLastSession = true,
-                ReuseAddon = true,
-                ReusePatient = true,
-                ReuseLastChargeForNextPatient = true,
-                EnableAddonReusePrompt = false,
-                EnablePatientReusePrompt = false,
-            };
-        }
-        private void LoadMockPatient()
-        {
-            this._mockPatient = new Patient()
-            {
-                FirstName = "John",
-                LastName = "Smith"
-            };
-        }
-        private void LoadMockInsurance()
-        {
-            this._mockInsurance = new InsuranceCompany()
-            {
-                Name = "Aetna",
-                TaxId = "123456789",
-                Address = new Address()
-                {
-                    StreetOne = "123 Fake Street",
-                    StreetTwo = "Ste 230",
-                    City = "Seattle",
-                    State = "WA",
-                }
-
-            };
-        }
+        public bool AddonPromptEnabled { get; set; }
+        public bool ReuseSameAddonEnabled { get; set; }
 
         public bool ReuseCharge { get; set; }
         public bool PatientPromptEnabled { get; set; }
         public bool ReuseSamePatientEnabled { get; set; }
-        public bool AddonPromptEnabled { get; set; }
-        public bool ReuseSameAddonEnabled { get; set; }
+
         public List<InsuranceCompany> GetInsuranceCompanies()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void SaveInsuranceCompanies(List<InsuranceCompany> insurancecompanies)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void SetDefaultPreferences(Preference preference)
@@ -129,43 +70,6 @@ namespace EraFileCreator.Mocks
             preference.ReuseLastChargeForNextPatient = this._mockPreference.ReuseLastChargeForNextPatient;
 
             return preference;
-        }
-
-        public InsuranceCompany PullDefaultInsurance(InsuranceCompany insurance)
-        {
-            if (!string.IsNullOrEmpty(this._mockInsurance.Name))
-                insurance.Name = this._mockInsurance.Name;
-
-            if (!string.IsNullOrEmpty(this._mockInsurance.TaxId))
-                insurance.TaxId = this._mockInsurance.TaxId;
-
-            if (!string.IsNullOrEmpty(this._mockInsurance.Address.StreetOne))
-                insurance.Address.StreetOne = this._mockInsurance.Address.StreetOne;
-
-            if (!string.IsNullOrEmpty(this._mockInsurance.Address.StreetTwo))
-                insurance.Address.StreetTwo = this._mockInsurance.Address.StreetTwo;
-
-            if (!string.IsNullOrEmpty(this._mockInsurance.Address.City))
-                insurance.Address.City = this._mockInsurance.Address.City;
-
-            if (!string.IsNullOrEmpty(this._mockInsurance.Address.State))
-                insurance.Address.State = this._mockInsurance.Address.State;
-
-            if (!string.IsNullOrEmpty(this._mockInsurance.Address.ZipCode))
-                insurance.Address.ZipCode = this._mockInsurance.Address.ZipCode;
-
-            return insurance;
-        }
-
-        public void SetDefaultInsurance(InsuranceCompany insurance)
-        {
-            this._mockInsurance.Name = insurance.Name;
-            this._mockInsurance.TaxId = insurance.TaxId;
-            this._mockInsurance.Address.StreetOne = insurance.Address.StreetOne;
-            this._mockInsurance.Address.StreetTwo = insurance.Address.StreetTwo;
-            this._mockInsurance.Address.City = insurance.Address.City;
-            this._mockInsurance.Address.State = insurance.Address.State;
-            this._mockInsurance.Address.ZipCode = insurance.Address.ZipCode;
         }
 
         public Patient PullDefaultPatient(Patient patient)
@@ -257,6 +161,107 @@ namespace EraFileCreator.Mocks
             this._mockBillingProvider.Address.State = billingProvider.Address.State;
             this._mockBillingProvider.Address.ZipCode = billingProvider.Address.ZipCode;
             this._mockBillingProvider.IsIndividual = billingProvider.IsIndividual;
+        }
+
+        private void LoadMockBillingProvider()
+        {
+            this._mockBillingProvider = new Provider
+            {
+                BusinessName = "Provider Business",
+                Npi = "9876543213",
+                Address = new Address
+                {
+                    StreetOne = "123 Fake Street",
+                    StreetTwo = "Ste 230",
+                    City = "Seattle",
+                    State = "WA"
+                }
+            };
+        }
+
+        private void LoadMockRenderingProvider()
+        {
+            this._mockRenderingProvider = new Provider
+            {
+                FirstName = "Provider",
+                LastName = "One",
+                Npi = "1234567893"
+            };
+        }
+
+        private void LoadMockPreference()
+        {
+            this._mockPreference = new Preference
+            {
+                ReloadLastPatientFromLastSession = true,
+                ReuseAddon = true,
+                ReusePatient = true,
+                ReuseLastChargeForNextPatient = true,
+                EnableAddonReusePrompt = false,
+                EnablePatientReusePrompt = false
+            };
+        }
+
+        private void LoadMockPatient()
+        {
+            this._mockPatient = new Patient
+            {
+                FirstName = "John",
+                LastName = "Smith"
+            };
+        }
+
+        private void LoadMockInsurance()
+        {
+            this._mockInsurance = new InsuranceCompany
+            {
+                Name = "Aetna",
+                TaxId = "123456789",
+                Address = new Address
+                {
+                    StreetOne = "123 Fake Street",
+                    StreetTwo = "Ste 230",
+                    City = "Seattle",
+                    State = "WA"
+                }
+            };
+        }
+
+        public InsuranceCompany PullDefaultInsurance(InsuranceCompany insurance)
+        {
+            if (!string.IsNullOrEmpty(this._mockInsurance.Name))
+                insurance.Name = this._mockInsurance.Name;
+
+            if (!string.IsNullOrEmpty(this._mockInsurance.TaxId))
+                insurance.TaxId = this._mockInsurance.TaxId;
+
+            if (!string.IsNullOrEmpty(this._mockInsurance.Address.StreetOne))
+                insurance.Address.StreetOne = this._mockInsurance.Address.StreetOne;
+
+            if (!string.IsNullOrEmpty(this._mockInsurance.Address.StreetTwo))
+                insurance.Address.StreetTwo = this._mockInsurance.Address.StreetTwo;
+
+            if (!string.IsNullOrEmpty(this._mockInsurance.Address.City))
+                insurance.Address.City = this._mockInsurance.Address.City;
+
+            if (!string.IsNullOrEmpty(this._mockInsurance.Address.State))
+                insurance.Address.State = this._mockInsurance.Address.State;
+
+            if (!string.IsNullOrEmpty(this._mockInsurance.Address.ZipCode))
+                insurance.Address.ZipCode = this._mockInsurance.Address.ZipCode;
+
+            return insurance;
+        }
+
+        public void SetDefaultInsurance(InsuranceCompany insurance)
+        {
+            this._mockInsurance.Name = insurance.Name;
+            this._mockInsurance.TaxId = insurance.TaxId;
+            this._mockInsurance.Address.StreetOne = insurance.Address.StreetOne;
+            this._mockInsurance.Address.StreetTwo = insurance.Address.StreetTwo;
+            this._mockInsurance.Address.City = insurance.Address.City;
+            this._mockInsurance.Address.State = insurance.Address.State;
+            this._mockInsurance.Address.ZipCode = insurance.Address.ZipCode;
         }
     }
 }

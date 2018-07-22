@@ -12,8 +12,8 @@ namespace EraFileCreator.ViewModels
 {
     public class UpdateInsuranceCompaniesViewModel : BaseViewModel
     {
-        private InsuranceCompany _insuranceCompany;
         private ObservableCollection<InsuranceCompany> _insuranceCompanies;
+        private InsuranceCompany _insuranceCompany;
         private InsuranceCompany _insuranceCompanyInEdit;
         private Dictionary<string, string> _states;
 
@@ -22,54 +22,16 @@ namespace EraFileCreator.ViewModels
             this.InsuranceCompanyInEdit = new InsuranceCompany();
             this.InsuranceCompany = new InsuranceCompany();
             this.AddInsuranceCompanyCommand = new Command(this.AddInsuranceCompany, this.CanAddInsuranceCompany);
-            this.SaveInsuranceCompaniesCommand = new Command(this.SaveInsuranceCompanies, this.CanSaveInsuranceCompanies);
-            this.DeleteSelectedInsuranceCommand = new Command(this.DeleteSelectedInsurance, CanDeleteSelectedInsurance);
+            this.SaveInsuranceCompaniesCommand =
+                new Command(this.SaveInsuranceCompanies, this.CanSaveInsuranceCompanies);
+            this.DeleteSelectedInsuranceCommand =
+                new Command(this.DeleteSelectedInsurance, this.CanDeleteSelectedInsurance);
             this.SettingsService = new SettingsService();
             this.InsuranceCompanies =
-                new ObservableCollection<InsuranceCompany>(SettingsService.GetInsuranceCompanies().OrderBy(a=>a.Name));
+                new ObservableCollection<InsuranceCompany>(this.SettingsService.GetInsuranceCompanies()
+                    .OrderBy(a => a.Name));
             var stateDictionary = new States();
-            States = stateDictionary.StatesDictionary;
-
-        }
-
-        private void DeleteSelectedInsurance(object obj)
-        {
-            if (obj is InsuranceCompany insuranceCompany)
-            {
-                InsuranceCompanies.Remove(insuranceCompany);
-            }
-        }
-
-        private bool CanDeleteSelectedInsurance(object obj)
-        {
-            return true;
-        }
-
-        private bool CanSaveInsuranceCompanies(object obj)
-        {
-            return this.InsuranceCompanies.Count > 0;
-        }
-
-        private void SaveInsuranceCompanies(object obj)
-        {
-            if (obj is IEnumerable<InsuranceCompany> insuranceCompanyList)
-            {
-                this.SettingsService.SaveInsuranceCompanies(insuranceCompanyList.ToList());
-                Messenger.Default.Send(new UpdateInsuranceCompaniesMessage(), "NewInsuranceSaved");
-                Messenger.Default.Send(new WindowMessenger(),"CloseWindow");
-            }
-        }
-
-        private void AddInsuranceCompany(object obj)
-        {
-            var insuranceCompany = obj as InsuranceCompany;
-            this.InsuranceCompanies.Add(insuranceCompany);
-            this.InsuranceCompany = new InsuranceCompany();
-        }
-
-        private bool CanAddInsuranceCompany(object obj)
-        {
-            return !string.IsNullOrEmpty(this.InsuranceCompany.Name) && !string.IsNullOrEmpty(this.InsuranceCompany.TaxId);
+            this.States = stateDictionary.StatesDictionary;
         }
 
         public ICommand DeleteSelectedInsuranceCommand { get; set; }
@@ -80,7 +42,7 @@ namespace EraFileCreator.ViewModels
             set
             {
                 this._insuranceCompanyInEdit = value;
-                RaisePropertyChanged("InsuranceCompanyInEdit");
+                this.RaisePropertyChanged("InsuranceCompanyInEdit");
             }
         }
 
@@ -88,13 +50,13 @@ namespace EraFileCreator.ViewModels
         public ICommand AddInsuranceCompanyCommand { get; set; }
         public ICommand SaveInsuranceCompaniesCommand { get; set; }
 
-        public Dictionary<string,string> States
+        public Dictionary<string, string> States
         {
             get => this._states;
             set
             {
                 this._states = value;
-                RaisePropertyChanged("States");
+                this.RaisePropertyChanged("States");
             }
         }
 
@@ -118,5 +80,42 @@ namespace EraFileCreator.ViewModels
             }
         }
 
+        private void DeleteSelectedInsurance(object obj)
+        {
+            if (obj is InsuranceCompany insuranceCompany) this.InsuranceCompanies.Remove(insuranceCompany);
+        }
+
+        private bool CanDeleteSelectedInsurance(object obj)
+        {
+            return true;
+        }
+
+        private bool CanSaveInsuranceCompanies(object obj)
+        {
+            return this.InsuranceCompanies.Count > 0;
+        }
+
+        private void SaveInsuranceCompanies(object obj)
+        {
+            if (obj is IEnumerable<InsuranceCompany> insuranceCompanyList)
+            {
+                this.SettingsService.SaveInsuranceCompanies(insuranceCompanyList.ToList());
+                Messenger.Default.Send(new UpdateInsuranceCompaniesMessage(), "NewInsuranceSaved");
+                Messenger.Default.Send(new WindowMessenger(), "CloseWindow");
+            }
+        }
+
+        private void AddInsuranceCompany(object obj)
+        {
+            var insuranceCompany = obj as InsuranceCompany;
+            this.InsuranceCompanies.Add(insuranceCompany);
+            this.InsuranceCompany = new InsuranceCompany();
+        }
+
+        private bool CanAddInsuranceCompany(object obj)
+        {
+            return !string.IsNullOrEmpty(this.InsuranceCompany.Name) &&
+                   !string.IsNullOrEmpty(this.InsuranceCompany.TaxId);
+        }
     }
 }

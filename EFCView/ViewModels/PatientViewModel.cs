@@ -17,20 +17,11 @@ namespace EraFileCreator.ViewModels
             PatientService.PatientRepository.Add(this.SelectedPatient);
             Messenger.Default.Register<ServiceDescription>(this, this.OnChargeReceived);
             Messenger.Default.Register<Provider>(this, this.OnProviderReceived, "BillingProvider");
-            Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileMessage, "SaveTextFiletoSelectedDirectory");
-            Messenger.Default.Register<ListClearedMessage>(this, this.OnListClearedMessageReceived, "Patient List Cleared");
+            Messenger.Default.Register<SaveFileMessage>(this, this.OnSaveFileMessage,
+                "SaveTextFiletoSelectedDirectory");
+            Messenger.Default.Register<ListClearedMessage>(this, this.OnListClearedMessageReceived,
+                "Patient List Cleared");
             this.AddPatientCommand = new Command(this.AddPatient, this.CanAddPatient);
-        }
-
-        private void OnListClearedMessageReceived(ListClearedMessage obj)
-        {
-            this.SelectedPatient = PatientService.LoadInitialPatient();
-            PatientService.PatientRepository.Add(this.SelectedPatient);
-        }
-
-        private void OnChargeReceived(ServiceDescription charge)
-        {
-            this.SelectedPatient.Charges.Add(charge);
         }
 
         public Patient SelectedPatient
@@ -45,6 +36,17 @@ namespace EraFileCreator.ViewModels
         }
 
         public ICommand AddPatientCommand { get; }
+
+        private void OnListClearedMessageReceived(ListClearedMessage obj)
+        {
+            this.SelectedPatient = PatientService.LoadInitialPatient();
+            PatientService.PatientRepository.Add(this.SelectedPatient);
+        }
+
+        private void OnChargeReceived(ServiceDescription charge)
+        {
+            this.SelectedPatient.Charges.Add(charge);
+        }
 
         private void OnSaveFileMessage(SaveFileMessage obj)
         {
@@ -64,6 +66,7 @@ namespace EraFileCreator.ViewModels
             PatientService.PatientRepository.Add(this.SelectedPatient);
             this.RaisePropertyChanged("CheckAmount");
         }
+
         private bool CanAddPatient(object obj)
         {
             return !string.IsNullOrEmpty(this.SelectedPatient.FirstName) &&

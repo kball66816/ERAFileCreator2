@@ -47,7 +47,7 @@ namespace Common.Common.Services
         /// <param name="recipient"></param>
         public void Unregister(object recipient)
         {
-            Unregister(recipient, null);
+            this.Unregister(recipient, null);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Common.Common.Services
         /// <param name="message"></param>
         public void Send<T>(T message)
         {
-            Send(message, null);
+            this.Send(message, null);
         }
 
         /// <summary>
@@ -105,8 +105,8 @@ namespace Common.Common.Services
             /// <param name="context"></param>
             public MessengerKey(object recipient, object context)
             {
-                Recipient = recipient;
-                Context = context;
+                this.Recipient = recipient;
+                this.Context = context;
             }
 
             public object Recipient { get; }
@@ -119,7 +119,7 @@ namespace Common.Common.Services
             /// <returns></returns>
             protected bool Equals(MessengerKey other)
             {
-                return Equals(Recipient, other.Recipient) && Equals(Context, other.Context);
+                return Equals(this.Recipient, other.Recipient) && Equals(this.Context, other.Context);
             }
 
             /// <summary>
@@ -131,9 +131,9 @@ namespace Common.Common.Services
             {
                 if (ReferenceEquals(null, obj)) return false;
                 if (ReferenceEquals(this, obj)) return true;
-                if (obj.GetType() != GetType()) return false;
+                if (obj.GetType() != this.GetType()) return false;
 
-                return Equals((MessengerKey) obj);
+                return this.Equals((MessengerKey) obj);
             }
 
             /// <summary>
@@ -144,8 +144,8 @@ namespace Common.Common.Services
             {
                 unchecked
                 {
-                    return ((Recipient != null ? Recipient.GetHashCode() : 0) * 397) ^
-                           (Context != null ? Context.GetHashCode() : 0);
+                    return ((this.Recipient != null ? this.Recipient.GetHashCode() : 0) * 397) ^
+                           (this.Context != null ? this.Context.GetHashCode() : 0);
                 }
             }
         }

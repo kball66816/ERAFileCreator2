@@ -9,6 +9,11 @@ namespace EraFileCreator.ViewModels
 {
     public class PatientEncounterViewModel : BaseViewModel
     {
+        private ServiceDescription _additionalServiceDescription;
+        private Dictionary<string, string> _claimStatusCodes;
+
+        private ServiceDescription _primaryServiceDescription;
+
         public PatientEncounterViewModel()
         {
             this.PrimaryServiceDescription = ChargeService.GetNewCharge();
@@ -16,14 +21,15 @@ namespace EraFileCreator.ViewModels
             this.PlacesOfService = this._primaryServiceDescription.PlaceOfService.PlacesOfService;
             this.ClaimStatusCodes = this.PrimaryServiceDescription.ClaimStatus.Codes;
             Messenger.Default.Register<Adjustment>(this, this.OnPrimaryAdjustmentReceived, "PrimaryAdjustment");
-            Messenger.Default.Register<Adjustment>(this, this.OnAdditionalAdjustmentReceived, "AdditionalServiceDescriptionAdjustment");
+            Messenger.Default.Register<Adjustment>(this, this.OnAdditionalAdjustmentReceived,
+                "AdditionalServiceDescriptionAdjustment");
             this.AddChargeToPatientCommand = new Command(this.AddNewCharge, CanAddChargeToPatient);
             this.AddAddonCommand = new Command(this.AddAdditionalServiceDescription, CanAddChargeToPatient);
         }
 
         public Dictionary<string, string> ClaimStatusCodes
         {
-            get { return this._claimStatusCodes; }
+            get => this._claimStatusCodes;
             set
             {
                 if (value != this._claimStatusCodes)
@@ -31,13 +37,7 @@ namespace EraFileCreator.ViewModels
                     this._claimStatusCodes = value;
                     this.RaisePropertyChanged("ClaimStatusCodes");
                 }
-
             }
-        }
-
-        private void OnAdditionalAdjustmentReceived(Adjustment adjustment)
-        {
-            ChargeService.AssociateAdjustmentWithCharge(this.AdditionalServiceDescription, adjustment);
         }
 
         public ICommand AddChargeToPatientCommand { get; set; }
@@ -45,15 +45,6 @@ namespace EraFileCreator.ViewModels
         public ICommand AddAddonCommand { get; }
 
         public Dictionary<string, string> PlacesOfService { get; set; }
-
-        private void OnPrimaryAdjustmentReceived(Adjustment adjustment)
-        {
-            ChargeService.AssociateAdjustmentWithCharge(this.PrimaryServiceDescription, adjustment);
-        }
-
-        private ServiceDescription _primaryServiceDescription;
-        private ServiceDescription _additionalServiceDescription;
-        private Dictionary<string, string> _claimStatusCodes;
 
         public ServiceDescription PrimaryServiceDescription
         {
@@ -77,9 +68,20 @@ namespace EraFileCreator.ViewModels
             }
         }
 
+        private void OnAdditionalAdjustmentReceived(Adjustment adjustment)
+        {
+            ChargeService.AssociateAdjustmentWithCharge(this.AdditionalServiceDescription, adjustment);
+        }
+
+        private void OnPrimaryAdjustmentReceived(Adjustment adjustment)
+        {
+            ChargeService.AssociateAdjustmentWithCharge(this.PrimaryServiceDescription, adjustment);
+        }
+
         private void AddAdditionalServiceDescription(object description)
         {
-            ChargeService.AssociateAdditionalServiceDescription(this.PrimaryServiceDescription, description as ServiceDescription);
+            ChargeService.AssociateAdditionalServiceDescription(this.PrimaryServiceDescription,
+                description as ServiceDescription);
             this.AdditionalServiceDescription =
                 ChargeService.SetNewOrClonedChargeByUserSettings(this.AdditionalServiceDescription);
             this.RaisePropertyChanged("SelectedAddonCharge");
@@ -90,7 +92,8 @@ namespace EraFileCreator.ViewModels
         private void AddNewCharge(object description)
         {
             Messenger.Default.Send(description as ServiceDescription);
-            this.PrimaryServiceDescription = ChargeService.SetNewOrClonedChargeByUserSettings(description as ServiceDescription);
+            this.PrimaryServiceDescription =
+                ChargeService.SetNewOrClonedChargeByUserSettings(description as ServiceDescription);
             this.AdditionalServiceDescription = ChargeService.GetNewCharge();
             this.RaisePropertyChanged("PrimaryServiceDescription");
             this.RaisePropertyChanged("AdditionalServiceDescription");
@@ -100,10 +103,7 @@ namespace EraFileCreator.ViewModels
         private static bool CanAddChargeToPatient(object obj)
         {
             var canAdd = false;
-            if (obj is ServiceDescription s)
-            {
-                canAdd = s.ChargeCost != 0 && !string.IsNullOrEmpty(s.ProcedureCode);
-            }
+            if (obj is ServiceDescription s) canAdd = s.ChargeCost != 0 && !string.IsNullOrEmpty(s.ProcedureCode);
 
             return canAdd;
         }

@@ -43,7 +43,8 @@ namespace EraFileCreator.ViewModels
 
         private bool CanAddAddonAdjustment(object obj)
         {
-            return !string.IsNullOrEmpty(this.AddonAdjustment.AdjustmentReasonCode) && this.AddonAdjustment.AdjustmentAmount != 0;
+            return !string.IsNullOrEmpty(this.AddonAdjustment.AdjustmentReasonCode) &&
+                   this.AddonAdjustment.AdjustmentAmount != 0;
         }
     }
 }

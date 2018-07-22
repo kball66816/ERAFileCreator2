@@ -7,11 +7,11 @@ namespace Edi835._835Segments
     {
         public Trn(Payment payment, InsuranceCompany insurance)
         {
-            SegmentIdentifier = "TRN";
-            TraceTypeCode = "1";
-            ReferenceIdentification = payment.Number;
-            OriginatingCompanyIdentifier = "1" + insurance.TaxId;
-            OriginatingCompanySupplementalCode = "13551";
+            this.SegmentIdentifier = "TRN";
+            this.TraceTypeCode = "1";
+            this.ReferenceIdentification = payment.Number;
+            this.OriginatingCompanyIdentifier = "1" + insurance.TaxId;
+            this.OriginatingCompanySupplementalCode = "13551";
         }
 
         private string TraceTypeCode { get; }
@@ -23,16 +23,16 @@ namespace Edi835._835Segments
         {
             var trn = new StringBuilder();
 
-            trn.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(TraceTypeCode)
-                .Append(DataElementTerminator)
-                .Append(ReferenceIdentification)
-                .Append(DataElementTerminator)
-                .Append(OriginatingCompanyIdentifier)
-                .Append(DataElementTerminator)
-                .Append(OriginatingCompanySupplementalCode)
-                .Append(SegmentTerminator);
+            trn.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.TraceTypeCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.ReferenceIdentification)
+                .Append(this.DataElementTerminator)
+                .Append(this.OriginatingCompanyIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.OriginatingCompanySupplementalCode)
+                .Append(this.SegmentTerminator);
 
             return trn.ToString();
         }

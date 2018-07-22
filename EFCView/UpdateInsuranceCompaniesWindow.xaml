@@ -9,6 +9,6 @@
         SizeToContent="Height"
         Width="560">
     <Grid>
-        <views:UpdateInsuranceCompanyView/>
+        <views:UpdateInsuranceCompanyView />
     </Grid>
 </Window>

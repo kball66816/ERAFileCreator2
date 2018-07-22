@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using PatientManagement.DAL;
 
@@ -9,22 +8,23 @@ namespace Edi835._835Segments
     {
         public Clp(ServiceDescription serviceDescription)
         {
-            SegmentIdentifier = "CLP";
+            this.SegmentIdentifier = "CLP";
 
-            ClaimSubmittersIdentifier = serviceDescription.BillId;
-            ClaimStatusCode = serviceDescription.ClaimStatus.Code;
-            TotalClaimChargeAmount = serviceDescription.ChargeCost+serviceDescription.AdditionalServiceDescriptions.Sum(s=>s.ChargeCost);
-            TotalClaimPaymentAmount = serviceDescription.PaymentAmount +
-                                      serviceDescription.AdditionalServiceDescriptions.Sum(s => s.SumOfChargePaid);
-            PatientResponsibility = serviceDescription.Copay +
-                                    serviceDescription.AdditionalServiceDescriptions.Sum(s => s.Copay);
-            ClaimFilingIndicatorCode = "12";
-            PayerClaimControlNumber = "EMC5841338";
-            FacilityTypeCode = serviceDescription.PlaceOfService.ServiceLocation;
-            ClaimFrequencyCode = string.Empty;
-            DrgCode = string.Empty;
-            DrgWeight = 0;
-            Dischargefractionpercentage = 0;
+            this.ClaimSubmittersIdentifier = serviceDescription.BillId;
+            this.ClaimStatusCode = serviceDescription.ClaimStatus.Code;
+            this.TotalClaimChargeAmount = serviceDescription.ChargeCost +
+                                          serviceDescription.AdditionalServiceDescriptions.Sum(s => s.ChargeCost);
+            this.TotalClaimPaymentAmount = serviceDescription.PaymentAmount +
+                                           serviceDescription.AdditionalServiceDescriptions.Sum(s => s.SumOfChargePaid);
+            this.PatientResponsibility = serviceDescription.Copay +
+                                         serviceDescription.AdditionalServiceDescriptions.Sum(s => s.Copay);
+            this.ClaimFilingIndicatorCode = "12";
+            this.PayerClaimControlNumber = "EMC5841338";
+            this.FacilityTypeCode = serviceDescription.PlaceOfService.ServiceLocation;
+            this.ClaimFrequencyCode = string.Empty;
+            this.DrgCode = string.Empty;
+            this.DrgWeight = 0;
+            this.Dischargefractionpercentage = 0;
         }
 
         private string ClaimSubmittersIdentifier { get; }
@@ -44,50 +44,50 @@ namespace Edi835._835Segments
         {
             var buildClp = new StringBuilder();
 
-            buildClp.Append(SegmentIdentifier);
-            buildClp.Append(DataElementTerminator);
-            buildClp.Append(ClaimSubmittersIdentifier);
-            buildClp.Append(DataElementTerminator);
-            buildClp.Append(ClaimStatusCode);
-            buildClp.Append(DataElementTerminator);
-            buildClp.Append(TotalClaimChargeAmount);
-            buildClp.Append(DataElementTerminator);
-            buildClp.Append(TotalClaimPaymentAmount);
-            buildClp.Append(DataElementTerminator);
+            buildClp.Append(this.SegmentIdentifier);
+            buildClp.Append(this.DataElementTerminator);
+            buildClp.Append(this.ClaimSubmittersIdentifier);
+            buildClp.Append(this.DataElementTerminator);
+            buildClp.Append(this.ClaimStatusCode);
+            buildClp.Append(this.DataElementTerminator);
+            buildClp.Append(this.TotalClaimChargeAmount);
+            buildClp.Append(this.DataElementTerminator);
+            buildClp.Append(this.TotalClaimPaymentAmount);
+            buildClp.Append(this.DataElementTerminator);
 
-            if (PatientResponsibility > 0) buildClp.Append(PatientResponsibility);
-            buildClp.Append(DataElementTerminator);
-            buildClp.Append(ClaimFilingIndicatorCode);
-            buildClp.Append(DataElementTerminator);
-            buildClp.Append(PayerClaimControlNumber);
+            if (this.PatientResponsibility > 0) buildClp.Append(this.PatientResponsibility);
+            buildClp.Append(this.DataElementTerminator);
+            buildClp.Append(this.ClaimFilingIndicatorCode);
+            buildClp.Append(this.DataElementTerminator);
+            buildClp.Append(this.PayerClaimControlNumber);
 
-            if (!string.IsNullOrEmpty(FacilityTypeCode))
+            if (!string.IsNullOrEmpty(this.FacilityTypeCode))
             {
-                buildClp.Append(DataElementTerminator);
-                buildClp.Append(FacilityTypeCode);
+                buildClp.Append(this.DataElementTerminator);
+                buildClp.Append(this.FacilityTypeCode);
             }
 
-            if (!string.IsNullOrEmpty(ClaimFrequencyCode))
+            if (!string.IsNullOrEmpty(this.ClaimFrequencyCode))
             {
-                buildClp.Append(DataElementTerminator);
-                buildClp.Append(ClaimFrequencyCode);
+                buildClp.Append(this.DataElementTerminator);
+                buildClp.Append(this.ClaimFrequencyCode);
             }
 
-            if (!string.IsNullOrEmpty(DrgCode))
+            if (!string.IsNullOrEmpty(this.DrgCode))
             {
-                buildClp.Append(DataElementTerminator);
-                buildClp.Append(DrgCode);
-                buildClp.Append(DataElementTerminator);
-                buildClp.Append(DrgWeight);
+                buildClp.Append(this.DataElementTerminator);
+                buildClp.Append(this.DrgCode);
+                buildClp.Append(this.DataElementTerminator);
+                buildClp.Append(this.DrgWeight);
             }
 
-            if (Dischargefractionpercentage > 0)
+            if (this.Dischargefractionpercentage > 0)
             {
-                buildClp.Append(DataElementTerminator);
-                buildClp.Append(Dischargefractionpercentage);
+                buildClp.Append(this.DataElementTerminator);
+                buildClp.Append(this.Dischargefractionpercentage);
             }
 
-            buildClp.Append(SegmentTerminator);
+            buildClp.Append(this.SegmentTerminator);
             return buildClp.ToString();
         }
     }

@@ -6,9 +6,9 @@ namespace Edi835._835Segments
     {
         public Iea()
         {
-            SegmentIdentifier = "IEA";
-            NumberOfFunctionalGroups = "1";
-            InterchangeControlNumber = "201541257";
+            this.SegmentIdentifier = "IEA";
+            this.NumberOfFunctionalGroups = "1";
+            this.InterchangeControlNumber = "201541257";
         }
 
         private string NumberOfFunctionalGroups { get; }
@@ -18,12 +18,12 @@ namespace Edi835._835Segments
         {
             var buildIea = new StringBuilder();
 
-            buildIea.Append(SegmentIdentifier);
-            buildIea.Append(DataElementTerminator);
-            buildIea.Append(NumberOfFunctionalGroups);
-            buildIea.Append(DataElementTerminator);
-            buildIea.Append(InterchangeControlNumber);
-            buildIea.Append(SegmentTerminator);
+            buildIea.Append(this.SegmentIdentifier);
+            buildIea.Append(this.DataElementTerminator);
+            buildIea.Append(this.NumberOfFunctionalGroups);
+            buildIea.Append(this.DataElementTerminator);
+            buildIea.Append(this.InterchangeControlNumber);
+            buildIea.Append(this.SegmentTerminator);
 
             return buildIea.ToString();
         }

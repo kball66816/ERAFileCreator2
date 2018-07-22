@@ -13,10 +13,10 @@
 
     <DockPanel x:Name="TopGrid">
         <DockPanel DockPanel.Dock="Left">
-            <views:PreferenceView DockPanel.Dock="Bottom"/>
-            <views:PatientListView DockPanel.Dock="Top"/>
+            <views:PreferenceView DockPanel.Dock="Bottom" />
+            <views:PatientListView DockPanel.Dock="Top" />
         </DockPanel>
-      
+
         <ScrollViewer DockPanel.Dock="Right">
             <views:PatientEncounterView />
         </ScrollViewer>

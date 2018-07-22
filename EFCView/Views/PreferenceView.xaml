@@ -11,8 +11,7 @@
             <viewModels:PreferenceViewModel />
         </Grid.DataContext>
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Vertical"
-                        >
+            <StackPanel Orientation="Vertical">
                 <CheckBox Content="Reuse Same Patient"
                           Name="ReusePatientPreference"
                           Command="{Binding SavePreferenceCommand}"

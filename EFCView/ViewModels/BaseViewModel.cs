@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace EraFileCreator.ViewModels
 {
@@ -11,10 +6,10 @@ namespace EraFileCreator.ViewModels
     {
         public BaseViewModel()
         {
-            ViewFactory = new ViewFactory();
+            this.ViewFactory = new ViewFactory();
         }
 
-        public ViewFactory ViewFactory { get; private set; }
+        public ViewFactory ViewFactory { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

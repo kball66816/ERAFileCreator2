@@ -16,7 +16,8 @@ namespace EraFileCreator.ViewModels
             ProviderService.SaveBillingProvider(this.BillingProvider);
             Messenger.Default.Register<UpdateRepositoriesMessage>(this, this.OnUpdateRepositoriesMessage);
             Messenger.Default.Register<SettingsSavedMessage>(this, this.OnSettingsSavedMessage, "UpdateSettings");
-            this.UpdateRenderingProviderCommand = new Command(this.UpdateRenderingProvider, this.CanUpdateRenderingProvider);
+            this.UpdateRenderingProviderCommand =
+                new Command(this.UpdateRenderingProvider, this.CanUpdateRenderingProvider);
         }
 
         public ICommand UpdateRenderingProviderCommand { get; }
@@ -39,7 +40,8 @@ namespace EraFileCreator.ViewModels
 
         private bool CanUpdateRenderingProvider(object obj)
         {
-            return !string.IsNullOrEmpty(this.BillingProvider.FirstName) && !string.IsNullOrEmpty(this.BillingProvider.LastName);
+            return !string.IsNullOrEmpty(this.BillingProvider.FirstName) &&
+                   !string.IsNullOrEmpty(this.BillingProvider.LastName);
         }
 
         private void OnSettingsSavedMessage(SettingsSavedMessage obj)
@@ -49,8 +51,7 @@ namespace EraFileCreator.ViewModels
 
         private void OnUpdateRepositoriesMessage(UpdateRepositoriesMessage obj)
         {
-           ProviderService.BillingProviderRepository.AddBillingProvider(this.BillingProvider);
+            ProviderService.BillingProviderRepository.AddBillingProvider(this.BillingProvider);
         }
-
     }
 }

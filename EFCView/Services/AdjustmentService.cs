@@ -8,6 +8,5 @@ namespace EraFileCreator.Services
         {
             return new Adjustment();
         }
-
     }
 }

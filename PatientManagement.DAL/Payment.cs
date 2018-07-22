@@ -7,15 +7,26 @@ namespace PatientManagement.DAL
 {
     public class Payment
     {
+        private decimal _amount;
+
+        private DateTime _date;
+
+        public Dictionary<string, string> Types = new Dictionary<string, string>
+        {
+            {"EFT", "ACH"},
+            {"Financial Institution Option", "BPO"},
+            {"Check", "CHK"},
+            {"Wire Transfer", "FWT"},
+            {"Non Payment", "NON"}
+        };
+
         public Payment()
         {
             if (this.Type == null) this.Type = "CHK";
             this.Date = DateTime.Today;
             this.Number = DateTime.Now.ToString("yyyyMMddhhmmssff");
         }
-        private decimal _amount;
 
-        private DateTime _date;
         public decimal Amount
         {
             get => this._amount;
@@ -28,6 +39,7 @@ namespace PatientManagement.DAL
                 }
             }
         }
+
         public DateTime Date
         {
             get => this._date;
@@ -40,18 +52,10 @@ namespace PatientManagement.DAL
                 }
             }
         }
+
         public string Type { get; set; }
 
         public string Number { get; set; }
-
-        public Dictionary<string, string> Types = new Dictionary<string, string>
-        {
-            {"EFT", "ACH"},
-            {"Financial Institution Option", "BPO"},
-            {"Check", "CHK"},
-            {"Wire Transfer", "FWT"},
-            {"Non Payment", "NON"}
-        };
 
         public event PropertyChangedEventHandler PropertyChanged;
 

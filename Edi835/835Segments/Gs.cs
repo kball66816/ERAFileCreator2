@@ -6,15 +6,15 @@ namespace Edi835._835Segments
     {
         public Gs()
         {
-            SegmentIdentifier = "GS";
-            FunctionalIdentifierCode = "HP";
-            ApplicationSendersCode = "7802840731";
-            ApplicationReceiversCode = "7234068";
-            Date = "20160101";
-            Time = "1200";
-            GroupControlNumber = "201541257";
-            ResponsibleAgencyCode = "X";
-            IndustryIdentifierCode = "005010X221A1";
+            this.SegmentIdentifier = "GS";
+            this.FunctionalIdentifierCode = "HP";
+            this.ApplicationSendersCode = "7802840731";
+            this.ApplicationReceiversCode = "7234068";
+            this.Date = "20160101";
+            this.Time = "1200";
+            this.GroupControlNumber = "201541257";
+            this.ResponsibleAgencyCode = "X";
+            this.IndustryIdentifierCode = "005010X221A1";
         }
 
         private string FunctionalIdentifierCode { get; }
@@ -30,24 +30,24 @@ namespace Edi835._835Segments
         {
             var buildGs = new StringBuilder();
 
-            buildGs.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(FunctionalIdentifierCode)
-                .Append(DataElementTerminator)
-                .Append(ApplicationSendersCode)
-                .Append(DataElementTerminator)
-                .Append(ApplicationReceiversCode)
-                .Append(DataElementTerminator)
-                .Append(Date)
-                .Append(DataElementTerminator)
-                .Append(Time)
-                .Append(DataElementTerminator)
-                .Append(GroupControlNumber)
-                .Append(DataElementTerminator)
-                .Append(ResponsibleAgencyCode)
-                .Append(DataElementTerminator)
-                .Append(IndustryIdentifierCode)
-                .Append(SegmentTerminator);
+            buildGs.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.FunctionalIdentifierCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.ApplicationSendersCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.ApplicationReceiversCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.Date)
+                .Append(this.DataElementTerminator)
+                .Append(this.Time)
+                .Append(this.DataElementTerminator)
+                .Append(this.GroupControlNumber)
+                .Append(this.DataElementTerminator)
+                .Append(this.ResponsibleAgencyCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.IndustryIdentifierCode)
+                .Append(this.SegmentTerminator);
 
             return buildGs.ToString();
         }

@@ -1,15 +1,15 @@
-﻿
-namespace EraFileCreator
+﻿namespace EraFileCreator
 {
     public class ViewFactory
     {
-        public UpdateInsuranceCompaniesWindow InsuranceCompaniesWindow { get; set; }
+        private UpdateInsuranceCompaniesWindow InsuranceCompaniesWindow { get; set; }
+
         public void ShowUpdateInsuranceCompaniesWindow()
         {
-            if (InsuranceCompaniesWindow == null)
+            if (this.InsuranceCompaniesWindow == null)
             {
-                InsuranceCompaniesWindow = new UpdateInsuranceCompaniesWindow();
-                InsuranceCompaniesWindow.Show();
+                this.InsuranceCompaniesWindow = new UpdateInsuranceCompaniesWindow();
+                this.InsuranceCompaniesWindow.Show();
             }
         }
 

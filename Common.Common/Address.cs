@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Common.Common
 {
@@ -9,7 +8,7 @@ namespace Common.Common
 
         public Address()
         {
-            if (State == null) State = "AL";
+            if (this.State == null) this.State = "AL";
         }
 
         public string StreetOne { get; set; }
@@ -18,12 +17,12 @@ namespace Common.Common
 
         public string State
         {
-            get => state;
+            get => this.state;
             set
             {
-                if (value == state) return;
-                state = value;
-                RaisePropertyChanged("State");
+                if (value == this.state) return;
+                this.state = value;
+                this.RaisePropertyChanged("State");
             }
         }
 
@@ -33,7 +32,7 @@ namespace Common.Common
 
         private void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

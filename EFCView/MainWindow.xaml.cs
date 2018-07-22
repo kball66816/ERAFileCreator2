@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Threading;
-using Common.Common.Services;
+﻿using System.Windows;
 
 namespace EraFileCreator
 {

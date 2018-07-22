@@ -1,9 +1,6 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Common.Common.Extensions;
 using EraFileCreator.Utility;
 
 namespace EraFileCreator.Views
@@ -15,7 +12,7 @@ namespace EraFileCreator.Views
     {
         public PrimaryChargeView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void HightlightAllText(object sender, RoutedEventArgs e)
@@ -27,6 +24,7 @@ namespace EraFileCreator.Views
         {
             InputRules.IgnoreDecimalInput(sender, e);
         }
+
         private void Expander_KeyDown(object sender, KeyEventArgs e)
         {
             ExpandOrRetractOnSpaceDown(sender, e);
@@ -35,23 +33,21 @@ namespace EraFileCreator.Views
         private static void ExpandOrRetractOnSpaceDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
-            {
                 if (sender is Expander exp)
                 {
                     e.Handled = true;
                     exp.IsExpanded = exp.IsExpanded != true;
                 }
-            }
         }
 
         private void Expander_KeyDown_1(object sender, KeyEventArgs e)
         {
-            ExpandOrRetractOnSpaceDown(sender,e);
+            ExpandOrRetractOnSpaceDown(sender, e);
         }
 
         private void Expander_KeyDown_2(object sender, KeyEventArgs e)
         {
-            ExpandOrRetractOnSpaceDown(sender,e);
+            ExpandOrRetractOnSpaceDown(sender, e);
         }
     }
 }

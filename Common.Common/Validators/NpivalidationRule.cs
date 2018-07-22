@@ -26,14 +26,14 @@ namespace Common.Common.Validators
 
             if (number.Count == 10)
             {
-                var sum = PreSumCheckDigit(number);
+                var sum = this.PreSumCheckDigit(number);
                 sum = sum % 10 != 0 ? CheckIfSumCanBeDividedBy10(sum) : 0;
-                InvalidNpi = sum != number[9];
+                this.InvalidNpi = sum != number[9];
             }
 
             else
             {
-                InvalidNpi = true;
+                this.InvalidNpi = true;
             }
         }
 
@@ -70,8 +70,8 @@ namespace Common.Common.Validators
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (value != null) ParseNpi(value.ToString());
-            return InvalidNpi ? new ValidationResult(false, null) : new ValidationResult(true, null);
+            if (value != null) this.ParseNpi(value.ToString());
+            return this.InvalidNpi ? new ValidationResult(false, null) : new ValidationResult(true, null);
         }
     }
 }

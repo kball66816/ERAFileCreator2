@@ -6,11 +6,11 @@ namespace Edi835._835Segments
     {
         public Per()
         {
-            SegmentIdentifier = "PER";
-            ContactFunctionCode = "BL";
-            Name = "EDI SUPPORT";
-            CommunicationNumberQualifier = "TE";
-            CommunicationNumber = "8888888888";
+            this.SegmentIdentifier = "PER";
+            this.ContactFunctionCode = "BL";
+            this.Name = "EDI SUPPORT";
+            this.CommunicationNumberQualifier = "TE";
+            this.CommunicationNumber = "8888888888";
         }
 
         private string ContactFunctionCode { get; }
@@ -22,16 +22,16 @@ namespace Edi835._835Segments
         {
             var buildPer = new StringBuilder();
 
-            buildPer.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(ContactFunctionCode)
-                .Append(DataElementTerminator)
-                .Append(Name)
-                .Append(DataElementTerminator)
-                .Append(CommunicationNumberQualifier)
-                .Append(DataElementTerminator)
-                .Append(CommunicationNumber)
-                .Append(SegmentTerminator);
+            buildPer.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.ContactFunctionCode)
+                .Append(this.DataElementTerminator)
+                .Append(this.Name)
+                .Append(this.DataElementTerminator)
+                .Append(this.CommunicationNumberQualifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.CommunicationNumber)
+                .Append(this.SegmentTerminator);
 
             return buildPer.ToString();
         }

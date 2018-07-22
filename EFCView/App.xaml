@@ -6,6 +6,6 @@
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <utility:NotConverter x:Key="NotConverter" />
-        <BooleanToVisibilityConverter x:Key="VisibilityDisabled"/>
+        <BooleanToVisibilityConverter x:Key="VisibilityDisabled" />
     </Application.Resources>
 </Application>

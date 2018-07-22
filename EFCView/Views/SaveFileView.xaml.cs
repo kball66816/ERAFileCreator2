@@ -9,7 +9,7 @@ namespace EraFileCreator.Views
     {
         public SaveFileView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

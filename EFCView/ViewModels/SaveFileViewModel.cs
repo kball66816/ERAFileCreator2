@@ -29,8 +29,9 @@ namespace EraFileCreator.ViewModels
 
         private static void SendFileCreationComplete()
         {
-            Messenger.Default.Send(new SaveFileMessage(),"CreationCompleted");
+            Messenger.Default.Send(new SaveFileMessage(), "CreationCompleted");
         }
+
         private static void Save50Files(object obj)
         {
             SendCalculateRequest();
@@ -64,9 +65,7 @@ namespace EraFileCreator.ViewModels
             var canSave = false;
 
             foreach (var patient in PatientService.PatientRepository.GetAllPatients())
-            {
                 canSave = patient.Charges.Count > 0;
-            }
 
             return canSave;
         }

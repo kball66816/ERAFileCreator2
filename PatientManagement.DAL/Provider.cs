@@ -35,10 +35,7 @@ namespace PatientManagement.DAL
 
         public string BusinessName
         {
-            get
-            {
-                return this.IsIndividual ? this.FullName : this._businessName;
-            }
+            get => this.IsIndividual ? this.FullName : this._businessName;
             set
             {
                 this._businessName = value;
@@ -122,7 +119,8 @@ namespace PatientManagement.DAL
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (this.PropertyChanged != null) this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (this.PropertyChanged != null)
+                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -3,13 +3,13 @@
 namespace EraFileCreator
 {
     /// <summary>
-    /// Interaction logic for UpdateInsuranceCompaniesWindow.xaml
+    ///     Interaction logic for UpdateInsuranceCompaniesWindow.xaml
     /// </summary>
     public partial class UpdateInsuranceCompaniesWindow : Window
     {
         public UpdateInsuranceCompaniesWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

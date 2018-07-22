@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace EraFileCreator.Views
 {
@@ -10,7 +9,7 @@ namespace EraFileCreator.Views
     {
         public PreferenceView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

@@ -4,13 +4,12 @@ namespace EraFileCreator.Services
 {
     public interface IMessageBoxService
     {
-        bool ShowDialog();
-
-       MessageBoxResult NewDialogResult { get; set; }
-
-        void DisplayMessage(string identifier);
+        MessageBoxResult NewDialogResult { get; set; }
 
         bool DialogResult { get; set; }
+        bool ShowDialog();
+
+        void DisplayMessage(string identifier);
 
         string MessageBoxMessage(string identifier);
     }

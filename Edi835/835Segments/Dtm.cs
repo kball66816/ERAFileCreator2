@@ -12,24 +12,24 @@ namespace Edi835._835Segments
 
         public Dtm()
         {
-            SegmentIdentifier = "DTM";
-            Date = DateTime.Today.DateToYearFirstShortString();
-            DateTimeQualifier = "405";
+            this.SegmentIdentifier = "DTM";
+            this.Date = DateTime.Today.DateToYearFirstShortString();
+            this.DateTimeQualifier = "405";
         }
 
         public Dtm(Patient patient)
         {
-            Charge = patient.Charges.FirstOrDefault();
-            SegmentIdentifier = "DTM";
-            ServiceStartDateDetails();
+            this.Charge = patient.Charges.FirstOrDefault();
+            this.SegmentIdentifier = "DTM";
+            this.ServiceStartDateDetails();
         }
 
         public Dtm(ServiceDescription charge)
         {
-            Charge = charge;
-            SegmentIdentifier = "DTM";
-            DateTimeQualifier = "472";
-            Date = charge.DateOfService.DateToYearFirstShortString();
+            this.Charge = charge;
+            this.SegmentIdentifier = "DTM";
+            this.DateTimeQualifier = "472";
+            this.Date = charge.DateOfService.DateToYearFirstShortString();
         }
 
         private ServiceDescription Charge { get; }
@@ -39,64 +39,64 @@ namespace Edi835._835Segments
 
         public string BuildDtm()
         {
-            buildDtm = new StringBuilder();
+            this.buildDtm = new StringBuilder();
 
-            buildDtm.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(DateTimeQualifier)
-                .Append(DataElementTerminator)
-                .Append(Date)
-                .Append(SegmentTerminator);
-            if (DateTimeQualifier == "232")
+            this.buildDtm.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.DateTimeQualifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.Date)
+                .Append(this.SegmentTerminator);
+            if (this.DateTimeQualifier == "232")
             {
-                AttachServiceExpirationDate();
-                AttachClaimReceivedDateDetails();
+                this.AttachServiceExpirationDate();
+                this.AttachClaimReceivedDateDetails();
             }
 
-            return buildDtm.ToString();
+            return this.buildDtm.ToString();
         }
 
 
         private void ServiceStartDateDetails()
         {
-            DateTimeQualifier = "232";
-            Date = Charge.DateOfService.DateToYearFirstShortString();
+            this.DateTimeQualifier = "232";
+            this.Date = this.Charge.DateOfService.DateToYearFirstShortString();
         }
 
         private void ServiceExpirationDateDetails()
         {
-            DateTimeQualifier = "233";
-            Date = Charge.DateOfService.DateToYearFirstShortString();
+            this.DateTimeQualifier = "233";
+            this.Date = this.Charge.DateOfService.DateToYearFirstShortString();
         }
 
 
         private void AttachServiceExpirationDate()
         {
-            ServiceExpirationDateDetails();
-            buildDtm.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(DateTimeQualifier)
-                .Append(DataElementTerminator)
-                .Append(Date)
-                .Append(SegmentTerminator);
+            this.ServiceExpirationDateDetails();
+            this.buildDtm.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.DateTimeQualifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.Date)
+                .Append(this.SegmentTerminator);
         }
 
 
         private void ClaimReceivedDateDetails()
         {
-            DateTimeQualifier = "050";
-            Date = Charge.DateOfService.DateToYearFirstShortString();
+            this.DateTimeQualifier = "050";
+            this.Date = this.Charge.DateOfService.DateToYearFirstShortString();
         }
 
         private void AttachClaimReceivedDateDetails()
         {
-            ClaimReceivedDateDetails();
-            buildDtm.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(DateTimeQualifier)
-                .Append(DataElementTerminator)
-                .Append(Date)
-                .Append(SegmentTerminator);
+            this.ClaimReceivedDateDetails();
+            this.buildDtm.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.DateTimeQualifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.Date)
+                .Append(this.SegmentTerminator);
         }
     }
 }

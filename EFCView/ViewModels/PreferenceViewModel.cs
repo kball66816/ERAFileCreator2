@@ -8,6 +8,7 @@ namespace EraFileCreator.ViewModels
 {
     public class PreferenceViewModel : BaseViewModel
     {
+        private readonly ISettingsService _settingsService;
         private Preference _preference;
 
         public PreferenceViewModel()
@@ -18,7 +19,6 @@ namespace EraFileCreator.ViewModels
             this.LoadCommands();
         }
 
-        private readonly ISettingsService _settingsService;
         public Preference Preference
         {
             get => this._preference;

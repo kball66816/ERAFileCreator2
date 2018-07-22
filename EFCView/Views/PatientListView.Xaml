@@ -11,30 +11,32 @@
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <TextBlock
                 Margin="25,5,0,0"
-                       Text="Patients:"
-                HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Text="{Binding Patients.Count}" 
-                       Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-           
+                Text="Patients:"
+                HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Text="{Binding Patients.Count}"
+                       Margin="0,5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <Button Command="{Binding ClearPatientList}"
                     Background="#FF7789D8"
-                    BorderBrush="#FF7789D8">Clear Patient List</Button>
+                    BorderBrush="#FF7789D8">
+                Clear Patient List
+            </Button>
         </StackPanel>
         <ListBox Grid.Row="2" Background="#FF7789D8"
                  BorderBrush="#FF7789D8"
                  ItemsSource="{Binding Patients}"
                  SelectedItem="{Binding Patient, Mode=TwoWay}"
                  MinWidth="100"
-                 HorizontalContentAlignment="Stretch" 
+                 HorizontalContentAlignment="Stretch"
                  TabIndex="69"
                  Margin="5,5,5,5">
             <ListBox.ItemTemplate>

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using EraFileCreator.Utility;
 
@@ -11,7 +12,7 @@ namespace EraFileCreator.Views
     {
         public InsuranceCompanyView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void InsuranceZipCodeInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -19,7 +20,7 @@ namespace EraFileCreator.Views
             InputRestrictions.RestrictTextToIntegerOnly(e);
         }
 
-        private void InsuranceCompanyNameInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void InsuranceCompanyNameInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
@@ -29,12 +30,12 @@ namespace EraFileCreator.Views
             InputRules.HighlightAllText(sender);
         }
 
-        private void InsuranceCompanyTaxIdInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void InsuranceCompanyTaxIdInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
 
-        private void InsuranceStreetLineOneInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void InsuranceStreetLineOneInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
@@ -49,12 +50,12 @@ namespace EraFileCreator.Views
             InputRules.HighlightAllText(sender);
         }
 
-        private void InsuranceStreetLineTwoInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void InsuranceStreetLineTwoInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
 
-        private void InsuranceCityInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void InsuranceCityInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }
@@ -69,7 +70,7 @@ namespace EraFileCreator.Views
             InputRules.HighlightAllText(sender);
         }
 
-        private void InsuranceZipCodeInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        private void InsuranceZipCodeInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }

@@ -7,17 +7,17 @@ namespace EraFileCreator.Services
 {
     public static class PatientService
     {
-        static PatientService()
-        {
-            PatientRepository = new PatientRepository();
-            SettingsService = new SettingsService();
-        }
-
         public static readonly IPatientRepository PatientRepository;
 
         public static ISettingsService SettingsService;
 
         public static IMessageBoxService DialogPrompt = new MessageBoxService();
+
+        static PatientService()
+        {
+            PatientRepository = new PatientRepository();
+            SettingsService = new SettingsService();
+        }
 
         private static Patient GetNewPatient()
         {
@@ -32,19 +32,13 @@ namespace EraFileCreator.Services
         public static Patient GetNewPatientBasedOnSettings(Patient patient)
         {
             if (SettingsService.ReuseSamePatientEnabled && SettingsService.PatientPromptEnabled)
-            {
                 patient = PromptTypeOfNewPatient(patient);
-            }
 
             else if (SettingsService.ReuseSamePatientEnabled)
-            {
                 patient = ClonePatient(patient);
-            }
 
             else
-            {
                 patient = GetNewPatient();
-            }
 
             return patient;
         }
@@ -55,6 +49,7 @@ namespace EraFileCreator.Services
             patient = DialogPrompt.ShowDialog() ? ClonePatient(patient) : GetNewPatient();
             return patient;
         }
+
         public static Patient LoadInitialPatient()
         {
             return SettingsService.PullDefaultPatient(GetNewPatient());

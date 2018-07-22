@@ -6,23 +6,23 @@ namespace Edi835._835Segments
     {
         public Isa()
         {
-            SegmentIdentifier = "ISA";
-            AuthorizationInfoQualifier = "00";
-            AuthorizationInformation = "          ";
-            SecurityInfoQualifier = "00";
-            SecurityInformation = "          ";
-            InterchangeIdQualifierSender = "30";
-            InterchangeSenderId = "166055205UPSERB";
-            InterchangeIdQualifierReceiver = "30";
-            InterchangeReceiverId = "074056672XPCMXJ";
-            InterchangeDate = "160101";
-            InterchangeTime = "1200";
-            ReptitionSeperator = "^";
-            InterchangeControlVersionNumber = "00501";
-            InterchangeControlNumber = "201541257";
-            AcknowledgementRequested = "0";
-            UsageIndicator = "P";
-            ComponentElementSeperator = ":";
+            this.SegmentIdentifier = "ISA";
+            this.AuthorizationInfoQualifier = "00";
+            this.AuthorizationInformation = "          ";
+            this.SecurityInfoQualifier = "00";
+            this.SecurityInformation = "          ";
+            this.InterchangeIdQualifierSender = "30";
+            this.InterchangeSenderId = "166055205UPSERB";
+            this.InterchangeIdQualifierReceiver = "30";
+            this.InterchangeReceiverId = "074056672XPCMXJ";
+            this.InterchangeDate = "160101";
+            this.InterchangeTime = "1200";
+            this.ReptitionSeperator = "^";
+            this.InterchangeControlVersionNumber = "00501";
+            this.InterchangeControlNumber = "201541257";
+            this.AcknowledgementRequested = "0";
+            this.UsageIndicator = "P";
+            this.ComponentElementSeperator = ":";
         }
 
         private string AuthorizationInfoQualifier { get; }
@@ -47,40 +47,40 @@ namespace Edi835._835Segments
         {
             var buildIsa = new StringBuilder();
 
-            buildIsa.Append(SegmentIdentifier)
-                .Append(DataElementTerminator)
-                .Append(AuthorizationInfoQualifier)
-                .Append(DataElementTerminator)
-                .Append(AuthorizationInformation)
-                .Append(DataElementTerminator)
-                .Append(SecurityInfoQualifier)
-                .Append(DataElementTerminator)
-                .Append(SecurityInformation)
-                .Append(DataElementTerminator)
-                .Append(InterchangeIdQualifierSender)
-                .Append(DataElementTerminator)
-                .Append(InterchangeSenderId)
-                .Append(DataElementTerminator)
-                .Append(InterchangeIdQualifierReceiver)
-                .Append(DataElementTerminator)
-                .Append(InterchangeReceiverId)
-                .Append(DataElementTerminator)
-                .Append(InterchangeDate)
-                .Append(DataElementTerminator)
-                .Append(InterchangeTime)
-                .Append(DataElementTerminator)
-                .Append(ReptitionSeperator)
-                .Append(DataElementTerminator)
-                .Append(InterchangeControlVersionNumber)
-                .Append(DataElementTerminator)
-                .Append(InterchangeControlNumber)
-                .Append(DataElementTerminator)
-                .Append(AcknowledgementRequested)
-                .Append(DataElementTerminator)
-                .Append(UsageIndicator)
-                .Append(DataElementTerminator)
-                .Append(ComponentElementSeperator)
-                .Append(SegmentTerminator);
+            buildIsa.Append(this.SegmentIdentifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.AuthorizationInfoQualifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.AuthorizationInformation)
+                .Append(this.DataElementTerminator)
+                .Append(this.SecurityInfoQualifier)
+                .Append(this.DataElementTerminator)
+                .Append(this.SecurityInformation)
+                .Append(this.DataElementTerminator)
+                .Append(this.InterchangeIdQualifierSender)
+                .Append(this.DataElementTerminator)
+                .Append(this.InterchangeSenderId)
+                .Append(this.DataElementTerminator)
+                .Append(this.InterchangeIdQualifierReceiver)
+                .Append(this.DataElementTerminator)
+                .Append(this.InterchangeReceiverId)
+                .Append(this.DataElementTerminator)
+                .Append(this.InterchangeDate)
+                .Append(this.DataElementTerminator)
+                .Append(this.InterchangeTime)
+                .Append(this.DataElementTerminator)
+                .Append(this.ReptitionSeperator)
+                .Append(this.DataElementTerminator)
+                .Append(this.InterchangeControlVersionNumber)
+                .Append(this.DataElementTerminator)
+                .Append(this.InterchangeControlNumber)
+                .Append(this.DataElementTerminator)
+                .Append(this.AcknowledgementRequested)
+                .Append(this.DataElementTerminator)
+                .Append(this.UsageIndicator)
+                .Append(this.DataElementTerminator)
+                .Append(this.ComponentElementSeperator)
+                .Append(this.SegmentTerminator);
 
             return buildIsa.ToString();
         }

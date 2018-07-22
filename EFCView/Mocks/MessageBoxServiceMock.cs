@@ -20,6 +20,7 @@ namespace EraFileCreator.Mocks
         {
             return $"Do you want to Reuse the details of {identifier}?";
         }
+
         public MessageBoxResult NewDialogResult { get; set; }
         public bool DialogResult { get; set; }
     }

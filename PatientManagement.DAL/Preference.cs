@@ -122,7 +122,8 @@ namespace PatientManagement.DAL
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (this.PropertyChanged != null) this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (this.PropertyChanged != null)
+                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

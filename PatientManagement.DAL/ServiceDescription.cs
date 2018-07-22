@@ -7,9 +7,22 @@ namespace PatientManagement.DAL
 {
     public class ServiceDescription
     {
+        private ObservableCollection<ServiceDescription> _additionalServiceDescriptions;
+
+        private ObservableCollection<Adjustment> _adjustmentList;
         private string _billId;
+
+
+        private decimal _chargeCost;
         private decimal _copay;
         private DateTime _dateOfService;
+
+        private decimal _paymentAmount;
+
+
+        private string _procedureCode;
+
+        public int ReferenceIdCounter;
 
         public ServiceDescription()
         {
@@ -35,16 +48,6 @@ namespace PatientManagement.DAL
             this.Adjustments = new ObservableCollection<Adjustment>();
             this.ClaimStatus = new ClaimStatusCode(charge.ClaimStatus);
         }
-
-        private ObservableCollection<Adjustment> _adjustmentList;
-
-
-        private decimal _chargeCost;
-
-        private decimal _paymentAmount;
-
-
-        private string _procedureCode;
 
         public ObservableCollection<Adjustment> Adjustments
         {
@@ -119,10 +122,7 @@ namespace PatientManagement.DAL
 
         public ObservableCollection<ServiceDescription> AdditionalServiceDescriptions
         {
-            get
-            {
-                return this._additionalServiceDescriptions;
-            }
+            get => this._additionalServiceDescriptions;
 
             set
             {
@@ -134,13 +134,7 @@ namespace PatientManagement.DAL
             }
         }
 
-        public string ReferenceId
-        {
-            get => this.BillId + "-" + this.ReferenceIdCounter;
-        }
-
-        public int ReferenceIdCounter;
-        private ObservableCollection<ServiceDescription> _additionalServiceDescriptions;
+        public string ReferenceId => this.BillId + "-" + this.ReferenceIdCounter;
 
         public string BillId
         {
@@ -172,26 +166,14 @@ namespace PatientManagement.DAL
 
         public decimal AllowedAmount => this.PaymentAmount + this.Copay;
 
-        private decimal TotalCostofAddonCharge
-        {
-            get => this.AdditionalServiceDescriptions.Sum(addon => addon.ChargeCost);
-        }
+        private decimal TotalCostofAddonCharge => this.AdditionalServiceDescriptions.Sum(addon => addon.ChargeCost);
 
-        private decimal TotalAddonChargesPaid
-        {
-            get => this.AdditionalServiceDescriptions.Sum(addon => addon.PaymentAmount);
-        }
+        private decimal TotalAddonChargesPaid => this.AdditionalServiceDescriptions.Sum(addon => addon.PaymentAmount);
 
 
-        public decimal SumOfChargePaid
-        {
-            get => this.PaymentAmount + this.TotalAddonChargesPaid;
-        }
+        public decimal SumOfChargePaid => this.PaymentAmount + this.TotalAddonChargesPaid;
 
-        public decimal SumOfChargeCost
-        {
-            get => this.ChargeCost + this.TotalCostofAddonCharge;
-        }
+        public decimal SumOfChargeCost => this.ChargeCost + this.TotalCostofAddonCharge;
 
         public ClaimStatusCode ClaimStatus { get; set; }
 
