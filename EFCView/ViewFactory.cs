@@ -6,16 +6,14 @@
 
         public void ShowUpdateInsuranceCompaniesWindow()
         {
-            if (this.InsuranceCompaniesWindow == null)
-            {
-                this.InsuranceCompaniesWindow = new UpdateInsuranceCompaniesWindow();
-                this.InsuranceCompaniesWindow.Show();
-            }
+            this.InsuranceCompaniesWindow = new UpdateInsuranceCompaniesWindow();
+            this.InsuranceCompaniesWindow.ShowDialog();
         }
 
         public void CloseUpdateInsuranceCompaniesWindow()
         {
             this.InsuranceCompaniesWindow?.Close();
+            this.InsuranceCompaniesWindow = null;
         }
     }
 }
