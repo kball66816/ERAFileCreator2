@@ -32,7 +32,7 @@
                           DisplayMemberPath="Name"
                           Margin="5"
                           SelectedIndex="0"
-                          SelectedItem="{Binding InsuranceCompanyInEdit}" />
+                          SelectedItem="{Binding InsuranceCompanyInEdit}" Padding="5,2,2,2.5" />
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <Button Content="Delete Selected"
@@ -73,7 +73,7 @@
             <StackPanel Grid.Column="1">
                 <TextBlock Text="Address Line Two" Margin="5,5,5,0" />
                 <TextBox Margin="5,0,5,5"
-                         Text="{Binding InsuranceCompany.Address.StreetTwo}" />
+                         Text="{Binding InsuranceCompany.Address.StreetTwo}" Padding="0" />
             </StackPanel>
             <StackPanel Grid.Column="2">
                 <TextBlock Text="City" Margin="5,5,5,0" />
@@ -83,11 +83,12 @@
             <StackPanel Grid.Column="3">
                 <TextBlock Text="State" Margin="5,5,5,0" />
                 <ComboBox Margin="5,0,5,5"
+                          IsEditable="True"
                           ItemsSource="{Binding States}"
                           DisplayMemberPath="Key"
                           SelectedValuePath="Value"
                           SelectedValue="{Binding InsuranceCompany.Address.State}"
-                          SelectedIndex="9" />
+                          SelectedIndex="9" Padding="2,0,0,0" />
             </StackPanel>
             <StackPanel Grid.Column="4">
                 <TextBlock Text="Zip Code" Margin="5,5,5,0" />
