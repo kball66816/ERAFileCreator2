@@ -115,7 +115,8 @@ namespace EraFileCreator.ViewModels
         private bool CanAddInsuranceCompany(object obj)
         {
             return !string.IsNullOrEmpty(this.InsuranceCompany.Name) &&
-                   !string.IsNullOrEmpty(this.InsuranceCompany.TaxId);
+                   !string.IsNullOrEmpty(this.InsuranceCompany.TaxId)
+                   && !string.IsNullOrEmpty(this.InsuranceCompany.Address.State);
         }
     }
 }

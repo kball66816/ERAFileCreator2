@@ -107,8 +107,8 @@ namespace EraFileCreator.ViewModels
 
         private void OnUpdateCalculation(UpdateCalculations obj)
         {
-            this.CalculateCheckAmount();
-            this.RaisePropertyChanged("CheckAmount");
+            this.Payment.Amount = this.CalculateCheckAmount();
+            RaisePropertyChanged("Amount");
         }
 
         private decimal CalculateCheckAmount()
@@ -116,16 +116,14 @@ namespace EraFileCreator.ViewModels
             decimal chargesPaidAmount = 0;
             decimal addonsPaidAmount = 0;
             foreach (var patient in PatientService.PatientRepository.GetAllPatients())
-            foreach (var c in patient.Charges)
-            {
-                chargesPaidAmount += c.PaymentAmount;
+                foreach (var c in patient.Charges)
+                {
+                    chargesPaidAmount += c.PaymentAmount;
 
-                foreach (var addonCharge in c.AdditionalServiceDescriptions)
-                    addonsPaidAmount += addonCharge.PaymentAmount;
-            }
-
-            this.Payment.Amount = chargesPaidAmount + addonsPaidAmount;
-            return this.Payment.Amount;
+                    foreach (var addonCharge in c.AdditionalServiceDescriptions)
+                        addonsPaidAmount += addonCharge.PaymentAmount;
+                }
+            return chargesPaidAmount + addonsPaidAmount;
         }
 
         private void LoadInsuranceCompany()
