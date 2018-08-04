@@ -13,7 +13,6 @@ namespace EraFileCreator.ViewModels
         public PatientViewModel()
         {
             this.SelectedPatient = PatientService.LoadInitialPatient();
-            PatientService.SettingsService.PullDefaultRenderingProvider(this.SelectedPatient.RenderingProvider);
             PatientService.PatientRepository.Add(this.SelectedPatient);
             Messenger.Default.Register<ServiceDescription>(this, this.OnChargeReceived);
             Messenger.Default.Register<Provider>(this, this.OnProviderReceived, "BillingProvider");
@@ -61,7 +60,6 @@ namespace EraFileCreator.ViewModels
 
         private void AddPatient(object obj)
         {
-            Messenger.Default.Send(this.SelectedPatient, "AddRenderingProvider");
             this.SelectedPatient = PatientService.GetNewPatientBasedOnSettings(this.SelectedPatient);
             PatientService.PatientRepository.Add(this.SelectedPatient);
             this.RaisePropertyChanged("CheckAmount");

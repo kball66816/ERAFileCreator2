@@ -52,7 +52,9 @@ namespace EraFileCreator.Services
 
         public static Patient LoadInitialPatient()
         {
-            return SettingsService.PullDefaultPatient(GetNewPatient());
+            var patient = SettingsService.PullDefaultPatient(GetNewPatient());
+            SettingsService.PullDefaultRenderingProvider(patient.RenderingProvider);
+            return patient;
         }
 
         public static void SaveSettings(Patient patient)

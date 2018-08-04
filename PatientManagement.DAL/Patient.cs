@@ -7,21 +7,21 @@ namespace PatientManagement.DAL
 {
     public class Patient : IPerson, INotifyPropertyChanged
     {
-        private ObservableCollection<ServiceDescription> charges;
+        private ObservableCollection<ServiceDescription> _charges;
 
-        private string firstName;
+        private string _firstName;
 
-        private string fullName;
+        private string _fullName;
 
-        private string lastName;
+        private string _lastName;
 
         public Patient()
         {
+            this.Id = Guid.NewGuid();
             this.MemberId = "ZLF1155487866";
             this.Subscriber = new Subscriber();
             this.RenderingProvider = new Provider();
             this.Charges = new ObservableCollection<ServiceDescription>();
-            this.Id = Guid.NewGuid();
         }
 
         public string FullName
@@ -30,15 +30,15 @@ namespace PatientManagement.DAL
             {
                 var fullName = this.FirstName;
 
-                if (!string.IsNullOrEmpty(this.LastName)) fullName = fullName += " " + this.LastName;
+                if (!string.IsNullOrEmpty(this.LastName)) fullName += " " + this.LastName;
                 return fullName;
             }
 
             set
             {
-                if (value != this.fullName)
+                if (value != this._fullName)
                 {
-                    this.fullName = value;
+                    this._fullName = value;
                     this.RaisePropertyChanged("FullName");
                 }
             }
@@ -46,11 +46,11 @@ namespace PatientManagement.DAL
 
         public ObservableCollection<ServiceDescription> Charges
         {
-            get => this.charges;
+            get => this._charges;
             set
             {
-                if (value == this.charges) return;
-                this.charges = value;
+                if (value == this._charges) return;
+                this._charges = value;
                 this.RaisePropertyChanged("Charges");
             }
         }
@@ -58,7 +58,6 @@ namespace PatientManagement.DAL
         public string MemberId { get; set; }
 
         public Guid Id { get; set; }
-
 
         public bool IncludeSubscriber { get; set; }
 
@@ -70,12 +69,12 @@ namespace PatientManagement.DAL
 
         public string FirstName
         {
-            get => this.firstName;
+            get => this._firstName;
             set
             {
-                if (value != this.firstName)
+                if (value != this._firstName)
                 {
-                    this.firstName = value;
+                    this._firstName = value;
                     this.RaisePropertyChanged("FirstName");
                     this.RaisePropertyChanged("Name");
                     this.RaisePropertyChanged("FullName");
@@ -85,12 +84,12 @@ namespace PatientManagement.DAL
 
         public string LastName
         {
-            get => this.lastName;
+            get => this._lastName;
             set
             {
-                if (value != this.lastName)
+                if (value != this._lastName)
                 {
-                    this.lastName = value;
+                    this._lastName = value;
                     this.RaisePropertyChanged("LastName");
                     this.RaisePropertyChanged("Name");
                     this.RaisePropertyChanged("FullName");
@@ -104,8 +103,7 @@ namespace PatientManagement.DAL
 
         public void RaisePropertyChanged(string propertyName)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public Patient CopyPatient()

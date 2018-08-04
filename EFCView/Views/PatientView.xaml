@@ -101,7 +101,7 @@
                     <TextBox x:Name="SubscriberFirstNameInput"
                              Text="{Binding SelectedPatient.Subscriber.FirstName}"
                              IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
-                             HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="23"
+                             HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="30"
                              GotFocus="SubscriberFirstNameInput_GotFocus" />
 
 
@@ -112,7 +112,7 @@
                     <TextBox x:Name="SubscriberLastNameInput"
                              Text="{Binding SelectedPatient.Subscriber.LastName}"
                              IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
-                             HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="24"
+                             HorizontalContentAlignment="Stretch" Margin="5,0,0,0" TabIndex="31"
                              GotFocus="SubscriberLastNameInput_GotFocus" />
                 </StackPanel>
                 <StackPanel Grid.Column="2">
@@ -121,7 +121,7 @@
                     <TextBox x:Name="SubscriberMemberIdnput"
                              Text="{Binding SelectedPatient.Subscriber.MemberId}"
                              IsEnabled="{Binding IsChecked, ElementName=IncludeSubscriberInput}"
-                             HorizontalContentAlignment="Stretch" Margin="5,0,0,5" TabIndex="25"
+                             HorizontalContentAlignment="Stretch" Margin="5,0,0,5" TabIndex="32"
                              GotFocus="SubscriberMemberIdnput_GotFocus" />
                 </StackPanel>
             </Grid>
@@ -137,20 +137,20 @@
                                Text="Provider's First Name*" Margin="5,5,5,0" />
                     <TextBox x:Name="RenderingProviderFirstNameInput"
                              Text="{Binding SelectedPatient.RenderingProvider.FirstName}"
-                             Margin="5,0" TabIndex="27" GotFocus="RenderingProviderFirstNameInput_GotFocus" />
+                             Margin="5,0" TabIndex="40" GotFocus="RenderingProviderFirstNameInput_GotFocus" />
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <TextBlock x:Name="RenderingProviderLastNameTag"
                                Text="Provider's Last Name*" Margin="5,5,5,0" />
                     <TextBox x:Name="RenderingProviderLastNameInput"
-                             Text="{Binding SelectedPatient.RenderingProvider.LastName}" Margin="5,0" TabIndex="28"
+                             Text="{Binding SelectedPatient.RenderingProvider.LastName}" Margin="5,0" TabIndex="41"
                              GotFocus="RenderingProviderLastNameInput_GotFocus" />
                 </StackPanel>
                 <StackPanel Grid.Column="2">
                     <TextBlock x:Name="RenderingProviderNpiTag"
                                Text="Provider's NPI*" Margin="5,5,5,0" />
                     <TextBox x:Name="RenderingProviderNpiInput"
-                             MaxLength="10" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="29"
+                             MaxLength="10" Margin="5,0,0,0" HorizontalContentAlignment="Stretch" TabIndex="42"
                              PreviewTextInput="RenderingProviderNpiInput_PreviewTextInput"
                              GotFocus="RenderingProviderNpiInput_GotFocus">
                         <Validation.ErrorTemplate>
@@ -172,7 +172,7 @@
                 <StackPanel Grid.Column="3">
                     <Button x:Name="AddPatient"
                             Content="Add Additional Patient"
-                            Command="{Binding AddPatientCommand}" Margin="5,20,5,5" TabIndex="30" />
+                            Command="{Binding AddPatientCommand}" Margin="5,20,5,5" TabIndex="43" />
                 </StackPanel>
             </Grid>
         </Grid>

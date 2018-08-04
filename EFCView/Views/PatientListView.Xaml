@@ -27,8 +27,9 @@
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <Button Command="{Binding ClearPatientList}"
                     Background="#FF7789D8"
-                    BorderBrush="#FF7789D8">
-                Clear Patient List
+                    BorderBrush="#FF7789D8"
+                    Content="Clear Patient List"
+                    TabIndex="130">
             </Button>
         </StackPanel>
         <ListBox Grid.Row="2" Background="#FF7789D8"
@@ -37,7 +38,7 @@
                  SelectedItem="{Binding Patient, Mode=TwoWay}"
                  MinWidth="100"
                  HorizontalContentAlignment="Stretch"
-                 TabIndex="69"
+                 TabIndex="131"
                  Margin="5,5,5,5">
             <ListBox.ItemTemplate>
                 <DataTemplate>

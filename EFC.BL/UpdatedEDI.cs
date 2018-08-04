@@ -23,8 +23,6 @@ namespace EFC.BL
             var insurancePaymentRepository = new InsurancePaymentRepository();
             this._insurance = insurancePaymentRepository.GetInsuranceWithPayment().InsuranceCompany;
             this._payment = insurancePaymentRepository.GetInsuranceWithPayment().Payment;
-            //IInsurance insuranceCompany = new InsuranceRepository();
-            //this._insurance = insuranceCompany.GetInsurance();
             IPatientRepository patientList = new PatientRepository();
             this._patients = patientList.GetAllPatients().ToList();
             IProvider provider = new BillingProviderRepository();
@@ -112,115 +110,139 @@ namespace EFC.BL
             this._segmentCount++;
 
             foreach (var patient in this._patients)
-            foreach (var charge in patient.Charges)
-            {
-                var clp = new Clp(charge);
-                edi.Append(clp.BuildClp());
-                this._segmentCount++;
-
-                var patientNm1 = new Nm1(patient);
-                edi.Append(patientNm1.BuildNm1());
-                this._segmentCount++;
-
-                if (patient.IncludeSubscriber)
+                foreach (var charge in patient.Charges)
                 {
-                    var subscriberNm1 = new Nm1(patient.Subscriber);
-                    edi.Append(subscriberNm1.BuildNm1());
+                    var clp = new Clp(charge);
+                    edi.Append(clp.BuildClp());
                     this._segmentCount++;
-                }
 
-                var renderingNm1 = new Nm1(patient.RenderingProvider);
-                edi.Append(renderingNm1.BuildNm1());
-                this._segmentCount++;
-
-                var startDtm = new Dtm(patient);
-                edi.Append(startDtm.BuildDtm());
-                this._segmentCount++;
-
-
-                var svc = new Svc(charge);
-                edi.Append(svc.BuildSvc());
-                this._segmentCount++;
-
-                var dateOfServiceDtm = new Dtm(charge);
-                edi.Append(dateOfServiceDtm.BuildDtm());
-                this._segmentCount++;
-
-                var copayCas = new Cas(charge);
-
-                var chargeAdjustments = charge.Adjustments;
-
-                if (chargeAdjustments != null)
-                {
-                    foreach (var adjustment in chargeAdjustments)
+                    var isClaimLevelAuth = false;
+                    if (!string.IsNullOrEmpty(charge.AuthorizationNumber)
+                        && charge.AdditionalServiceDescriptions.All(a => a.AuthorizationNumber == charge.AuthorizationNumber))
                     {
-                        var cas = new Cas(adjustment);
-                        edi.Append(cas.BuildCas());
+                        var claimAuthRef = new Ref(charge.AuthorizationNumber);
+                        edi.Append(claimAuthRef.BuildRef());
+                        this._segmentCount++;
+                        isClaimLevelAuth = true;
+                    }
+
+                    var patientNm1 = new Nm1(patient);
+                    edi.Append(patientNm1.BuildNm1());
+                    this._segmentCount++;
+
+                    if (patient.IncludeSubscriber)
+                    {
+                        var subscriberNm1 = new Nm1(patient.Subscriber);
+                        edi.Append(subscriberNm1.BuildNm1());
                         this._segmentCount++;
                     }
 
-                    edi.Append(copayCas.BuildCas());
-                }
-                else
-                {
-                    edi.Append(copayCas.BuildCas());
-                }
-
-                this._segmentCount++;
-
-                charge.ReferenceIdCounter = 1;
-                var chargeRef = new Ref(charge);
-                edi.Append(chargeRef.BuildRef());
-                this._segmentCount++;
-
-                var amt = new Amt(charge);
-                edi.Append(amt.BuildAmt());
-                this._segmentCount++;
-
-                var additionalServiceDescriptions = charge.AdditionalServiceDescriptions;
-                foreach (var serviceDescription in additionalServiceDescriptions)
-                {
-                    charge.ReferenceIdCounter++;
-                    serviceDescription.ReferenceIdCounter = charge.ReferenceIdCounter;
-                    var additionalSvc = new Svc(serviceDescription);
-                    edi.Append(additionalSvc.BuildSvc());
+                    var renderingNm1 = new Nm1(patient.RenderingProvider);
+                    edi.Append(renderingNm1.BuildNm1());
                     this._segmentCount++;
 
-                    var additionalDateOfServiceDtm = new Dtm(serviceDescription);
-                    edi.Append(additionalDateOfServiceDtm.BuildDtm());
-                    this._segmentCount++;
-
-                    var additionalcopayCas = new Cas(serviceDescription);
-
-                    var additionalAdjustments = serviceDescription.Adjustments;
-
-                    if (additionalAdjustments != null)
+                    if (!isClaimLevelAuth && !string.IsNullOrEmpty(charge.AuthorizationNumber))
                     {
-                        foreach (var adjustment in additionalAdjustments)
+                        var serviceLevelAuthRef = new Ref(charge.AuthorizationNumber);
+                        edi.Append(serviceLevelAuthRef.BuildRef());
+                        this._segmentCount++;
+                    }
+
+                    var startDtm = new Dtm(patient);
+                    edi.Append(startDtm.BuildDtm());
+                    this._segmentCount++;
+
+
+                    var svc = new Svc(charge);
+                    edi.Append(svc.BuildSvc());
+                    this._segmentCount++;
+
+                    var dateOfServiceDtm = new Dtm(charge);
+                    edi.Append(dateOfServiceDtm.BuildDtm());
+                    this._segmentCount++;
+
+                    var copayCas = new Cas(charge);
+
+                    var chargeAdjustments = charge.Adjustments;
+
+                    if (chargeAdjustments != null)
+                    {
+                        foreach (var adjustment in chargeAdjustments)
                         {
                             var cas = new Cas(adjustment);
                             edi.Append(cas.BuildCas());
                             this._segmentCount++;
                         }
 
-                        edi.Append(additionalcopayCas.BuildCas());
+                        edi.Append(copayCas.BuildCas());
                     }
                     else
                     {
-                        edi.Append(additionalcopayCas.BuildCas());
+                        edi.Append(copayCas.BuildCas());
                     }
 
                     this._segmentCount++;
 
-                    var additionalRef = new Ref(serviceDescription);
-                    edi.Append(additionalRef.BuildRef());
+                    charge.ReferenceIdCounter = 1;
+                    var chargeRef = new Ref(charge);
+                    edi.Append(chargeRef.BuildRef());
                     this._segmentCount++;
 
-                    var additionalamt = new Amt(serviceDescription);
-                    edi.Append(additionalamt.BuildAmt());
+                    var amt = new Amt(charge);
+                    edi.Append(amt.BuildAmt());
                     this._segmentCount++;
+
+                    var additionalServiceDescriptions = charge.AdditionalServiceDescriptions;
+                    foreach (var serviceDescription in additionalServiceDescriptions)
+                    {
+                        charge.ReferenceIdCounter++;
+                        serviceDescription.ReferenceIdCounter = charge.ReferenceIdCounter;
+                        var additionalSvc = new Svc(serviceDescription);
+                        edi.Append(additionalSvc.BuildSvc());
+                        this._segmentCount++;
+
+                        var additionalDateOfServiceDtm = new Dtm(serviceDescription);
+                        edi.Append(additionalDateOfServiceDtm.BuildDtm());
+                        this._segmentCount++;
+
+                        if (!isClaimLevelAuth && !string.IsNullOrEmpty(serviceDescription.AuthorizationNumber))
+                        {
+                            var serviceLevelAuthRef = new Ref(serviceDescription.AuthorizationNumber);
+                            edi.Append(serviceLevelAuthRef.BuildRef());
+                            this._segmentCount++;
+                        }
+
+                        var additionalcopayCas = new Cas(serviceDescription);
+
+                        var additionalAdjustments = serviceDescription.Adjustments;
+
+                        if (additionalAdjustments != null)
+                        {
+                            foreach (var adjustment in additionalAdjustments)
+                            {
+                                var cas = new Cas(adjustment);
+                                edi.Append(cas.BuildCas());
+                                this._segmentCount++;
+                            }
+
+                            edi.Append(additionalcopayCas.BuildCas());
+                        }
+                        else
+                        {
+                            edi.Append(additionalcopayCas.BuildCas());
+                        }
+
+                        this._segmentCount++;
+
+                        var additionalRef = new Ref(serviceDescription);
+                        edi.Append(additionalRef.BuildRef());
+                        this._segmentCount++;
+
+                        var additionalamt = new Amt(serviceDescription);
+                        edi.Append(additionalamt.BuildAmt());
+                        this._segmentCount++;
+                    }
                 }
-            }
 
             var se = new Se(this._segmentCount);
             edi.Append(se.BuildSe());

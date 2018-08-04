@@ -77,8 +77,7 @@ namespace EraFileCreator.ViewModels
 
         private void OnUpdateReceived(UpdateInsuranceCompaniesMessage obj)
         {
-            this.InsuranceCompanies =
-                new ObservableCollection<InsuranceCompany>(this._settingsService.GetInsuranceCompanies());
+            this.LoadInsuranceCompany();
         }
 
         private void OpenEditWindow(object obj)
@@ -116,13 +115,13 @@ namespace EraFileCreator.ViewModels
             decimal chargesPaidAmount = 0;
             decimal addonsPaidAmount = 0;
             foreach (var patient in PatientService.PatientRepository.GetAllPatients())
-            foreach (var c in patient.Charges)
-            {
-                chargesPaidAmount += c.PaymentAmount;
+                foreach (var c in patient.Charges)
+                {
+                    chargesPaidAmount += c.PaymentAmount;
 
-                foreach (var addonCharge in c.AdditionalServiceDescriptions)
-                    addonsPaidAmount += addonCharge.PaymentAmount;
-            }
+                    foreach (var addonCharge in c.AdditionalServiceDescriptions)
+                        addonsPaidAmount += addonCharge.PaymentAmount;
+                }
 
             this.Payment.Amount = chargesPaidAmount + addonsPaidAmount;
             return this.Payment.Amount;
@@ -133,7 +132,7 @@ namespace EraFileCreator.ViewModels
             this.Insurance = new InsuranceCompany();
             this.PaymentTypes = this.Payment.Types;
             this.InsuranceCompanies =
-                new ObservableCollection<InsuranceCompany>(this._settingsService.GetInsuranceCompanies());
+                new ObservableCollection<InsuranceCompany>(this._settingsService.GetInsuranceCompanies().OrderBy(i => i.Name));
             this.SaveInsuranceToRepository();
             this.RaisePropertyChanged("Insurance");
         }

@@ -42,7 +42,8 @@
                              IsEnabled="{Binding IsChecked, Converter={StaticResource NotConverter}, ElementName=IsIndividualBillingTag}"
                              Margin="5,0,5,5" HorizontalContentAlignment="Stretch"
                              MouseDoubleClick="BillingProviderNameInput_MouseDoubleClick"
-                             TabIndex="13">
+                             GotFocus="BillingProviderNameInput_GotFocus"
+                             TabIndex="11">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
                                 <DockPanel>
@@ -64,7 +65,7 @@
                                Text="NPI*" Margin="5,5,5,0" />
                     <TextBox x:Name="BusinessNpiInput"
                              MaxLength="10" Margin="5,0,5,5"
-                             HorizontalContentAlignment="Stretch" TabIndex="14"
+                             HorizontalContentAlignment="Stretch" TabIndex="12"
                              PreviewTextInput="BillingProviderNpiInput_PreviewTextInput"
                              GotFocus="BusinessNpiInput_GotFocus">
                         <Validation.ErrorTemplate>
@@ -97,7 +98,7 @@
                                Text="First Name" Margin="5,5,5,0" />
                     <TextBox x:Name="BillingProviderFirstNameInput"
                              IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag}" Margin="5,0,5,5"
-                             HorizontalContentAlignment="Stretch" TabIndex="12"
+                             HorizontalContentAlignment="Stretch" TabIndex="13"
                              GotFocus="BillingProviderFirstNameInput_GotFocus">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -123,7 +124,7 @@
                              IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag, Mode=TwoWay}"
                              Margin="5,0,5,5"
                              HorizontalContentAlignment="Stretch"
-                             TabIndex="13"
+                             TabIndex="14"
                              GotFocus="BillingProviderLastNameInput_GotFocus">
                         <Validation.ErrorTemplate>
                             <ControlTemplate>
@@ -146,7 +147,7 @@
                                Text="NPI*" Margin="5,5,5,0" />
                     <TextBox x:Name="BillingProviderNpiInput"
                              MaxLength="10" Margin="5,0,5,5"
-                             HorizontalContentAlignment="Stretch" TabIndex="14"
+                             HorizontalContentAlignment="Stretch" TabIndex="15"
                              PreviewTextInput="BillingProviderNpiInput_PreviewTextInput"
                              GotFocus="BillingProviderNpiInput_GotFocus">
                         <Validation.ErrorTemplate>
@@ -170,7 +171,7 @@
                     <Button Content="Copy To Rendering Provider"
                             Command="{Binding UpdateRenderingProviderCommand}"
                             IsEnabled="{Binding IsChecked, ElementName=IsIndividualBillingTag}"
-                            x:Name="Copy" Margin="5,20,0,0" TabIndex="15" />
+                            x:Name="Copy" Margin="5,20,0,0" TabIndex="16" />
                 </StackPanel>
             </Grid>
         </Grid>

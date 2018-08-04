@@ -61,30 +61,6 @@ namespace EraFileCreator {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string InsuranceCompanyName {
-            get {
-                return ((string)(this["InsuranceCompanyName"]));
-            }
-            set {
-                this["InsuranceCompanyName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string InsuranceCompanyTaxId {
-            get {
-                return ((string)(this["InsuranceCompanyTaxId"]));
-            }
-            set {
-                this["InsuranceCompanyTaxId"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool BillIdPreference {
             get {
@@ -128,66 +104,6 @@ namespace EraFileCreator {
             }
             set {
                 this["UpgradeSettings"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Street One")]
-        public string InsuranceCompanyAddressLineOne {
-            get {
-                return ((string)(this["InsuranceCompanyAddressLineOne"]));
-            }
-            set {
-                this["InsuranceCompanyAddressLineOne"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Street Two")]
-        public string InsuranceCompanyAddressLineTwo {
-            get {
-                return ((string)(this["InsuranceCompanyAddressLineTwo"]));
-            }
-            set {
-                this["InsuranceCompanyAddressLineTwo"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("City")]
-        public string InsuranceCompanyAddressCity {
-            get {
-                return ((string)(this["InsuranceCompanyAddressCity"]));
-            }
-            set {
-                this["InsuranceCompanyAddressCity"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("AL")]
-        public string InsuranceCompanyAddressState {
-            get {
-                return ((string)(this["InsuranceCompanyAddressState"]));
-            }
-            set {
-                this["InsuranceCompanyAddressState"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("99991")]
-        public string InsuranceCompanyAddressZipCode {
-            get {
-                return ((string)(this["InsuranceCompanyAddressZipCode"]));
-            }
-            set {
-                this["InsuranceCompanyAddressZipCode"] = value;
             }
         }
         

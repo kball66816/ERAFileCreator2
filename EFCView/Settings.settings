@@ -1,7 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
-              GeneratedClassNamespace="PatientManagement.ViewModel" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EraFileCreator" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="PatientFirstName" Type="System.String" Scope="User">
@@ -11,12 +9,6 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PatientCopay" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="InsuranceCompanyName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="InsuranceCompanyTaxId" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="BillIdPreference" Type="System.Boolean" Scope="User">
@@ -30,21 +22,6 @@
     </Setting>
     <Setting Name="UpgradeSettings" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="InsuranceCompanyAddressLineOne" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Street One</Value>
-    </Setting>
-    <Setting Name="InsuranceCompanyAddressLineTwo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Street Two</Value>
-    </Setting>
-    <Setting Name="InsuranceCompanyAddressCity" Type="System.String" Scope="User">
-      <Value Profile="(Default)">City</Value>
-    </Setting>
-    <Setting Name="InsuranceCompanyAddressState" Type="System.String" Scope="User">
-      <Value Profile="(Default)">AL</Value>
-    </Setting>
-    <Setting Name="InsuranceCompanyAddressZipCode" Type="System.String" Scope="User">
-      <Value Profile="(Default)">99991</Value>
     </Setting>
     <Setting Name="BillingProviderAddressLineOne" Type="System.String" Scope="User">
       <Value Profile="(Default)">Street One</Value>

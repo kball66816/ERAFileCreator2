@@ -15,11 +15,6 @@ namespace EraFileCreator.Views
             this.InitializeComponent();
         }
 
-        private void BillingProviderZipCodeInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            InputRestrictions.RestrictTextToIntegerOnly(e);
-        }
-
         private void BillingProviderNpiInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             InputRestrictions.RestrictTextToIntegerOnly(e);
@@ -36,41 +31,6 @@ namespace EraFileCreator.Views
         }
 
         private void BusinessNpiInput_GotFocus(object sender, RoutedEventArgs e)
-        {
-            InputRules.HighlightAllText(sender);
-        }
-
-        private void ProviderAddressLineOneInput_GotFocus(object sender, RoutedEventArgs e)
-        {
-            InputRules.HighlightAllText(sender);
-        }
-
-        private void ProviderAddressLineOneInput_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            InputRules.HighlightAllText(sender);
-        }
-
-        private void BillingProviderAddressTwoInput_GotFocus(object sender, RoutedEventArgs e)
-        {
-            InputRules.HighlightAllText(sender);
-        }
-
-        private void BillingProviderAddressTwoInput_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            InputRules.HighlightAllText(sender);
-        }
-
-        private void BillingProviderCityInput_GotFocus(object sender, RoutedEventArgs e)
-        {
-            InputRules.HighlightAllText(sender);
-        }
-
-        private void BillingProviderCityInput_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            InputRules.HighlightAllText(sender);
-        }
-
-        private void BillingProviderZipCodeInput_GotFocus(object sender, RoutedEventArgs e)
         {
             InputRules.HighlightAllText(sender);
         }

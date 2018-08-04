@@ -99,7 +99,8 @@
                 <Button Command="{Binding OpenEditWindowCommand}"
                         CommandParameter="{Binding Insurance}"
                         Content="Update Insurance Companies"
-                        Margin="5,20,5,5" />
+                        Margin="5,20,5,5" 
+                        TabIndex="4"/>
             </StackPanel>
         </Grid>
     </Grid>

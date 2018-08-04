@@ -23,6 +23,7 @@ namespace PatientManagement.DAL
         private string _procedureCode;
 
         public int ReferenceIdCounter;
+        private string _authorizationNumber;
 
         public ServiceDescription()
         {
@@ -86,8 +87,6 @@ namespace PatientManagement.DAL
                 {
                     this._paymentAmount = value;
                     this.RaisePropertyChanged("PaymentAmount");
-                    this.RaisePropertyChanged("CheckAmount");
-                    this.RaisePropertyChanged("AllowedAmount");
                 }
             }
         }
@@ -159,8 +158,17 @@ namespace PatientManagement.DAL
                 {
                     this._copay = value;
                     this.RaisePropertyChanged("Copay");
-                    this.RaisePropertyChanged("AllowedAmount");
                 }
+            }
+        }
+
+        public string AuthorizationNumber
+        {
+            get => this._authorizationNumber;
+            set
+            {
+                this._authorizationNumber = value;
+                this.RaisePropertyChanged("AuthorizationNumber");
             }
         }
 
