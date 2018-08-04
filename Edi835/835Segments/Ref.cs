@@ -38,7 +38,7 @@ namespace Edi835._835Segments
 
         public Ref(string authorizationNumber)
         {
-            this.SegmentIdentifier = "Ref";
+            this.SegmentIdentifier = "REF";
             this.ReferenceIdQualifier = "G1";
             this.ReferenceIdentification = authorizationNumber;
         }

@@ -116,16 +116,6 @@ namespace EFC.BL
                     edi.Append(clp.BuildClp());
                     this._segmentCount++;
 
-                    var isClaimLevelAuth = false;
-                    if (!string.IsNullOrEmpty(charge.AuthorizationNumber)
-                        && charge.AdditionalServiceDescriptions.All(a => a.AuthorizationNumber == charge.AuthorizationNumber))
-                    {
-                        var claimAuthRef = new Ref(charge.AuthorizationNumber);
-                        edi.Append(claimAuthRef.BuildRef());
-                        this._segmentCount++;
-                        isClaimLevelAuth = true;
-                    }
-
                     var patientNm1 = new Nm1(patient);
                     edi.Append(patientNm1.BuildNm1());
                     this._segmentCount++;
@@ -141,11 +131,14 @@ namespace EFC.BL
                     edi.Append(renderingNm1.BuildNm1());
                     this._segmentCount++;
 
-                    if (!isClaimLevelAuth && !string.IsNullOrEmpty(charge.AuthorizationNumber))
+                    var isClaimLevelAuth = false;
+                    if (!string.IsNullOrEmpty(charge.AuthorizationNumber)
+                        && charge.AdditionalServiceDescriptions.All(a => a.AuthorizationNumber == charge.AuthorizationNumber))
                     {
-                        var serviceLevelAuthRef = new Ref(charge.AuthorizationNumber);
-                        edi.Append(serviceLevelAuthRef.BuildRef());
+                        var claimAuthRef = new Ref(charge.AuthorizationNumber);
+                        edi.Append(claimAuthRef.BuildRef());
                         this._segmentCount++;
+                        isClaimLevelAuth = true;
                     }
 
                     var startDtm = new Dtm(patient);
@@ -183,6 +176,13 @@ namespace EFC.BL
 
                     this._segmentCount++;
 
+                    if (!isClaimLevelAuth && !string.IsNullOrEmpty(charge.AuthorizationNumber))
+                    {
+                        var serviceLevelAuthRef = new Ref(charge.AuthorizationNumber);
+                        edi.Append(serviceLevelAuthRef.BuildRef());
+                        this._segmentCount++;
+                    }
+
                     charge.ReferenceIdCounter = 1;
                     var chargeRef = new Ref(charge);
                     edi.Append(chargeRef.BuildRef());
@@ -205,13 +205,6 @@ namespace EFC.BL
                         edi.Append(additionalDateOfServiceDtm.BuildDtm());
                         this._segmentCount++;
 
-                        if (!isClaimLevelAuth && !string.IsNullOrEmpty(serviceDescription.AuthorizationNumber))
-                        {
-                            var serviceLevelAuthRef = new Ref(serviceDescription.AuthorizationNumber);
-                            edi.Append(serviceLevelAuthRef.BuildRef());
-                            this._segmentCount++;
-                        }
-
                         var additionalcopayCas = new Cas(serviceDescription);
 
                         var additionalAdjustments = serviceDescription.Adjustments;
@@ -233,6 +226,13 @@ namespace EFC.BL
                         }
 
                         this._segmentCount++;
+
+                        if (!isClaimLevelAuth && !string.IsNullOrEmpty(serviceDescription.AuthorizationNumber))
+                        {
+                            var serviceLevelAuthRef = new Ref(serviceDescription.AuthorizationNumber);
+                            edi.Append(serviceLevelAuthRef.BuildRef());
+                            this._segmentCount++;
+                        }
 
                         var additionalRef = new Ref(serviceDescription);
                         edi.Append(additionalRef.BuildRef());
