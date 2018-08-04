@@ -48,6 +48,7 @@ namespace PatientManagement.DAL
             this._additionalServiceDescriptions = new ObservableCollection<ServiceDescription>();
             this.Adjustments = new ObservableCollection<Adjustment>();
             this.ClaimStatus = new ClaimStatusCode(charge.ClaimStatus);
+            this.AuthorizationNumber = charge.AuthorizationNumber;
         }
 
         public ObservableCollection<Adjustment> Adjustments
