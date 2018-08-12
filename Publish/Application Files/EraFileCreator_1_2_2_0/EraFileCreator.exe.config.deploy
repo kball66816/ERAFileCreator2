@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<configuration>
+  <configSections>
+    <sectionGroup name="userSettings"
+                  type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="WPFERA.Settings"
+               type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+               allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+    </sectionGroup>
+
+    <section name="entityFramework"
+             type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+             requirePermission="false" />
+  </configSections>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6.1" />
+  </startup>
+  <userSettings>
+    <WPFERA.Settings>
+      <setting name="PatientFirstName" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="PatientLastName" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="PatientCopay" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="InsuranceCompanyName" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="InsuranceCompanyTaxId" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="BillIdPreference" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="ReloadLastPatient" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="IncludeSubscriber" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="UpgradeSettings" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="InsuranceCompanyAddressLineOne" serializeAs="String">
+        <value>Street One</value>
+      </setting>
+      <setting name="InsuranceCompanyAddressLineTwo" serializeAs="String">
+        <value>Street Two</value>
+      </setting>
+      <setting name="InsuranceCompanyAddressCity" serializeAs="String">
+        <value>City</value>
+      </setting>
+      <setting name="InsuranceCompanyAddressState" serializeAs="String">
+        <value>AL</value>
+      </setting>
+      <setting name="InsuranceCompanyAddressZipCode" serializeAs="String">
+        <value>99991</value>
+      </setting>
+      <setting name="BillingProviderAddressLineOne" serializeAs="String">
+        <value>Street One</value>
+      </setting>
+      <setting name="BillingProviderAddressLineTwo" serializeAs="String">
+        <value>Street Two</value>
+      </setting>
+      <setting name="BillingProviderAddressCity" serializeAs="String">
+        <value>City</value>
+      </setting>
+      <setting name="BillingProviderAddressState" serializeAs="String">
+        <value>AL</value>
+      </setting>
+      <setting name="BillingProviderAddressZipCode" serializeAs="String">
+        <value>99999</value>
+      </setting>
+      <setting name="BillingProviderName" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="BillingProviderFirstName" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="BillingProviderLastName" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="BillingProviderNpi" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="RenderingProviderFirstName" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="RenderingProviderLastName" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="RenderingProviderNpi" serializeAs="String">
+        <value />
+      </setting>
+      <setting name="ReusePatient" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="EnableReusePatientPrompt" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="ReuseSelectedAddonCharge" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="EnableReuseSelectedAddonChargePrompt" serializeAs="String">
+        <value>True</value>
+      </setting>
+      <setting name="BillingProviderIsIndividual" serializeAs="String">
+        <value>False</value>
+      </setting>
+      <setting name="PatientPlaceOfService" serializeAs="String">
+        <value>11</value>
+      </setting>
+      <setting name="ReuseCharge" serializeAs="String">
+        <value>True</value>
+      </setting>
+    </WPFERA.Settings>
+  </userSettings>
+</configuration>

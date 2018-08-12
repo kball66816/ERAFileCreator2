@@ -5,7 +5,7 @@ using Common.Common.Extensions;
 
 namespace PatientManagement.DAL
 {
-    public class Payment
+    public class Payment: INotifyPropertyChanged
     {
         private decimal _amount;
 

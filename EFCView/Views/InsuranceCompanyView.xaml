@@ -84,7 +84,7 @@
                            Text="Check Amount*" Margin="5,5,5,0" />
                 <TextBox x:Name="CheckAmountInput"
                          IsEnabled="False"
-                         Text="{Binding Payment.Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Payment.Amount}"
                          HorizontalContentAlignment="Stretch" Margin="5,0,5,5" />
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Column="4">
