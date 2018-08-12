@@ -52,6 +52,7 @@
                         <TextBlock x:Name="PlaceofServiceTag"
                                    Text="Place Of Service*" Margin="5,5,5,0" />
                         <ComboBox x:Name="PlaceOfServiceComboBox" ItemsSource="{Binding PlacesOfService}"
+                                  IsEditable="True"
                                   DisplayMemberPath="Key"
                                   SelectedValuePath="Key"
                                   SelectedValue="{Binding PrimaryServiceDescription.PlaceOfService.ServiceLocation}"
@@ -67,6 +68,7 @@
                         <TextBlock x:Name="ClaimStatus"
                                    Text="Claim Status" Margin="5,5,5,0" />
                         <ComboBox x:Name="ClaimStatusDropdown" ItemsSource="{Binding ClaimStatusCodes}"
+                                  IsEditable="True"
                                   DisplayMemberPath="Key"
                                   SelectedValuePath="Key"
                                   SelectedValue="{Binding PrimaryServiceDescription.ClaimStatus.Code}"

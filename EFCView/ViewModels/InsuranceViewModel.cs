@@ -90,8 +90,7 @@ namespace EraFileCreator.ViewModels
         {
             this.SaveSettings();
             this.Insurance = new InsuranceCompany(this.Insurance);
-            this.Payment = new Payment();
-            this.RaisePropertyChanged("Insurance");
+            this.Payment = new Payment {Amount = this.CalculateCheckAmount()};
             this.SaveInsuranceToRepository();
         }
 
@@ -108,7 +107,6 @@ namespace EraFileCreator.ViewModels
         private void OnUpdateCalculation(UpdateCalculations obj)
         {
             this.Payment.Amount = this.CalculateCheckAmount();
-            RaisePropertyChanged("Amount");
         }
 
         private decimal CalculateCheckAmount()
@@ -133,7 +131,6 @@ namespace EraFileCreator.ViewModels
             this.InsuranceCompanies =
                 new ObservableCollection<InsuranceCompany>(this._settingsService.GetInsuranceCompanies());
             this.SaveInsuranceToRepository();
-            this.RaisePropertyChanged("Insurance");
         }
 
         private void SaveInsuranceToRepository()
