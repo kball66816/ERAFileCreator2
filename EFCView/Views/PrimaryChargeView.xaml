@@ -325,6 +325,7 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                     <ColumnDefinition />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Orientation="vertical">
@@ -418,6 +419,25 @@
                                              TabIndex="88"
                                              MouseDoubleClick="HightlightAllText"
                                              GotFocus="HightlightAllText"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="5">
+                                    <TextBlock x:Name="CopayTag"
+                                               Text="Copay" Margin="5,5,5,0" />
+                                    <TextBox x:Name="CopayInput"
+                                             VerticalAlignment="Center" Margin="5,0,5,5" TabIndex="89" GotFocus="HightlightAllText"
+                                             Text="{Binding Copay, StringFormat=\{0:F2\}, UpdateSourceTrigger=PropertyChanged}"
+                                             MouseDoubleClick="HightlightAllText"
+                                             PreviewKeyDown="IgnoreDecimalInput">
+                                        <Validation.ErrorTemplate>
+                                            <ControlTemplate>
+                                                <DockPanel>
+                                                    <Border BorderBrush="Red" BorderThickness="2">
+                                                        <AdornedElementPlaceholder />
+                                                    </Border>
+                                                </DockPanel>
+                                            </ControlTemplate>
+                                        </Validation.ErrorTemplate>
+                                    </TextBox>
                                 </StackPanel>
 
 
