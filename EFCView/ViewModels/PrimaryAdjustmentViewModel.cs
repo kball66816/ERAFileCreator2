@@ -18,6 +18,8 @@ namespace EraFileCreator.ViewModels
             this.AddChargeAdjustmentCommand = new Command(this.AddAdjustmentCommand, this.CanAddAdjustment);
         }
 
+        public ICommand AddChargeAdjustmentCommand { get; }
+
         public Adjustment SelectedAdjustment
         {
             get => this._selectedAdjustment;
@@ -32,8 +34,6 @@ namespace EraFileCreator.ViewModels
         public Dictionary<string, string> PrimaryAdjustmentType { get; set; }
 
         public Dictionary<string, string> PrimaryAdjustmentReasonCodes { get; set; }
-
-        public ICommand AddChargeAdjustmentCommand { get; }
 
         private void AddAdjustmentCommand(object obj)
         {

@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Edi835.Services;
 using PatientManagement.DAL;
 
 namespace Edi835._835Segments
@@ -12,12 +14,12 @@ namespace Edi835._835Segments
 
             this.ClaimSubmittersIdentifier = serviceDescription.BillId;
             this.ClaimStatusCode = serviceDescription.ClaimStatus.Code;
-            this.TotalClaimChargeAmount = serviceDescription.ChargeCost +
-                                          serviceDescription.AdditionalServiceDescriptions.Sum(s => s.ChargeCost);
-            this.TotalClaimPaymentAmount = serviceDescription.PaymentAmount +
-                                           serviceDescription.AdditionalServiceDescriptions.Sum(s => s.SumOfChargePaid);
-            this.PatientResponsibility = serviceDescription.Copay +
-                                         serviceDescription.AdditionalServiceDescriptions.Sum(s => s.Copay);
+            var responsibility = new ResponsibilityCounter();
+            this.TotalClaimChargeAmount = responsibility.ClaimChargeAmountSum(serviceDescription);
+            this.TotalClaimPaymentAmount = responsibility.ClaimPaymentAmountSum(serviceDescription);
+            var totalPatientResponsibility = responsibility.PatientResponsibilitySum(serviceDescription);
+            var sum = totalPatientResponsibility.Sum(a => a.AdjustmentAmount);
+            this.PatientResponsibility = sum;
             this.ClaimFilingIndicatorCode = "12";
             this.PayerClaimControlNumber = "EMC5841338";
             this.FacilityTypeCode = serviceDescription.PlaceOfService.ServiceLocation;
@@ -26,6 +28,7 @@ namespace Edi835._835Segments
             this.DrgWeight = 0;
             this.Dischargefractionpercentage = 0;
         }
+
 
         private string ClaimSubmittersIdentifier { get; }
         private string ClaimStatusCode { get; }

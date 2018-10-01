@@ -469,6 +469,7 @@
                                                               ItemsSource="{Binding AddonAdjustmentType}"
                                                               DisplayMemberPath="Value"
                                                               SelectedValuePath="Value"
+                                                              SelectedValue="{Binding AddonAdjustment.AdjustmentType}"
                                                               ToolTip="{Binding SelectedItem.Key, 
                                                         ElementName=AddonAdjustmentTypeDropdown}"
                                                               Margin="5,5,5,0" TabIndex="91" />
@@ -478,6 +479,7 @@
                                                               ItemsSource="{Binding AddonAdjustmentReasonCodes}"
                                                               DisplayMemberPath="Value"
                                                               SelectedValuePath="Value"
+                                                              SelectedValue="{Binding AddonAdjustment.AdjustmentReasonCode}"
                                                               ToolTip="{Binding SelectedItem.Key, ElementName=AddonAdjustmentReasonCodeDropdown}"
                                                               SelectedIndex="34" Margin="5,5,5,0" TabIndex="92" />
                                                 </StackPanel>

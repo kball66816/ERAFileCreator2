@@ -63,6 +63,7 @@
     <Compile Include="835Segments\St.cs" />
     <Compile Include="835Segments\Svc.cs" />
     <Compile Include="835Segments\Trn.cs" />
+    <Compile Include="Services\ResponsibilityCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Common\Common.Common.csproj">
