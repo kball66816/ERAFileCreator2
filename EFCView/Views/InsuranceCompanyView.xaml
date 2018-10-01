@@ -53,7 +53,6 @@
                            Text="Payment Type*"
                            Margin="5,5,5,0" />
                 <ComboBox x:Name="PaymentTypeDropdown"
-                          IsEditable="True"
                           SelectedValuePath="Value"
                           DisplayMemberPath="Key"
                           SelectedValue="{Binding Payment.Type}"
