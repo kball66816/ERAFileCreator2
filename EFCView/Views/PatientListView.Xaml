@@ -7,7 +7,12 @@
              mc:Ignorable="d"
              Background="#FF7789D8" BorderBrush="#FF7789D8">
     <UserControl.DataContext>
-        <viewModels:PatientListViewModel />
+        <ObjectDataProvider ObjectType="viewModels:PatientListViewModel" 
+                            xmlns:services="clr-namespace:EraFileCreator.Services">
+            <ObjectDataProvider.ConstructorParameters>
+                <services:SettingsService/>
+            </ObjectDataProvider.ConstructorParameters>
+        </ObjectDataProvider>
     </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>

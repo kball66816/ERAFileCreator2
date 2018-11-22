@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PatientListViewModelTest.cs" />
     <Compile Include="PatientServiceTest.cs" />
     <Compile Include="PatientViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

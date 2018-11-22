@@ -14,11 +14,11 @@ namespace EraFileCreator.ViewModels
 
         private ObservableCollection<Patient> _patients;
 
-        private readonly PatientService _patientService;
-        public PatientListViewModel()
+        public PatientService PatientService { get; }
+        public PatientListViewModel(ISettingsService settingsService)
         {
-            _patientService = new PatientService(new SettingsService());
-            this.Patients = _patientService.PatientRepository.GetAllPatients();
+            this.PatientService = new PatientService(settingsService);
+            this.Patients = this.PatientService.PatientRepository.GetAllPatients();
             this.ClearPatientList = new Command(this.ClearPatientListCommand, this.CanClearPatientList);
         }
 
@@ -52,19 +52,14 @@ namespace EraFileCreator.ViewModels
 
         private bool CanClearPatientList(object obj)
         {
-            return _patientService.PatientRepository.GetAllPatients() != null;
+            return this.PatientService.PatientRepository.GetAllPatients() != null;
         }
 
         private void ClearPatientListCommand(object obj)
         {
-            var dialog = new MessageBoxService();
-            dialog.ClearMessage("Patient List");
-            if (dialog.NewDialogResult == MessageBoxResult.Yes)
-            {
-                _patientService.PatientRepository.GetAllPatients().Clear();
-                Messenger.Default.Send(new ListClearedMessage(), "Patient List Cleared");
-                Messenger.Default.Send(new UpdateCalculations());
-            }
+            this.PatientService.PatientRepository.GetAllPatients().Clear();
+            Messenger.Default.Send(new ListClearedMessage(), "Patient List Cleared");
+            Messenger.Default.Send(new UpdateCalculations());
         }
     }
 }
