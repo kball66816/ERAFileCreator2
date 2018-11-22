@@ -11,11 +11,9 @@ namespace PatientManagement.ViewModel.Services.Test
         [TestMethod]
         public void LoadInitialPatientTest()
         {
-            //Arrange
-            PatientService.SettingsService = new SettingsServiceMock();
-            PatientService.DialogPrompt = new MessageBoxServiceMock();
-            var patient = PatientService.LoadInitialPatient();
-            //Act
+            var patientService =
+                new PatientService(new SettingsServiceMock());
+            var patient = patientService.LoadInitialPatient();
             var actual = patient.FirstName;
             const string expected = "John";
 
@@ -25,19 +23,16 @@ namespace PatientManagement.ViewModel.Services.Test
         [TestMethod]
         public void GetNewPatientBasedOnSettingsReuseSamePatientEnabledTest()
         {
-            //Arrange
-            PatientService.SettingsService = new SettingsServiceMock
-                {ReuseSamePatientEnabled = true};
-            PatientService.DialogPrompt = new MessageBoxServiceMock();
-            var patient = PatientService.LoadInitialPatient();
 
-            //Act
+            var patientService =
+                new PatientService(new SettingsServiceMock());
+            var patient = patientService.LoadInitialPatient();
+            patientService.SettingsService.ReuseSamePatientEnabled = true;
             patient.FirstName = "Jacob";
             patient.LastName = "Smith";
 
-            PatientService.PatientRepository.Add(patient);
-            var patient2 = PatientService.GetNewPatientBasedOnSettings(patient);
-
+            patientService.PatientRepository.Add(patient);
+            var patient2 = patientService.GetNewPatientBasedOnSettings(patient);
 
             Assert.AreEqual(patient.FirstName, patient2.FirstName);
         }
@@ -45,19 +40,16 @@ namespace PatientManagement.ViewModel.Services.Test
         [TestMethod]
         public void GetNewPatientBasedOnSettingsReuseSamePatientDisabledTest()
         {
-            //Arrange
-            PatientService.SettingsService = new SettingsServiceMock
-                {ReuseSamePatientEnabled = false};
-            PatientService.DialogPrompt = new MessageBoxServiceMock();
-            var patient = PatientService.LoadInitialPatient();
-            var patient2 = PatientService.LoadInitialPatient();
+            var patientService =
+                new PatientService(new SettingsServiceMock());
+            var patient = patientService.LoadInitialPatient();
+            var patient2 = patientService.LoadInitialPatient();
 
-            //Act
             patient.FirstName = "Jacob";
             patient.LastName = "Smith";
 
-            PatientService.PatientRepository.Add(patient);
-            patient2 = PatientService.GetNewPatientBasedOnSettings(patient);
+            patientService.PatientRepository.Add(patient);
+            patient2 = patientService.GetNewPatientBasedOnSettings(patient);
 
             Assert.AreNotEqual(patient.FirstName, patient2.FirstName);
         }
@@ -65,21 +57,15 @@ namespace PatientManagement.ViewModel.Services.Test
         [TestMethod]
         public void DialogPromptTest()
         {
-            //Arrange
-            PatientService.SettingsService = new SettingsServiceMock
-            {
-                ReuseSamePatientEnabled = false,
-                PatientPromptEnabled = true
-            };
-            PatientService.DialogPrompt = new MessageBoxServiceMock();
-            var patient = PatientService.LoadInitialPatient();
+            var patientService =
+                new PatientService(new SettingsServiceMock());
+            var patient = patientService.LoadInitialPatient();
 
-            //Act
             patient.FirstName = "Jacob";
             patient.LastName = "Smith";
-            PatientService.PatientRepository.Add(patient);
+            patientService.PatientRepository.Add(patient);
 
-            Console.WriteLine(PatientService.DialogPrompt.MessageBoxMessage(patient.FullName));
+            Console.WriteLine(patientService.DialogPrompt.MessageBoxMessage(patient.FullName));
         }
     }
 }

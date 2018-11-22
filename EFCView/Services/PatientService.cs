@@ -1,22 +1,37 @@
-﻿using Common.Common.Services;
+﻿using System;
+using Common.Common.Services;
 using EFC.BL;
+using EraFileCreator.Mocks;
 using EraFileCreator.Service.Messaging;
 using PatientManagement.DAL;
 
 namespace EraFileCreator.Services
 {
-    public static class PatientService
+    public class PatientService
     {
-        public static readonly IPatientRepository PatientRepository;
+        public readonly IPatientRepository PatientRepository;
 
-        public static ISettingsService SettingsService;
+        public readonly ISettingsService SettingsService;
 
-        public static IMessageBoxService DialogPrompt = new MessageBoxService();
+        public IMessageBoxService DialogPrompt { get;}
 
-        static PatientService()
+        public PatientService(ISettingsService settingService)
         {
-            PatientRepository = new PatientRepository();
-            SettingsService = new SettingsService();
+            this.SettingsService = settingService;
+            switch (settingService)
+            {
+                case SettingsService _:
+                    this.DialogPrompt = new MessageBoxService();
+                    this.PatientRepository = new PatientRepository();
+                    break;
+                case SettingsServiceMock _:
+                    this.DialogPrompt = new MessageBoxServiceMock();
+                    this.PatientRepository = new PatientRepositoryMock();
+                    break;
+                default:
+                    throw new ArgumentException($"The State of Settings Service is invalid");
+
+            }
         }
 
         private static Patient GetNewPatient()
@@ -24,17 +39,17 @@ namespace EraFileCreator.Services
             return new Patient();
         }
 
-        private static Patient ClonePatient(Patient patient)
+        private Patient ClonePatient(Patient patient)
         {
             return PatientRepository.GetSelectedPatient(patient.Id).CopyPatient();
         }
 
-        public static Patient GetNewPatientBasedOnSettings(Patient patient)
+        public Patient GetNewPatientBasedOnSettings(Patient patient)
         {
-            if (SettingsService.ReuseSamePatientEnabled && SettingsService.PatientPromptEnabled)
+            if (this.SettingsService.ReuseSamePatientEnabled && this.SettingsService.PatientPromptEnabled)
                 patient = PromptTypeOfNewPatient(patient);
 
-            else if (SettingsService.ReuseSamePatientEnabled)
+            else if (this.SettingsService.ReuseSamePatientEnabled)
                 patient = ClonePatient(patient);
 
             else
@@ -43,24 +58,24 @@ namespace EraFileCreator.Services
             return patient;
         }
 
-        private static Patient PromptTypeOfNewPatient(Patient patient)
+        private Patient PromptTypeOfNewPatient(Patient patient)
         {
             DialogPrompt.DisplayMessage(patient.FullName);
             patient = DialogPrompt.ShowDialog() ? ClonePatient(patient) : GetNewPatient();
             return patient;
         }
 
-        public static Patient LoadInitialPatient()
+        public Patient LoadInitialPatient()
         {
-            var patient = SettingsService.PullDefaultPatient(GetNewPatient());
-            SettingsService.PullDefaultRenderingProvider(patient.RenderingProvider);
+            var patient = this.SettingsService.PullDefaultPatient(GetNewPatient());
+            this.SettingsService.PullDefaultRenderingProvider(patient.RenderingProvider);
             return patient;
         }
 
-        public static void SaveSettings(Patient patient)
+        public void SaveSettings(Patient patient)
         {
             Messenger.Default.Send(new SettingsSavedMessage(), "UpdateSettings");
-            SettingsService.SetDefaultPatient(patient);
+            this.SettingsService.SetDefaultPatient(patient);
         }
     }
 }

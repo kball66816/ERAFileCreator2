@@ -63,8 +63,8 @@ namespace EraFileCreator.ViewModels
         private static bool CanSave(object obj)
         {
             var canSave = false;
-
-            foreach (var patient in PatientService.PatientRepository.GetAllPatients())
+            var patientService = new PatientService(new SettingsService());
+            foreach (var patient in patientService.PatientRepository.GetAllPatients())
                 canSave = patient.Charges.Count > 0;
 
             return canSave;

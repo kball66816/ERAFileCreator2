@@ -113,7 +113,8 @@ namespace EraFileCreator.ViewModels
         {
             decimal chargesPaidAmount = 0;
             decimal addonsPaidAmount = 0;
-            foreach (var patient in PatientService.PatientRepository.GetAllPatients())
+            var patientService = new PatientService(new SettingsService());
+            foreach (var patient in patientService.PatientRepository.GetAllPatients())
                 foreach (var c in patient.Charges)
                 {
                     chargesPaidAmount += c.PaymentAmount;

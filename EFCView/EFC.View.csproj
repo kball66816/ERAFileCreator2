@@ -103,6 +103,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Mocks\MessageBoxServiceMock.cs" />
+    <Compile Include="Mocks\PatientRepositoryMock.cs" />
     <Compile Include="Mocks\SettingsServiceMock.cs" />
     <Compile Include="Service.Messaging\ListClearedMessage.cs" />
     <Compile Include="Service.Messaging\PreferenceUpdatedMessage.cs" />
