@@ -103,7 +103,10 @@ namespace EraFileCreator.ViewModels
         private static bool CanAddChargeToPatient(object obj)
         {
             var canAdd = false;
-            if (obj is ServiceDescription s) canAdd = s.ChargeCost != 0 && !string.IsNullOrEmpty(s.ProcedureCode);
+            if (obj is ServiceDescription s)
+                canAdd = s.ChargeCost != 0
+                         && s.UnitCount > 0
+                         && !string.IsNullOrEmpty(s.ProcedureCode);
 
             return canAdd;
         }

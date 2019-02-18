@@ -24,6 +24,20 @@ namespace PatientManagement.DAL
 
         public int ReferenceIdCounter;
         private string _authorizationNumber;
+        private int _unitCount;
+
+        public int UnitCount
+        {
+            get => _unitCount;
+            set
+            {
+                if (value != _unitCount)
+                {
+                    this._unitCount = value;
+                    this.RaisePropertyChanged("UnitCount");
+                }
+            }
+        }
 
         public ServiceDescription()
         {
@@ -33,6 +47,7 @@ namespace PatientManagement.DAL
             this.DateOfService = DateTime.Today;
             this.PlaceOfService = new PlaceOfService();
             this.ClaimStatus = new ClaimStatusCode();
+            UnitCount = 1;
         }
 
         public ServiceDescription(ServiceDescription charge)
@@ -49,6 +64,7 @@ namespace PatientManagement.DAL
             this.Adjustments = new ObservableCollection<Adjustment>();
             this.ClaimStatus = new ClaimStatusCode(charge.ClaimStatus);
             this.AuthorizationNumber = charge.AuthorizationNumber;
+            UnitCount = charge.UnitCount;
         }
 
         public ObservableCollection<Adjustment> Adjustments

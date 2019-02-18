@@ -21,6 +21,20 @@ Adjustment - Ideally you want each adjustment to be unique, a Service Descriptio
 
 Additional Service Description - Each Encounter can have more than one service Additional Service Descriptions keep a primary and additional service descriptions tied together. These will need to be added before you add the charge to the patient.
 
+** V1.3
+Contains the following Changes
+
+Features
+* Can Now Add Authorizations to primary and additional service descriptions
+* Can Now Add Copay to additional service descriptions
+* Can Now Dictate the number of units shown. 
+		Note : Units cannot be 0 or less currently
+
+Fixes
+* Fixed bug that made additional service description adjustments always CO-45
+* Fixed bug that calculated Patient responsibility only based on Copay
+* Fixed bug that that always added a copay even of $0.00
+
 ** V1.2.2
 Contains the following fixes
 * Fixed bug that prevented Update Insurance Company Window when closed using the X

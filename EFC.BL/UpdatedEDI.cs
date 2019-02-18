@@ -158,7 +158,7 @@ namespace EFC.BL
 
                     var chargeAdjustments = charge.Adjustments;
 
-                    if (chargeAdjustments != null)
+                    if (chargeAdjustments != null && charge.Copay != 0)
                     {
                         foreach (var adjustment in chargeAdjustments)
                         {
@@ -169,7 +169,7 @@ namespace EFC.BL
 
                         edi.Append(copayCas.BuildCas());
                     }
-                    else
+                    else if (charge.Copay != 0)
                     {
                         edi.Append(copayCas.BuildCas());
                     }
@@ -205,11 +205,11 @@ namespace EFC.BL
                         edi.Append(additionalDateOfServiceDtm.BuildDtm());
                         this._segmentCount++;
 
-                        var additionalcopayCas = new Cas(serviceDescription);
+                        var additionalCopayCas = new Cas(serviceDescription);
 
                         var additionalAdjustments = serviceDescription.Adjustments;
 
-                        if (additionalAdjustments != null)
+                        if (additionalAdjustments != null && serviceDescription.Copay != 0)
                         {
                             foreach (var adjustment in additionalAdjustments)
                             {
@@ -218,11 +218,11 @@ namespace EFC.BL
                                 this._segmentCount++;
                             }
 
-                            edi.Append(additionalcopayCas.BuildCas());
+                            edi.Append(additionalCopayCas.BuildCas());
                         }
-                        else
+                        else if(serviceDescription.Copay != 0)
                         {
-                            edi.Append(additionalcopayCas.BuildCas());
+                            edi.Append(additionalCopayCas.BuildCas());
                         }
 
                         this._segmentCount++;
@@ -238,8 +238,8 @@ namespace EFC.BL
                         edi.Append(additionalRef.BuildRef());
                         this._segmentCount++;
 
-                        var additionalamt = new Amt(serviceDescription);
-                        edi.Append(additionalamt.BuildAmt());
+                        var additionalAmt = new Amt(serviceDescription);
+                        edi.Append(additionalAmt.BuildAmt());
                         this._segmentCount++;
                     }
                 }
